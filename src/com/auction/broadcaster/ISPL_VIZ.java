@@ -118,11 +118,15 @@ public class ISPL_VIZ extends Scene{
 			}
 			
 		case "ANIMATE-OUT": case "CLEAR-ALL": case "ANIMATE-IN-PLAYERPROFILE": case "ANIMATE-IN-SQUAD": case "ANIMATE-IN-REMAINING_PURSE_ALL": case "ANIMATE-IN-SINGLE_PURSE":
-		case "ANIMATE-IN-TOP_SOLD": case "ANIMATE-IN-NAMESUPER": case "ANIMATE-IN-IDENT": case "ANIMATE-IN-TOP_SOLD_TEAM":
+		case "ANIMATE-IN-TOP_SOLD": case "ANIMATE-IN-NAMESUPER": case "ANIMATE-IN-IDENT": case "ANIMATE-IN-TOP_SOLD_TEAM": case "ANIMATE-IN-CURR_BID":
 		
 			switch (session_selected_broadcaster.toUpperCase()) {
 			case "ISPL_VIZ":
 				switch (whatToProcess.toUpperCase()) {
+				case "ANIMATE-IN-CURR_BID":
+					print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Anim_CurrentBid START \0");
+					data.setBid_Start_or_not(true);
+					break;
 				
 				case "ANIMATE-IN-PLAYERPROFILE": 
 					data.setBid_Start_or_not(false);
@@ -265,9 +269,11 @@ public class ISPL_VIZ extends Scene{
 							print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side2$txt_Header*GEOM*TEXT SET "+ "SOLD FOR" + "\0");
 							print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Change$BasePrice START \0");
 							print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Change$CurrentBid START \0");
-							if(auction.getPlayers().get(i).getSoldForPoints() == 300000) {
-								print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Anim_CurrentBid START \0");
-								data.setBid_Start_or_not(true);
+							if(data.isBid_Start_or_not() == false) {
+								if(auction.getPlayers().get(i).getSoldForPoints() == 300000) {
+									print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Anim_CurrentBid START \0");
+									data.setBid_Start_or_not(true);
+								}
 							}
 							data.setPlayer_sold_or_unsold(true);
 						}else if(auction.getPlayers().get(i).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.UNSOLD)) {
@@ -291,9 +297,9 @@ public class ISPL_VIZ extends Scene{
 				print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_PlayerInfo$NameGrp$Img_Text1$txt_Name*GEOM*TEXT SET " + auctionService.getAllPlayer().get(playerId - 1).getFirstname() + " \0");
 			}
 			if(auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase().equalsIgnoreCase("BATSMAN")) {
-				print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_PlayerInfo$Side1$txt_Info*GEOM*TEXT SET " + "BATTER" + "\0");
+				print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_PlayerInfo$Side1$txt_Info*GEOM*TEXT SET " + "BATTER - "+ auctionService.getAllPlayer().get(playerId - 1).getCategory().toUpperCase() + "\0");
 			}else {
-				print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_PlayerInfo$Side1$txt_Info*GEOM*TEXT SET " + auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase() + "\0");
+				print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_PlayerInfo$Side1$txt_Info*GEOM*TEXT SET " + auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase() + " - " + auctionService.getAllPlayer().get(playerId - 1).getCategory().toUpperCase() + "\0");
 			}
 			print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_PlayerInfo$WhiteBase*TEXTURE*IMAGE SET "+ photo_path + auctionService.getAllPlayer().get(playerId - 1).getPhotoName() + AuctionUtil.PNG_EXTENSION + "\0");
 			print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_BasePrice$Side1$txt_Price*GEOM*TEXT SET "+ "3" + "\0");
@@ -507,11 +513,21 @@ public class ISPL_VIZ extends Scene{
 					}
 				}
 			}
+			
+			
 			print_writer.println("-1 RENDERER*TREE*$Main$Row"+(i+1)+"$txt_SquadSize*GEOM*TEXT SET "+ row + "\0");
 			print_writer.println("-1 RENDERER*TREE*$Main$Row"+(i+1)+"$txt_PurseValue*GEOM*TEXT SET "+ AuctionFunctions.ConvertToLakh((Integer.valueOf(match.getTeam().get(i).getTeamTotalPurse()) - total))  + "\0");
-			print_writer.println("-1 RENDERER*TREE*$Main$Row"+(i+1)+"$txt_Unit*GEOM*TEXT SET "+ "LAKHS" + "\0");
-			
-			
+			if((Integer.valueOf(match.getTeam().get(i).getTeamTotalPurse()) - total) == 100000) {
+				print_writer.println("-1 RENDERER*TREE*$Main$Row"+(i+1)+"$RupeeSymbol*ACTIVE SET 1 \0");
+				print_writer.println("-1 RENDERER*TREE*$Main$Row"+(i+1)+"$txt_Unit*GEOM*TEXT SET "+ "LAKH" + "\0");
+			}else if((Integer.valueOf(match.getTeam().get(i).getTeamTotalPurse()) - total) <= 0) {
+				print_writer.println("-1 RENDERER*TREE*$Main$Row"+(i+1)+"$RupeeSymbol*ACTIVE SET 0 \0");
+				print_writer.println("-1 RENDERER*TREE*$Main$Row"+(i+1)+"$txt_PurseValue*GEOM*TEXT SET "+ "-"  + "\0");
+				print_writer.println("-1 RENDERER*TREE*$Main$Row"+(i+1)+"$txt_Unit*GEOM*TEXT SET "+ "" + "\0");
+			}else {
+				print_writer.println("-1 RENDERER*TREE*$Main$Row"+(i+1)+"$RupeeSymbol*ACTIVE SET 1 \0");
+				print_writer.println("-1 RENDERER*TREE*$Main$Row"+(i+1)+"$txt_Unit*GEOM*TEXT SET "+ "LAKHS" + "\0");
+			}
 			row = 0;
 			total = 0;
 		}

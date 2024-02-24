@@ -93,9 +93,12 @@ function processUserSelection(whichInput)
 		break;
 		
 	case 'populate_namesuper_btn': case 'populate_namesuper_player_btn': case 'populate_playerprofile_btn':	case 'populate_squad_btn': case 'populate_Top_Sold_btn':
-	case 'populate_single_purse_btn': 
+	case 'populate_single_purse_btn': case 'curr_bid_section':
 		processWaitingButtonSpinner('START_WAIT_TIMER');
 		switch ($(whichInput).attr('name')) {
+		case 'curr_bid_section':
+			processAuctionProcedures('POPULATE-CURR_BID');
+			break;
 		case 'populate_namesuper_btn':
 			processAuctionProcedures('POPULATE-L3-NAMESUPER');
 			break;
@@ -303,13 +306,16 @@ function processAuctionProcedures(whatToProcess)
 				break;
 			
 			case 'POPULATE-FF-PLAYERPROFILE': case 'POPULATE-SQUAD': case 'POPULATE-REMAINING_PURSE_ALL': case 'POPULATE-SINGLE_PURSE': case 'POPULATE-TOP_SOLD':
-			case 'POPULATE-L3-NAMESUPER': case 'POPULATE-TOP_SOLD_TEAM': case 'POPULATE-IDENT':
+			case 'POPULATE-L3-NAMESUPER': case 'POPULATE-TOP_SOLD_TEAM': case 'POPULATE-IDENT': case 'POPULATE-CURR_BID':
 				if(confirm('Animate In?') == true){
 					$('#select_graphic_options_div').empty();
 					document.getElementById('select_graphic_options_div').style.display = 'none';
 					$("#captions_div").show();
 					
 		        	switch(whatToProcess) {
+					case 'POPULATE-CURR_BID':
+						processAuctionProcedures('ANIMATE-IN-CURR_BID');
+						break;
 					case 'POPULATE-IDENT':
 						processAuctionProcedures('ANIMATE-IN-IDENT');
 						break;
@@ -552,6 +558,15 @@ function addItemsToList(whatToProcess, dataToProcess)
 						row.insertCell(cellCount).appendChild(select);
 						$(select).select2();
 						cellCount = cellCount + 1;
+						
+						option = document.createElement('input');
+		    			option.type = 'button';
+		    			option.name = 'curr_bid_section';
+			    		option.value = 'Populate Current bid';
+			    		option.id = option.name;
+					    option.setAttribute('onclick',"processUserSelection(this)");
+					    row.insertCell(cellCount).appendChild(option);
+					    cellCount = cellCount + 1;
 						
 						break;
 				} 
