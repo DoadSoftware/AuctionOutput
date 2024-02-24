@@ -20,11 +20,13 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 32:
 			processAuctionProcedures('CLEAR-ALL');
 			break;
-		case 45:
+		case 189:
 			if(confirm('It will Also Delete Your Preview from Directory...\r\n \r\nAre You Sure To Animate Out? ') == true){
 				processAuctionProcedures('ANIMATE-OUT');	
 			}
 		break;
+		case 'RE_READ':
+			processAuctionProcedures('RE_READ_DATA');
 		}
 		break;
 	}
@@ -161,7 +163,7 @@ function processAuctionProcedures(whatToProcess)
 	var valueToProcess;
 	switch(whatToProcess) {
 	
-	case 'READ-MATCH-AND-POPULATE':
+	case 'READ-MATCH-AND-POPULATE': 
 		valueToProcess = $('#matchFileTimeStamp').val();
 		break;
 	case 'POPULATE-L3-NAMESUPER':
@@ -256,7 +258,7 @@ function processAuctionProcedures(whatToProcess)
 			//match_data = data;
 			
         	switch(whatToProcess) {
-			case 'READ-MATCH-AND-POPULATE':
+			case 'READ-MATCH-AND-POPULATE': case 'RE_READ_DATA':
 				if(data){
 					//alert("match = " + $('#matchFileTimeStamp').val() + "Data = "+ data.matchFileTimeStamp)
 					if($('#matchFileTimeStamp').val() != data.matchFileTimeStamp) {
@@ -264,6 +266,9 @@ function processAuctionProcedures(whatToProcess)
 						initialiseForm("UPDATE-MATCH-ON-OUTPUT-FORM",data);
 						//match_data = data;
 					}
+				}
+				if(whatToProcess == 'RE_READ_DATA'){
+					alert('Data is Loaded');
 				}
 				break;
 			case 'NAMESUPER_GRAPHICS-OPTIONS':

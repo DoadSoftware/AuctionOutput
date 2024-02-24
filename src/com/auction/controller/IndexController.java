@@ -33,6 +33,8 @@ import com.auction.containers.Data;
 import com.auction.containers.Scene;
 import com.auction.model.Auction;
 import com.auction.model.NameSuper;
+import com.auction.model.Player;
+import com.auction.model.Team;
 import com.auction.service.AuctionService;
 import com.auction.util.AuctionFunctions;
 import com.auction.util.AuctionUtil;
@@ -59,6 +61,10 @@ public class IndexController
 	public static String current_date = "";
 	public static String Current_File_Name = "";
 	public int current_layer = 1;
+	
+	List<NameSuper> session_nameSupers = new ArrayList<NameSuper>();
+	List<Team> session_team = new ArrayList<Team>();
+	List<Player> session_player = new ArrayList<Player>();
 	
 	List<Scene> scene = new ArrayList<Scene>();
 	List<Auction> auction_file = new ArrayList<Auction>();
@@ -169,6 +175,8 @@ public class IndexController
 				break;	
 			}
 			
+			getDataFromDB();
+			
 			session_Configurations = new Configurations(selectedMatch, select_broadcaster, vizIPAddresss, vizPortNumber);
 			
 			JAXBContext.newInstance(Configurations.class).createMarshaller().marshal(session_Configurations, 
@@ -204,21 +212,9 @@ public class IndexController
 	{
 		
 		switch (whatToProcess.toUpperCase()) {
-		case "PLAYERPROFILE_GRAPHICS-OPTIONS": 
-			switch (session_selected_broadcaster.toUpperCase()) {
-			case "HANDBALL": case "ISPL": case "ISPL_VIZ":
-				return JSONArray.fromObject(auctionService.getAllPlayer()).toString();
-			}
-		case "SQUAD_GRAPHICS-OPTIONS": case "SINGLE_PURSE_GRAPHICS-OPTIONS": case "TOP-SOLD_TEAM_GRAPHICS-OPTIONS":
-			switch (session_selected_broadcaster.toUpperCase()) {
-			case "HANDBALL": case "ISPL": case "ISPL_VIZ":
-				return JSONArray.fromObject(auctionService.getTeams()).toString();
-			}
-		case "NAMESUPER_GRAPHICS-OPTIONS": 
-			switch (session_selected_broadcaster.toUpperCase()) {
-			case "ISPL_VIZ":
-				return JSONArray.fromObject(auctionService.getNameSupers()).toString();
-			}
+		case "RE_READ_DATA":
+			getDataFromDB();
+			return JSONObject.fromObject(session_auction).toString();
 		case "READ-MATCH-AND-POPULATE":
 			session_auction = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON), Auction.class);
 			session_curr_bid = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON), Auction.class);
@@ -235,6 +231,9 @@ public class IndexController
 			return JSONObject.fromObject(session_auction).toString();
 		
 		default:
+			if(whatToProcess.contains("_GRAPHICS-OPTIONS")) {
+				return JSONArray.fromObject(GetSpecificDataList(whatToProcess)).toString();
+			}
 			switch (session_selected_broadcaster.toUpperCase()) {
 			case "HANDBALL": case "ISPL": 
 				this_doad.ProcessGraphicOption(whatToProcess, session_auction, auctionService, print_writer, session_selected_scenes, valueToProcess);
@@ -244,5 +243,25 @@ public class IndexController
 			}
 			return JSONObject.fromObject(session_auction).toString();
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> List<T> GetSpecificDataList(String whatToProcess) throws IOException {
+		switch (whatToProcess) {
+		case "NAMESUPER_GRAPHICS-OPTIONS":
+		    return (List<T>) session_nameSupers;
+		case "PLAYERPROFILE_GRAPHICS-OPTIONS": 
+		    return (List<T>) session_player;
+		case "SQUAD_GRAPHICS-OPTIONS": case "SINGLE_PURSE_GRAPHICS-OPTIONS": case "TOP-SOLD_TEAM_GRAPHICS-OPTIONS": 
+		    return (List<T>) session_team;
+		}
+	    return null;
+	}
+
+	public void getDataFromDB()
+	{
+		session_nameSupers = auctionService.getNameSupers();
+		session_team = auctionService.getTeams();
+		session_player = auctionService.getAllPlayer();
 	}
 }

@@ -17,8 +17,14 @@
   <link rel="stylesheet" href="<c:url value="/webjars/bootstrap/5.1.3/css/bootstrap.min.css"/>"/>  
   <link href="<c:url value="/webjars/font-awesome/6.0.0/css/all.css"/>" rel="stylesheet">
   <script type="text/javascript">
-  $(document).on("keypress", function(e){
-		processUserSelectionData('LOGGER_FORM_KEYPRESS',e.which);
+  $(document).on("keydown", function(e){
+	  if(e.altKey && e.key === 'r'){
+   		  e.preventDefault()
+   		  processUserSelectionData('LOGGER_FORM_KEYPRESS','RE_READ');
+   	  }else{
+   		processUserSelectionData('LOGGER_FORM_KEYPRESS',e.which); 
+   	  }
+		
   });
  	setInterval(() => {
  		processAuctionProcedures('READ-MATCH-AND-POPULATE');		
