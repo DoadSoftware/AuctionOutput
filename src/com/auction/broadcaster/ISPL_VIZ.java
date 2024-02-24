@@ -255,9 +255,7 @@ public class ISPL_VIZ extends Scene{
 			}
 			
 			if(data.isBid_Start_or_not()) {
-				
 				print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side1$txt_Price*GEOM*TEXT SET "+ AuctionFunctions.ConvertToLakh(auction.getPlayers().get(playerId-1).getSoldForPoints()) + "\0");
-//				print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side1$txt_Price*GEOM*TEXT SET "+ AuctionFunctions.ConvertToLakh(auction.getPlayers().get(auction.getPlayers().size()-1).getSoldForPoints()) + "\0");
 			}
 			
 			if(data.isPlayer_sold_or_unsold() == false) {
@@ -305,7 +303,8 @@ public class ISPL_VIZ extends Scene{
 			
 		}
 		if(is_this_updating == false) {
-			print_writer.println("-1 RENDERER PREVIEW SCENE*" + viz_scene + " C:/Temp/Preview.png Anim_Graphics$Anim_All$In 0.500  Anim_Graphics$Anim_PlayerInfo$In 1.200 Anim_Graphics$Anim_BasePrice$In 1.200 \0");
+			print_writer.println("-1 RENDERER PREVIEW SCENE*" + viz_scene + " C:/Temp/Preview.png Anim_Graphics$Anim_All 0.500 Anim_Graphics$Anim_All$In 0.500 "
+					+ "Anim_Graphics$Anim_PlayerInfo 1.200 Anim_Graphics$Anim_PlayerInfo$In 1.200 Anim_Graphics$Anim_BasePrice 1.200 Anim_Graphics$Anim_BasePrice$In 1.200 \0");
 		}
 		
 	}
