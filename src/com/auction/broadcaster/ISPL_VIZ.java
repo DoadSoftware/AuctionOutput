@@ -48,15 +48,15 @@ public class ISPL_VIZ extends Scene{
 		this.status = status;
 	}
 	
-	public Data updateData(Scene scene, Auction auction,AuctionService auctionService, PrintWriter print_writer) throws InterruptedException
+	public Data updateData(Scene scene, Auction auction, Auction session_curr_bid,AuctionService auctionService, PrintWriter print_writer) throws InterruptedException
 	{
 		if(which_graphics_onscreen.equalsIgnoreCase("PLAYERPROFILE")) {
-			populatePlayerProfile(true,print_writer, "", data.getPlayer_id(),auctionService.getAllStats(),auction,auctionService, session_selected_broadcaster);
+			populatePlayerProfile(true,print_writer, "", data.getPlayer_id(),auctionService.getAllStats(),auction, session_curr_bid,auctionService, session_selected_broadcaster);
 		}
 		return data;
 	}
 	
-	public Object ProcessGraphicOption(String whatToProcess, Auction auction, AuctionService auctionService,
+	public Object ProcessGraphicOption(String whatToProcess, Auction auction, Auction session_curr_bid, AuctionService auctionService,
 			PrintWriter print_writer, List<Scene> scenes, String valueToProcess) throws InterruptedException, NumberFormatException, IllegalAccessException {
 		switch (whatToProcess.toUpperCase()) {
 		case "POPULATE-FF-PLAYERPROFILE": case "POPULATE-SQUAD": case "POPULATE-REMAINING_PURSE_ALL": case "POPULATE-SINGLE_PURSE": case "POPULATE-TOP_SOLD":
@@ -94,7 +94,7 @@ public class ISPL_VIZ extends Scene{
 					data.setPlayer_id(Integer.valueOf(valueToProcess.split(",")[1]));
 					data.setBid_Start_or_not(false);
 					populatePlayerProfile(false,print_writer,valueToProcess.split(",")[0],Integer.valueOf(valueToProcess.split(",")[1]),
-							auctionService.getAllStats(),auction,auctionService, session_selected_broadcaster);
+							auctionService.getAllStats(),auction, session_curr_bid,auctionService, session_selected_broadcaster);
 					break;
 				case "POPULATE-REMAINING_PURSE_ALL":
 					populateRemainingPurse(print_writer, valueToProcess.split(",")[0], auction,auctionService, session_selected_broadcaster);
@@ -239,23 +239,20 @@ public class ISPL_VIZ extends Scene{
 		}
 		print_writer.println("-1 RENDERER PREVIEW SCENE*" + viz_scene + " C:/Temp/Preview.png In 1.300 \0");
 	}
-	public void populatePlayerProfile(boolean is_this_updating,PrintWriter print_writer,String viz_scene, int playerId,List<Statistics> stats, Auction auction,AuctionService auctionService, String session_selected_broadcaster) throws InterruptedException 
+	public void populatePlayerProfile(boolean is_this_updating,PrintWriter print_writer,String viz_scene, int playerId,List<Statistics> stats, Auction auction, Auction session_curr_bid,AuctionService auctionService, String session_selected_broadcaster) throws InterruptedException 
 	{
-		if(auction.getPlayers() != null && auction.getPlayers().size() > 0) {
+		if(session_curr_bid.getCurrentPlayers() != null) {
 			if(data.isBid_Start_or_not() == false) {
-				for(int i=auction.getPlayers().size()-1; i >= 0; i--) {
-					if(playerId == auction.getPlayers().get(i).getPlayerId()) {
-						if(auction.getPlayers().get(i).getSoldForPoints() > 300000) {
-							print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Anim_CurrentBid START \0");
-							data.setBid_Start_or_not(true);
-						}
-						break;
+				if(playerId == session_curr_bid.getCurrentPlayers().getPlayerId()) {
+					if(session_curr_bid.getCurrentPlayers().getSoldForPoints() > 300000) {
+						print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Anim_CurrentBid START \0");
+						data.setBid_Start_or_not(true);
 					}
 				}
 			}
 			
 			if(data.isBid_Start_or_not()) {
-				print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side1$txt_Price*GEOM*TEXT SET "+ AuctionFunctions.ConvertToLakh(auction.getPlayers().get(playerId-1).getSoldForPoints()) + "\0");
+				print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side1$txt_Price*GEOM*TEXT SET "+ AuctionFunctions.ConvertToLakh(session_curr_bid.getCurrentPlayers().getSoldForPoints()) + "\0");
 			}
 			
 			if(data.isPlayer_sold_or_unsold() == false) {
@@ -264,7 +261,7 @@ public class ISPL_VIZ extends Scene{
 						if(auction.getPlayers().get(i).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD)) {
 							print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_BasePrice$Side2$txt_Unit*GEOM*TEXT SET "+ "" + "\0");
 							print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_BasePrice$Side2$txt_Price*GEOM*TEXT SET "+ auctionService.getTeams().get(auction.getPlayers().get(i).getTeamId() - 1).getTeamName4() + "\0");
-							print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side2$txt_Price*GEOM*TEXT SET "+ AuctionFunctions.ConvertToLakh(auction.getPlayers().get(playerId-1).getSoldForPoints())  + "\0");
+							print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side2$txt_Price*GEOM*TEXT SET "+ AuctionFunctions.ConvertToLakh(auction.getPlayers().get(i).getSoldForPoints())  + "\0");
 							print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side2$txt_Header*GEOM*TEXT SET "+ "SOLD FOR" + "\0");
 							print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Change$BasePrice START \0");
 							print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Change$CurrentBid START \0");
@@ -303,6 +300,10 @@ public class ISPL_VIZ extends Scene{
 			
 		}
 		if(is_this_updating == false) {
+//			print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Anim_All SHOW 0.0 \0");
+//			print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Anim_PlayerInfo SHOW 0.0 \0");
+//			print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Anim_BasePrice SHOW 0.0 \0");
+			print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Anim_Graphics SHOW 0.0 \0");
 			print_writer.println("-1 RENDERER PREVIEW SCENE*" + viz_scene + " C:/Temp/Preview.png Anim_Graphics$Anim_All 0.500 Anim_Graphics$Anim_All$In 0.500 "
 					+ "Anim_Graphics$Anim_PlayerInfo 1.200 Anim_Graphics$Anim_PlayerInfo$In 1.200 Anim_Graphics$Anim_BasePrice 1.200 Anim_Graphics$Anim_BasePrice$In 1.200 \0");
 		}
@@ -340,7 +341,7 @@ public class ISPL_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*TREE*$Main$BgAll$TeamBadgeGrp$img_TeamLogo*TEXTURE*IMAGE SET "+ logo_path + auction.getTeam().get(team_id-1).getTeamName4() + "\0");
 		print_writer.println("-1 RENDERER*TREE*$Main$OutWipe$img_TeamLogo*TEXTURE*IMAGE SET "+ logo_path + auction.getTeam().get(team_id-1).getTeamName4() + "\0");
 		for(int m=0; m<= top_sold.size() - 1; m++) {
-			if(!top_sold.get(m).getSoldOrUnsold().equalsIgnoreCase("BID")) {
+			if(top_sold.get(m).getSoldOrUnsold().equalsIgnoreCase("SOLD")) {
 				row = row + 1;
 	        	if(row <= 5) {
 	        		print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"*ACTIVE SET 1 \0");
@@ -410,9 +411,7 @@ public class ISPL_VIZ extends Scene{
 		List<Player> top_sold = new ArrayList<Player>();
 		
 		if(auction.getPlayers() != null) {
-			for(Player plyr : auction.getPlayers()) {
-				top_sold.add(plyr);
-			}
+			top_sold = auction.getPlayers();
 		}
 		
 		Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
@@ -427,7 +426,7 @@ public class ISPL_VIZ extends Scene{
 		}
 		
 		for(int m=0; m<= top_sold.size() - 1; m++) {
-			if(!top_sold.get(m).getSoldOrUnsold().equalsIgnoreCase("BID")) {
+			if(top_sold.get(m).getSoldOrUnsold().equalsIgnoreCase("SOLD")) {
 				row = row + 1;
 	        	if(row <= 10) {
 	        		print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"*ACTIVE SET 1 \0");

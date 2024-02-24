@@ -36,6 +36,7 @@ import com.auction.model.NameSuper;
 import com.auction.service.AuctionService;
 import com.auction.util.AuctionFunctions;
 import com.auction.util.AuctionUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -47,6 +48,7 @@ public class IndexController
 	AuctionService auctionService;
 	public static Configurations session_Configurations;
 	public static Auction session_auction;
+	public static Auction session_curr_bid;
 	public static Socket session_socket;
 	public static Doad this_doad;
 	public static ISPL this_ispl;
@@ -92,7 +94,7 @@ public class IndexController
 				@Override
 			    public boolean accept(File pathname) {
 			        String name = pathname.getName().toLowerCase();
-			        return name.endsWith(".xml") && pathname.isFile();
+			        return name.endsWith(".json") && pathname.isFile();
 			    }
 			}));
 			
@@ -171,9 +173,14 @@ public class IndexController
 			
 			JAXBContext.newInstance(Configurations.class).createMarshaller().marshal(session_Configurations, 
 					new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CONFIGURATIONS_DIRECTORY + AuctionUtil.OUTPUT_XML));
-	
-			session_auction = AuctionFunctions.populateMatchVariables(auctionService, (Auction) JAXBContext.newInstance(Auction.class).createUnmarshaller().unmarshal(
-					new File(AuctionUtil.AUCTION_DIRECTORY + selectedMatch)));
+			
+			session_auction = new Auction();
+			session_auction = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON), Auction.class);
+			//session_auction = AuctionFunctions.populateMatchVariables(auctionService, session_auction);
+			
+			session_curr_bid = new Auction();
+			session_curr_bid = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON), Auction.class);
+			
 			Current_File_Name = selectedMatch;
 			
 			model.addAttribute("session_auction", session_auction);
@@ -213,15 +220,15 @@ public class IndexController
 				return JSONArray.fromObject(auctionService.getNameSupers()).toString();
 			}
 		case "READ-MATCH-AND-POPULATE":
+			session_auction = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON), Auction.class);
+			session_curr_bid = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON), Auction.class);
 			
-			session_auction = AuctionFunctions.populateMatchVariables(auctionService, (Auction) JAXBContext.newInstance(Auction.class).createUnmarshaller().unmarshal(
-					new File(AuctionUtil.AUCTION_DIRECTORY + Current_File_Name)));
 			switch (session_selected_broadcaster) {
 			case "HANDBALL": case "ISPL": 
 				this_doad.updateData(session_selected_scenes.get(0), session_auction,auctionService,print_writer);
 				break;
 			case "ISPL_VIZ":
-				this_ispl_viz.updateData(session_selected_scenes.get(0), session_auction,auctionService,print_writer);
+				this_ispl_viz.updateData(session_selected_scenes.get(0), session_auction, session_curr_bid,auctionService,print_writer);
 				break;
 			}
 			
@@ -232,7 +239,7 @@ public class IndexController
 			case "HANDBALL": case "ISPL": 
 				this_doad.ProcessGraphicOption(whatToProcess, session_auction, auctionService, print_writer, session_selected_scenes, valueToProcess);
 			case "ISPL_VIZ":
-				this_ispl_viz.ProcessGraphicOption(whatToProcess, session_auction, auctionService, print_writer, session_selected_scenes, valueToProcess);
+				this_ispl_viz.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
 				break;
 			}
 			return JSONObject.fromObject(session_auction).toString();
