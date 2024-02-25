@@ -6,6 +6,8 @@ public class Data {
 	private boolean player_sold_or_unsold;
 	private boolean bid_Start_or_not;
 	private int player_id;
+	private int whichside = 1;
+	private int previousBid;
 
 	public boolean isData_on_screen() {
 		return data_on_screen;
@@ -37,6 +39,22 @@ public class Data {
 
 	public void setBid_Start_or_not(boolean bid_Start_or_not) {
 		this.bid_Start_or_not = bid_Start_or_not;
+	}
+
+	public int getWhichside() {
+		return whichside;
+	}
+
+	public void setWhichside(int whichside) {
+		this.whichside = whichside;
+	}
+
+	public int getPreviousBid() {
+		return previousBid;
+	}
+
+	public void setPreviousBid(int previousBid) {
+		this.previousBid = previousBid;
 	}
 	
 

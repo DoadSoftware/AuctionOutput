@@ -24,7 +24,7 @@ public class ISPL_VIZ extends Scene{
 	public String session_selected_broadcaster = "ISPL_VIZ";
 	public Data data = new Data();
 	public String which_graphics_onscreen = "BG";
-	public int current_layer = 2;
+	public int current_layer = 2, whichSide = 1;
 
 	private String base_path = "IMAGE*/Default/Essentials/Base";
 	private String text_path = "IMAGE*/Default/Essentials/Text";
@@ -51,7 +51,19 @@ public class ISPL_VIZ extends Scene{
 	public Data updateData(Scene scene, Auction auction, Auction session_curr_bid,AuctionService auctionService, PrintWriter print_writer) throws InterruptedException
 	{
 		if(which_graphics_onscreen.equalsIgnoreCase("PLAYERPROFILE")) {
-			populatePlayerProfile(true,print_writer, "", data.getPlayer_id(),auctionService.getAllStats(),auction, session_curr_bid,auctionService, session_selected_broadcaster);
+			populatePlayerProfile(true,print_writer, "", data.getPlayer_id(),auctionService.getAllStats(),auction, 
+					session_curr_bid,auctionService, session_selected_broadcaster);
+			
+			
+			if(data.getPreviousBid() < session_curr_bid.getCurrentPlayers().getSoldForPoints()) {
+				BidChangeOn(print_writer, session_curr_bid, data.getWhichside());
+				print_writer.println("-1 RENDERER*STAGE*DIRECTOR*CurrentBid$Info START \0");
+				TimeUnit.MILLISECONDS.sleep(1000);
+				BidChangeOn(print_writer, session_curr_bid, 1);
+				print_writer.println("-1 RENDERER*STAGE*DIRECTOR*CurrentBid$Info SHOW 0.0 \0");
+				
+				data.setPreviousBid(session_curr_bid.getCurrentPlayers().getSoldForPoints());
+			}
 		}
 		return data;
 	}
@@ -124,6 +136,7 @@ public class ISPL_VIZ extends Scene{
 			case "ISPL_VIZ":
 				switch (whatToProcess.toUpperCase()) {
 				case "ANIMATE-IN-CURR_BID":
+					print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side1$txt_Price*GEOM*TEXT SET " + AuctionFunctions.ConvertToLakh(data.getPreviousBid())  + "\0");
 					print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Anim_CurrentBid START \0");
 					data.setBid_Start_or_not(true);
 					break;
@@ -197,6 +210,7 @@ public class ISPL_VIZ extends Scene{
 						print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Anim_PlayerInfo CONTINUE \0");
 						print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Anim_BasePrice CONTINUE \0");
 						which_graphics_onscreen = "";
+						data.setPreviousBid(300000);
 						break;
 					case "SQUAD": case "REMAINING_PURSE_ALL": case "SINGLE_PURSE": case "TOP_SOLD": case "NAMESUPER": case "TOP_SOLD_TEAM": case "IDENT":
 						AnimateOutGraphics(print_writer, whatToProcess.toUpperCase());
@@ -254,15 +268,14 @@ public class ISPL_VIZ extends Scene{
 					}
 				}
 			}
-			
-			if(data.isBid_Start_or_not()) {
-				print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side1$txt_Price*GEOM*TEXT SET "+ AuctionFunctions.ConvertToLakh(session_curr_bid.getCurrentPlayers().getSoldForPoints()) + "\0");
-			}
-			
+//			if(data.isBid_Start_or_not()) {
+//				print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side1$txt_Price*GEOM*TEXT SET "+ AuctionFunctions.ConvertToLakh(session_curr_bid.getCurrentPlayers().getSoldForPoints()) + "\0");
+//			}
 			if(data.isPlayer_sold_or_unsold() == false) {
 				for(int i=auction.getPlayers().size()-1; i >= 0; i--) {
 					if(playerId == auction.getPlayers().get(i).getPlayerId()) {
 						if(auction.getPlayers().get(i).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD)) {
+							print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side2$Img_Text1*TEXTURE*IMAGE SET " + text_path + "2/" + "GREEN" + "\0");
 							print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_BasePrice$Side2$txt_Unit*GEOM*TEXT SET "+ "" + "\0");
 							print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_BasePrice$Side2$txt_Price*GEOM*TEXT SET "+ auctionService.getTeams().get(auction.getPlayers().get(i).getTeamId() - 1).getTeamName4() + "\0");
 							print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side2$txt_Price*GEOM*TEXT SET "+ AuctionFunctions.ConvertToLakh(auction.getPlayers().get(i).getSoldForPoints())  + "\0");
@@ -596,9 +609,22 @@ public class ISPL_VIZ extends Scene{
 					print_writer.println("-1 RENDERER*TREE*$Main$Data$Row"+row+"$HighLight$NameAll$img_Base2*TEXTURE*IMAGE SET "+ base_path + "2/" + auctionService.getTeams().get(team_id - 1).getTeamName4() + "\0");
 					print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"$HighLight$txt_FirstName*GEOM*TEXT SET "+ auctionService.getAllPlayer().get( match.getPlayers().get(j).getPlayerId()-1).getFirstname() + "\0");
 					if(auctionService.getAllPlayer().get( match.getPlayers().get(j).getPlayerId()-1).getSurname()!=null) {
-						print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"$HighLight$txt_LastName*GEOM*TEXT SET "+ auctionService.getAllPlayer().get( match.getPlayers().get(j).getPlayerId()-1).getSurname() + "\0");
+						if(auctionService.getAllPlayer().get( match.getPlayers().get(j).getPlayerId()-1).getCategory().equalsIgnoreCase("U19")) {
+							print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"$HighLight$txt_LastName*GEOM*TEXT SET "+ auctionService.getAllPlayer().get( match.getPlayers().get(j).getPlayerId()-1).getSurname()+" - "+auctionService.getAllPlayer().get( match.getPlayers().get(j).getPlayerId()-1).getCategory().toUpperCase() + "\0");
+							
+						}else {
+							print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"$HighLight$txt_LastName*GEOM*TEXT SET "+ auctionService.getAllPlayer().get( match.getPlayers().get(j).getPlayerId()-1).getSurname()
+									+" - "+auctionService.getAllPlayer().get( match.getPlayers().get(j).getPlayerId()-1).getCategory().charAt(0) +"Z" + "\0");
+						}
+
 					}else {
-						print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"$HighLight$txt_LastName*GEOM*TEXT SET "+ "" + "\0");
+						if(auctionService.getAllPlayer().get( match.getPlayers().get(j).getPlayerId()-1).getCategory().equalsIgnoreCase("U19")) {
+							print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"$HighLight$txt_LastName*GEOM*TEXT SET "+" - "+auctionService.getAllPlayer().get( match.getPlayers().get(j).getPlayerId()-1).getCategory().toUpperCase() + "\0");
+							
+						}else {
+							print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"$HighLight$txt_LastName*GEOM*TEXT SET "+" - "+auctionService.getAllPlayer().get( match.getPlayers().get(j).getPlayerId()-1).getCategory().charAt(0) +"Z" + "\0");
+						}
+						//print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"$HighLight$txt_LastName*GEOM*TEXT SET "+ " - "+ auctionService.getAllPlayer().get( match.getPlayers().get(j).getPlayerId()-1).getCategory().substring(0, 3).toUpperCase() + "\0");
 					}
 					
 					
@@ -649,6 +675,14 @@ public class ISPL_VIZ extends Scene{
 		print_writer.println("-1 RENDERER PREVIEW SCENE*" + viz_scene + " C:/Temp/Preview.png In 2.900 \0");
 	}
 	
+	public void BidChangeOn(PrintWriter print_writer, Auction session_curr_bid, int whichSide) {
+		if(data.isBid_Start_or_not()) {
+			print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side" + whichSide + "$txt_Price*GEOM*TEXT SET "+ 
+					AuctionFunctions.ConvertToLakh(session_curr_bid.getCurrentPlayers().getSoldForPoints()) + "\0");
+			print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side" + whichSide + "$Img_Text1*TEXTURE*IMAGE SET " + text_path + "1/" + "ISPL" + "\0");
+		}
+	}
+	
 	public void AnimateInGraphics(PrintWriter print_writer, String whichGraphic) throws InterruptedException
 	{
 		
@@ -676,5 +710,6 @@ public class ISPL_VIZ extends Scene{
 	public String toString() {
 		return "Doad [status=" + status + ", slashOrDash=" + slashOrDash + "]";
 	}
+	
 	
 }

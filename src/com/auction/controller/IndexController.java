@@ -69,9 +69,7 @@ public class IndexController
 	List<Scene> scene = new ArrayList<Scene>();
 	List<Auction> auction_file = new ArrayList<Auction>();
 	List<Scene> session_selected_scenes = new ArrayList<Scene>();
-	Data infobar = new Data();
-	
-	
+	Data data = new Data();
 	Auction auc = new Auction();
 	
 	int whichInning,player_id,team_id,session_port;
@@ -143,7 +141,7 @@ public class IndexController
 			session_port =  vizPortNumber;
 			session_selected_ip = vizIPAddresss;
 			
-			infobar = new Data();
+			data = new Data();
 			this_doad = new Doad();
 			this_ispl = new ISPL();
 			this_ispl_viz = new ISPL_VIZ();
@@ -220,11 +218,15 @@ public class IndexController
 			session_curr_bid = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON), Auction.class);
 			
 			switch (session_selected_broadcaster) {
-			case "HANDBALL": case "ISPL": 
+			case "HANDBALL": case "ISPL":
 				this_doad.updateData(session_selected_scenes.get(0), session_auction,auctionService,print_writer);
 				break;
 			case "ISPL_VIZ":
-				this_ispl_viz.updateData(session_selected_scenes.get(0), session_auction, session_curr_bid,auctionService,print_writer);
+				if(this_ispl_viz.data.isBid_Start_or_not() == true) {
+					this_ispl_viz.data.setWhichside(2);
+				}
+				this_ispl_viz.updateData(session_selected_scenes.get(0), session_auction,
+						session_curr_bid,auctionService,print_writer);
 				break;
 			}
 			
