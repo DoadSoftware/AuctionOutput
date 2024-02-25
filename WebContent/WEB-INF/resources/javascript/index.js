@@ -308,9 +308,12 @@ function processAuctionProcedures(whatToProcess)
 			case 'POPULATE-FF-PLAYERPROFILE': case 'POPULATE-SQUAD': case 'POPULATE-REMAINING_PURSE_ALL': case 'POPULATE-SINGLE_PURSE': case 'POPULATE-TOP_SOLD':
 			case 'POPULATE-L3-NAMESUPER': case 'POPULATE-TOP_SOLD_TEAM': case 'POPULATE-IDENT': case 'POPULATE-CURR_BID':
 				if(confirm('Animate In?') == true){
-					$('#select_graphic_options_div').empty();
-					document.getElementById('select_graphic_options_div').style.display = 'none';
-					$("#captions_div").show();
+					if(whatToProcess != 'POPULATE-FF-PLAYERPROFILE' && whatToProcess != 'POPULATE-CURR_BID'){
+						$('#select_graphic_options_div').empty();
+						document.getElementById('select_graphic_options_div').style.display = 'none';
+						$("#captions_div").show();	
+					}
+					
 					
 		        	switch(whatToProcess) {
 					case 'POPULATE-CURR_BID':
@@ -409,9 +412,14 @@ function addItemsToList(whatToProcess, dataToProcess)
 	
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ':
-
+ 			
+ 			/*if(whatToProcess != 'PLAYERPROFILE-OPTIONS'){
+				$("#select_graphic_options_div").empty();
+				document.getElementById('select_graphic_options_div').style.display = 'none';
+				$("#captions_div").show();
+			}*/
+			
 			$('#select_graphic_options_div').empty();
-	
 			header_text = document.createElement('h6');
 			header_text.innerHTML = 'Select Graphic Options';
 			document.getElementById('select_graphic_options_div').appendChild(header_text);
@@ -559,14 +567,14 @@ function addItemsToList(whatToProcess, dataToProcess)
 						$(select).select2();
 						cellCount = cellCount + 1;
 						
-						option = document.createElement('input');
+						/*option = document.createElement('input');
 		    			option.type = 'button';
 		    			option.name = 'curr_bid_section';
 			    		option.value = 'Populate Current bid';
 			    		option.id = option.name;
 					    option.setAttribute('onclick',"processUserSelection(this)");
 					    row.insertCell(cellCount).appendChild(option);
-					    cellCount = cellCount + 1;
+					    cellCount = cellCount + 1;*/
 						
 						break;
 				} 
@@ -609,6 +617,20 @@ function addItemsToList(whatToProcess, dataToProcess)
 		    
 		    div = document.createElement('div');
 		    div.append(option);
+		    	switch (whatToProcess) {
+					case'PLAYERPROFILE-OPTIONS':
+						
+						option = document.createElement('input');
+		    			option.type = 'button';
+		    			option.name = 'curr_bid_section';
+			    		option.value = 'Populate Current bid';
+			    		option.id = option.name;
+					    option.setAttribute('onclick',"processUserSelection(this)");
+					    
+		    			div.append(option);
+					   
+						break;
+				} 
 
 			option = document.createElement('input');
 			option.type = 'button';
