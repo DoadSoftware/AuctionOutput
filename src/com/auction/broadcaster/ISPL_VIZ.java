@@ -274,12 +274,20 @@ public class ISPL_VIZ extends Scene{
 			if(data.isPlayer_sold_or_unsold() == false) {
 				for(int i=auction.getPlayers().size()-1; i >= 0; i--) {
 					if(playerId == auction.getPlayers().get(i).getPlayerId()) {
-						if(auction.getPlayers().get(i).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD)) {
+						if(auction.getPlayers().get(i).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD) || auction.getPlayers().get(i).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)) {
 							print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side2$Img_Text1*TEXTURE*IMAGE SET " + text_path + "2/" + "GREEN" + "\0");
 							print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_BasePrice$Side2$txt_Unit*GEOM*TEXT SET "+ "" + "\0");
 							print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_BasePrice$Side2$txt_Price*GEOM*TEXT SET "+ auctionService.getTeams().get(auction.getPlayers().get(i).getTeamId() - 1).getTeamName4() + "\0");
 							print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side2$txt_Price*GEOM*TEXT SET "+ AuctionFunctions.ConvertToLakh(auction.getPlayers().get(i).getSoldForPoints())  + "\0");
+							
 							print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_CurrentBid$Side2$txt_Header*GEOM*TEXT SET "+ "SOLD FOR" + "\0");
+							
+							if(auction.getPlayers().get(i).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD)) {
+								print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_BasePrice$Side2$txt_Header*GEOM*TEXT SET "+ "SOLD TO" + "\0");
+							}else if(auction.getPlayers().get(i).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)) {
+								print_writer.println("-1 RENDERER*TREE*$Gfx$Gfx_BasePrice$Side2$txt_Header*GEOM*TEXT SET "+ "RTM TO" + "\0");
+							}
+							
 							print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Change$BasePrice START \0");
 							print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Change$CurrentBid START \0");
 							if(data.isBid_Start_or_not() == false) {
