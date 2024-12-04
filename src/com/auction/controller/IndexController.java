@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.auction.broadcaster.Doad;
 import com.auction.broadcaster.ISPL;
 import com.auction.broadcaster.ISPL_VIZ;
+import com.auction.broadcaster.VIZ_ISPL_2024;
 import com.auction.containers.Configurations;
 import com.auction.containers.Data;
 import com.auction.containers.Scene;
@@ -55,6 +56,7 @@ public class IndexController
 	public static Doad this_doad;
 	public static ISPL this_ispl;
 	public static ISPL_VIZ this_ispl_viz;
+	public static VIZ_ISPL_2024 this_ispl_viz_2024;
 	public static PrintWriter print_writer;
 	public static String expiry_date = "2024-12-31";
 	public static String error_message = "";
@@ -66,7 +68,7 @@ public class IndexController
 	List<Team> session_team = new ArrayList<Team>();
 	List<Player> session_player = new ArrayList<Player>();
 	
-	List<Scene> scene = new ArrayList<Scene>();
+	public static Scene scene = new Scene();
 	List<Auction> auction_file = new ArrayList<Auction>();
 	List<Scene> session_selected_scenes = new ArrayList<Scene>();
 	Data data = new Data();
@@ -145,6 +147,7 @@ public class IndexController
 			this_doad = new Doad();
 			this_ispl = new ISPL();
 			this_ispl_viz = new ISPL_VIZ();
+			this_ispl_viz_2024 = new VIZ_ISPL_2024();
 			session_selected_broadcaster = select_broadcaster;
 			selected_layer = which_layer;
 			selected_scene = which_scene;
@@ -170,7 +173,12 @@ public class IndexController
 //				print_writer.println("LAYER3*EVEREST*STAGE*DIRECTOR*In START;");
 //				print_writer.println("LAYER3*EVEREST*STAGE*DIRECTOR*Loop START;");
 				this_doad.which_graphics_onscreen = "BG";
-				break;	
+				break;
+			case "VIZ_ISPL_2024":
+				scene.LoadScene("OVERLAYS", print_writer, session_Configurations);
+//				scene.LoadScene("LINEUP", print_writer, session_Configurations);
+//				scene.LoadScene("FULL-FRAMERS", print_writer, session_Configurations);
+				break;
 			}
 			
 			getDataFromDB();
@@ -215,6 +223,7 @@ public class IndexController
 			return JSONObject.fromObject(session_auction).toString();
 		case "READ-MATCH-AND-POPULATE":
 			session_auction = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON), Auction.class);
+			session_auction = AuctionFunctions.populateMatchVariables(auctionService, session_auction);
 			session_curr_bid = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON), Auction.class);
 			
 			switch (session_selected_broadcaster) {
@@ -228,6 +237,13 @@ public class IndexController
 				this_ispl_viz.updateData(session_selected_scenes.get(0), session_auction,
 						session_curr_bid,auctionService,print_writer);
 				break;
+			case "VIZ_ISPL_2024":
+				if(this_ispl_viz_2024.data.isBid_Start_or_not() == true) {
+					this_ispl_viz_2024.data.setWhichside(2);
+				}
+				this_ispl_viz_2024.updateData(session_auction,session_curr_bid,auctionService,print_writer);
+				break;
+				
 			}
 			
 			return JSONObject.fromObject(session_auction).toString();
@@ -242,6 +258,10 @@ public class IndexController
 			case "ISPL_VIZ":
 				this_ispl_viz.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
 				break;
+			case "VIZ_ISPL_2024":
+				this_ispl_viz_2024.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
+				break;
+				
 			}
 			return JSONObject.fromObject(session_auction).toString();
 		}

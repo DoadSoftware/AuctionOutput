@@ -4,7 +4,8 @@ public class Data {
 	
 	private boolean data_on_screen;
 	private boolean player_sold_or_unsold;
-	private boolean bid_Start_or_not;
+	private boolean bid_Start_or_not = false;
+	private String bid_result;
 	private int player_id;
 	private int whichside = 1;
 	private int previousBid;
@@ -56,6 +57,13 @@ public class Data {
 	public void setPreviousBid(int previousBid) {
 		this.previousBid = previousBid;
 	}
-	
+
+	public String getBid_result() {
+		return bid_result;
+	}
+
+	public void setBid_result(String bid_result) {
+		this.bid_result = bid_result;
+	}
 
 }

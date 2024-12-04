@@ -98,4 +98,24 @@ public class Scene {
 			break;
 		}
 	}
+	public void LoadScene(String whatToProcess, PrintWriter print_writer, Configurations config) throws InterruptedException
+	{
+		print_writer.println("-1 SCENE CLEANUP\0");
+		print_writer.println("-1 IMAGE CLEANUP\0");
+		print_writer.println("-1 GEOM CLEANUP\0");
+		print_writer.println("-1 FONT CLEANUP\0");
+		print_writer.println("-1 IMAGE INFO\0");
+		
+		switch (config.getBroadcaster().toUpperCase()) {
+		case "VIZ_ISPL_2024":
+			switch (whatToProcess) {
+			case "OVERLAYS":
+				print_writer.println("-1 RENDERER*FRONT_LAYER SET_OBJECT SCENE*/Default/Overlays \0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*SCENE_DATA INITIALIZE \0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE SHOW 0.0 \0");
+				break;
+			}
+			break;
+		}
+	}
 }
