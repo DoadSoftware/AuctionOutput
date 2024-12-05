@@ -70,6 +70,15 @@
 			  		name="namesuper_graphic_btn" id="namesuper_graphic_btn" onclick="processUserSelection(this)"> Name Super </button>
 			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
 			  		name="ident_graphic_btn" id="ident_graphic_btn" onclick="processUserSelection(this)"> Ident </button>
+			  		
+			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="rtm_available_graphic_btn" id="rtm_available_graphic_btn" onclick="processUserSelection(this)"> RTM Available </button>
+			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="rtm_enabled_graphic_btn" id="rtm_enabled_graphic_btn" onclick="processUserSelection(this)"> RTM Enabled </button>
+			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="googly_power_graphic_btn" id="googly_power_graphic_btn" onclick="processUserSelection(this)"> Googly Power </button>
+			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="profile_stats_graphic_btn" id="profile_stats_graphic_btn" onclick="processUserSelection(this)"> Profile stats </button>
 			  	
 			  	</div>
 			   
@@ -95,6 +104,8 @@
 			  	<div class="left">
 			  	<button style="background-color:#f44336;color:#FEFEFE;" class="btn btn-sm" type="button"
 			  		name="animateout_graphic_btn" id="animateout_graphic_btn" onclick="processUserSelection(this)"> AnimateOut </button>
+			  	<button style="background-color:#f44336;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="animateout_profile_stat_graphic_btn" id="animateout_profile_stat_graphic_btn" onclick="processUserSelection(this)"> Animate out Stats </button>
 			  	<button style="background-color:#f44336;color:#FEFEFE;" class="btn btn-sm" type="button"
 			  		name="clearall_graphic_btn" id="clearall_graphic_btn" onclick="processUserSelection(this)"> Clear All </button>
 			  </div>
