@@ -44,7 +44,7 @@ function initialiseForm(whatToProcess,dataToProcess)
 		processUserSelection($('#select_broadcaster'));
 		break;
 	case 'UPDATE-MATCH-ON-OUTPUT-FORM':
-	
+		
 		break;
 	}
 }
@@ -83,6 +83,7 @@ function processUserSelection(whichInput)
 		break;
 	case 'playerprofile_graphic_btn': case 'squad_graphic_btn': case 'remaining_purse_single_graphic_btn': case 'namesuper_graphic_btn': case 'top_sold_team_graphic_btn':
 	case 'googly_power_graphic_btn': case 'profile_stats_graphic_btn': case 'lof_remaining_purse_graphic_btn': case 'lof_top_sold_team_graphic_btn':
+	case 'squad_Player_graphic_btn':
 	
 		$("#captions_div").hide();
 		$("#cancel_match_setup_btn").hide();
@@ -117,12 +118,15 @@ function processUserSelection(whichInput)
 		case 'lof_top_sold_team_graphic_btn':
 			processAuctionProcedures('LOF_TOP_SOLD_TEAM_GRAPHICS-OPTIONS');
 			break;
+		case 'squad_Player_graphic_btn':
+			processAuctionProcedures('SQUAD_PLAYER_GRAPHICS-OPTIONS');
+			break;
 		}
 		break;
 		
 	case 'populate_namesuper_btn': case 'populate_namesuper_player_btn': case 'populate_playerprofile_btn':	case 'populate_squad_btn': case 'populate_Top_Sold_btn':
 	case 'populate_single_purse_btn': case 'curr_bid_section': case 'populate_googly_purse_btn': case 'populate_profile_stats_btn': case 'populate_single_purse_btn': 
-	case 'curr_bid_section': case 'populate_lof_remaining_purse_btn': case 'populate_Lof_Top_Sold_team_btn':
+	case 'curr_bid_section': case 'populate_lof_remaining_purse_btn': case 'populate_Lof_Top_Sold_team_btn': case "populate_squad_Player_btn":
 		processWaitingButtonSpinner('START_WAIT_TIMER');
 		switch ($(whichInput).attr('name')) {
 		case 'curr_bid_section':
@@ -151,11 +155,15 @@ function processUserSelection(whichInput)
 			break;
 		case 'populate_profile_stats_btn':
 			processAuctionProcedures('POPULATE-PROFILE_STATS');
+			break;
 		case 'populate_lof_remaining_purse_btn':
 			processAuctionProcedures('POPULATE-LOF_REMAINING_PURSE');
 			break;
 		case 'populate_Lof_Top_Sold_team_btn':
 			processAuctionProcedures('POPULATE-LOF_TEAM_TOP_SOLD');
+			break;
+		case "populate_squad_Player_btn":
+			processAuctionProcedures('POPULATE-SQUAD-PLAYER');
 			break;
 		}
 		break;
@@ -267,6 +275,13 @@ function processAuctionProcedures(whatToProcess)
 			break;	
 		}
 		break;
+	case "POPULATE-SQUAD-PLAYER":
+		switch ($('#selected_broadcaster').val().toUpperCase()) {	
+		case 'VIZ_ISPL_2024': 
+			valueToProcess = $('#selectTeamName option:selected').val();
+			break;
+		}
+		break;
 		
 	case 'POPULATE-TOP_SOLD_TEAM':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
@@ -334,6 +349,7 @@ function processAuctionProcedures(whatToProcess)
 			
         	switch(whatToProcess) {
 			case 'READ-MATCH-AND-POPULATE': case 'RE_READ_DATA':
+				session_auction = data;
 				if(data){
 					//alert("match = " + $('#matchFileTimeStamp').val() + "Data = "+ data.matchFileTimeStamp)
 					if($('#matchFileTimeStamp').val() != data.matchFileTimeStamp) {
@@ -345,6 +361,11 @@ function processAuctionProcedures(whatToProcess)
 				if(whatToProcess == 'RE_READ_DATA'){
 					alert('Data is Loaded');
 				}
+				break;
+			case "SQUAD_PLAYER_GRAPHICS-OPTIONS":
+				addItemsToList('SQUAD_PLAYER-OPTIONS',data);
+				addItemsToList('POPULATE-TEAM',data);
+				match_data = data;
 				break;
 			case 'NAMESUPER_GRAPHICS-OPTIONS':
 				addItemsToList('NAMESUPER-OPTIONS',data);
@@ -390,25 +411,25 @@ function processAuctionProcedures(whatToProcess)
 			case 'POPULATE-FF-PLAYERPROFILE': case 'POPULATE-SQUAD': case 'POPULATE-REMAINING_PURSE_ALL': case 'POPULATE-SINGLE_PURSE': case 'POPULATE-TOP_SOLD':
 			case 'POPULATE-L3-NAMESUPER': case 'POPULATE-TOP_SOLD_TEAM': case 'POPULATE-IDENT': case 'POPULATE-CURR_BID': case 'POPULATE-RTM_AVAILABLE':
 			case 'POPULATE-RTM_ENABLED': case 'POPULATE-GOOGLY_POWER': case 'POPULATE-PROFILE_STATS': case 'POPULATE-LOF_REMAINING_PURSE':
-			case 'POPULATE-LOF_TOP_SOLD': case 'POPULATE-LOF_TEAM_TOP_SOLD':
+			case 'POPULATE-LOF_TOP_SOLD': case 'POPULATE-LOF_TEAM_TOP_SOLD': case "POPULATE-SQUAD-PLAYER":
 			
-				if(whatToProcess == 'POPULATE-RTM_ENABLED')	{
+				if(whatToProcess == 'POPULATE-RTM_ENABLED' || whatToProcess == 'POPULATE-CURR_BID')	{
 					switch(whatToProcess){
 						case 'POPULATE-RTM_ENABLED':
 							processAuctionProcedures('ANIMATE-IN-RTM_ENABLED');
-						break;
+							break;
+						case 'POPULATE-CURR_BID':
+							processAuctionProcedures('ANIMATE-IN-CURR_BID');
+							break;
 					}
 				}else{
 					if(confirm('Animate In?') == true){
-						if(whatToProcess != 'POPULATE-FF-PLAYERPROFILE' && whatToProcess != 'POPULATE-CURR_BID'){
+						if(whatToProcess != 'POPULATE-FF-PLAYERPROFILE'){
 							$('#select_graphic_options_div').empty();
 							document.getElementById('select_graphic_options_div').style.display = 'none';
 							$("#captions_div").show();	
 						}
 			        	switch(whatToProcess) {
-						case 'POPULATE-CURR_BID':
-							processAuctionProcedures('ANIMATE-IN-CURR_BID');
-							break;
 						case 'POPULATE-IDENT':
 							processAuctionProcedures('ANIMATE-IN-IDENT');
 							break;
@@ -451,6 +472,9 @@ function processAuctionProcedures(whatToProcess)
 						case 'POPULATE-LOF_TEAM_TOP_SOLD':
 							processAuctionProcedures('ANIMATE-IN-LOF_TEAM_TOP_SOLD');				
 							break;
+						case "POPULATE-SQUAD-PLAYER":
+							processAuctionProcedures('ANIMATE-IN-SQUAD-PLAYER');				
+							break;
 						}
 					}
 				}
@@ -483,13 +507,25 @@ function addItemsToList(whatToProcess, dataToProcess)
 		break;
 	case 'POPULATE-PROFILE' :
 		$('#selectPlayerName').empty();
-		
-		dataToProcess.forEach(function(plyr,index,arr1){
-			$('#selectPlayerName').append(
+		session_auction.playersList.forEach(function(plyr,index,arr1){
+			if(plyr.playerId == session_auction.players[session_auction.players.length- 1].playerId){
+				$('#selectPlayerName').append(
 					$(document.createElement('option')).prop({
 					value: plyr.playerId,
 					text: plyr.playerNumber + ' - ' + plyr.full_name + ' - ' + plyr.category + ' - ' + plyr.role
 				}))
+			}
+		});
+		
+		
+		dataToProcess.forEach(function(plyr,index,arr1){
+			if(plyr.playerId != session_auction.players[session_auction.players.length - 1].playerId){
+				$('#selectPlayerName').append(
+					$(document.createElement('option')).prop({
+					value: plyr.playerId,
+					text: plyr.playerNumber + ' - ' + plyr.full_name + ' - ' + plyr.category + ' - ' + plyr.role
+				}))
+			}
 		});
 		
 		break;
@@ -518,7 +554,8 @@ function addItemsToList(whatToProcess, dataToProcess)
 		break;
 		
 	case'NAMESUPER-OPTIONS': case 'NAMESUPER_PLAYER-OPTIONS':  case'PLAYERPROFILE-OPTIONS': case 'SQUAD-OPTIONS': case 'SINGLE_PURSE-OPTIONS': case 'TOP-SOLD_TEAM-OPTIONS':
-	case 'GOOGLY-OPTIONS': case 'PROFILE_STATS-OPTIONS': case 'LOF_REMAINING_PURSE-OPTIONS': case 'LOF_TOP_SOLD_TEAM-OPTIONS':
+	case 'GOOGLY-OPTIONS': case 'PROFILE_STATS-OPTIONS': case 'LOF_REMAINING_PURSE-OPTIONS': case 'LOF_TOP_SOLD_TEAM-OPTIONS': case'SQUAD_PLAYER-OPTIONS':
+
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
  			
@@ -558,7 +595,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 						break;
 					}
 					break;
-				case 'SQUAD-OPTIONS': case 'TOP-SOLD_TEAM-OPTIONS': case 'GOOGLY-OPTIONS': case 'LOF_TOP_SOLD_TEAM-OPTIONS':
+				case 'SQUAD-OPTIONS': case 'TOP-SOLD_TEAM-OPTIONS': case 'GOOGLY-OPTIONS': case 'LOF_TOP_SOLD_TEAM-OPTIONS': case'SQUAD_PLAYER-OPTIONS':
 					switch ($('#selected_broadcaster').val().toUpperCase()) {
 						case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
 							select = document.createElement('select');
@@ -791,7 +828,10 @@ function addItemsToList(whatToProcess, dataToProcess)
 				option.name = 'populate_profile_stats_btn';
 			    option.value = 'Profile Stats';
 				break;
-			
+			case "SQUAD_PLAYER-OPTIONS":
+				option.name = 'populate_squad_Player_btn';
+			    option.value = 'Populate Squad Player';
+				break;
 			}
 		    option.id = option.name;
 		    option.setAttribute('onclick',"processUserSelection(this)");
