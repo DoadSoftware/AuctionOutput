@@ -25,7 +25,7 @@ public class VIZ_ISPL_2024 extends Scene{
 	public String session_selected_broadcaster = "VIZ_ISPL_2024";
 	public Data data = new Data();
 	public String which_graphics_onscreen = "";
-	public int current_layer = 2, whichSide = 1, whichSideNotProfile=1, rowHighlight = 1, prevRowHighlight = 1;
+	public int current_layer = 2, whichSide = 1, whichSideNotProfile=1, rowHighlight = 1,prevRowHighlight = 1,player_ID=0;
 
 	private String base_path = "IMAGE*/Default/Essentials/Base/";
 	private String text_path = "IMAGE*/Default/Essentials/Text/";
@@ -115,8 +115,9 @@ public class VIZ_ISPL_2024 extends Scene{
 					}else {
 						whichSide = 1;
 					}
-					populatePlayerProfileFF(print_writer,whichSide,Integer.valueOf(valueToProcess.split(",")[0]), auctionService.getAllStats(),auction, 
-							auctionService, session_selected_broadcaster);
+					player_ID = Integer.valueOf(valueToProcess.split(",")[0]);
+					populatePlayerProfileFF(print_writer,whichSide,player_ID, auctionService.getAllStats(),auction, auctionService, session_selected_broadcaster);
+					processPreviewFullFrames(print_writer, whatToProcess, whichSide);
 					break;
 					
 				case "POPULATE-REMAINING_PURSE_ALL":
@@ -135,6 +136,7 @@ public class VIZ_ISPL_2024 extends Scene{
 						whichSide = 1;
 					}
 					populateIdent(print_writer,whichSide,session_selected_broadcaster);
+					processPreviewFullFrames(print_writer, whatToProcess, whichSide);
 					break;
 				case "POPULATE-TOP_SOLD_TEAM":
 					populateTopSoldTeam(print_writer, valueToProcess.split(",")[0], Integer.valueOf(valueToProcess.split(",")[1]), auction,auctionService, session_selected_broadcaster);
@@ -301,8 +303,9 @@ public class VIZ_ISPL_2024 extends Scene{
 					
 				case "ANIMATE-IN-IDENT": case "ANIMATE-IN-PLAYERPROFILE_FF":
 					if(which_graphics_onscreen.isEmpty()) {
+						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*StartFlare START \0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Essentials START\0");
-						switch(which_graphics_onscreen) {
+						switch(whatToProcess.toUpperCase()) {
 						case "ANIMATE-IN-IDENT":
 							print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$MatchId START\0");
 							which_graphics_onscreen = "IDENT";
@@ -314,7 +317,18 @@ public class VIZ_ISPL_2024 extends Scene{
 							break;
 						}
 					}else {
-						
+						ChangeOn(print_writer, which_graphics_onscreen, whatToProcess);
+						switch (whatToProcess.toUpperCase()) {
+						case "ANIMATE-IN-IDENT":
+							populateIdent(print_writer,1,session_selected_broadcaster);
+							break;
+						case "ANIMATE-IN-PLAYERPROFILE_FF":
+							populatePlayerProfileFF(print_writer,1,player_ID, auctionService.getAllStats(),auction,auctionService,session_selected_broadcaster);
+							break;
+						}
+						TimeUnit.MILLISECONDS.sleep(2000);
+						cutBack(print_writer, which_graphics_onscreen, whatToProcess);
+						which_graphics_onscreen = whatToProcess.replace("ANIMATE-IN-", "");
 					}
 					break;
 					
@@ -419,6 +433,10 @@ public class VIZ_ISPL_2024 extends Scene{
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*MoveForCatHighlight SHOW 0.0 \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_LOF$RemainingPurse SHOW 0\0");
 					
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe SHOW 0.0 \0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change SHOW 0.0 \0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*StartFlare SHOW 0.0 \0");
+					
 		            which_graphics_onscreen = "";
 		            side2ValueToProcess ="";
 		            whichSideNotProfile = 1;
@@ -462,7 +480,8 @@ public class VIZ_ISPL_2024 extends Scene{
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Googly SHOW 0\0");
 						which_graphics_onscreen = "";
 						break;
-					case "LOF_REMAINING_PURSE": case "LOF_TOP_SOLD": case "SQUAD-PLAYER": case "LOF_TEAM_TOP_SOLD":
+
+					case "LOF_REMAINING_PURSE": case "LOF_TOP_SOLD": case "LOF_TEAM_TOP_SOLD": case "SQUAD-PLAYER":
 						switch (which_graphics_onscreen) {
 						case "LOF_REMAINING_PURSE":
 							print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LOF$In_Out$Main$RemainingPurse CONTINUE \0");
@@ -546,6 +565,13 @@ public class VIZ_ISPL_2024 extends Scene{
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*MoveForCatHighlight$Side1$"+i+" CONTINUE REVERSE\0");
 			}
 			break;
+		case "IDENT":
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Ident START\0");
+			break;
+		case "PLAYERPROFILE_FF":
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Header CONTINUE\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Profile START\0");
+			break;
 		}
 		TimeUnit.MILLISECONDS.sleep(500);
 		switch (whatToProcess.toUpperCase()) {
@@ -577,14 +603,25 @@ public class VIZ_ISPL_2024 extends Scene{
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*MoveForCatHighlight$Side1$"+(i+1)+" START\0");
 				}
 			}
-			
+			break;
+		case "ANIMATE-IN-IDENT":
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Ident START\0");
+			break;
+		case "ANIMATE-IN-PLAYERPROFILE_FF":
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Header START\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Profile START\0");
 			break;
 		}
 	}
 	public void cutBack(PrintWriter print_writer, String whichGraphicOnScreen, String whatToProcess) throws InterruptedException { 
 		
-		print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_LOF$Header SHOW 0\0");
-		print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_LOF$SubHeader SHOW 0\0");
+		switch (which_graphics_onscreen.toUpperCase()) {
+		case "LOF_REMAINING_PURSE": case "LOF_TOP_SOLD": case "LOF_TEAM_TOP_SOLD":
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_LOF$Header SHOW 0\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_LOF$SubHeader SHOW 0\0");
+			break;
+		}
+		
 		switch (whatToProcess.toUpperCase()) {
 		case "ANIMATE-IN-LOF_REMAINING_PURSE":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LOF$In_Out$Main$RemainingPurse SHOW 2.000\0");
@@ -608,6 +645,15 @@ public class VIZ_ISPL_2024 extends Scene{
 				}
 			}
 			break;
+		case "ANIMATE-IN-IDENT":
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$MatchId SHOW 2.480\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Ident SHOW 0.0\0");
+			break;
+		case "ANIMATE-IN-PLAYERPROFILE_FF":
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Header SHOW 2.480\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$Profile SHOW 2.480\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Profile SHOW 0.0\0");
+			break;
 		}
 		switch (which_graphics_onscreen.toUpperCase()) {
 		case "LOF_REMAINING_PURSE":
@@ -629,6 +675,16 @@ public class VIZ_ISPL_2024 extends Scene{
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LOF$In_Out$Main$SquadSize_Category$In SHOW 0\0");
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_LOF$SquadSize_Category SHOW 0\0");
 			}
+			break;
+		
+		case "IDENT":
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$MatchId SHOW 0.0\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Ident SHOW 0.0\0");
+			break;
+		case "PLAYERPROFILE_FF":
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Header SHOW 0.0\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$Profile SHOW 0.0\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Profile SHOW 0.0\0");
 			break;
 		}
 		prevRowHighlight = rowHighlight;
@@ -1844,8 +1900,48 @@ public class VIZ_ISPL_2024 extends Scene{
 				break;
 			}	
 		}
-		print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/Overlays " + "C:/Temp/Preview.jpg "+previewCommand+"\0");
+		print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/Overlays " + "C:/Temp/Preview.jpg " + previewCommand + "\0");
 		
+	}
+	public void processPreviewFullFrames(PrintWriter print_writer, String whatToProcess, int whichSide) {
+		String previewCommand = "";
+		
+		if(whichSide == 1) {
+			switch (whatToProcess.toUpperCase()) {
+			case "POPULATE-IDENT": case "POPULATE-PLAYERPROFILE_FF":
+				previewCommand = "anim_Fullframe$In_Out 2.480 anim_Fullframe$In_Out$Essentials 2.480 anim_Fullframe$In_Out$Essentials$In 1.300 ";
+				switch(whatToProcess.toUpperCase()) {
+				case "POPULATE-IDENT":
+					previewCommand = previewCommand + "anim_Fullframe$In_Out$Main$MatchId 2.480 anim_Fullframe$In_Out$Main$MatchId$In 2.340";
+					break;
+				case "POPULATE-PLAYERPROFILE_FF":
+					previewCommand = previewCommand + "anim_Fullframe$In_Out$Header 2.480 anim_Fullframe$In_Out$Header$In 2.340 "
+							+ "anim_Fullframe$In_Out$Main$Profile 2.480 anim_Fullframe$In_Out$Main$Profile$In 2.180";
+					break;
+				}
+				break;
+			}
+		}else {
+			switch (which_graphics_onscreen.toUpperCase()) {
+			case "IDENT":
+				previewCommand = "Change$Ident 2.340 Change$Ident$Change_Out 0.700 Change$Ident$Change_In 2.340 ";
+				break;
+			case "PLAYERPROFILE_FF":
+				previewCommand = "anim_Fullframe$In_Out$Header 0.0 anim_Fullframe$In_Out$Header$In 0.0 Change$Profile 2.180 "
+						+ "Change$Profile$Change_Out 0.620 Change$Profile$Change_In 2.180 ";
+				break;
+			}
+			switch (whatToProcess.toUpperCase()) {
+			case "POPULATE-IDENT":
+				previewCommand = previewCommand + "Change$Ident 2.340 Change$Ident$Change_Out 0.700 Change$Ident$Change_In 2.340 ";
+				break;
+			case "POPULATE-PLAYERPROFILE_FF":
+				previewCommand = previewCommand + "anim_Fullframe$In_Out$Header 2.480 anim_Fullframe$In_Out$Header$In 2.340 "
+						+ "Change$Profile 2.180 Change$Profile$Change_Out 0.620 Change$Profile$Change_In 2.180 ";
+				break;
+			}
+		}
+		print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/FullFrames " + "C:/Temp/Preview.jpg " + previewCommand + "\0");
 	}
 	
 	public void processAnimation(PrintWriter print_writer, String animationName,String animationCommand, String which_broadcaster,int which_layer)

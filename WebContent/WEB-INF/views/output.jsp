@@ -17,15 +17,76 @@
   <link rel="stylesheet" href="<c:url value="/webjars/bootstrap/5.1.3/css/bootstrap.min.css"/>"/>  
   <link href="<c:url value="/webjars/font-awesome/6.0.0/css/all.css"/>" rel="stylesheet">
   <script type="text/javascript">
-  $(document).on("keydown", function(e){
-	  if(e.altKey && e.key === 'r'){
-   		  e.preventDefault()
-   		  processUserSelectionData('LOGGER_FORM_KEYPRESS','RE_READ');
-   	  }else{
-   		processUserSelectionData('LOGGER_FORM_KEYPRESS',e.which); 
-   	  }
-		
-  });
+	$(document).on("keydown", function(e){
+	  
+	  if($('#waiting_modal').hasClass('show')) {
+		  e.cancelBubble = true;
+		  e.stopImmediatePropagation();
+    	  e.preventDefault();
+		  return false;
+	  }
+	  
+      var evtobj = window.event? event : e;
+      
+      switch(e.target.tagName.toLowerCase())
+      {
+      case "input": case "textarea":
+    	 break;
+      default:
+    	  e.preventDefault();
+	      var whichKey = '';
+		  var validKeyFound = false;
+	    
+	      if(evtobj.ctrlKey) {
+	    	  whichKey = 'Control';
+	      }
+	      if(evtobj.altKey) {
+	    	  if(whichKey) {
+	        	  whichKey = whichKey + '_Alt';
+	    	  } else {
+	        	  whichKey = 'Alt';
+	    	  }
+	      }
+	      if(evtobj.shiftKey) {
+	    	  if(whichKey) {
+	        	  whichKey = whichKey + '_Shift';
+	    	  } else {
+	        	  whichKey = 'Shift';
+	    	  }
+	      }
+	      
+		  if(evtobj.keyCode) {
+	    	  if(whichKey) {
+	    		  if(!whichKey.includes(evtobj.key)) {
+	            	  whichKey = whichKey + '_' + evtobj.key;
+	    		  }
+	    	  } else {
+	        	  whichKey = evtobj.key;
+	    	  }
+		  }
+		  validKeyFound = false;
+		  if (whichKey.includes('_')) {
+			  whichKey.split("_").forEach(function (this_key) {
+				  switch (this_key) {
+				  case 'Control': case 'Shift': case 'Alt':
+					break;
+				  default:
+					validKeyFound = true;
+					break;
+				  }
+			  });
+		   } else {
+			  if(whichKey != 'Control' && whichKey != 'Alt' && whichKey != 'Shift') {
+				  validKeyFound = true;
+			  }
+		   }
+			  
+		   if(validKeyFound == true) {
+			   console.log('whichKey = ' + whichKey);
+			   processUserSelectionData('LOGGER_FORM_KEYPRESS',whichKey);
+		   }
+	      }
+	  });
  	setInterval(() => {
  		processAuctionProcedures('READ-MATCH-AND-POPULATE');		
 	}, 1000);
@@ -54,41 +115,69 @@
 			    <label class="col-sm-4 col-form-label text-left">Port Number: ${session_port} </label>
 			    <label class="col-sm-4 col-form-label text-left">Broadcaster: ${session_selected_broadcaster} </label>
 			    
-			    	<div class="left">
-				
+			    <div class="left">
+			  	<button style="background-color:#f44336;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="animateout_graphic_btn" id="animateout_graphic_btn" onclick="processUserSelection(this)"> AnimateOut (-)</button>
+			  	<button style="background-color:#f44336;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="animateout_profile_graphic_btn" id="animateout_profile_graphic_btn" onclick="processUserSelection(this)"> AnimateOut SCOREBUG (=) </button>
+			  	<button style="background-color:#f44336;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="animateout_profile_stat_graphic_btn" id="animateout_profile_stat_graphic_btn" onclick="processUserSelection(this)"> Animate out Stats (9)</button>
+			  	<button style="background-color:#f44336;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="clearall_graphic_btn" id="clearall_graphic_btn" onclick="processUserSelection(this)"> Clear All (Space) </button>
+
+			  </div>
+			    
+			    <label class="col-sm-4 col-form-label text-left" style="font-size: 20px;">SCOREBUG</label>
+			    <div class="left">
 			    <button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="playerprofile_graphic_btn" id="playerprofile_graphic_btn" onclick="processUserSelection(this)"> PlayerProfile </button>
+			  		name="playerprofile_graphic_btn" id="playerprofile_graphic_btn" onclick="processUserSelection(this)"> SCOREBUG (F1) </button>
 			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="remaining_purse_graphic_btn" id="remaining_purse_graphic_btn" onclick="processUserSelection(this)"> Remaining Purse All </button>
+			  		name="curr_bid_section" id="curr_bid_section" onclick="processUserSelection(this)"> Populate Current bid (1) </button>
 			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="squad_graphic_btn" id="squad_graphic_btn" onclick="processUserSelection(this)"> Squad </button>	
-			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="top_sold_graphic_btn" id="top_sold_graphic_btn" onclick="processUserSelection(this)"> Top Sold Auction</button>
-			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="top_sold_team_graphic_btn" id="top_sold_team_graphic_btn" onclick="processUserSelection(this)"> Top Sold Team</button>
-			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="namesuper_graphic_btn" id="namesuper_graphic_btn" onclick="processUserSelection(this)"> Name Super </button>
-			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="ident_graphic_btn" id="ident_graphic_btn" onclick="processUserSelection(this)"> Ident </button>
-			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="rtm_available_graphic_btn" id="rtm_available_graphic_btn" onclick="processUserSelection(this)"> RTM Available </button>
-			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="rtm_enabled_graphic_btn" id="rtm_enabled_graphic_btn" onclick="processUserSelection(this)"> RTM Enabled </button>
-			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="googly_power_graphic_btn" id="googly_power_graphic_btn" onclick="processUserSelection(this)"> Googly Power </button>
-			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="profile_stats_graphic_btn" id="profile_stats_graphic_btn" onclick="processUserSelection(this)"> Profile stats </button>
-			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="lof_remaining_purse_graphic_btn" id="lof_remaining_purse_graphic_btn" onclick="processUserSelection(this)"> Lof Remaining Purse </button>
-			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="lof_top_sold_graphic_btn" id="lof_top_sold_graphic_btn" onclick="processUserSelection(this)"> Lof Top Sold </button>
-			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="lof_top_sold_team_graphic_btn" id="lof_top_sold_team_graphic_btn" onclick="processUserSelection(this)"> Lof Team Top Sold </button>
-				<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="squad_Player_graphic_btn" id="squad_Player_graphic_btn" onclick="processUserSelection(this)"> Team Player Category </button>	
-			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="ff_playerprofile_graphic_btn" id="ff_playerprofile_graphic_btn" onclick="processUserSelection(this)"> ProfilePlayer FF </button>
+			  		name="profile_stats_graphic_btn" id="profile_stats_graphic_btn" onclick="processUserSelection(this)"> Profile stats (F9) </button>
 			  	</div>
+			  	
+			  	<label class="col-sm-4 col-form-label text-left" style="font-size: 20px;"> LT </label>
+			  	<div class="left">
+			    <button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="namesuper_graphic_btn" id="namesuper_graphic_btn" onclick="processUserSelection(this)"> Name Super (F7) </button>
+			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="rtm_available_graphic_btn" id="rtm_available_graphic_btn" onclick="processUserSelection(this)"> RTM Available (F8) </button>
+			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="rtm_enabled_graphic_btn" id="rtm_enabled_graphic_btn" onclick="processUserSelection(this)"> RTM Enabled (8) </button>
+			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="googly_power_graphic_btn" id="googly_power_graphic_btn" onclick="processUserSelection(this)"> Googly Power (E) </button>
+			  	</div>
+			  	
+			  	<label class="col-sm-4 col-form-label text-left" style="font-size: 20px;"> LOF </label>
+			  	<div class="left">
+			    <button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="lof_top_sold_graphic_btn" id="lof_top_sold_graphic_btn" onclick="processUserSelection(this)"> Lof Top Sold (F6) </button>
+			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="lof_remaining_purse_graphic_btn" id="lof_remaining_purse_graphic_btn" onclick="processUserSelection(this)"> Lof Remaining Purse (F10) </button>
+			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="lof_top_sold_team_graphic_btn" id="lof_top_sold_team_graphic_btn" onclick="processUserSelection(this)"> Lof Team Top Sold (F11) </button>
+			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="squad_Player_graphic_btn" id="squad_Player_graphic_btn" onclick="processUserSelection(this)"> Lof Team Player Category (F12) </button>
+			  	</div>
+			  	
+			  	<label class="col-sm-4 col-form-label text-left" style="font-size: 20px;"> FULLFRAMES </label>
+			  	<div class="left">
+			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="remaining_purse_graphic_btn" id="remaining_purse_graphic_btn" onclick="processUserSelection(this)"> Remaining Purse All (F2) </button>
+			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="squad_graphic_btn" id="squad_graphic_btn" onclick="processUserSelection(this)"> Squad (F3) </button>
+			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="ident_graphic_btn" id="ident_graphic_btn" onclick="processUserSelection(this)"> Ident (F4) </button>
+			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="top_sold_graphic_btn" id="top_sold_graphic_btn" onclick="processUserSelection(this)"> Top Sold Auction (F5) </button>
+			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="top_sold_team_graphic_btn" id="top_sold_team_graphic_btn" onclick="processUserSelection(this)"> Top Sold Team (Q) </button>
+			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="ff_playerprofile_graphic_btn" id="ff_playerprofile_graphic_btn" onclick="processUserSelection(this)"> ProfilePlayer FF (W) </button>
+			  	</div>
+			  	
+			  	
 			   
 			    
 				<!--<c:if test="${(session_selected_second_broadcaster == 'ISPL')}">
@@ -107,16 +196,6 @@
 			  	
 			  	</div>	
   				 </c:if> -->
-  				 
-				
-			  	<div class="left">
-			  	<button style="background-color:#f44336;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="animateout_graphic_btn" id="animateout_graphic_btn" onclick="processUserSelection(this)"> AnimateOut </button>
-			  	<button style="background-color:#f44336;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="animateout_profile_stat_graphic_btn" id="animateout_profile_stat_graphic_btn" onclick="processUserSelection(this)"> Animate out Stats </button>
-			  	<button style="background-color:#f44336;color:#FEFEFE;" class="btn btn-sm" type="button"
-			  		name="clearall_graphic_btn" id="clearall_graphic_btn" onclick="processUserSelection(this)"> Clear All </button>
-			  </div>
 			  </div>
 	       </div>
 	    </div>

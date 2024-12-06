@@ -17,21 +17,108 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 	switch (whatToProcess) {
 	case 'LOGGER_FORM_KEYPRESS':
 		switch(dataToProcess){
-		case 32:
+		case ' '://Space
 			processAuctionProcedures('CLEAR-ALL');
 			break;
-		case 189:
+		case '-'://189
 			if(confirm('It will Also Delete Your Preview from Directory...\r\n \r\nAre You Sure To Animate Out? ') == true){
 				processAuctionProcedures('ANIMATE-OUT');	
 			}
 		break;
-		case 187:
+		case "="://187
 			if(confirm('It will Also Delete Your Preview from Directory...\r\n \r\nAre You Sure To Animate Out? ') == true){
 				processAuctionProcedures('ANIMATE-OUT-PROFILE');	
 			}
 			break;
-		case 'RE_READ':
+		case 'Alt_r':
 			processAuctionProcedures('RE_READ_DATA');
+			break;
+			
+		case '1':
+			processAuctionProcedures('POPULATE-CURR_BID');
+			break;
+		case '9':
+			processAuctionProcedures('ANIMATE-OUT-PLAYER_STAT');
+			break;
+			
+		case 'F1':
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			processAuctionProcedures('PLAYERPROFILE_GRAPHICS-OPTIONS');
+			break;
+		case 'F2':
+			processAuctionProcedures('POPULATE-REMAINING_PURSE_ALL');
+			break;
+		case 'F3':
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			processAuctionProcedures('SQUAD_GRAPHICS-OPTIONS');
+			break;
+		case 'F4':
+			processAuctionProcedures('POPULATE-IDENT');
+			break;
+		case 'F5':
+			processAuctionProcedures('POPULATE-TOP_SOLD');
+			break;
+		case 'F6':
+			processAuctionProcedures('POPULATE-LOF_TOP_SOLD');
+			break;
+		case 'F7':
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			processAuctionProcedures('NAMESUPER_GRAPHICS-OPTIONS');
+			break;
+		case 'F8':
+			processAuctionProcedures('POPULATE-RTM_AVAILABLE');
+			break;
+		case '8':
+			processAuctionProcedures('POPULATE-RTM_ENABLED');
+			break
+		case 'F9':
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			addItemsToList('PROFILE_STATS-OPTIONS',null);
+			break;
+		case 'F10':
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			addItemsToList('LOF_REMAINING_PURSE-OPTIONS',null);
+			break;
+		case 'F11':
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			processAuctionProcedures('LOF_TOP_SOLD_TEAM_GRAPHICS-OPTIONS');
+			break;
+		case 'F12':
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			processAuctionProcedures('SQUAD_PLAYER_GRAPHICS-OPTIONS');
+			break;
+		case 'q':
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			processAuctionProcedures('TOP-SOLD_TEAM_GRAPHICS-OPTIONS');
+			break;
+		case 'w':
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			processAuctionProcedures('FF_PLAYERPROFILE_GRAPHICS-OPTIONS');
+			break
+		case 'e':
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			processAuctionProcedures('GOOGLY_GRAPHICS-OPTIONS');
+			break;
 		}
 		break;
 	}
@@ -52,6 +139,9 @@ function processUserSelection(whichInput)
 {	
 	switch ($(whichInput).attr('name')) {
 		
+	case 'animateout_profile_graphic_btn':
+		processAuctionProcedures('ANIMATE-OUT-PROFILE');
+		break;
 	case 'animateout_profile_stat_graphic_btn':
 		processAuctionProcedures('ANIMATE-OUT-PLAYER_STAT');
 		break;
@@ -446,11 +536,10 @@ function processAuctionProcedures(whatToProcess)
 					}
 				}else{
 					if(confirm('Animate In?') == true){
-						if(whatToProcess != 'POPULATE-FF-PLAYERPROFILE'){
-							$('#select_graphic_options_div').empty();
-							document.getElementById('select_graphic_options_div').style.display = 'none';
-							$("#captions_div").show();	
-						}
+						$('#select_graphic_options_div').empty();
+						document.getElementById('select_graphic_options_div').style.display = 'none';
+						$("#captions_div").show();
+						
 			        	switch(whatToProcess) {
 						case 'POPULATE-IDENT':
 							processAuctionProcedures('ANIMATE-IN-IDENT');
@@ -496,6 +585,7 @@ function processAuctionProcedures(whatToProcess)
 							break;
 						case "POPULATE-SQUAD-PLAYER":
 							processAuctionProcedures('ANIMATE-IN-SQUAD-PLAYER');
+							break;
 						case 'POPULATE-PLAYERPROFILE_FF':
 							processAuctionProcedures('ANIMATE-IN-PLAYERPROFILE_FF');
 							break;
@@ -725,7 +815,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 						break;
 				}
 				break;
-			case'PLAYERPROFILE-OPTIONS': case 'FF_PLAYERPROFILE-OPTIONS':
+			case 'PLAYERPROFILE-OPTIONS': case 'FF_PLAYERPROFILE-OPTIONS':
 				switch ($('#selected_broadcaster').val().toUpperCase()) {
 					case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
 						select = document.createElement('select');
@@ -736,16 +826,6 @@ function addItemsToList(whatToProcess, dataToProcess)
 						row.insertCell(cellCount).appendChild(select);
 						$(select).select2();
 						cellCount = cellCount + 1;
-						
-						/*option = document.createElement('input');
-		    			option.type = 'button';
-		    			option.name = 'curr_bid_section';
-			    		option.value = 'Populate Current bid';
-			    		option.id = option.name;
-					    option.setAttribute('onclick',"processUserSelection(this)");
-					    row.insertCell(cellCount).appendChild(option);
-					    cellCount = cellCount + 1;*/
-						
 						break;
 				} 
 				break;
@@ -824,7 +904,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 			    option.value = 'Populate Lof Remaining Purse';
 				break;
 			
-			case'PLAYERPROFILE-OPTIONS':
+			case 'PLAYERPROFILE-OPTIONS':
 			    option.name = 'populate_playerprofile_btn';
 			    option.value = 'Populate Playerprofile';
 				break;
@@ -867,21 +947,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 		    
 		    div = document.createElement('div');
 		    div.append(option);
-		    	switch (whatToProcess) {
-					case'PLAYERPROFILE-OPTIONS':
-						
-						option = document.createElement('input');
-		    			option.type = 'button';
-		    			option.name = 'curr_bid_section';
-			    		option.value = 'Populate Current bid';
-			    		option.id = option.name;
-					    option.setAttribute('onclick',"processUserSelection(this)");
-					    
-		    			div.append(option);
-					   
-						break;
-				} 
-
+		    	
 			option = document.createElement('input');
 			option.type = 'button';
 			option.name = 'cancel_graphics_btn';
