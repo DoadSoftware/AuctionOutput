@@ -86,7 +86,8 @@
 			  		name="lof_top_sold_team_graphic_btn" id="lof_top_sold_team_graphic_btn" onclick="processUserSelection(this)"> Lof Team Top Sold </button>
 				<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
 			  		name="squad_Player_graphic_btn" id="squad_Player_graphic_btn" onclick="processUserSelection(this)"> Team Player Category </button>	
-			  	
+			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
+			  		name="ff_playerprofile_graphic_btn" id="ff_playerprofile_graphic_btn" onclick="processUserSelection(this)"> ProfilePlayer FF </button>
 			  	</div>
 			   
 			    

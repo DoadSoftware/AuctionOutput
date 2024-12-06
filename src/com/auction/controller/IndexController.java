@@ -175,9 +175,8 @@ public class IndexController
 				this_doad.which_graphics_onscreen = "BG";
 				break;
 			case "VIZ_ISPL_2024":
-				scene.LoadScene("OVERLAYS", print_writer, session_Configurations);
-//				scene.LoadScene("LINEUP", print_writer, session_Configurations);
-//				scene.LoadScene("FULL-FRAMERS", print_writer, session_Configurations);
+				//scene.LoadScene("OVERLAYS", print_writer, session_Configurations);
+				scene.LoadScene("FULL-FRAMERS", print_writer, session_Configurations);
 				break;
 			}
 			
@@ -272,7 +271,7 @@ public class IndexController
 		switch (whatToProcess) {
 		case "NAMESUPER_GRAPHICS-OPTIONS":
 		    return (List<T>) session_nameSupers;
-		case "PLAYERPROFILE_GRAPHICS-OPTIONS": 
+		case "PLAYERPROFILE_GRAPHICS-OPTIONS": case "FF_PLAYERPROFILE_GRAPHICS-OPTIONS":
 		    return (List<T>) session_player;
 		case "SQUAD_GRAPHICS-OPTIONS": case "SINGLE_PURSE_GRAPHICS-OPTIONS": case "TOP-SOLD_TEAM_GRAPHICS-OPTIONS": case "GOOGLY_GRAPHICS-OPTIONS":
 		case "LOF_TOP_SOLD_TEAM_GRAPHICS-OPTIONS": case "SQUAD_PLAYER_GRAPHICS-OPTIONS":
