@@ -175,7 +175,7 @@ public class IndexController
 				this_doad.which_graphics_onscreen = "BG";
 				break;
 			case "VIZ_ISPL_2024":
-				//scene.LoadScene("OVERLAYS", print_writer, session_Configurations);
+				scene.LoadScene("OVERLAYS", print_writer, session_Configurations);
 				scene.LoadScene("FULL-FRAMERS", print_writer, session_Configurations);
 				break;
 			}

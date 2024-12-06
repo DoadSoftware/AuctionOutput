@@ -100,7 +100,6 @@ function processUserSelection(whichInput)
 		case 'ff_playerprofile_graphic_btn':
 			processAuctionProcedures('FF_PLAYERPROFILE_GRAPHICS-OPTIONS');
 			break;
-			
 		case 'squad_graphic_btn':
 			processAuctionProcedures('SQUAD_GRAPHICS-OPTIONS');
 			break;
