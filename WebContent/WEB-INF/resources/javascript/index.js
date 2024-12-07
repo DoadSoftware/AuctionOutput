@@ -119,6 +119,15 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#expiry_message").hide();
 			processAuctionProcedures('GOOGLY_GRAPHICS-OPTIONS');
 			break;
+		case 'r':
+			processAuctionProcedures('POPULATE-LOF_REMAINING_SLOT');
+			break;
+		case 's':
+			processAuctionProcedures('POPULATE-LOF_SQUAD_SIZE');
+			break;
+		case 'a':
+			processAuctionProcedures('POPULATE-LOF_RTM_REMAINING');
+			break;
 		}
 		break;
 	}
@@ -524,6 +533,7 @@ function processAuctionProcedures(whatToProcess)
 			case 'POPULATE-L3-NAMESUPER': case 'POPULATE-TOP_SOLD_TEAM': case 'POPULATE-IDENT': case 'POPULATE-CURR_BID': case 'POPULATE-RTM_AVAILABLE':
 			case 'POPULATE-RTM_ENABLED': case 'POPULATE-GOOGLY_POWER': case 'POPULATE-PROFILE_STATS': case 'POPULATE-LOF_REMAINING_PURSE':
 			case 'POPULATE-LOF_TOP_SOLD': case 'POPULATE-LOF_TEAM_TOP_SOLD': case "POPULATE-SQUAD-PLAYER": case 'POPULATE-PLAYERPROFILE_FF':
+			case 'POPULATE-LOF_REMAINING_SLOT': case 'POPULATE-LOF_SQUAD_SIZE': case 'POPULATE-LOF_RTM_REMAINING':
 			
 				if(whatToProcess == 'POPULATE-RTM_ENABLED' || whatToProcess == 'POPULATE-CURR_BID')	{
 					switch(whatToProcess){
@@ -588,6 +598,15 @@ function processAuctionProcedures(whatToProcess)
 							break;
 						case 'POPULATE-PLAYERPROFILE_FF':
 							processAuctionProcedures('ANIMATE-IN-PLAYERPROFILE_FF');
+							break;
+						case 'POPULATE-LOF_REMAINING_SLOT':
+							processAuctionProcedures('ANIMATE-IN-LOF_REMAINING_SLOT');
+							break;
+						case 'POPULATE-LOF_SQUAD_SIZE':
+							processAuctionProcedures('ANIMATE-IN-LOF_SQUAD_SIZE');
+							break;
+						case 'POPULATE-LOF_RTM_REMAINING':
+							processAuctionProcedures('ANIMATE-IN-LOF_RTM_REMAINING');
 							break;
 						}
 					}
