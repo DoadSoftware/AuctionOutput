@@ -33,9 +33,12 @@
       case "input": case "textarea":
     	 break;
       default:
-    	  e.preventDefault();
 	      var whichKey = '';
 		  var validKeyFound = false;
+		  
+		  if(evtobj.key != 'Tab'){
+    		  e.preventDefault();
+    	  }
 	    
 	      if(evtobj.ctrlKey) {
 	    	  whichKey = 'Control';

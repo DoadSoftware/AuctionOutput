@@ -17,6 +17,10 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 	switch (whatToProcess) {
 	case 'LOGGER_FORM_KEYPRESS':
 		switch(dataToProcess){
+		case 'Escape':
+			$("#captions_div").show();
+			$('#select_graphic_options_div').hide();
+			break;
 		case ' '://Space
 			processAuctionProcedures('CLEAR-ALL');
 			break;
@@ -40,7 +44,6 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case '9':
 			processAuctionProcedures('ANIMATE-OUT-PLAYER_STAT');
 			break;
-			
 		case 'F1':
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
@@ -278,7 +281,7 @@ function processUserSelection(whichInput)
 		document.output_form.action = 'initialise';
 	   	document.output_form.submit();
 		break;
-	case 'cancel_graphics_btn':
+	case 'cancel_graphics_btn': 
 		$('#select_graphic_options_div').empty();
 		document.getElementById('select_graphic_options_div').style.display = 'none';
 		$("#captions_div").show();
@@ -985,6 +988,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 		}
 		break;
 	}
+	document.activeElement.blur();
 	
 	
 }
