@@ -118,6 +118,7 @@
 			    <label class="col-sm-4 col-form-label text-left">Port Number: ${session_port} </label>
 			    <label class="col-sm-4 col-form-label text-left">Broadcaster: ${session_selected_broadcaster} </label>
 			    
+			    <!--
 			    <div class="left">
 			  	<button style="background-color:#f44336;color:#FEFEFE;" class="btn btn-sm" type="button"
 			  		name="animateout_graphic_btn" id="animateout_graphic_btn" onclick="processUserSelection(this)"> AnimateOut (-)</button>
@@ -127,9 +128,10 @@
 			  		name="animateout_profile_stat_graphic_btn" id="animateout_profile_stat_graphic_btn" onclick="processUserSelection(this)"> Animate out Stats (9)</button>
 			  	<button style="background-color:#f44336;color:#FEFEFE;" class="btn btn-sm" type="button"
 			  		name="clearall_graphic_btn" id="clearall_graphic_btn" onclick="processUserSelection(this)"> Clear All (Space) </button>
-
+				-->
 			  </div>
 			    
+			    <!-- 
 			    <label class="col-sm-4 col-form-label text-left" style="font-size: 20px;">SCOREBUG</label>
 			    <div class="left">
 			    <button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
@@ -179,6 +181,7 @@
 			  	<button style="background-color:#2E008B;color:#FEFEFE;" class="btn btn-sm" type="button"
 			  		name="ff_playerprofile_graphic_btn" id="ff_playerprofile_graphic_btn" onclick="processUserSelection(this)"> ProfilePlayer FF (W) </button>
 			  	</div>
+			  	
 			  	
 			  	
 			   

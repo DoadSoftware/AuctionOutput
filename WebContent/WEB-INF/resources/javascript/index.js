@@ -41,108 +41,124 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case '1':
 			processAuctionProcedures('POPULATE-CURR_BID');
 			break;
-		case '9':
-			processAuctionProcedures('ANIMATE-OUT-PLAYER_STAT');
-			break;
 		case 'F1':
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
 			processAuctionProcedures('PLAYERPROFILE_GRAPHICS-OPTIONS');
 			break;
-		case 'F2':
+		case 'F2': //FF REMAINING PURSE ALL
 			processAuctionProcedures('POPULATE-REMAINING_PURSE_ALL');
 			break;
-		case 'F3':
+		case 'F3': //FF SQUAD
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
 			processAuctionProcedures('SQUAD_GRAPHICS-OPTIONS');
 			break;
-		case 'F4':
+		case 'F4': //FF IDENT
 			processAuctionProcedures('POPULATE-IDENT');
 			break;
-		case 'F5':
-			processAuctionProcedures('POPULATE-TOP_SOLD');
+		case 'F5': //FF SQUAD SIZE, RTM AVAILABLE, PURSE REM
+			processAuctionProcedures('POPULATE-FF_RTM_AND_PURSE_REMAINING');
 			break;
-		case 'F6':
-			processAuctionProcedures('POPULATE-LOF_TOP_SOLD');
+		case 'F6': //FF TOP BUY AUCTION
+			processAuctionProcedures('POPULATE-FF_TOP_BUYS_AUCTION');
 			break;
-		case 'F7':
+		case 'F7': // FF TOP BUY TEAMS
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
-			processAuctionProcedures('NAMESUPER_GRAPHICS-OPTIONS');
+			processAuctionProcedures('FF_TOP_SOLD_TEAM_GRAPHICS-OPTIONS');
 			break;
-		case 'F8':
+		case 'F8': //POP UP RTM AVAILABLE
 			processAuctionProcedures('POPULATE-RTM_AVAILABLE');
 			break;
-		case '8':
+		case '8': //POP UP RTM ENABLED
 			processAuctionProcedures('POPULATE-RTM_ENABLED');
 			break
-		case 'F9':
+		case 'F9': //SCORE BUG BOTTOM
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
 			addItemsToList('PROFILE_STATS-OPTIONS',null);
 			break;
-		case 'F10':
+		case '9': //SCORE BUG ANIMATE OUT BOTTOM
+			processAuctionProcedures('ANIMATE-OUT-PLAYER_STAT');
+			break;
+		case 'F10': //changed
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			processAuctionProcedures('FF_PLAYERPROFILE_GRAPHICS-OPTIONS');
+			break
+		case 'a': //LOF SLOT REMAINING
+			processAuctionProcedures('POPULATE-LOF_REMAINING_SLOT');
+			break;
+		case 's': // LOF SQUAD SIZE
+			processAuctionProcedures('POPULATE-LOF_SQUAD_SIZE');
+			break;
+		case 'd': // LOF RTM REMAINING
+			processAuctionProcedures('POPULATE-LOF_RTM_REMAINING');
+			break;
+		case 'e': //POP UP GOOGLY POWER
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			processAuctionProcedures('GOOGLY_GRAPHICS-OPTIONS');
+			break;
+		case 'f': //LOF PURSE REMAINING
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
 			addItemsToList('LOF_REMAINING_PURSE-OPTIONS',null);
 			break;
-		case 'F11':
+		case 'g': //LOF TOP BUYS
+			processAuctionProcedures('POPULATE-LOF_TOP_SOLD');
+			break;
+		case 'h': //LOF TEAM TOP BUYS
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
 			processAuctionProcedures('LOF_TOP_SOLD_TEAM_GRAPHICS-OPTIONS');
 			break;
-		case 'F12':
+		case 'j': //LOF SQUAD SIZE CATEGORY WISE
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
 			processAuctionProcedures('SQUAD_PLAYER_GRAPHICS-OPTIONS');
 			break;
+			
+			
+			
+			
+			
+		/*case 'F5':
+			processAuctionProcedures('POPULATE-TOP_SOLD');
+			break;*/
+		
+		
+		//it will be changed
+		/*case 'F7':
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			processAuctionProcedures('NAMESUPER_GRAPHICS-OPTIONS');
+			break;
+		
 		case 'q':
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
 			processAuctionProcedures('TOP-SOLD_TEAM_GRAPHICS-OPTIONS');
 			break;
-		case 'w':
+		case 'F10': //changed
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
 			processAuctionProcedures('FF_PLAYERPROFILE_GRAPHICS-OPTIONS');
-			break
-		case 'e':
-			$("#captions_div").hide();
-			$("#cancel_match_setup_btn").hide();
-			$("#expiry_message").hide();
-			processAuctionProcedures('GOOGLY_GRAPHICS-OPTIONS');
-			break;
-		case 'a':
-			processAuctionProcedures('POPULATE-LOF_REMAINING_SLOT');
-			break;
-		case 's':
-			processAuctionProcedures('POPULATE-LOF_SQUAD_SIZE');
-			break;
-		case 'd':
-			processAuctionProcedures('POPULATE-LOF_RTM_REMAINING');
-			break;
-		case 'f':
-			processAuctionProcedures('POPULATE-FF_RTM_AND_PURSE_REMAINING');
-			break;
-		case 'g':
-			processAuctionProcedures('POPULATE-FF_TOP_BUYS_AUCTION');
-			break;
-		case 'h':
-			$("#captions_div").hide();
-			$("#cancel_match_setup_btn").hide();
-			$("#expiry_message").hide();
-			processAuctionProcedures('FF_TOP_SOLD_TEAM_GRAPHICS-OPTIONS');
-			break;
+			break */
+		
 		}
 		break;
 	}
