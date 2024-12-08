@@ -63,6 +63,7 @@ public class IndexController
 	public static String current_date = "";
 	public static String Current_File_Name = "";
 	public int current_layer = 1;
+	public static long last_match_time_stamp = 0;
 	
 	List<NameSuper> session_nameSupers = new ArrayList<NameSuper>();
 	List<Team> session_team = new ArrayList<Team>();
@@ -104,22 +105,20 @@ public class IndexController
 			    }
 			}));
 			
-			if(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CONFIGURATIONS_DIRECTORY + AuctionUtil.OUTPUT_XML).exists()) {
-				session_Configurations = (Configurations)JAXBContext.newInstance(Configurations.class).createUnmarshaller().unmarshal(
-						new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CONFIGURATIONS_DIRECTORY + AuctionUtil.OUTPUT_XML));
-			} else {
-				session_Configurations = new Configurations();
-				JAXBContext.newInstance(Configurations.class).createMarshaller().marshal(session_Configurations, 
-						new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CONFIGURATIONS_DIRECTORY + AuctionUtil.OUTPUT_XML));
-			}
+			model.addAttribute("configuration_files", new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CONFIGURATIONS_DIRECTORY).listFiles(new FileFilter() {
+				@Override
+			    public boolean accept(File pathname) {
+			        String name = pathname.getName().toLowerCase();
+			        return name.endsWith(".xml") && pathname.isFile();
+			    }
+			}));
 			
-			model.addAttribute("session_Configurations",session_Configurations);
-		
 			return "initialise";
 	}
 
 	@RequestMapping(value = {"/output"}, method={RequestMethod.GET,RequestMethod.POST}) 
 	public String outputPage(ModelMap model,
+			@RequestParam(value = "configuration_file_name", required = false, defaultValue = "") String configuration_file_name,
 			@RequestParam(value = "select_broadcaster", required = false, defaultValue = "") String select_broadcaster,
 			@RequestParam(value = "which_layer", required = false, defaultValue = "") String which_layer,
 			@RequestParam(value = "which_scene", required = false, defaultValue = "") String which_scene,
@@ -139,7 +138,7 @@ public class IndexController
 			return "error";
 			
 		}else {
-		
+			
 			session_port =  vizPortNumber;
 			session_selected_ip = vizIPAddresss;
 			
@@ -153,6 +152,11 @@ public class IndexController
 			selected_scene = which_scene;
 			session_socket = new Socket(vizIPAddresss, Integer.valueOf(vizPortNumber));
 			print_writer = new PrintWriter(session_socket.getOutputStream(), true);
+			
+			session_Configurations = new Configurations(selectedMatch, select_broadcaster, vizIPAddresss, vizPortNumber);
+			
+			JAXBContext.newInstance(Configurations.class).createMarshaller().marshal(session_Configurations, 
+					new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CONFIGURATIONS_DIRECTORY + configuration_file_name));
 			
 			switch (session_selected_broadcaster) {
 				
@@ -182,14 +186,9 @@ public class IndexController
 			
 			getDataFromDB();
 			
-			session_Configurations = new Configurations(selectedMatch, select_broadcaster, vizIPAddresss, vizPortNumber);
-			
-			JAXBContext.newInstance(Configurations.class).createMarshaller().marshal(session_Configurations, 
-					new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CONFIGURATIONS_DIRECTORY + AuctionUtil.OUTPUT_XML));
-			
 			session_auction = new Auction();
 			session_auction = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON), Auction.class);
-			//session_auction = AuctionFunctions.populateMatchVariables(auctionService, session_auction);
+			session_auction = AuctionFunctions.populateMatchVariables(auctionService, session_auction);
 			
 			session_curr_bid = new Auction();
 			session_curr_bid = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON), Auction.class);
@@ -217,12 +216,21 @@ public class IndexController
 	{
 		
 		switch (whatToProcess.toUpperCase()) {
+		case "GET-CONFIG-DATA":
+			session_Configurations = (Configurations)JAXBContext.newInstance(Configurations.class).createUnmarshaller().unmarshal(
+					new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CONFIGURATIONS_DIRECTORY + valueToProcess));
+				
+				return JSONObject.fromObject(session_Configurations).toString();
 		case "RE_READ_DATA":
 			getDataFromDB();
 			return JSONObject.fromObject(session_auction).toString();
 		case "READ-MATCH-AND-POPULATE":
-			session_auction = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON), Auction.class);
-			session_auction = AuctionFunctions.populateMatchVariables(auctionService, session_auction);
+			if(last_match_time_stamp != new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON).lastModified()) {
+				session_auction = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON), Auction.class);
+				session_auction = AuctionFunctions.populateMatchVariables(auctionService, session_auction);
+				last_match_time_stamp = new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON).lastModified();
+			}
+			
 			session_curr_bid = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON), Auction.class);
 			
 			switch (session_selected_broadcaster) {
@@ -244,7 +252,6 @@ public class IndexController
 				break;
 				
 			}
-			
 			return JSONObject.fromObject(session_auction).toString();
 		
 		default:

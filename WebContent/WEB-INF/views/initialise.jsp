@@ -31,6 +31,25 @@
           <div id="initialise_div" style="display:none;">
 			  </div>
 			  <div class="form-group row row-bottom-margin ml-2" style="margin-bottom:5px;">
+			    <label for="select_configuration_file" class="col-sm-4 col-form-label text-left">Select Configuration </label>
+			    <div class="col-sm-6 col-md-6">
+			      <select id="select_configuration_file" name="select_configuration_file" 
+			      		class="brower-default custom-select custom-select-sm" onchange="processUserSelection(this)">
+			          	<option value=""></option>
+						<c:forEach items = "${configuration_files}" var = "config">
+				          	<option value="${config.name}">${config.name}</option>
+						</c:forEach>
+			      </select>
+			    </div>
+			  </div>
+			  <div class="form-group row row-bottom-margin ml-2" style="margin-bottom:5px;">
+			    <label for="configuration_file_name" class="col-sm-4 col-form-label text-left">Configuration File Name </label>
+			    <div class="col-sm-6 col-md-6">
+		             <input type="text" id="configuration_file_name" name="configuration_file_name"
+		             	class="form-control form-control-sm floatlabel"></input>
+			    </div>
+			  </div>
+			  <div class="form-group row row-bottom-margin ml-2" style="margin-bottom:5px;">
 			    <label for="select_cricket_matches" class="col-sm-4 col-form-label text-left">Select Auction File </label>
 			    <div class="col-sm-6 col-md-6">
 			      <select id="select_cricket_matches" name="select_cricket_matches" 

@@ -157,11 +157,20 @@ function initialiseForm(whatToProcess,dataToProcess)
 	case 'UPDATE-MATCH-ON-OUTPUT-FORM':
 		
 		break;
+	case 'UPDATE-CONFIG':
+		document.getElementById('configuration_file_name').value = $('#select_configuration_file option:selected').val();
+		document.getElementById('select_broadcaster').value = dataToProcess.broadcaster;
+		document.getElementById('vizIPAddress').value = dataToProcess.ipAddress;
+		document.getElementById('vizPortNumber').value = dataToProcess.portNumber;
+		break;
 	}
 }
 function processUserSelection(whichInput)
 {	
 	switch ($(whichInput).attr('name')) {
+	case 'select_configuration_file':
+		processAuctionProcedures('GET-CONFIG-DATA');
+		break;
 		
 	case 'animateout_profile_graphic_btn':
 		processAuctionProcedures('ANIMATE-OUT-PROFILE');
@@ -337,6 +346,9 @@ function processAuctionProcedures(whatToProcess)
 {
 	var valueToProcess;
 	switch(whatToProcess) {
+	case 'GET-CONFIG-DATA':
+		valueToProcess = $('#select_configuration_file option:selected').val();
+		break;
 	
 	case 'READ-MATCH-AND-POPULATE': 
 		valueToProcess = $('#matchFileTimeStamp').val();
@@ -349,7 +361,7 @@ function processAuctionProcedures(whatToProcess)
 	case 'POPULATE-PLAYERPROFILE_FF':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'VIZ_ISPL_2024':
-			valueToProcess = $('#selectPlayerName option:selected').val();
+			valueToProcess = $('#selectPlayerName option:selected').val() + ',' + $('#selectShowProfileStats option:selected').val();
 			break;
 		}
 		break;
@@ -380,6 +392,9 @@ function processAuctionProcedures(whatToProcess)
 			break;	
 		case 'ISPL_VIZ': 
 			valueToProcess = '/Default/Squad'+ ',' + $('#selectTeamName option:selected').val();
+			break;
+		case 'VIZ_ISPL_2024': 
+			valueToProcess = $('#selectTeamName option:selected').val();
 			break;
 		}
 		break;
@@ -481,6 +496,9 @@ function processAuctionProcedures(whatToProcess)
 			//match_data = data;
 			
         	switch(whatToProcess) {
+			case 'GET-CONFIG-DATA':
+				initialiseForm('UPDATE-CONFIG',data);
+				break;
 			case 'READ-MATCH-AND-POPULATE': case 'RE_READ_DATA':
 				session_auction = data;
 				if(data){
@@ -880,6 +898,29 @@ function addItemsToList(whatToProcess, dataToProcess)
 						row.insertCell(cellCount).appendChild(select);
 						$(select).select2();
 						cellCount = cellCount + 1;
+						
+						switch(whatToProcess){
+							case 'FF_PLAYERPROFILE-OPTIONS':
+								select = document.createElement('select');
+								select.style = 'width:100px';
+								select.id = 'selectShowProfileStats';
+								select.name = select.id;
+								
+								option = document.createElement('option');
+								option.value = 'without';
+								option.text = 'WithOut Stats';
+								select.appendChild(option);
+								
+								option = document.createElement('option');
+								option.value = 'with';
+								option.text = 'With Stats';
+								select.appendChild(option);
+								
+								select.setAttribute('onchange',"processUserSelection(this)");
+								row.insertCell(cellCount).appendChild(select);
+								cellCount = cellCount + 1;
+								break;
+						}
 						break;
 				} 
 				break;
