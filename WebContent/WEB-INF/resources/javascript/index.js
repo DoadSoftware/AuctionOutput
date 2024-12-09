@@ -92,6 +92,9 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#expiry_message").hide();
 			processAuctionProcedures('FF_PLAYERPROFILE_GRAPHICS-OPTIONS');
 			break
+		case 'F11': //FF ICONIC PLAYERS
+			processAuctionProcedures('POPULATE-FF_ICONIC_PLAYERS');
+			break;
 		case 'a': //LOF SLOT REMAINING
 			processAuctionProcedures('POPULATE-LOF_REMAINING_SLOT');
 			break;
@@ -593,6 +596,7 @@ function processAuctionProcedures(whatToProcess)
 			case 'POPULATE-LOF_REMAINING_SLOT': case 'POPULATE-LOF_SQUAD_SIZE': case 'POPULATE-LOF_RTM_REMAINING':
 			
 			case 'POPULATE-FF_RTM_AND_PURSE_REMAINING': case 'POPULATE-FF_TOP_BUYS_AUCTION': case 'POPULATE-FF_TOP_BUY_TEAM':
+			case 'POPULATE-FF_ICONIC_PLAYERS':
 			
 				if(whatToProcess == 'POPULATE-RTM_ENABLED' || whatToProcess == 'POPULATE-CURR_BID')	{
 					switch(whatToProcess){
@@ -675,6 +679,9 @@ function processAuctionProcedures(whatToProcess)
 							break;
 						case 'POPULATE-FF_TOP_BUY_TEAM':
 							processAuctionProcedures('ANIMATE-IN-FF_TOP_BUY_TEAM');
+							break;
+						case 'POPULATE-FF_ICONIC_PLAYERS':
+							processAuctionProcedures('ANIMATE-IN-FF_ICONIC_PLAYERS');
 							break;
 						}
 					}
