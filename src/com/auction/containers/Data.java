@@ -2,7 +2,7 @@ package com.auction.containers;
 
 public class Data {
 	
-	private boolean data_on_screen;
+	private boolean data_on_screen = false;
 	private boolean player_sold_or_unsold;
 	private boolean bid_Start_or_not = false;
 	private String bid_result;

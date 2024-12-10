@@ -180,6 +180,15 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#expiry_message").hide();
 			addItemsToList('LT_PP_STATS-OPTIONS',null);
 			break;
+		case 'F12':
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			addItemsToList('ZONE-PLAYER-OPTIONS',null);
+			break;
+		case '6': //ZONE PLAYERS CHANGE ON
+			processAuctionProcedures('POPULATE-ZONE_PLAYERS_STATS');
+			break
 			
 		/*case 'F5':
 			processAuctionProcedures('POPULATE-TOP_SOLD');
@@ -309,7 +318,7 @@ function processUserSelection(whichInput)
 	case 'populate_single_purse_btn': case 'curr_bid_section': case 'populate_googly_purse_btn': case 'populate_profile_stats_btn': case 'populate_single_purse_btn': 
 	case 'curr_bid_section': case 'populate_lof_remaining_purse_btn': case 'populate_Lof_Top_Sold_team_btn': case "populate_squad_Player_btn": 
 	case 'populate_squad_size_category_wise_btn': case 'populate_ff_playerprofile_btn': case 'populate_ff_Top_Sold_team_btn': case 'populate_lt_playerprofile_btn':
-	case 'populate_lt_playerprofile_stats_btn': case 'populate_Lof_squad_btn': case 'populate_flipper_btn':
+	case 'populate_lt_playerprofile_stats_btn': case 'populate_Lof_squad_btn': case 'populate_flipper_btn': case 'populate_zonePlayer_stats_btn':
 		processWaitingButtonSpinner('START_WAIT_TIMER');
 		switch ($(whichInput).attr('name')) {
 		case 'curr_bid_section':
@@ -336,6 +345,9 @@ function processUserSelection(whichInput)
 			break;
 		case 'populate_lt_playerprofile_stats_btn':
 			processAuctionProcedures('POPULATE-PLAYERPROFILE_LT_STATS');
+			break;
+		case 'populate_zonePlayer_stats_btn':
+			processAuctionProcedures('POPULATE-ZONE_PLAYERS_STATS');
 			break;
 			
 		case 'populate_squad_btn':
@@ -459,7 +471,7 @@ function processAuctionProcedures(whatToProcess)
 			break;
 		}
 		break;
-	case 'POPULATE-PLAYERPROFILE_LT_STATS':
+	case 'POPULATE-PLAYERPROFILE_LT_STATS': case 'POPULATE-ZONE_PLAYERS_STATS':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'VIZ_ISPL_2024':
 			valueToProcess = $('#selectShowData option:selected').val();
@@ -708,7 +720,7 @@ function processAuctionProcedures(whatToProcess)
 			case 'POPULATE-FF_RTM_AND_PURSE_REMAINING': case 'POPULATE-FF_TOP_BUYS_AUCTION': case 'POPULATE-FF_TOP_BUY_TEAM':
 			case 'POPULATE-FF_ICONIC_PLAYERS':
 			
-			case 'POPULATE-LT_ICONIC_PLAYERS': case 'POPULATE-PLAYERPROFILE_LT': case 'POPULATE-PLAYERPROFILE_LT_STATS':
+			case 'POPULATE-LT_ICONIC_PLAYERS': case 'POPULATE-PLAYERPROFILE_LT': case 'POPULATE-PLAYERPROFILE_LT_STATS': case 'POPULATE-ZONE_PLAYERS_STATS':
 			
 				if(whatToProcess == 'POPULATE-RTM_ENABLED' || whatToProcess == 'POPULATE-CURR_BID')	{
 					switch(whatToProcess){
@@ -817,6 +829,9 @@ function processAuctionProcedures(whatToProcess)
 						case 'POPULATE-PLAYERPROFILE_LT_STATS':
 							processAuctionProcedures('ANIMATE-IN-PLAYERPROFILE_LT_STATS');
 							break;
+						case 'POPULATE-ZONE_PLAYERS_STATS':
+							processAuctionProcedures('ANIMATE-IN-ZONE-PLAYER_STATS');
+							break;
 						}
 					}
 				}
@@ -898,7 +913,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 	case'NAMESUPER-OPTIONS': case 'NAMESUPER_PLAYER-OPTIONS':  case'PLAYERPROFILE-OPTIONS': case 'SQUAD-OPTIONS': case 'SINGLE_PURSE-OPTIONS': 
 	case 'TOP-SOLD_TEAM-OPTIONS': case 'GOOGLY-OPTIONS': case 'PROFILE_STATS-OPTIONS': case 'LOF_REMAINING_PURSE-OPTIONS': case 'LOF_TOP_SOLD_TEAM-OPTIONS': 
 	case'SQUAD_PLAYER-OPTIONS': case 'FF_PLAYERPROFILE-OPTIONS': case 'FF_TOP_SOLD_TEAM-OPTIONS': case 'LOF_SQUAD_SIZE_CATEGORY_WISE_-OPTIONS': 
-	case 'LT_PLAYERPROFILE-OPTIONS': case 'LT_PP_STATS-OPTIONS': case 'LOF_SQUAD-OPTIONS': case 'FLIPPER-OPTIONS':
+	case 'LT_PLAYERPROFILE-OPTIONS': case 'LT_PP_STATS-OPTIONS': case 'LOF_SQUAD-OPTIONS': case 'FLIPPER-OPTIONS': case "ZONE-PLAYER-OPTIONS":
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
  			
@@ -924,6 +939,46 @@ function addItemsToList(whatToProcess, dataToProcess)
 			row = tbody.insertRow(tbody.rows.length);
 			
 			switch(whatToProcess){
+				case "ZONE-PLAYER-OPTIONS":
+					select = document.createElement('select');
+					select.style = 'width:100px';
+					select.id = 'selectShowData';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = 'EAST ZONE';
+					option.text = 'EAST ZONE';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'WEST ZONE';
+					option.text = 'WEST ZONE';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'NORTH ZONE';
+					option.text = 'NORTH ZONE';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'SOUTH ZONE';
+					option.text = 'SOUTH ZONE';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'CENTRAL ZONE';
+					option.text = 'CENTRAL ZONE';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'U19';
+					option.text = 'UNDER 19';
+					select.appendChild(option);
+					
+					select.setAttribute('onchange',"processUserSelection(this)");
+					row.insertCell(cellCount).appendChild(select);
+					cellCount = cellCount + 1;
+					break;
 				case 'SINGLE_PURSE-OPTIONS':
 				switch ($('#selected_broadcaster').val().toUpperCase()) {
 					case 'HANDBALL': case 'ISPL':
@@ -1266,6 +1321,10 @@ function addItemsToList(whatToProcess, dataToProcess)
 			case 'LT_PP_STATS-OPTIONS':
 				option.name = 'populate_lt_playerprofile_stats_btn';
 			    option.value = 'Populate Playerprofile Lt Stats';
+				break;
+			case "ZONE-PLAYER-OPTIONS":
+				option.name = 'populate_zonePlayer_stats_btn';
+			    option.value = 'Populate zonePlayer Stats';
 				break;
 				
 			case'SQUAD-OPTIONS':
