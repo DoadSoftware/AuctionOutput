@@ -118,6 +118,10 @@
 			    <label class="col-sm-4 col-form-label text-left">Port Number: ${session_port} </label>
 			    <label class="col-sm-4 col-form-label text-left">Broadcaster: ${session_selected_broadcaster} </label>
 			    
+			    <label id="player_name" class="col-sm-4 col-form-label text-left">NAME :</label>
+			    <label id="player_status" class="col-sm-4 col-form-label text-left">STATUS :</label>
+			    <label id="player_last_year_team" class="col-sm-4 col-form-label text-left">LAST YEAR TEAM :</label>
+			    
 			    <!--
 			    <div class="left">
 			  	<button style="background-color:#f44336;color:#FEFEFE;" class="btn btn-sm" type="button"
