@@ -33,6 +33,7 @@ import com.auction.containers.Configurations;
 import com.auction.containers.Data;
 import com.auction.containers.Scene;
 import com.auction.model.Auction;
+import com.auction.model.Flipper;
 import com.auction.model.NameSuper;
 import com.auction.model.Player;
 import com.auction.model.Team;
@@ -66,6 +67,7 @@ public class IndexController
 	public static long last_match_time_stamp = 0;
 	
 	List<NameSuper> session_nameSupers = new ArrayList<NameSuper>();
+	List<Flipper> session_flipper = new ArrayList<Flipper>();
 	List<Team> session_team = new ArrayList<Team>();
 	List<Player> session_player = new ArrayList<Player>();
 	
@@ -276,6 +278,8 @@ public class IndexController
 	@SuppressWarnings("unchecked")
 	public <T> List<T> GetSpecificDataList(String whatToProcess) throws IOException {
 		switch (whatToProcess) {
+		case "FLIPPER_GRAPHICS-OPTIONS":
+			return (List<T>) session_flipper;
 		case "NAMESUPER_GRAPHICS-OPTIONS":
 		    return (List<T>) session_nameSupers;
 		case "PLAYERPROFILE_GRAPHICS-OPTIONS": case "FF_PLAYERPROFILE_GRAPHICS-OPTIONS": case "LT_PLAYERPROFILE_GRAPHICS-OPTIONS":
@@ -290,6 +294,7 @@ public class IndexController
 
 	public void getDataFromDB()
 	{
+		session_flipper = auctionService.getFlipper();
 		session_nameSupers = auctionService.getNameSupers();
 		session_team = auctionService.getTeams();
 		session_player = auctionService.getAllPlayer();

@@ -158,6 +158,13 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#expiry_message").hide();
 			processAuctionProcedures('NAMESUPER_GRAPHICS-OPTIONS');
 			break;
+		case 'x':
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			processAuctionProcedures('FLIPPER_GRAPHICS-OPTIONS');
+			break;	
+		
 		case 'm': //LT ICONIC PPLAYERS
 			processAuctionProcedures('POPULATE-LT_ICONIC_PLAYERS');
 			break;
@@ -302,7 +309,7 @@ function processUserSelection(whichInput)
 	case 'populate_single_purse_btn': case 'curr_bid_section': case 'populate_googly_purse_btn': case 'populate_profile_stats_btn': case 'populate_single_purse_btn': 
 	case 'curr_bid_section': case 'populate_lof_remaining_purse_btn': case 'populate_Lof_Top_Sold_team_btn': case "populate_squad_Player_btn": 
 	case 'populate_squad_size_category_wise_btn': case 'populate_ff_playerprofile_btn': case 'populate_ff_Top_Sold_team_btn': case 'populate_lt_playerprofile_btn':
-	case 'populate_lt_playerprofile_stats_btn': case 'populate_Lof_squad_btn':
+	case 'populate_lt_playerprofile_stats_btn': case 'populate_Lof_squad_btn': case 'populate_flipper_btn':
 		processWaitingButtonSpinner('START_WAIT_TIMER');
 		switch ($(whichInput).attr('name')) {
 		case 'curr_bid_section':
@@ -310,6 +317,9 @@ function processUserSelection(whichInput)
 			break;
 		case 'populate_namesuper_btn':
 			processAuctionProcedures('POPULATE-L3-NAMESUPER');
+			break;
+		case 'populate_flipper_btn':
+			processAuctionProcedures('POPULATE-L3-FLIPPER');
 			break;
 		case 'populate_namesuper_player_btn':
 			processAuctionProcedures('POPULATE-L3-NAMESUPER-PLAYER');
@@ -417,11 +427,23 @@ function processAuctionProcedures(whatToProcess)
 		valueToProcess = $('#matchFileTimeStamp').val();
 		break;
 	case 'POPULATE-L3-NAMESUPER':
+		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'ISPL_VIZ':
 			valueToProcess = '/Default/LT'+ ',' + $('#selectNameSuper option:selected').val();
+			break;
 		case 'VIZ_ISPL_2024':
 			valueToProcess = $('#selectNameSuper option:selected').val();
+			break;
+		}
 		break;
+	case 'POPULATE-L3-FLIPPER':
+		switch ($('#selected_broadcaster').val().toUpperCase()) {
+		case 'VIZ_ISPL_2024':
+			valueToProcess = $('#selectFlipper option:selected').val();
+			break;
+		}
+		break;
+	
 		
 	case 'POPULATE-PLAYERPROFILE_FF':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
@@ -613,6 +635,10 @@ function processAuctionProcedures(whatToProcess)
 				addItemsToList('NAMESUPER-OPTIONS',data);
 				match_data = data;
 				break;
+			case 'FLIPPER_GRAPHICS-OPTIONS':
+				addItemsToList('FLIPPER-OPTIONS',data);
+				match_data = data;
+				break;
 			case 'NAMESUPER_PLAYER_GRAPHICS-OPTIONS':
 				addItemsToList('NAMESUPER_PLAYER-OPTIONS',data);
 				addItemsToList('POPULATE-PLAYER',data);
@@ -677,7 +703,7 @@ function processAuctionProcedures(whatToProcess)
 			case 'POPULATE-RTM_ENABLED': case 'POPULATE-GOOGLY_POWER': case 'POPULATE-PROFILE_STATS': case 'POPULATE-LOF_REMAINING_PURSE':
 			case 'POPULATE-LOF_TOP_SOLD': case 'POPULATE-LOF_TEAM_TOP_SOLD': case "POPULATE-SQUAD-PLAYER": case 'POPULATE-PLAYERPROFILE_FF':
 			case 'POPULATE-LOF_REMAINING_SLOT': case 'POPULATE-LOF_SQUAD_SIZE': case 'POPULATE-LOF_RTM_REMAINING': case 'POPULATE-LOF_SQUAD_SIZE_CATEGORY_WISE':
-			case 'POPULATE-LOF_SQUAD': case 'POPULATE-LOF_SQUAD_REMAIN':
+			case 'POPULATE-LOF_SQUAD': case 'POPULATE-LOF_SQUAD_REMAIN': case 'POPULATE-L3-FLIPPER':
 			
 			case 'POPULATE-FF_RTM_AND_PURSE_REMAINING': case 'POPULATE-FF_TOP_BUYS_AUCTION': case 'POPULATE-FF_TOP_BUY_TEAM':
 			case 'POPULATE-FF_ICONIC_PLAYERS':
@@ -705,6 +731,9 @@ function processAuctionProcedures(whatToProcess)
 							break;
 						case 'POPULATE-L3-NAMESUPER':
 							processAuctionProcedures('ANIMATE-IN-NAMESUPER');	
+							break;
+						case 'POPULATE-L3-FLIPPER':
+							processAuctionProcedures('ANIMATE-IN-FLIPPER');	
 							break;
 						case 'POPULATE-TOP_SOLD': 
 							processAuctionProcedures('ANIMATE-IN-TOP_SOLD');				
@@ -869,7 +898,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 	case'NAMESUPER-OPTIONS': case 'NAMESUPER_PLAYER-OPTIONS':  case'PLAYERPROFILE-OPTIONS': case 'SQUAD-OPTIONS': case 'SINGLE_PURSE-OPTIONS': 
 	case 'TOP-SOLD_TEAM-OPTIONS': case 'GOOGLY-OPTIONS': case 'PROFILE_STATS-OPTIONS': case 'LOF_REMAINING_PURSE-OPTIONS': case 'LOF_TOP_SOLD_TEAM-OPTIONS': 
 	case'SQUAD_PLAYER-OPTIONS': case 'FF_PLAYERPROFILE-OPTIONS': case 'FF_TOP_SOLD_TEAM-OPTIONS': case 'LOF_SQUAD_SIZE_CATEGORY_WISE_-OPTIONS': 
-	case 'LT_PLAYERPROFILE-OPTIONS': case 'LT_PP_STATS-OPTIONS': case 'LOF_SQUAD-OPTIONS':
+	case 'LT_PLAYERPROFILE-OPTIONS': case 'LT_PP_STATS-OPTIONS': case 'LOF_SQUAD-OPTIONS': case 'FLIPPER-OPTIONS':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
  			
@@ -924,6 +953,26 @@ function addItemsToList(whatToProcess, dataToProcess)
 							break;
 						} 
 						break;
+				case 'FLIPPER-OPTIONS':
+					switch ($('#selected_broadcaster').val().toUpperCase()) {
+					case 'DOAD_IN_HOUSE_EVEREST': case 'DOAD_IN_HOUSE_VIZ': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
+						select = document.createElement('select');
+						select.style = 'width:130px';
+						select.id = 'selectFlipper';
+						select.name = select.id;
+						
+						dataToProcess.forEach(function(flip,index,arr1){
+							option = document.createElement('option');
+							option.value = flip.flipperId;
+							option.text = flip.prompt ;
+							select.appendChild(option);
+						});
+						
+						row.insertCell(cellCount).appendChild(select);
+						cellCount = cellCount + 1;
+						break;
+					}
+					break;
 				case'NAMESUPER-OPTIONS':
 					switch ($('#selected_broadcaster').val().toUpperCase()) {
 					case 'DOAD_IN_HOUSE_EVEREST': case 'DOAD_IN_HOUSE_VIZ': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
@@ -1184,7 +1233,10 @@ function addItemsToList(whatToProcess, dataToProcess)
 			option = document.createElement('input');
 		    option.type = 'button';
 			switch (whatToProcess) {
-			
+			case 'FLIPPER-OPTIONS':
+				option.name = 'populate_flipper_btn';
+			    option.value = 'Populate Flipper';
+				break;
 			case'NAMESUPER-OPTIONS':
 			    option.name = 'populate_namesuper_btn';
 			    option.value = 'Populate Namesuper';
