@@ -68,6 +68,7 @@
 			      		<option value="VIZ_ISPL_2024">VIZ ISPL 2024</option>
 			      	    <option value="ISPL_VIZ">ISPL VIZ</option>
 			          <option value="HANDBALL">HANDBALL</option>
+			          <option value="UTT_VIZ">UTT</option>
 			      </select>
 			    </div>
 			  </div>

@@ -492,14 +492,14 @@ function processAuctionProcedures(whatToProcess)
 		case 'ISPL_VIZ':
 			valueToProcess = '/Default/LT'+ ',' + $('#selectNameSuper option:selected').val();
 			break;
-		case 'VIZ_ISPL_2024':
+		case 'VIZ_ISPL_2024': case "UTT_VIZ":
 			valueToProcess = $('#selectNameSuper option:selected').val();
 			break;
 		}
 		break;
 	case 'POPULATE-L3-FLIPPER':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
-		case 'VIZ_ISPL_2024':
+		case 'VIZ_ISPL_2024': case "UTT_VIZ":
 			valueToProcess = $('#selectFlipper option:selected').val();
 			break;
 		}
@@ -508,21 +508,21 @@ function processAuctionProcedures(whatToProcess)
 		
 	case 'POPULATE-PLAYERPROFILE_FF':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
-		case 'VIZ_ISPL_2024':
+		case 'VIZ_ISPL_2024': case "UTT_VIZ":
 			valueToProcess = $('#selectPlayerName option:selected').val() + ',' + $('#selectShowProfileStats option:selected').val();
 			break;
 		}
 		break;
 	case 'POPULATE-PLAYERPROFILE_LT':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
-		case 'VIZ_ISPL_2024':
+		case 'VIZ_ISPL_2024': case "UTT_VIZ":
 			valueToProcess = $('#selectPlayerName option:selected').val() + ',' + $('#selectShowData option:selected').val();
 			break;
 		}
 		break;
 	case 'POPULATE-PLAYERPROFILE_LT_STATS': case 'POPULATE-ZONE_PLAYERS_STATS': case 'POPULATE-ZONEWISE_PLAYERS_SOLD':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
-		case 'VIZ_ISPL_2024':
+		case 'VIZ_ISPL_2024': case "UTT_VIZ":
 			valueToProcess = $('#selectShowData option:selected').val();
 			break;
 		}
@@ -539,7 +539,7 @@ function processAuctionProcedures(whatToProcess)
 		case 'ISPL_VIZ':
 			valueToProcess = '/Default/BidLt'+ ',' + $('#selectPlayerName option:selected').val();
 			break;
-		case 'VIZ_ISPL_2024':
+		case 'VIZ_ISPL_2024': case "UTT_VIZ":
 			valueToProcess = $('#selectPlayerName option:selected').val();
 			break;
 		}
@@ -555,7 +555,7 @@ function processAuctionProcedures(whatToProcess)
 		case 'ISPL_VIZ': 
 			valueToProcess = '/Default/Squad'+ ',' + $('#selectTeamName option:selected').val();
 			break;
-		case 'VIZ_ISPL_2024': 
+		case 'VIZ_ISPL_2024': case "UTT_VIZ": 
 			valueToProcess = $('#selectTeamName option:selected').val();
 			break;
 		}
@@ -573,7 +573,7 @@ function processAuctionProcedures(whatToProcess)
 		
 	case 'POPULATE-LOF_REMAINING_PURSE':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
-		case 'VIZ_ISPL_2024':
+		case 'VIZ_ISPL_2024': case "UTT_VIZ":
 			valueToProcess = $('#selectType option:selected').val();
 			break;	
 		}
@@ -581,21 +581,21 @@ function processAuctionProcedures(whatToProcess)
 	case 'POPULATE-LOF_TEAM_TOP_SOLD': case 'POPULATE-FF_TOP_BUY_TEAM': case 'POPULATE-LOF_SQUAD': case 'POPULATE-TEAM_CURR_BID':
 	case 'POPULATE-FF_FIVE_TOP_BUY_TEAM':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
-		case 'VIZ_ISPL_2024':
+		case 'VIZ_ISPL_2024': case "UTT_VIZ":
 			valueToProcess = $('#selectTeamName option:selected').val();
 			break;	
 		}
 		break;
 	case "POPULATE-SQUAD-PLAYER":
 		switch ($('#selected_broadcaster').val().toUpperCase()) {	
-		case 'VIZ_ISPL_2024': 
+		case 'VIZ_ISPL_2024': case "UTT_VIZ": 
 			valueToProcess = $('#selectTeamName option:selected').val();
 			break;
 		}
 		break;
 	case 'POPULATE-LOF_SQUAD_SIZE_CATEGORY_WISE':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {	
-		case 'VIZ_ISPL_2024': 
+		case 'VIZ_ISPL_2024': case "UTT_VIZ": 
 			valueToProcess = $('#selectTeamName option:selected').val();
 			break;
 		}
@@ -643,14 +643,14 @@ function processAuctionProcedures(whatToProcess)
 		break;
 	case 'POPULATE-GOOGLY_POWER':
 		switch ($('#selected_broadcaster').val().toUpperCase()){
-		case 'VIZ_ISPL_2024':
+		case 'VIZ_ISPL_2024': case "UTT_VIZ":
 			valueToProcess = $('#selectTeamName option:selected').val();
 			break;
 		}
 		break;
 	case 'POPULATE-PROFILE_STATS':
 		switch ($('#selected_broadcaster').val().toUpperCase()){
-		case 'VIZ_ISPL_2024':
+		case 'VIZ_ISPL_2024': case "UTT_VIZ":
 			valueToProcess = $('#selectProfileStats option:selected').val();
 			break;
 		}
@@ -984,7 +984,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 	case 'LT_PLAYERPROFILE-OPTIONS': case 'LT_PP_STATS-OPTIONS': case 'LOF_SQUAD-OPTIONS': case 'FLIPPER-OPTIONS': case "ZONE-PLAYER-OPTIONS":
 	case 'TEAM_CURRENT_BID-OPTIONS': case 'FF_TOP_FIVE_SOLD_TEAM-OPTIONS': case 'ZONEWISE_PLAYER_SOLD-OPTIONS':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
-		case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
+		case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case "UTT_VIZ":
  			
  			/*if(whatToProcess != 'PLAYERPROFILE-OPTIONS'){
 				$("#select_graphic_options_div").empty();
@@ -1066,7 +1066,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 				case 'FF_TOP_SOLD_TEAM-OPTIONS': case 'LOF_SQUAD_SIZE_CATEGORY_WISE_-OPTIONS': case 'LOF_SQUAD-OPTIONS': case 'TEAM_CURRENT_BID-OPTIONS':
 				case 'FF_TOP_FIVE_SOLD_TEAM-OPTIONS':
 					switch ($('#selected_broadcaster').val().toUpperCase()) {
-						case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
+						case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case "UTT_VIZ":
 							select = document.createElement('select');
 							select.id = 'selectTeamName';
 							select.name = select.id;
@@ -1080,7 +1080,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 						break;
 				case 'FLIPPER-OPTIONS':
 					switch ($('#selected_broadcaster').val().toUpperCase()) {
-					case 'DOAD_IN_HOUSE_EVEREST': case 'DOAD_IN_HOUSE_VIZ': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
+					case 'DOAD_IN_HOUSE_EVEREST': case 'DOAD_IN_HOUSE_VIZ': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case "UTT_VIZ":
 						select = document.createElement('select');
 						select.style = 'width:130px';
 						select.id = 'selectFlipper';
@@ -1100,7 +1100,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 					break;
 				case'NAMESUPER-OPTIONS':
 					switch ($('#selected_broadcaster').val().toUpperCase()) {
-					case 'DOAD_IN_HOUSE_EVEREST': case 'DOAD_IN_HOUSE_VIZ': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
+					case 'DOAD_IN_HOUSE_EVEREST': case 'DOAD_IN_HOUSE_VIZ': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case "UTT_VIZ":
 						select = document.createElement('select');
 						select.style = 'width:130px';
 						select.id = 'selectNameSuper';
@@ -1192,7 +1192,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 				break;
 			case 'PLAYERPROFILE-OPTIONS': case 'FF_PLAYERPROFILE-OPTIONS': case 'LT_PLAYERPROFILE-OPTIONS':
 				switch ($('#selected_broadcaster').val().toUpperCase()) {
-					case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
+					case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case "UTT_VIZ":
 						select = document.createElement('select');
 						select.id = 'selectPlayerName';
 						select.name = select.id;
@@ -1304,38 +1304,54 @@ function addItemsToList(whatToProcess, dataToProcess)
 				select.id = 'selectProfileStats';
 				select.name = select.id;
 				
-				option = document.createElement('option');
-				option.value = 'category';
-				option.text = 'Category';
-				select.appendChild(option);
+				switch($('#selected_broadcaster').val().toUpperCase()){
+					case "UTT_VIZ":
+						option = document.createElement('option');
+						option.value = 'freetext';
+						option.text = 'Franchise pick';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = 'prevteam';
+						option.text = 'Previous Team';
+						select.appendChild(option);
+						
+					break;
+					default:
+						option = document.createElement('option');
+						option.value = 'category';
+						option.text = 'Category';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = 'style';
+						option.text = 'Style';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = 'freetext';
+						option.text = 'Franchise pick';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = 'prevteam';
+						option.text = 'Previous Team';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = 'stats';
+						option.text = 'Stats';
+						select.appendChild(option);
 				
-				option = document.createElement('option');
-				option.value = 'style';
-				option.text = 'Style';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = 'freetext';
-				option.text = 'Franchise pick';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = 'prevteam';
-				option.text = 'Previous Team';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = 'stats';
-				option.text = 'Stats';
-				select.appendChild(option);
-				
+					break;
+				}
 				select.setAttribute('onchange',"processUserSelection(this)");
 				row.insertCell(cellCount).appendChild(select);
 				cellCount = cellCount + 1;
 				break;
 			case 'LOF_REMAINING_PURSE-OPTIONS':
 				switch ($('#selected_broadcaster').val().toUpperCase()) {
-				case 'VIZ_ISPL_2024':
+				case 'VIZ_ISPL_2024': case "UTT_VIZ":
 					select = document.createElement('select');
 					select.id = 'selectType';
 					select.name = select.id;
