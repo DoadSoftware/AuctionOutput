@@ -121,6 +121,7 @@ public class UTT_VIZ extends Scene{
 					data.setPlayer_id(Integer.valueOf(valueToProcess.split(",")[0]));
 					populatePlayerProfile(false,print_writer,whichSide,Integer.valueOf(valueToProcess.split(",")[0]), auctionService.getAllStats(),auction, 
 							session_curr_bid,auctionService, session_selected_broadcaster);
+					TimeUnit.MILLISECONDS.sleep(500);
 					processPreview(print_writer, whatToProcess, whichSide);
 					break;
 					
@@ -4287,22 +4288,25 @@ public class UTT_VIZ extends Scene{
 		String previewCommand = "";
 		
 		if(whichSide == 1) {
-			if(data.isData_on_screen() && !whatToProcess.equalsIgnoreCase("POPULATE-FF-PLAYERPROFILE")) {
-				previewCommand = "anim_ScoreBug$In_Out 2.500 anim_ScoreBug$In_Out$Essentials 2.500 anim_ScoreBug$In_Out$Essentials$In 1.500 "
-						+ "anim_ScoreBug$In_Out$Left_Data 1.500 anim_ScoreBug$In_Out$Left_Data$In 1.500 anim_ScoreBug$In_Out$RightData 2.500 anim_ScoreBug$In_Out$RightData$Gavel 2.500 "
-						+ "anim_ScoreBug$In_Out$RightData$Gavel$in 2.500 ";
-			}
-			if(isProfileStatsOnScreen) {
-				previewCommand =previewCommand + "anim_ScoreBug$In_Out$Stats 2.500 anim_ScoreBug$In_Out$Stats$In 1.760 ";
-			}
 			switch (whatToProcess.toUpperCase()) {
 			case "POPULATE-FF-PLAYERPROFILE":
-				previewCommand = "anim_ScoreBug$In_Out 2.500 anim_ScoreBug$In_Out$Essentials 2.500 anim_ScoreBug$In_Out$Essentials$In 1.500 "
-						+ "anim_ScoreBug$In_Out$Left_Data 1.500 anim_ScoreBug$In_Out$Left_Data$In 1.500 anim_ScoreBug$In_Out$RightData 2.500 anim_ScoreBug$In_Out$RightData$Gavel 2.500 "
-						+ "anim_ScoreBug$In_Out$RightData$Gavel$in 2.500";
+				previewCommand = previewCommand +  "anim_InfoBar$In_Out$CenterData 0.800 anim_InfoBar$In_Out$CenterData$Essentials 0.800 "
+						+ "anim_InfoBar$In_Out$CenterData$Essentials$In 0.800 anim_InfoBar$In_Out$CenterData$Image 0.800 anim_InfoBar$In_Out$CenterData$Image$In 0.800 "
+						+ "anim_InfoBar$In_Out$CenterData$Data 0.800 anim_InfoBar$In_Out$CenterData$Data$In 0.800 Shift_PositionX 0.800 ";
+				if(data.isBid_Start_or_not()) {
+					previewCommand += "anim_InfoBar$In_Out$CurrentBid 0.800 anim_InfoBar$In_Out$CurrentBid$In 0.800 ";
+				}				
+				if(data.getBid_result() != null && !data.getBid_result().isEmpty() && data.getBid_result().equalsIgnoreCase(AuctionUtil.RTM)) {
+					previewCommand += "anim_InfoBar$In_Out$RTM 0.800 anim_InfoBar$In_Out$RTM$In 0.800 ";
+				}
+				if(data.getBid_result()!=null && (data.getBid_result().equalsIgnoreCase(AuctionUtil.SOLD) || data.getBid_result().equalsIgnoreCase(AuctionUtil.RTM))) {
+					previewCommand += "anim_InfoBar$In_Out$Sold 0.800 anim_InfoBar$In_Out$Sold$In 0.800 ";
+				}else if(data.getBid_result()!= null && data.getBid_result().equalsIgnoreCase(AuctionUtil.UNSOLD)) {
+					previewCommand += "anim_InfoBar$In_Out$UnSold 0.800 anim_InfoBar$In_Out$UnSold$In 0.800 ";
+				}
 				break;
 			case "POPULATE-PROFILE_STATS": case "POPULATE-TEAM_CURR_BID":
-				previewCommand = previewCommand + "anim_ScoreBug$In_Out$Stats 2.500 anim_ScoreBug$In_Out$Stats$In 1.760";
+				previewCommand = previewCommand + "anim_InfoBar$In_Out$CenterData 0.800 anim_InfoBar$In_Out$CenterData$In 0.800";
 				break;
 			case "POPULATE-RTM_AVAILABLE":
 				previewCommand = previewCommand + "anim_RTM$In_Out 0.500 anim_RTM$In_Out$Essentials 0.500 anim_RTM$In_Out$Essentials$In 0.500 anim_RTM$In_Out$Text$In 0.500";
@@ -4341,9 +4345,20 @@ public class UTT_VIZ extends Scene{
 			}
 		}else {
 			if(data.isData_on_screen() && !whatToProcess.equalsIgnoreCase("POPULATE-FF-PLAYERPROFILE")) {
-				previewCommand = "anim_ScoreBug$In_Out 2.500 anim_ScoreBug$In_Out$Essentials 2.500 anim_ScoreBug$In_Out$Essentials$In 1.500 "
-						+ "anim_ScoreBug$In_Out$Left_Data 1.500 anim_ScoreBug$In_Out$Left_Data$In 1.500 anim_ScoreBug$In_Out$RightData 2.500 "
-						+ "anim_ScoreBug$In_Out$RightData$Gavel 2.500 anim_ScoreBug$In_Out$RightData$Gavel$in 2.500 ";
+				previewCommand = previewCommand +  "anim_InfoBar$In_Out$CenterData 0.800 anim_InfoBar$In_Out$CenterData$Essentials 0.800 "
+						+ "anim_InfoBar$In_Out$CenterData$Essentials$In 0.800 anim_InfoBar$In_Out$CenterData$Image 0.800 anim_InfoBar$In_Out$CenterData$Image$In 0.800 "
+						+ "anim_InfoBar$In_Out$CenterData$Data 0.800 anim_InfoBar$In_Out$CenterData$Data$In 0.800 Shift_PositionX 0.800 ";
+				if(data.isBid_Start_or_not()) {
+					previewCommand += "anim_InfoBar$In_Out$CurrentBid 0.800 anim_InfoBar$In_Out$CurrentBid$In 0.800 ";
+				}				
+				if(data.getBid_result() != null && !data.getBid_result().isEmpty() && data.getBid_result().equalsIgnoreCase(AuctionUtil.RTM)) {
+					previewCommand += "anim_InfoBar$In_Out$RTM 0.800 anim_InfoBar$In_Out$RTM$In 0.800 ";
+				}
+				if(data.getBid_result()!=null && (data.getBid_result().equalsIgnoreCase(AuctionUtil.SOLD) || data.getBid_result().equalsIgnoreCase(AuctionUtil.RTM))) {
+					previewCommand += "anim_InfoBar$In_Out$Sold 0.800 anim_InfoBar$In_Out$Sold$In 0.800 ";
+				}else if(data.getBid_result()!= null && data.getBid_result().equalsIgnoreCase(AuctionUtil.UNSOLD)) {
+					previewCommand += "anim_InfoBar$In_Out$UnSold 0.800 anim_InfoBar$In_Out$UnSold$In 0.800 ";
+				}
 			}
 			switch (which_graphics_onscreen.toUpperCase()) {
 			case "LOF_REMAINING_PURSE": case "LOF_TOP_SOLD": case "LOF_TEAM_TOP_SOLD": case "LOF_REMAINING_SLOT": case "LOF_SQUAD_SIZE": case "LOF_RTM_REMAINING":
@@ -4396,7 +4411,7 @@ public class UTT_VIZ extends Scene{
 				break;
 			}	
 		}
-		print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/Overlays " + "C:/Temp/Preview.jpg " + previewCommand + "\0");
+		print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/Overlays " + "C:/Temp/Preview.png " + previewCommand + "\0");
 		
 	}
 	public void processPreviewFullFrames(PrintWriter print_writer, String whatToProcess, int whichSide) {
