@@ -277,7 +277,7 @@
 <dependency>
     <groupId>org.springframework</groupId>
     <artifactId>spring-aspects</artifactId>
-    <version>4.1.4.RELEASE</version>
+    <version>6.2.1</version>
 </dependency>
 
 <!-- https://mvnrepository.com/artifact/org.springframework/spring-beans -->
