@@ -39,11 +39,6 @@ public class UTT_VIZ extends Scene{
 	private String base_path = "IMAGE*/Default/Essentials/Base/";
 	private String text_path = "IMAGE*/Default/Essentials/Text/";
 	
-	private String base_path_1 = "IMAGE*/Default/Essentials/Base1/";
-	private String text_path_1 = "IMAGE*/Default/Essentials/Text1/";
-	private String base_path_2 = "IMAGE*/Default/Essentials/Base2/";
-	private String text_path_2 = "IMAGE*/Default/Essentials/Text2/";
-	
 	private String logo_base = "IMAGE*/Default/Essentials/LogoBase/";
 	private String logo_path = "IMAGE*/Default/Essentials/TeamBadges/";
 	private String icon_path = "IMAGE*/Default/Essentials/Icons/";
@@ -72,7 +67,7 @@ public class UTT_VIZ extends Scene{
 	{
 		if(data.isData_on_screen()) {
 			if(data.isPlayer_sold_or_unsold() == false) {
-				populatePlayerProfile(true,print_writer, 2, data.getPlayer_id(),auctionService.getAllStats(), auction, 
+				populatePlayerProfile(true,print_writer, 1, data.getPlayer_id(),auctionService.getAllStats(), auction, 
 						session_curr_bid, auctionService, session_selected_broadcaster);
 			}
 			
@@ -543,7 +538,7 @@ public class UTT_VIZ extends Scene{
 					}
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Shift_PositionX START \0");
 					
-					if(data.getBid_result().equalsIgnoreCase(AuctionUtil.RTM)) {
+					if(data.getBid_result() != null && !data.getBid_result().isEmpty() && data.getBid_result().equalsIgnoreCase(AuctionUtil.RTM)) {
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_InfoBar$In_Out$RTM START \0");
 						which_data = "RTM";
 					}
@@ -1501,14 +1496,6 @@ public class UTT_VIZ extends Scene{
 		for(int i=auction.getPlayers().size()-1; i >= 0; i--) {
 			if(playerId == auction.getPlayers().get(i).getPlayerId()) {
 				
-				if(which_side == 2) {
-					String Container = data.getWithPlayerPhoto()==0 ? "$Without_Image" : "$With_Image";
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$CenterData$Side" + which_side + "$Select_Style*FUNCTION*Omo*vis_con SET "+data.getWithPlayerPhoto()+" \0");
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$CenterData$Side" + which_side + Container + "$TopTextGrp$txt_Name*GEOM*TEXT SET " + 
-							auction.getPlayersList().get(playerId - 1).getFull_name() + " \0");
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$CenterData$Side" + which_side + Container + "$TopTextGrp$txt_Age*GEOM*TEXT SET " + 
-							(auction.getPlayersList().get(playerId - 1).getAge()== null ? "-" : auction.getPlayersList().get(playerId - 1).getAge()) + " \0");
-				}
 				if(auction.getPlayers().get(i).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.BID)) {
 					data.setBid_Start_or_not(true);
 				}
@@ -1548,8 +1535,8 @@ public class UTT_VIZ extends Scene{
 		}
 	}
 	
-	public void populatePlayerProfile(boolean is_this_updating,PrintWriter print_writer,int which_side, int playerId,List<Statistics> stats, Auction auction, 
-			Auction session_curr_bid,AuctionService auctionService, String session_selected_broadcaster) throws InterruptedException 
+	public void populatePlayerProfile(boolean is_this_updating, PrintWriter print_writer, int which_side, int playerId, List<Statistics> stats, Auction auction, 
+			Auction session_curr_bid, AuctionService auctionService, String session_selected_broadcaster) throws InterruptedException 
 	{
 		if(session_curr_bid.getCurrentPlayers() != null) {
 			if(data.isData_on_screen() == true) {
@@ -1590,23 +1577,25 @@ public class UTT_VIZ extends Scene{
 			}
 		}
 		
-		if(is_this_updating == false) {	
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$CenterData$Side" + which_side + "$Select_Style*FUNCTION*Omo*vis_con SET "+data.getWithPlayerPhoto()+" \0");
-
-			String Container = data.getWithPlayerPhoto()==0 ? "$Without_Image" : "$With_Image";
+		if(is_this_updating == false) {
+			String Container = data.getWithPlayerPhoto()==0 ? "$Without_Image" : "$With_Image";;
+			
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$CenterData$Side" + which_side + "$Select_Style*FUNCTION*Omo*vis_con SET "
+					+ data.getWithPlayerPhoto() + "\0");
+			
+			if(data.getWithPlayerPhoto() == 1) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$CenterData$Side"+ which_side + Container + "$ImageGrp$ImageGrp_Out$"
+						+ "Noggi*TEXTURE*IMAGE SET "+ photo_path + auctionService.getAllPlayer().get(playerId - 1).getPhotoName() + AuctionUtil.PNG_EXTENSION + "\0");
+			}
 			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$CenterData$Side" + which_side + Container + "$TopTextGrp$txt_Name*GEOM*TEXT SET " + 
 					auctionService.getAllPlayer().get(playerId - 1).getFull_name() + " \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$CenterData$Side" + which_side + Container +  "$TopTextGrp$txt_Age*GEOM*TEXT SET " + 
-					(auctionService.getAllPlayer().get(playerId - 1).getAge()== null ? "-" : auctionService.getAllPlayer().get(playerId - 1).getAge()+" YEARS" ) + " \0");
-			
-			
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$CenterData$Side"+ which_side + Container + "$ImageGrp$ImageGrp_Out$Noggi*TEXTURE*IMAGE SET "+ photo_path + 
-					auctionService.getAllPlayer().get(playerId - 1).getPhotoName() + AuctionUtil.PNG_EXTENSION + "\0");
+					(auctionService.getAllPlayer().get(playerId - 1).getAge()== null ? "" : auctionService.getAllPlayer().get(playerId - 1).getAge()+" YEARS" ) + " \0");
 			
 			if(!auctionService.getAllPlayer().get(playerId - 1).getNationality().equalsIgnoreCase("INDIA")) {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$CenterData$Side"+ which_side + Container + "$BottomLine$Flag$img_Flag*TEXTURE*IMAGE SET "+ flag_path + 
-					auctionService.getAllPlayer().get(playerId - 1).getNationality() + AuctionUtil.PNG_EXTENSION + "\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$CenterData$Side"+ which_side + Container + "$BottomLine$Flag$"
+						+ "img_Flag*TEXTURE*IMAGE SET "+ flag_path + auctionService.getAllPlayer().get(playerId - 1).getNationality() + AuctionUtil.PNG_EXTENSION + "\0");
 
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$CenterData$Side" + which_side + Container +  
 						"$BottomLine$Flag$Select_Flag*FUNCTION*Omo*vis_con SET 1 \0");
