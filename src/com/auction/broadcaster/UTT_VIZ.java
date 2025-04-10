@@ -537,6 +537,7 @@ public class UTT_VIZ extends Scene{
 				
 				case "ANIMATE-IN-PLAYERPROFILE": 
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_InfoBar$In_Out$CenterData START \0");
+					System.out.println(data.isBid_Start_or_not());
 					if(data.isBid_Start_or_not()) {
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_InfoBar$In_Out$CurrentBid START \0");
 					}
@@ -544,6 +545,7 @@ public class UTT_VIZ extends Scene{
 					
 					if(data.getBid_result().equalsIgnoreCase(AuctionUtil.RTM)) {
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_InfoBar$In_Out$RTM START \0");
+						which_data = "RTM";
 					}
 					if(data.isPlayer_sold_or_unsold() == false) {
 						data.setBid_result("GAVEL");
@@ -1512,7 +1514,6 @@ public class UTT_VIZ extends Scene{
 				if(auction.getPlayers().get(i).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.BID)) {
 					data.setBid_Start_or_not(true);
 				}
-				
 				//Auction Result
 				if(auction.getPlayers().get(i).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD) || auction.getPlayers().get(i).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)) {
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$Right_Data$Side" + which_side + 
@@ -1562,8 +1563,19 @@ public class UTT_VIZ extends Scene{
 							if(data.getBid_result().equalsIgnoreCase(AuctionUtil.SOLD) || data.getBid_result().equalsIgnoreCase(AuctionUtil.RTM)) {
 								print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_Current_Bid START \0");
 								print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_InfoBar$Sold START \0");
-								print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_InfoBar$RTM START \0");
+								if(data.getBid_result().equalsIgnoreCase(AuctionUtil.RTM)) {
+									print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_InfoBar$In_Out$RTM START \0");
+									which_data = "RTM";
+								}
+								if(which_data.equalsIgnoreCase(AuctionUtil.SOLD)) {
+									print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_InfoBar$In_Out$RTM CONTINUE \0");
+									which_data = "";
+								}
 							}else if(data.getBid_result().equalsIgnoreCase(AuctionUtil.UNSOLD)) {
+								if(which_data.equalsIgnoreCase(AuctionUtil.RTM)) {
+									print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_InfoBar$In_Out$RTM CONTINUE \0");
+									which_data = "";
+								}
 								print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_InfoBar$UnSold START \0");
 							}
 						}
