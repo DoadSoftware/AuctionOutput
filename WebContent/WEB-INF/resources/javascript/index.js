@@ -539,8 +539,11 @@ function processAuctionProcedures(whatToProcess)
 		case 'ISPL_VIZ':
 			valueToProcess = '/Default/BidLt'+ ',' + $('#selectPlayerName option:selected').val();
 			break;
-		case 'VIZ_ISPL_2024': case "UTT_VIZ":
+		case 'VIZ_ISPL_2024':
 			valueToProcess = $('#selectPlayerName option:selected').val();
+			break;
+		case "UTT_VIZ":
+			valueToProcess = $('#selectPlayerName option:selected').val()+','+$('#selectShowData option:selected').val();
 			break;
 		}
 		break;
@@ -1202,6 +1205,27 @@ function addItemsToList(whatToProcess, dataToProcess)
 						$(select).select2();
 						cellCount = cellCount + 1;
 						
+						if($('#selected_broadcaster').val().toUpperCase()==='UTT_VIZ'){
+							
+							select = document.createElement('select');
+							select.style = 'width:150px';
+							select.id = 'selectShowData';
+							select.name = select.id;
+							
+							option = document.createElement('option');
+							option.value = 'With_Photo';
+							option.text = 'With Photo';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'WithOut_Photo';
+							option.text = 'WithOut Photo';
+							select.appendChild(option);
+							
+							select.setAttribute('onchange',"processUserSelection(this)");
+							row.insertCell(cellCount).appendChild(select);
+							cellCount = cellCount + 1;
+						}
 						switch(whatToProcess){
 							case 'FF_PLAYERPROFILE-OPTIONS':
 								select = document.createElement('select');

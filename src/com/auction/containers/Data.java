@@ -6,7 +6,7 @@ public class Data {
 	private boolean player_sold_or_unsold;
 	private boolean bid_Start_or_not = false;
 	private String bid_result;
-	private int player_id;
+	private int player_id,withPlayerPhoto = 0;
 	private int whichside = 1;
 	private int previousBid;
 
@@ -66,4 +66,11 @@ public class Data {
 		this.bid_result = bid_result;
 	}
 
+	public int getWithPlayerPhoto() {
+		return withPlayerPhoto;
+	}
+
+	public void setWithPlayerPhoto(int withPlayerPhoto) {
+		this.withPlayerPhoto = withPlayerPhoto;
+	}
 }
