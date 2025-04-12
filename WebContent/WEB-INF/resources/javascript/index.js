@@ -77,11 +77,17 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processAuctionProcedures('POPULATE-FF_TOP_BUYS_AUCTION');
 			break;
 		case 't': //FF 5 TOP BUY AUCTION
-			$("#captions_div").hide();
-			$("#cancel_match_setup_btn").hide();
-			$("#expiry_message").hide();
-			addItemsToList('GRAPHICS-FF_FIVE_TOP_BUYS_AUCTION',null);
-			//processAuctionProcedures('POPULATE-FF_FIVE_TOP_BUYS_AUCTION');
+			switch ($('#selected_broadcaster').val()){
+			case 'UTT_VIZ':
+				$("#captions_div").hide();
+				$("#cancel_match_setup_btn").hide();
+				$("#expiry_message").hide();
+				addItemsToList('GRAPHICS-FF_FIVE_TOP_BUYS_AUCTION',null);
+				break;
+			default://ISPL
+				processAuctionProcedures('POPULATE-FF_FIVE_TOP_BUYS_AUCTION');
+				break;
+			}
 			break;	
 		
 		case 'F7': // FF TOP BUY TEAMS
@@ -101,7 +107,16 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processAuctionProcedures('POPULATE-RTM_AVAILABLE');
 			break;
 		case '8': //POP UP RTM ENABLED
-			processAuctionProcedures('POPULATE-RTM_ENABLED');
+			switch ($('#selected_broadcaster').val()){
+			case 'UTT_VIZ':
+				if(confirm('Are You Sure To Animate Out? ') == true){
+					processAuctionProcedures('ANIMATE-OUT-RTM_AVAILABLE');	
+				}
+				break;
+			default://ISPL
+				processAuctionProcedures('POPULATE-RTM_ENABLED');
+				break;
+			}
 			break
 			
 		case 'c': //SCORE BUG Which Team Current Bid
@@ -1287,13 +1302,13 @@ function addItemsToList(whatToProcess, dataToProcess)
 								select.name = select.id;
 								
 								option = document.createElement('option');
-								option.value = 'without';
-								option.text = 'WithOut Stats';
+								option.value = 'with';
+								option.text = 'With Stats';
 								select.appendChild(option);
 								
 								option = document.createElement('option');
-								option.value = 'with';
-								option.text = 'With Stats';
+								option.value = 'without';
+								option.text = 'WithOut Stats';
 								select.appendChild(option);
 								
 								select.setAttribute('onchange',"processUserSelection(this)");
@@ -1384,8 +1399,18 @@ function addItemsToList(whatToProcess, dataToProcess)
 				switch($('#selected_broadcaster').val().toUpperCase()){
 					case "UTT_VIZ":
 						option = document.createElement('option');
-						option.value = 'freetext';
-						option.text = 'Franchise pick';
+						option.value = 'rank';
+						option.text = 'Rank';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = 'style';
+						option.text = 'Style';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = 'bio';
+						option.text = 'Bio';
 						select.appendChild(option);
 						
 						option = document.createElement('option');
