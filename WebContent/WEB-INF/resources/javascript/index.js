@@ -1321,8 +1321,13 @@ function addItemsToList(whatToProcess, dataToProcess)
 								select.name = select.id;
 								
 								option = document.createElement('option');
-								option.value = 'with';
-								option.text = 'With Stats';
+								option.value = 'with_data';
+								option.text = 'Rank & Style';
+								select.appendChild(option);
+								
+								option = document.createElement('option');
+								option.value = 'with_info';
+								option.text = 'Info';
 								select.appendChild(option);
 								
 								option = document.createElement('option');
@@ -1415,13 +1420,13 @@ function addItemsToList(whatToProcess, dataToProcess)
 				select.name = select.id;
 				
 				option = document.createElement('option');
-				option.value = 'with';
-				option.text = 'With Stats';
+				option.value = 'with_info';
+				option.text = 'Info';
 				select.appendChild(option);
 				
 				option = document.createElement('option');
-				option.value = 'without';
-				option.text = 'WithOut Stats';
+				option.value = 'with_data';
+				option.text = 'Rank & Style';
 				select.appendChild(option);
 				
 				select.setAttribute('onchange',"processUserSelection(this)");
