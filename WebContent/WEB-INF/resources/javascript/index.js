@@ -48,9 +48,6 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case '1':
 			processAuctionProcedures('POPULATE-CURR_BID');
 			break;
-		case '2':
-			processAuctionProcedures('POPULATE-RTM_PLAYER');
-			break;
 			
 		case 'F1':
 			$("#captions_div").hide();
@@ -790,7 +787,7 @@ function processAuctionProcedures(whatToProcess)
 			
 			case 'POPULATE-FF-PLAYERPROFILE': case 'POPULATE-SQUAD': case 'POPULATE-REMAINING_PURSE_ALL': case 'POPULATE-SINGLE_PURSE': case 'POPULATE-TOP_SOLD':
 			case 'POPULATE-L3-NAMESUPER': case 'POPULATE-TOP_SOLD_TEAM': case 'POPULATE-IDENT': 
-			case 'POPULATE-CURR_BID': case 'POPULATE-RTM_AVAILABLE': case 'POPULATE-RTM_PLAYER':
+			case 'POPULATE-CURR_BID': case 'POPULATE-RTM_AVAILABLE':
 			case 'POPULATE-RTM_ENABLED': case 'POPULATE-GOOGLY_POWER': case 'POPULATE-PROFILE_STATS': case 'POPULATE-LOF_REMAINING_PURSE':
 			case 'POPULATE-LOF_TOP_SOLD': case 'POPULATE-LOF_TEAM_TOP_SOLD': case "POPULATE-SQUAD-PLAYER": case 'POPULATE-PLAYERPROFILE_FF':
 			case 'POPULATE-LOF_REMAINING_SLOT': case 'POPULATE-LOF_SQUAD_SIZE': case 'POPULATE-LOF_RTM_REMAINING': case 'POPULATE-LOF_SQUAD_SIZE_CATEGORY_WISE':
@@ -802,16 +799,13 @@ function processAuctionProcedures(whatToProcess)
 			case 'POPULATE-LT_ICONIC_PLAYERS': case 'POPULATE-PLAYERPROFILE_LT': case 'POPULATE-PLAYERPROFILE_LT_STATS': case 'POPULATE-ZONE_PLAYERS_STATS':
 			case 'POPULATE-ZONEWISE_PLAYERS_SOLD':
 			
-				if(whatToProcess == 'POPULATE-RTM_ENABLED' || whatToProcess == 'POPULATE-CURR_BID' || whatToProcess == 'POPULATE-RTM_PLAYER')	{
+				if(whatToProcess == 'POPULATE-RTM_ENABLED' || whatToProcess == 'POPULATE-CURR_BID')	{
 					switch(whatToProcess){
 						case 'POPULATE-RTM_ENABLED':
 							processAuctionProcedures('ANIMATE-IN-RTM_ENABLED');
 							break;
 						case 'POPULATE-CURR_BID':
 							processAuctionProcedures('ANIMATE-IN-CURR_BID');
-							break;
-						case 'POPULATE-RTM_PLAYER':
-							processAuctionProcedures('ANIMATE-IN-RTM_PLAYER');
 							break;
 					}
 				}else{
