@@ -386,7 +386,7 @@ public class UTT_VIZ extends Scene{
 					}
 					side2ValueToProcess = valueToProcess;
 					which_data = valueToProcess.split(",")[0];
-					which_team = valueToProcess.split(",")[1];
+					which_team = "WithTeam";
 					populateFFFiveTopBuysAuction(print_writer, whichSideNotProfile, auction,auctionService,session_selected_broadcaster);
 					processPreviewFullFrames(print_writer, whatToProcess, whichSideNotProfile);
 					break;
