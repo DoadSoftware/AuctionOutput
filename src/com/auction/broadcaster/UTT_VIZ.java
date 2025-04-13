@@ -973,6 +973,8 @@ public class UTT_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide + "$Team_Details$3_Column$List2$0$txt_Name*GEOM*TEXT SET SQUAD SIZE\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide + "$Team_Details$3_Column$List3$0$txt_Name*GEOM*TEXT SET RTM REM.\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide + "$Team_Details$3_Column$List4$0$txt_Name*GEOM*TEXT SET PURSE REM.\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide + "$Team_Details$3_Column$List4$0$Select_LineNumber"
+				+ "*FUNCTION*Omo*vis_con SET 1\0");
 		
 		for(Team tm : auction.getTeam()) {
 			row++;
