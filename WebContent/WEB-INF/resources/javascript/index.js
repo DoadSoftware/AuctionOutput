@@ -67,6 +67,13 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#expiry_message").hide();
 			processAuctionProcedures('SQUAD_GRAPHICS-OPTIONS');
 			break;
+		case 'c': //FF SQUAD
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			processAuctionProcedures('FLIPPER_SQUAD_GRAPHICS-OPTIONS');
+			break;
+			
 		case 'F4': //FF IDENT
 			processAuctionProcedures('POPULATE-IDENT');
 			break;
@@ -210,7 +217,11 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 'x':
 			switch ($('#selected_broadcaster').val()){
 			case 'UTT_VIZ':
-				processAuctionProcedures('POPULATE-L3-FLIPPER');
+				$("#captions_div").hide();
+				$("#cancel_match_setup_btn").hide();
+				$("#expiry_message").hide();
+				addItemsToList('FLIPPER-OPTIONS',null);
+				//processAuctionProcedures('POPULATE-L3-FLIPPER');
 				break;
 			default://ISPL
 				$("#captions_div").hide();
@@ -394,6 +405,7 @@ function processUserSelection(whichInput)
 	case 'populate_squad_size_category_wise_btn': case 'populate_ff_playerprofile_btn': case 'populate_ff_Top_Sold_team_btn': case 'populate_lt_playerprofile_btn':
 	case 'populate_lt_playerprofile_stats_btn': case 'populate_Lof_squad_btn': case 'populate_flipper_btn': case 'populate_zonePlayer_stats_btn':
 	case 'populate_team_curr_bid_btn': case 'populate_ff_Top_Five_Sold_team_btn': case 'populate_zonewisePlayer_sold_btn':case "populate_profile_Change_stats_btn":
+	case 'populate_flipper_squad_btn':
 		processWaitingButtonSpinner('START_WAIT_TIMER');
 		switch ($(whichInput).attr('name')) {
 		case 'curr_bid_section':
@@ -427,7 +439,9 @@ function processUserSelection(whichInput)
 		case 'populate_zonewisePlayer_sold_btn':
 			processAuctionProcedures('POPULATE-ZONEWISE_PLAYERS_SOLD');
 			break;
-			
+		case 'populate_flipper_squad_btn':
+			processAuctionProcedures('POPULATE-FLIPPER_SQUAD');
+			break;
 		case 'populate_squad_btn':
 			processAuctionProcedures('POPULATE-SQUAD');
 			break;
@@ -540,7 +554,7 @@ function processAuctionProcedures(whatToProcess)
 		break;
 	case 'POPULATE-L3-FLIPPER':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
-		case 'VIZ_ISPL_2024':
+		case 'VIZ_ISPL_2024': case "UTT_VIZ":
 			valueToProcess = $('#selectFlipper option:selected').val();
 			break;
 		}
@@ -588,7 +602,7 @@ function processAuctionProcedures(whatToProcess)
 			break;
 		}
 		break;
-	case 'POPULATE-SQUAD':
+	case 'POPULATE-SQUAD': case 'POPULATE-FLIPPER_SQUAD':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'HANDBALL':
 			valueToProcess = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_Handball_Auction_2023/Scenes/Squad.sum' + ',' + $('#selectTeamName option:selected').val();
@@ -783,6 +797,12 @@ function processAuctionProcedures(whatToProcess)
 				addItemsToList('POPULATE-TEAM',data);
 				match_data = data;
 				break;
+			case 'FLIPPER_SQUAD_GRAPHICS-OPTIONS':
+				addItemsToList('FLIPPER_SQUAD-OPTIONS',data);
+				addItemsToList('POPULATE-TEAM',data);
+				match_data = data;
+				break;
+				
 			case 'TOP-SOLD_TEAM_GRAPHICS-OPTIONS':
 				addItemsToList('TOP-SOLD_TEAM-OPTIONS',data);
 				addItemsToList('POPULATE-TEAM',data);
@@ -826,7 +846,7 @@ function processAuctionProcedures(whatToProcess)
 				break;
 			
 			case 'POPULATE-FF-PLAYERPROFILE': case 'POPULATE-SQUAD': case 'POPULATE-REMAINING_PURSE_ALL': case 'POPULATE-SINGLE_PURSE': case 'POPULATE-TOP_SOLD':
-			case 'POPULATE-L3-NAMESUPER': case 'POPULATE-TOP_SOLD_TEAM': case 'POPULATE-IDENT': 
+			case 'POPULATE-L3-NAMESUPER': case 'POPULATE-TOP_SOLD_TEAM': case 'POPULATE-IDENT': case 'POPULATE-FLIPPER_SQUAD':
 			case 'POPULATE-CURR_BID': case 'POPULATE-RTM_AVAILABLE': case 'POPULATE-RTM_PLAYER': case "POPULATE-PROFILE_STATS_CHANGE":
 			case 'POPULATE-RTM_ENABLED': case 'POPULATE-GOOGLY_POWER': case 'POPULATE-PROFILE_STATS': case 'POPULATE-LOF_REMAINING_PURSE':
 			case 'POPULATE-LOF_TOP_SOLD': case 'POPULATE-LOF_TEAM_TOP_SOLD': case "POPULATE-SQUAD-PLAYER": case 'POPULATE-PLAYERPROFILE_FF':
@@ -878,6 +898,9 @@ function processAuctionProcedures(whatToProcess)
 							break;
 						case 'POPULATE-SQUAD':
 							processAuctionProcedures('ANIMATE-IN-SQUAD');				
+							break;
+						case 'POPULATE-FLIPPER_SQUAD':
+							processAuctionProcedures('ANIMATE-IN-FLIPPER_SQUAD');				
 							break;
 						case 'POPULATE-FF-PLAYERPROFILE':
 							processAuctionProcedures('ANIMATE-IN-PLAYERPROFILE');				
@@ -1050,7 +1073,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 	case'SQUAD_PLAYER-OPTIONS': case 'FF_PLAYERPROFILE-OPTIONS': case 'FF_TOP_SOLD_TEAM-OPTIONS': case 'LOF_SQUAD_SIZE_CATEGORY_WISE_-OPTIONS': 
 	case 'LT_PLAYERPROFILE-OPTIONS': case 'LT_PP_STATS-OPTIONS': case 'LOF_SQUAD-OPTIONS': case 'FLIPPER-OPTIONS': case "ZONE-PLAYER-OPTIONS":
 	case 'TEAM_CURRENT_BID-OPTIONS': case 'FF_TOP_FIVE_SOLD_TEAM-OPTIONS': case 'ZONEWISE_PLAYER_SOLD-OPTIONS':case "GRAPHICS-FF_FIVE_TOP_BUYS_AUCTION":
-	case 'PROFILE_FF_STATS-OPTIONS':
+	case 'PROFILE_FF_STATS-OPTIONS': case 'FLIPPER_SQUAD-OPTIONS':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case "UTT_VIZ":
  			
@@ -1147,7 +1170,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 					break;
 				case 'SQUAD-OPTIONS': case 'TOP-SOLD_TEAM-OPTIONS': case 'GOOGLY-OPTIONS': case 'LOF_TOP_SOLD_TEAM-OPTIONS': case'SQUAD_PLAYER-OPTIONS':
 				case 'FF_TOP_SOLD_TEAM-OPTIONS': case 'LOF_SQUAD_SIZE_CATEGORY_WISE_-OPTIONS': case 'LOF_SQUAD-OPTIONS': case 'TEAM_CURRENT_BID-OPTIONS':
-				case 'FF_TOP_FIVE_SOLD_TEAM-OPTIONS':
+				case 'FF_TOP_FIVE_SOLD_TEAM-OPTIONS': case 'FLIPPER_SQUAD-OPTIONS':
 					switch ($('#selected_broadcaster').val().toUpperCase()) {
 						case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case "UTT_VIZ":
 							select = document.createElement('select');
@@ -1189,6 +1212,25 @@ function addItemsToList(whatToProcess, dataToProcess)
 							option.text = flip.prompt ;
 							select.appendChild(option);
 						});
+						
+						row.insertCell(cellCount).appendChild(select);
+						cellCount = cellCount + 1;
+						break;
+					case "UTT_VIZ":
+						select = document.createElement('select');
+						select.style = 'width:130px';
+						select.id = 'selectFlipper';
+						select.name = select.id;
+						
+						option = document.createElement('option');
+						option.value = 'top_buys';
+						option.text = 'Top Buys';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = 'remain_purse';
+						option.text = 'Purse Remaining';
+						select.appendChild(option);
 						
 						row.insertCell(cellCount).appendChild(select);
 						cellCount = cellCount + 1;
@@ -1573,7 +1615,10 @@ function addItemsToList(whatToProcess, dataToProcess)
 				option.name = 'populate_zonewisePlayer_sold_btn';
 			    option.value = 'Populate zoneWisePlayer Sold';
 				break;
-				
+			case 'FLIPPER_SQUAD-OPTIONS':
+				 option.name = 'populate_flipper_squad_btn';
+			    option.value = 'Populate Squad';
+				break;
 			case'SQUAD-OPTIONS':
 			    option.name = 'populate_squad_btn';
 			    option.value = 'Populate Squad';
