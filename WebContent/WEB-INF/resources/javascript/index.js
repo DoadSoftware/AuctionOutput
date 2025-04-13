@@ -1463,12 +1463,12 @@ function addItemsToList(whatToProcess, dataToProcess)
 						option.text = 'Bio';
 						select.appendChild(option);
 						
-						option = document.createElement('option');
+						/*option = document.createElement('option');
 						option.value = 'prevteam';
 						option.text = 'Previous Team';
-						select.appendChild(option);
+						select.appendChild(option);*/
 						
-					break;
+						break;
 					default:
 						option = document.createElement('option');
 						option.value = 'category';
