@@ -208,10 +208,17 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processAuctionProcedures('NAMESUPER_GRAPHICS-OPTIONS');
 			break;
 		case 'x':
-			$("#captions_div").hide();
-			$("#cancel_match_setup_btn").hide();
-			$("#expiry_message").hide();
-			processAuctionProcedures('FLIPPER_GRAPHICS-OPTIONS');
+			switch ($('#selected_broadcaster').val()){
+			case 'UTT_VIZ':
+				processAuctionProcedures('POPULATE-L3-FLIPPER');
+				break;
+			default://ISPL
+				$("#captions_div").hide();
+				$("#cancel_match_setup_btn").hide();
+				$("#expiry_message").hide();
+				processAuctionProcedures('FLIPPER_GRAPHICS-OPTIONS');
+				break;
+			}
 			break;	
 		
 		case 'm': //LT ICONIC PPLAYERS
@@ -533,7 +540,7 @@ function processAuctionProcedures(whatToProcess)
 		break;
 	case 'POPULATE-L3-FLIPPER':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
-		case 'VIZ_ISPL_2024': case "UTT_VIZ":
+		case 'VIZ_ISPL_2024':
 			valueToProcess = $('#selectFlipper option:selected').val();
 			break;
 		}
@@ -1170,7 +1177,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 						break;
 				case 'FLIPPER-OPTIONS':
 					switch ($('#selected_broadcaster').val().toUpperCase()) {
-					case 'DOAD_IN_HOUSE_EVEREST': case 'DOAD_IN_HOUSE_VIZ': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case "UTT_VIZ":
+					case 'DOAD_IN_HOUSE_EVEREST': case 'DOAD_IN_HOUSE_VIZ': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
 						select = document.createElement('select');
 						select.style = 'width:130px';
 						select.id = 'selectFlipper';

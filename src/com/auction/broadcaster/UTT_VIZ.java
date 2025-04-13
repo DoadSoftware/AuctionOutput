@@ -209,8 +209,7 @@ public class UTT_VIZ extends Scene{
 						whichSideNotProfile = 1;
 					}
 					side2ValueToProcess = valueToProcess;
-					populateFlipper(print_writer, whichSideNotProfile,Integer.valueOf(valueToProcess.split(",")[0]), auction,auctionService, 
-							session_selected_broadcaster);
+					populateFlipper(print_writer, whichSideNotProfile, auction, auctionService, session_selected_broadcaster);
 					processPreviewLowerThirds(print_writer, whatToProcess, whichSideNotProfile);
 					break;
 				case "POPULATE-L3-NAMESUPER":
@@ -618,17 +617,17 @@ public class UTT_VIZ extends Scene{
 					break;
 				//Flipper
 				case "ANIMATE-IN-FLIPPER":
-					if(which_graphics_onscreen.isEmpty()) {
-						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Flipper$In_Out$Essentials START \0");
-						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Flipper$In_Out$Header START \0");
-						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Flipper$In_Out$Text START \0");
-					}else {
-						ChangeOn(print_writer, which_graphics_onscreen, whatToProcess);
-						populateFlipper(print_writer, 1, Integer.valueOf(side2ValueToProcess.split(",")[0]), auction, 
-								auctionService, session_selected_broadcaster);
-						TimeUnit.MILLISECONDS.sleep(2000);
-						cutBack(print_writer, which_graphics_onscreen, whatToProcess);
-					}
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Flipper START \0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Scroll START \0");
+//					if(which_graphics_onscreen.isEmpty()) {
+//						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Flipper START \0");
+//						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Scroll START \0");
+//					}else {
+//						ChangeOn(print_writer, which_graphics_onscreen, whatToProcess);
+//						populateFlipper(print_writer, 1, auction, auctionService, session_selected_broadcaster);
+//						TimeUnit.MILLISECONDS.sleep(2000);
+//						cutBack(print_writer, which_graphics_onscreen, whatToProcess);
+//					}
 					which_graphics_onscreen = whatToProcess.replace("ANIMATE-IN-", "");
 					break;
 					
@@ -1060,15 +1059,11 @@ public class UTT_VIZ extends Scene{
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird SHOW 0\0");
 						break;
 					case "FLIPPER":
-						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Flipper$In_Out$Header CONTINUE \0");
-						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Flipper$In_Out$Text CONTINUE \0");
-						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Flipper$In_Out$Essentials CONTINUE \0");
+						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Flipper CONTINUE \0");
 						which_graphics_onscreen = "";
 						TimeUnit.MILLISECONDS.sleep(2000);
-						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Flipper SHOW 0\0");
+						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Flipper SHOW 0\0");
 						break;
-						
-						
 //					case "SINGLE_PURSE": case "TOP_SOLD": case "NAMESUPER": case "TOP_SOLD_TEAM":
 //						AnimateOutGraphics(print_writer, whatToProcess.toUpperCase());
 //						which_graphics_onscreen = "";
@@ -3350,14 +3345,23 @@ public class UTT_VIZ extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$CenterData$Side" + whichSide + "$BottomLine$txt_BasePrice*GEOM*TEXT SET \0");
 		}
 	}
-	public void populateFlipper(PrintWriter print_writer, int whichSide, int FlipperId, Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
+	public void populateFlipper(PrintWriter print_writer, int whichSide, Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
 		
-		for(Flipper flipper : auctionService.getFlipper()) {
-			if(flipper.getFlipperId() == FlipperId) {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Flipper$Header$Side"+whichSide+"$TextGrp$HeaderAll$NameGrp$txt_Title"
-						+ "*GEOM*TEXT SET " + flipper.getHeader() + "\0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Flipper$Text$Side"+whichSide+"$TextGrp$txt_Text*GEOM*TEXT SET "+flipper.getSubLine()+"\0");
-			}
+		int row=0;
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Flipper$Data$Header$txt_Header*GEOM*TEXT SET " + "TOP BUYS" + "\0");
+		List<Player> top_sold = new ArrayList<Player>();
+		if(auction.getPlayers() != null) {
+			top_sold = auction.getPlayers();
+		}
+		Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
+		for(Player plyr : top_sold) {
+			row = row + 1;
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Flipper$Data$Text_All$Scroll$" + row + "$txt_Name*GEOM*TEXT SET " + plyr.getFull_name() + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Flipper$Data$Text_All$Scroll$" + row + "$Flag$Select_Flag*FUNCTION*Omo*vis_con SET 1\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Flipper$Data$Text_All$Scroll$" + row + "$Flag$FlagAll$img_Flag"
+					+ "*TEXTURE*IMAGE SET " + flag_path + plyr.getNationality().trim().replace(" ", "_") + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Flipper$Data$Text_All$Scroll$" + row + "$txt_Value*GEOM*TEXT SET " + 
+					AuctionFunctions.ConvertToLakh(plyr.getSoldForPoints()) + "L TOKENS" + "\0");
 		}
 	}
 	public void populateTopSoldTeam(PrintWriter print_writer,String viz_scene,int team_id , Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
@@ -4001,7 +4005,7 @@ public class UTT_VIZ extends Scene{
 		System.out.println("whatToProcess  "+whatToProcess);
 		if (whatToProcess.equalsIgnoreCase("POPULATE-PROFILE_STATS_CHANGE")) {
 			previewCommand = "anim_Profile 2.800 anim_Profile$In_Out 1.700 anim_Profile$In_Out$Essentials 1.700 anim_Profile$In_Out$Essentials$In 1.400 "
-					+ "anim_Profile$In_Out$Profile  2.800 anim_Profile$In_Out$Profile$In  2.800 Change_Stats 0.700 ";	
+					+ "anim_Profile$In_Out$Profile 2.800 anim_Profile$In_Out$Profile$In 2.800 Change_Stats 0.700 Change_Stats$Side1 0.700 Change_Stats$Side2 0.700 ";	
 		}
 		if(whichSide == 1) {
 			switch (whatToProcess.toUpperCase()) {
