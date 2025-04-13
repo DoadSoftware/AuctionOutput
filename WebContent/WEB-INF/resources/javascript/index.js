@@ -437,7 +437,7 @@ function processUserSelection(whichInput)
 			processAuctionProcedures('POPULATE-PROFILE_STATS');
 			break;
 		case "populate_profile_Change_stats_btn":
-			processAuctionProcedures('POPULATE-PROFILE_STATS_CHNAGE');
+			processAuctionProcedures('POPULATE-PROFILE_STATS_CHANGE');
 			break;
 		case 'populate_lof_remaining_purse_btn':
 			processAuctionProcedures('POPULATE-LOF_REMAINING_PURSE');
@@ -701,7 +701,7 @@ function processAuctionProcedures(whatToProcess)
 			break;
 		}
 		break;
-	case "POPULATE-PROFILE_STATS_CHNAGE":
+	case "POPULATE-PROFILE_STATS_CHANGE":
 		switch ($('#selected_broadcaster').val().toUpperCase()){
 		case 'VIZ_ISPL_2024': case "UTT_VIZ":
 			valueToProcess = $('#selectShowProfileStats option:selected').val();
@@ -820,7 +820,7 @@ function processAuctionProcedures(whatToProcess)
 			
 			case 'POPULATE-FF-PLAYERPROFILE': case 'POPULATE-SQUAD': case 'POPULATE-REMAINING_PURSE_ALL': case 'POPULATE-SINGLE_PURSE': case 'POPULATE-TOP_SOLD':
 			case 'POPULATE-L3-NAMESUPER': case 'POPULATE-TOP_SOLD_TEAM': case 'POPULATE-IDENT': 
-			case 'POPULATE-CURR_BID': case 'POPULATE-RTM_AVAILABLE': case 'POPULATE-RTM_PLAYER': case "POPULATE-PROFILE_STATS_CHNAGE":
+			case 'POPULATE-CURR_BID': case 'POPULATE-RTM_AVAILABLE': case 'POPULATE-RTM_PLAYER': case "POPULATE-PROFILE_STATS_CHANGE":
 			case 'POPULATE-RTM_ENABLED': case 'POPULATE-GOOGLY_POWER': case 'POPULATE-PROFILE_STATS': case 'POPULATE-LOF_REMAINING_PURSE':
 			case 'POPULATE-LOF_TOP_SOLD': case 'POPULATE-LOF_TEAM_TOP_SOLD': case "POPULATE-SQUAD-PLAYER": case 'POPULATE-PLAYERPROFILE_FF':
 			case 'POPULATE-LOF_REMAINING_SLOT': case 'POPULATE-LOF_SQUAD_SIZE': case 'POPULATE-LOF_RTM_REMAINING': case 'POPULATE-LOF_SQUAD_SIZE_CATEGORY_WISE':
@@ -887,7 +887,7 @@ function processAuctionProcedures(whatToProcess)
 						case 'POPULATE-PROFILE_STATS':
 							processAuctionProcedures('ANIMATE-IN-PROFILE_STATS');
 							break;
-						case "POPULATE-PROFILE_STATS_CHNAGE":
+						case "POPULATE-PROFILE_STATS_CHANGE":
 							 processAuctionProcedures('ANIMATE-IN-PROFILE_STATS_CHANGE');
 							 break;
 						case 'POPULATE-LOF_REMAINING_PURSE':

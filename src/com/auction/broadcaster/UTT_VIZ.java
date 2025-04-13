@@ -117,7 +117,7 @@ public class UTT_VIZ extends Scene{
 		case "POPULATE-FF_TOP_BUY_TEAM": case "POPULATE-LOF_SQUAD_SIZE_CATEGORY_WISE": case "POPULATE-FF_ICONIC_PLAYERS": case "POPULATE-LT_ICONIC_PLAYERS": 
 		case "POPULATE-PLAYERPROFILE_LT": case "POPULATE-PLAYERPROFILE_LT_STATS": case "POPULATE-LOF_SQUAD": case "POPULATE-LOF_SQUAD_REMAIN":
 		case "POPULATE-L3-FLIPPER": case "POPULATE-ZONE_PLAYERS_STATS": case "POPULATE-TEAM_CURR_BID": case "POPULATE-FF_FIVE_TOP_BUYS_AUCTION":
-		case "POPULATE-FF_FIVE_TOP_BUY_TEAM": case "POPULATE-ZONEWISE_PLAYERS_SOLD":case "POPULATE-PROFILE_STATS_CHNAGE":
+		case "POPULATE-FF_FIVE_TOP_BUY_TEAM": case "POPULATE-ZONEWISE_PLAYERS_SOLD":case "POPULATE-PROFILE_STATS_CHANGE":
 			switch (session_selected_broadcaster.toUpperCase()) {
 			case "UTT_VIZ":
 				if(which_graphics_onscreen != "") {
@@ -157,7 +157,7 @@ public class UTT_VIZ extends Scene{
 							auction, auctionService, session_selected_broadcaster);
 					processPreviewFullFrames(print_writer, whatToProcess, whichSideNotProfile);
 					break;
-				case "POPULATE-PROFILE_STATS_CHNAGE":
+				case "POPULATE-PROFILE_STATS_CHANGE":
 					if(!which_graphics_onscreen.isEmpty()) {
 						whichSideNotProfile = 2;
 					}else {
@@ -165,6 +165,7 @@ public class UTT_VIZ extends Scene{
 					}
 					side2ValueToProcess = valueToProcess;
 					populateProfileChange(print_writer,whichSideNotProfile);
+					processPreviewFullFrames(print_writer, whatToProcess, whichSideNotProfile);
 					break;
 				case "POPULATE-REMAINING_PURSE_ALL":
 					if(!which_graphics_onscreen.isEmpty()) {
@@ -3862,9 +3863,12 @@ public class UTT_VIZ extends Scene{
 						+ "anim_InfoBar$In_Out$CenterData$Data 0.800 anim_InfoBar$In_Out$CenterData$Data$In 0.800 Shift_PositionX 0.800 ";
 				if(data.isBid_Start_or_not()) {
 					previewCommand += "anim_InfoBar$In_Out$CurrentBid 0.800 anim_InfoBar$In_Out$CurrentBid$In 0.800 ";
-				}				
+				}
 				if(data.getBid_result()!=null && (data.getBid_result().equalsIgnoreCase(AuctionUtil.SOLD) || data.getBid_result().equalsIgnoreCase(AuctionUtil.RTM))) {
 					previewCommand += "anim_InfoBar$In_Out$Sold 0.800 anim_InfoBar$In_Out$Sold$In 0.800 ";
+					if(data.getBid_result().equalsIgnoreCase(AuctionUtil.RTM)) {
+						previewCommand += "anim_InfoBar$In_Out$Sold 0.800 anim_InfoBar$In_Out$RTM$In 0.800 ";
+					}
 				}else if(data.getBid_result()!= null && data.getBid_result().equalsIgnoreCase(AuctionUtil.UNSOLD)) {
 					previewCommand += "anim_InfoBar$In_Out$Unsold 0.800 anim_InfoBar$In_Out$UnSold$In 0.800 ";
 				}
@@ -3917,9 +3921,12 @@ public class UTT_VIZ extends Scene{
 						+ "anim_InfoBar$In_Out$CenterData$Data 0.800 anim_InfoBar$In_Out$CenterData$Data$In 0.800 Shift_PositionX 0.800 ";
 				if(data.isBid_Start_or_not()) {
 					previewCommand += "anim_InfoBar$In_Out$CurrentBid 0.800 anim_InfoBar$In_Out$CurrentBid$In 0.800 ";
-				}				
+				}
 				if(data.getBid_result()!=null && (data.getBid_result().equalsIgnoreCase(AuctionUtil.SOLD) || data.getBid_result().equalsIgnoreCase(AuctionUtil.RTM))) {
 					previewCommand += "anim_InfoBar$In_Out$Sold 0.800 anim_InfoBar$In_Out$Sold$In 0.800 ";
+					if(data.getBid_result().equalsIgnoreCase(AuctionUtil.RTM)) {
+						previewCommand += "anim_InfoBar$In_Out$Sold 0.800 anim_InfoBar$In_Out$RTM$In 0.800 ";
+					}
 				}else if(data.getBid_result()!= null && data.getBid_result().equalsIgnoreCase(AuctionUtil.UNSOLD)) {
 					previewCommand += "anim_InfoBar$In_Out$Unsold 0.800 anim_InfoBar$In_Out$UnSold$In 0.800 ";
 				}
@@ -3953,7 +3960,7 @@ public class UTT_VIZ extends Scene{
 			
 			switch (whatToProcess.toUpperCase()) {
 			case "POPULATE-PROFILE_STATS": case "POPULATE-TEAM_CURR_BID":
-				previewCommand = previewCommand+ "Change$Stats$Change_Out 1.000 Change$Stats$Change_In 1.300";
+				previewCommand = previewCommand+ "Change_InfoBar$BottomStats 0.800 Change_InfoBar$$BottomStats$In 0.800";
 				break;
 			case "POPULATE-LOF_REMAINING_PURSE": case "POPULATE-LOF_REMAINING_SLOT": case "POPULATE-LOF_SQUAD_SIZE": case "POPULATE-LOF_RTM_REMAINING":
 			case "POPULATE-ZONEWISE_PLAYERS_SOLD":
@@ -3980,22 +3987,25 @@ public class UTT_VIZ extends Scene{
 	}
 	public void processPreviewFullFrames(PrintWriter print_writer, String whatToProcess, int whichSide) {
 		String previewCommand = "";
-		
+		System.out.println("whatToProcess  "+whatToProcess);
+		if (whatToProcess.equalsIgnoreCase("POPULATE-PROFILE_STATS_CHANGE")) {
+			previewCommand = "anim_Profile 2.800 anim_Profile$In_Out 1.700 anim_Profile$In_Out$Essentials 1.700 anim_Profile$In_Out$Essentials$In 1.400 "
+					+ "anim_Profile$In_Out$Profile  2.800 anim_Profile$In_Out$Profile$In  2.800 Change_Stats 0.700 ";	
+		}
 		if(whichSide == 1) {
 			switch (whatToProcess.toUpperCase()) {
 			case "POPULATE-IDENT":
 				previewCommand = "anim_Ident 2.500 anim_Ident$In_Out 1.600 anim_Ident$In_Out$Ident 1.600 anim_Ident$In_Out$Ident$In 1.600 ";
 				break;
 			case "POPULATE-PLAYERPROFILE_FF":
-				previewCommand = "anim_Profile 2.800 anim_Profile$In_Out 1.700 anim_Profile$In_Out$Essentials 1.700 anim_Profile$In_Out$Essentials$In 1.400 "
-						+ "anim_Profile$In_Out$Profile 1.700 anim_Profile$In_Out$Profile$In 1.700";
+				previewCommand = "anim_Profile 2.800 anim_Profile$In_Out 2.800 anim_Profile$In_Out$Essentials 2.800 anim_Profile$In_Out$Essentials$In 2.800 "
+						+ "anim_Profile$In_Out$Profile 2.800 anim_Profile$In_Out$Profile$In 2.800";
 				break;
-			case "POPULATE-FF_FIVE_TOP_BUYS_AUCTION": 	
-			case "POPULATE-SQUAD":
+			case "POPULATE-FF_FIVE_TOP_BUYS_AUCTION": case "POPULATE-SQUAD": case "POPULATE-FF_FIVE_TOP_BUY_TEAM":
 				previewCommand = "anim_Fullframes 2.800 anim_Fullframes$In_Out$Essentials$In 1.400 anim_Fullframes$In_Out$Header$In 1.000 ";
 				
 				switch (whatToProcess.toUpperCase()) {
-				case "POPULATE-FF_FIVE_TOP_BUYS_AUCTION":
+				case "POPULATE-FF_FIVE_TOP_BUYS_AUCTION": case "POPULATE-FF_FIVE_TOP_BUY_TEAM":
 					previewCommand = previewCommand + "anim_Fullframes$In_Out$Top5_Buys$In 1.500";
 					break;
 				case "POPULATE-SQUAD":
@@ -4007,12 +4017,12 @@ public class UTT_VIZ extends Scene{
 		}else {
 			
 			switch (which_graphics_onscreen.toUpperCase()) {
-			case "FF_FIVE_TOP_BUYS_AUCTION": case "SQUAD":
+			case "FF_FIVE_TOP_BUYS_AUCTION": case "SQUAD": case "POPULATE-FF_FIVE_TOP_BUY_TEAM":
 				
 				previewCommand = "Change_Fullframes 1.700 Change_Fullframes$Header 1.000";
 				
 				switch (which_graphics_onscreen.toUpperCase()) {
-				case "FF_FIVE_TOP_BUYS_AUCTION":
+				case "FF_FIVE_TOP_BUYS_AUCTION": case "POPULATE-FF_FIVE_TOP_BUY_TEAM":
 					previewCommand = "Change_Fullframes$Top5_Buys 1.500 Change_Fullframes$Top5_Buys$Change_Out 0.600 Change_Fullframes$Top5_Buys$Change_In 1.500";
 					break;
 				case "SQUAD":
@@ -4024,7 +4034,7 @@ public class UTT_VIZ extends Scene{
 			}
 			
 			switch (whatToProcess.toUpperCase()) {
-			case "POPULATE-FF_FIVE_TOP_BUYS_AUCTION":
+			case "POPULATE-FF_FIVE_TOP_BUYS_AUCTION": case "POPULATE-FF_FIVE_TOP_BUY_TEAM":
 				previewCommand = previewCommand + "Change_Fullframes$Top5_Buys 1.500 Change_Fullframes$Top5_Buys$Change_Out 0.600 "
 						+ "Change_Fullframes$Top5_Buys$Change_In 1.500";
 				break;
