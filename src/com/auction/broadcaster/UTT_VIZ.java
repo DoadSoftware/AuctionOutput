@@ -592,7 +592,7 @@ public class UTT_VIZ extends Scene{
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Profile$Side1$Stats$Side" + whichSideNotProfile2 + "$Style1$1$txt_StatHead"
 					+ "*GEOM*TEXT SET WR - WEEK 15\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Profile$Side1$Stats$Side" + whichSideNotProfile2 + "$Style1$1$txt_StatValue"
-					+ "*GEOM*TEXT SET " + Statistics.getRank() + "\0");
+					+ "*GEOM*TEXT SET " + (Statistics.getRank().equalsIgnoreCase("NA") ? "-" : Statistics.getRank()) + "\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Profile$Side1$Stats$Side" + whichSideNotProfile2 + "$Style1$2$txt_StatHead"
 					+ "*GEOM*TEXT SET STYLE\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Profile$Side1$Stats$Side" + whichSideNotProfile2 + "$Style1$2$txt_StatValue"
@@ -759,7 +759,7 @@ public class UTT_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Ident$Main$Ident$Header$Header_Out$Header_In$Text$txt_Title1*GEOM*TEXT SET " 
 				+ "PLAYER" + "\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Ident$Main$Ident$Header$Header_Out$Header_In$Text$txt_Title2*GEOM*TEXT SET " 
-				+ "AUCTION 2025" + "\0");
+				+ "AUCTION" + "\0");
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Ident$Main$Ident$Text$Info1_Out$Info1_in$txt_Info1*GEOM*TEXT SET " 
 				+ "ULTIMATE TABLE TENNIS SEASON 6" + "\0");
@@ -801,7 +801,7 @@ public class UTT_VIZ extends Scene{
 					
 					if(auction.getPlayers().get(i).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD)) {
 						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$Right_Data$Side" + which_side + "$Sold$Price$txt_Sold"
-								+ "*GEOM*TEXT SET " + "SOLD TO" + " \0");
+								+ "*GEOM*TEXT SET " + "SOLD" + " \0");
 					}else if(auction.getPlayers().get(i).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)) {
 						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$Right_Data$Side" + which_side + "$Sold$Price$txt_Sold"
 								+ "*GEOM*TEXT SET " + "RTM" + " \0");
@@ -897,7 +897,7 @@ public class UTT_VIZ extends Scene{
 			AuctionService auctionService, String session_selected_broadcaster) throws InterruptedException 
 	{
 		player_id = playerId;
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Profile$Side" + which_side + "$Header$txt_Header*GEOM*TEXT SET " + "AUCTION 2025" + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Profile$Side" + which_side + "$Header$txt_Header*GEOM*TEXT SET " + "PLAYER AUCTION" + "\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Profile$Side" + which_side + "$Header$txt_PlayerName*GEOM*TEXT SET " 
 				+ auctionService.getAllPlayer().get(playerId - 1).getFull_name() + "\0");
 		
@@ -933,13 +933,13 @@ public class UTT_VIZ extends Scene{
 			switch (show_stats) {
 			case "with_data":
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Profile$Side" + which_side + "$Stats$Side1$SelectStyle*FUNCTION*Omo*vis_con SET 0\0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Profile$Side" + which_side + "$Stats$Side1$Style1$1$txt_StatHead"
-						+ "*GEOM*TEXT SET WR - WEEK 15\0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Profile$Side" + which_side + "$Stats$Side1$Style1$1$txt_StatValue"
-						+ "*GEOM*TEXT SET " + Statistics.getRank() + "\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Profile$Side" + which_side + "$Stats$Side1$Style1$2$txt_StatHead"
-						+ "*GEOM*TEXT SET STYLE\0");
+						+ "*GEOM*TEXT SET WR - WEEK 15\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Profile$Side" + which_side + "$Stats$Side1$Style1$2$txt_StatValue"
+						+ "*GEOM*TEXT SET " + (Statistics.getRank().equalsIgnoreCase("NA") ? "-" : Statistics.getRank()) + "\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Profile$Side" + which_side + "$Stats$Side1$Style1$1$txt_StatHead"
+						+ "*GEOM*TEXT SET STYLE\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Profile$Profile$Side" + which_side + "$Stats$Side1$Style1$1$txt_StatValue"
 						+ "*GEOM*TEXT SET " + Statistics.getStyle() + " " + Statistics.getGrip() + "\0");
 				break;
 			case "with_info":
@@ -962,7 +962,7 @@ public class UTT_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$Main$Header$Header_Out$Header_In$Side" + whichSide + "$Style2$"
 				+ "txt_TeamFirstName*GEOM*TEXT SET " + "PLAYER" + " \0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$Main$Header$Header_Out$Header_In$Side" + whichSide + "$Style2$"
-				+ "txt_TeamLastName*GEOM*TEXT SET " + "AUCTION 2025" + " \0");
+				+ "txt_TeamLastName*GEOM*TEXT SET " + "AUCTION" + " \0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$Main$Header$Header_Out$Header_In$Side" + whichSide + "$Style2$" 
 				+ "img-TeamBadges*TEXTURE*IMAGE SET " + logo_path + "EVENT" + "\0");
 		
@@ -975,6 +975,7 @@ public class UTT_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide + "$Team_Details$3_Column$List4$0$txt_Name*GEOM*TEXT SET PURSE REM.\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide + "$Team_Details$3_Column$List4$0$Select_LineNumber"
 				+ "*FUNCTION*Omo*vis_con SET 1\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide + "$Team_Details$3_Column$List4$0$txt_Info*GEOM*TEXT SET IN LAKH\0");
 		
 		for(Team tm : auction.getTeam()) {
 			row++;
@@ -1415,7 +1416,7 @@ public class UTT_VIZ extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$CenterBottomStats$TextGrp$Side" + whichSide + "$txt_Info1*GEOM*TEXT SET " + 
 					"WORLD RANK - WEEK 15 " + "\0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$CenterBottomStats$TextGrp$Side" + whichSide + "$txt_Info2*GEOM*TEXT SET " + 
-					stats.getRank() + "\0");
+					(stats.getRank().equalsIgnoreCase("NA") ? "-" : stats.getRank()) + "\0");
 			break;
 		case "STYLE":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_InfoBar$Shift_ForStats$CenterBottomStats$TextGrp$Side" + whichSide + "$txt_Info1*GEOM*TEXT SET \0");
@@ -1485,10 +1486,10 @@ public class UTT_VIZ extends Scene{
 				previewCommand = previewCommand + "anim_InfoBar$In_Out$BottomStats 0.800 anim_InfoBar$In_Out$BottomStats$In 0.800";
 				break;
 			case "POPULATE-RTM_AVAILABLE":
-				previewCommand = previewCommand +  "anim_InfoBar$In_Out$CenterData 0.800 anim_InfoBar$In_Out$CenterData$Essentials 0.800 "
-						+ "anim_InfoBar$In_Out$CenterData$Essentials$In 0.800 anim_InfoBar$In_Out$CenterData$Image 0.800 anim_InfoBar$In_Out$CenterData$Image$In 0.800 "
-						+ "anim_InfoBar$In_Out$CenterData$Data 0.800 anim_InfoBar$In_Out$CenterData$Data$In 0.800 Shift_PositionX 0.800 "
-						+ "anim_InfoBar$In_Out$Sold 0.800 anim_InfoBar$In_Out$RTM$Logo 0.800 anim_InfoBar$In_Out$RTM$Essentials 0.800";
+				previewCommand = "anim_InfoBar$In_Out$CenterData 0.800 anim_InfoBar$In_Out$CenterData$Essentials 0.800 anim_InfoBar$In_Out$CenterData$Essentials$In 0.800 "
+						+ "anim_InfoBar$In_Out$CenterData$Image 0.800 anim_InfoBar$In_Out$CenterData$Image$In 0.800 anim_InfoBar$In_Out$CenterData$Data 0.800 "
+						+ "anim_InfoBar$In_Out$CenterData$Data$In 0.800 Shift_PositionX 0.800 anim_InfoBar$In_Out$Sold 0.800 anim_InfoBar$In_Out$RTM$Logo 0.800 "
+						+ "anim_InfoBar$In_Out$RTM$Logo$In 0.500 anim_InfoBar$In_Out$RTM$Essentials 0.800 anim_InfoBar$In_Out$RTM$Essentials$In 0.700";
 				break;
 			}
 		}else {
@@ -1614,7 +1615,7 @@ public class UTT_VIZ extends Scene{
 				
 			}
 		}
-		print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/Overlays " + "C:/Temp/Preview.jpg " + previewCommand + "\0");
+		print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/Overlays " + "C:/Temp/Preview.png " + previewCommand + "\0");
 	}
 	
 	public void processAnimation(PrintWriter print_writer, String animationName,String animationCommand, String which_broadcaster,int which_layer)
