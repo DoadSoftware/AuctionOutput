@@ -69,6 +69,7 @@
 			      	    <option value="ISPL_VIZ">ISPL VIZ</option>
 			          <option value="HANDBALL">HANDBALL</option>
 			          <option value="UTT_VIZ">UTT</option>
+			          <option value="MUMBAI_T20_VIZ">MUMBAI T20</option>
 			      </select>
 			    </div>
 			  </div>

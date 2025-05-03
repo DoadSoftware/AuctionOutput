@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.auction.broadcaster.Doad;
 import com.auction.broadcaster.ISPL;
 import com.auction.broadcaster.ISPL_VIZ;
+import com.auction.broadcaster.MUMBAI_T20_VIZ;
 import com.auction.broadcaster.UTT_VIZ;
 import com.auction.broadcaster.VIZ_ISPL_2024;
 import com.auction.containers.Configurations;
@@ -60,6 +61,7 @@ public class IndexController
 	public static ISPL_VIZ this_ispl_viz;
 	public static UTT_VIZ this_utt_viz;
 	public static VIZ_ISPL_2024 this_ispl_viz_2024;
+	public static MUMBAI_T20_VIZ this_mumbai_t20_viz;
 	public static PrintWriter print_writer;
 	public static String expiry_date = "2025-12-31";
 	public static String error_message = "";
@@ -151,6 +153,7 @@ public class IndexController
 			this_ispl = new ISPL();
 			this_ispl_viz = new ISPL_VIZ();
 			this_ispl_viz_2024 = new VIZ_ISPL_2024();
+			this_mumbai_t20_viz = new MUMBAI_T20_VIZ();
 			this_utt_viz = new UTT_VIZ();
 			session_selected_broadcaster = select_broadcaster;
 			selected_layer = which_layer;
@@ -183,7 +186,7 @@ public class IndexController
 //				print_writer.println("LAYER3*EVEREST*STAGE*DIRECTOR*Loop START;");
 				this_doad.which_graphics_onscreen = "BG";
 				break;
-			case "VIZ_ISPL_2024":case "UTT_VIZ":
+			case "VIZ_ISPL_2024":case "UTT_VIZ": case "MUMBAI_T20_VIZ":
 				scene.LoadScene("OVERLAYS", print_writer, session_Configurations);
 				scene.LoadScene("FULL-FRAMERS", print_writer, session_Configurations);
 				break;
@@ -261,6 +264,12 @@ public class IndexController
 				}
 				this_utt_viz.updateData(session_auction,session_curr_bid,auctionService,print_writer);
 				break;
+			case "MUMBAI_T20_VIZ":
+				if(this_mumbai_t20_viz.data.isBid_Start_or_not() == true) {
+					this_mumbai_t20_viz.data.setWhichside(2);
+				}
+				this_mumbai_t20_viz.updateData(session_auction,session_curr_bid,auctionService,print_writer);
+				break;
 				
 			}
 			return JSONObject.fromObject(session_auction).toString();
@@ -280,6 +289,9 @@ public class IndexController
 				break;
 			case "VIZ_ISPL_2024":
 				this_ispl_viz_2024.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
+				break;
+			case "MUMBAI_T20_VIZ":
+				this_mumbai_t20_viz.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
 				break;
 				
 			}
