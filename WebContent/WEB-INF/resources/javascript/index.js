@@ -571,14 +571,14 @@ function processAuctionProcedures(whatToProcess)
 	case 'POPULATE-PLAYERPROFILE_LT':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':
-			valueToProcess = $('#selectPlayerName option:selected').val() + ',' + $('#selectShowData option:selected').val();
+			valueToProcess = $('#selectPlayerName option:selected').val() + ',' + $('#selectShowData option:selected').val() + ',' + $('#PlayerData option:selected').val();
 			break;
 		}
 		break;
 	case 'POPULATE-PLAYERPROFILE_LT_STATS': case 'POPULATE-ZONE_PLAYERS_STATS': case 'POPULATE-ZONEWISE_PLAYERS_SOLD':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':
-			valueToProcess = $('#selectShowData option:selected').val();
+			valueToProcess = $('#selectShowData option:selected').val() + ',' + $('#PlayerData option:selected').val();
 			break;
 		}
 		break;
@@ -1394,34 +1394,58 @@ function addItemsToList(whatToProcess, dataToProcess)
 								select.id = 'selectShowData';
 								select.name = select.id;
 								
-								option = document.createElement('option');
-								option.value = 'category';
-								option.text = 'Category';
-								select.appendChild(option);
-								
-								option = document.createElement('option');
-								option.value = 'player';
-								option.text = 'Player';
-								select.appendChild(option);
-								
-								option = document.createElement('option');
-								option.value = 'thisyearteam';
-								option.text = 'This Year Team';
-								select.appendChild(option);
-								
-								option = document.createElement('option');
-								option.value = 'prevteam';
-								option.text = 'Previous Team';
-								select.appendChild(option);
-								
-								option = document.createElement('option');
-								option.value = 'stats';
-								option.text = 'Stats';
-								select.appendChild(option);
+							    ['category', 'player', 'thisyearteam', 'prevteam', 'stats'].forEach(value => {
+						            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
+								        return; // skip these options for Mumbai
+								    }
+						            const option = document.createElement('option');
+						            option.value = value;
+						            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
+						            select.appendChild(option);
+						        });
 								
 								select.setAttribute('onchange',"processUserSelection(this)");
-								row.insertCell(cellCount).appendChild(select);
+								row.insertCell(0).appendChild(select);
 								cellCount = cellCount + 1;
+								
+								/////
+							
+							    // Second cell: reserved for conditional dropdown
+							    const secCell = row.insertCell(1);
+							    secCell.id = 'Playerstats'; // So we can target it easily later
+							    cellCount++;
+							
+							    // Add event listener to the main dropdown
+							    $(select).on('change', function () {
+							        const selectedValue = this.value;
+							        const container = document.getElementById('Playerstats');
+							
+							        // Remove old dropdown if it exists
+							        const existing = document.getElementById('PlayerData');
+							        if (existing) existing.remove();
+							
+							        // Show second dropdown only if "stats" is selected
+							        if (selectedValue === 'stats') {
+							            const statsDropdown = document.createElement('select');
+							            statsDropdown.id = 'PlayerData';
+							            statsDropdown.name = 'PlayerData';
+							
+							            ['FC', 'LIST A', 'DT20'].forEach(value => {
+							                const option = document.createElement('option');
+							                option.value = value;
+							                option.text = value;
+							                option.style.fontWeight = 'bold';
+							                statsDropdown.appendChild(option);
+							            });
+							
+							            container.appendChild(statsDropdown);
+							        }
+							    });
+							
+							    // Trigger initial change in case default value is "stats"
+							    $(select).trigger('change');
+								
+								/////
 								break;
 						}
 						break;
@@ -1433,34 +1457,54 @@ function addItemsToList(whatToProcess, dataToProcess)
 				select.id = 'selectShowData';
 				select.name = select.id;
 				
-				option = document.createElement('option');
-				option.value = 'category';
-				option.text = 'Category';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = 'player';
-				option.text = 'Player';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = 'thisyearteam';
-				option.text = 'This Year Team';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = 'prevteam';
-				option.text = 'Previous Team';
-				select.appendChild(option);
-				
-				option = document.createElement('option');
-				option.value = 'stats';
-				option.text = 'Stats';
-				select.appendChild(option);
-				
+			    ['category', 'player', 'thisyearteam', 'prevteam', 'stats'].forEach(value => {
+		            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
+				        return; // skip these options for Mumbai
+				    }
+		            const option = document.createElement('option');
+		            option.value = value;
+		            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
+		            select.appendChild(option);
+		        });
+			    
 				select.setAttribute('onchange',"processUserSelection(this)");
-				row.insertCell(cellCount).appendChild(select);
+				row.insertCell(0).appendChild(select);
 				cellCount = cellCount + 1;
+				
+				// Second cell: reserved for conditional dropdown
+			    const secCell = row.insertCell(1);
+			    secCell.id = 'Playerstats'; // So we can target it easily later
+			    cellCount++;
+			
+			    // Add event listener to the main dropdown
+			    $(select).on('change', function () {
+			        const selectedValue = this.value;
+			        const container = document.getElementById('Playerstats');
+			
+			        // Remove old dropdown if it exists
+			        const existing = document.getElementById('PlayerData');
+			        if (existing) existing.remove();
+			
+			        // Show second dropdown only if "stats" is selected
+			        if (selectedValue === 'stats') {
+			            const statsDropdown = document.createElement('select');
+			            statsDropdown.id = 'PlayerData';
+			            statsDropdown.name = 'PlayerData';
+			
+			            ['FC', 'LIST A', 'DT20'].forEach(value => {
+			                const option = document.createElement('option');
+			                option.value = value;
+			                option.text = value;
+			                option.style.fontWeight = 'bold';
+			                statsDropdown.appendChild(option);
+			            });
+			
+			            container.appendChild(statsDropdown);
+			        }
+			    });
+			
+			    // Trigger initial change in case default value is "stats"
+			    $(select).trigger('change');
 				break;
 			case 'PROFILE_FF_STATS-OPTIONS':
 				select = document.createElement('select');
