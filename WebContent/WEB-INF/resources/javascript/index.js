@@ -223,12 +223,11 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			break;
 		case 'x':
 			switch ($('#selected_broadcaster').val()){
-			case 'UTT_VIZ':
+			case 'UTT_VIZ': case 'MUMBAI_T20_VIZ':
 				$("#captions_div").hide();
 				$("#cancel_match_setup_btn").hide();
 				$("#expiry_message").hide();
 				addItemsToList('FLIPPER-OPTIONS',null);
-				//processAuctionProcedures('POPULATE-L3-FLIPPER');
 				break;
 			default://ISPL
 				$("#captions_div").hide();
@@ -626,7 +625,7 @@ function processAuctionProcedures(whatToProcess)
 			valueToProcess = $('#selectPlayerName option:selected').val() + ',' + $('#selectShowData option:selected').val();
 			break;
 		case "UTT_VIZ":
-			valueToProcess = $('#selectPlayerName option:selected').val() + ',' + $('#selectShowData option:selected').val();
+			valueToProcess = $('#selectPlayerName option:selected').val()+','+$('#selectShowData option:selected').val();
 			break;
 		}
 		break;
@@ -1245,7 +1244,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 						break;
 				case 'FLIPPER-OPTIONS':
 					switch ($('#selected_broadcaster').val().toUpperCase()) {
-					case 'DOAD_IN_HOUSE_EVEREST': case 'DOAD_IN_HOUSE_VIZ': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case 'MUMBAI_T20_VIZ':
+					case 'DOAD_IN_HOUSE_EVEREST': case 'DOAD_IN_HOUSE_VIZ': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
 						select = document.createElement('select');
 						select.style = 'width:130px';
 						select.id = 'selectFlipper';
@@ -1261,7 +1260,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 						row.insertCell(cellCount).appendChild(select);
 						cellCount = cellCount + 1;
 						break;
-					case "UTT_VIZ":
+					case "UTT_VIZ": case 'MUMBAI_T20_VIZ':
 						select = document.createElement('select');
 						select.style = 'width:130px';
 						select.id = 'selectFlipper';
@@ -1407,8 +1406,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 							row.insertCell(cellCount).appendChild(select);
 							cellCount = cellCount + 1;
 						}
-						
-						if(whatToProcess == 'PLAYERPROFILE-OPTIONS' || $('#selected_broadcaster').val().toUpperCase()==='MUMBAI_T20_VIZ'){
+						else if(whatToProcess == 'PLAYERPROFILE-OPTIONS' && $('#selected_broadcaster').val().toUpperCase()==='MUMBAI_T20_VIZ'){
 							
 							select = document.createElement('select');
 							select.style = 'width:150px';
