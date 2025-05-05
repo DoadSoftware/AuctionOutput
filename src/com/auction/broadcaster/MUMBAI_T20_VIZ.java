@@ -554,7 +554,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 					
 					populateCurrentBid(print_writer, 1);
 					TimeUnit.MILLISECONDS.sleep(500);
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change SHOW 0.0 \0");
+					//print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change SHOW 0.0 \0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change$BasePriceHead SHOW 0.0 \0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change$CurrentBid SHOW 0.0 \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change$Right_Data_Move SHOW 1.560 \0");
 					break;
 				
