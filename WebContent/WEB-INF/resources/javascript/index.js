@@ -163,7 +163,14 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processAuctionProcedures('POPULATE-LOF_SQUAD_SIZE');
 			break;
 		case 'd': // LOF RTM REMAINING
-			processAuctionProcedures('POPULATE-LOF_RTM_REMAINING');
+			switch ($('#selected_broadcaster').val()){
+			case 'MUMBAI_T20_VIZ':
+				alert('GFX IS NOT ACTIVE FOR THIS AUCTION');
+				break;
+			default://ISPL
+				processAuctionProcedures('POPULATE-LOF_RTM_REMAINING');
+				break;
+			}
 			break;
 		case 'e': //POP UP GOOGLY POWER
 			$("#captions_div").hide();
@@ -1431,7 +1438,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 								select.id = 'selectShowData';
 								select.name = select.id;
 								
-							    ['category', 'player', 'thisyearteam', 'prevteam', 'stats'].forEach(value => {
+							    ['player', 'thisyearteam', 'prevteam', 'stats', 'category'].forEach(value => {
 						            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
 								        return; // skip these options for Mumbai
 								    }
@@ -1494,7 +1501,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 				select.id = 'selectShowData';
 				select.name = select.id;
 				
-			    ['category', 'player', 'thisyearteam', 'prevteam', 'stats'].forEach(value => {
+			    ['player', 'thisyearteam', 'prevteam', 'stats', 'category'].forEach(value => {
 		            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
 				        return; // skip these options for Mumbai
 				    }
@@ -1580,7 +1587,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 			            select.appendChild(option);
 			        });
 			    } else {
-			        ['category', 'style', 'freetext', 'prevteam', 'stats'].forEach(value => {
+			        ['style', 'freetext', 'prevteam', 'stats', 'category'].forEach(value => {
 			            if (broadcaster === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
 					        return; // skip these options for Mumbai
 					    }
