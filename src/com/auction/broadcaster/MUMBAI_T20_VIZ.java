@@ -4692,9 +4692,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 				break;
 			case "SQUAD-PLAYER":
 				if(!whatToProcess.equalsIgnoreCase("POPULATE-SQUAD-PLAYER")) {
-					previewCommand = previewCommand + "Change_LOF$SquadSize_Category$Change_Out 0.800 CtegoryHighlight$Side1$" + prevRowHighlight + " 1.200";
+					previewCommand = previewCommand + "Change_LOF$SquadSize_Category$Change_Out 0.800 CtegoryHighlight$Side1$" + prevRowHighlight + " 1.200 ";
 					for(int i=prevRowHighlight;i<=7;i++) {
-						previewCommand = previewCommand + " MoveForCatHighlight$Side1$" + (i+1) + " 1.000";
+						previewCommand = previewCommand + "MoveForCatHighlight$Side1$" + (i+1) + " 1.000 ";
 					}
 				}
 //				else {
