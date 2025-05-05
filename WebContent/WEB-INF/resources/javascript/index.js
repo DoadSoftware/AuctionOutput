@@ -623,10 +623,10 @@ function processAuctionProcedures(whatToProcess)
 			valueToProcess = '/Default/BidLt'+ ',' + $('#selectPlayerName option:selected').val();
 			break;
 		case 'VIZ_ISPL_2024': case 'MUMBAI_T20_VIZ':
-			valueToProcess = $('#selectPlayerName option:selected').val();
+			valueToProcess = $('#selectPlayerName option:selected').val() + ',' + $('#selectShowData option:selected').val();
 			break;
 		case "UTT_VIZ":
-			valueToProcess = $('#selectPlayerName option:selected').val()+','+$('#selectShowData option:selected').val();
+			valueToProcess = $('#selectPlayerName option:selected').val() + ',' + $('#selectShowData option:selected').val();
 			break;
 		}
 		break;
@@ -1387,6 +1387,28 @@ function addItemsToList(whatToProcess, dataToProcess)
 						cellCount = cellCount + 1;
 						
 						if($('#selected_broadcaster').val().toUpperCase()==='UTT_VIZ'){
+							
+							select = document.createElement('select');
+							select.style = 'width:150px';
+							select.id = 'selectShowData';
+							select.name = select.id;
+							
+							option = document.createElement('option');
+							option.value = 'With_Photo';
+							option.text = 'With Photo';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'WithOut_Photo';
+							option.text = 'WithOut Photo';
+							select.appendChild(option);
+							
+							select.setAttribute('onchange',"processUserSelection(this)");
+							row.insertCell(cellCount).appendChild(select);
+							cellCount = cellCount + 1;
+						}
+						
+						if(whatToProcess == 'PLAYERPROFILE-OPTIONS' || $('#selected_broadcaster').val().toUpperCase()==='MUMBAI_T20_VIZ'){
 							
 							select = document.createElement('select');
 							select.style = 'width:150px';
