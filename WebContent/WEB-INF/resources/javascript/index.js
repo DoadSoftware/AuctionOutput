@@ -649,8 +649,11 @@ function processAuctionProcedures(whatToProcess)
 		case 'ISPL_VIZ': 
 			valueToProcess = '/Default/Squad'+ ',' + $('#selectTeamName option:selected').val();
 			break;
-		case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':
+		case 'VIZ_ISPL_2024': case "UTT_VIZ":
 			valueToProcess = $('#selectTeamName option:selected').val();
+			break;
+		case 'MUMBAI_T20_VIZ':
+			valueToProcess = $('#selectTeamName option:selected').val() + ',' + $('#selectcrawlerData option:selected').val();
 			break;
 		}
 		break;
@@ -1250,6 +1253,24 @@ function addItemsToList(whatToProcess, dataToProcess)
 								select.setAttribute('onchange',"processUserSelection(this)");
 								row.insertCell(cellCount).appendChild(select);
 								cellCount = cellCount + 1;	
+							}else if(whatToProcess ==='FLIPPER_SQUAD-OPTIONS'){
+								select = document.createElement('select');
+								select.style = 'width:130px';
+								select.id = 'selectcrawlerData';
+								select.name = select.id;
+								
+								option = document.createElement('option');
+								option.value = 'squad';
+								option.text = 'Squad';
+								select.appendChild(option);
+								
+								option = document.createElement('option');
+								option.value = 'top_buys';
+								option.text = 'Top 5 Buys';
+								select.appendChild(option);
+								
+								row.insertCell(cellCount).appendChild(select);
+								cellCount = cellCount + 1;
 							}
 							break;
 						} 
