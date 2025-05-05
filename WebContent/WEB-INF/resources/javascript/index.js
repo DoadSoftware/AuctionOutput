@@ -248,20 +248,40 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			addItemsToList('LT_PP_STATS-OPTIONS',null);
 			break;
 		case 'F12':
-			$("#captions_div").hide();
-			$("#cancel_match_setup_btn").hide();
-			$("#expiry_message").hide();
-			addItemsToList('ZONE-PLAYER-OPTIONS',null);
-			break;
+		switch ($('#selected_broadcaster').val()){
+			case 'MUMBAI_T20_VIZ':
+				$("#captions_div").hide();
+				$("#cancel_match_setup_btn").hide();
+				$("#expiry_message").hide();
+				processAuctionProcedures('ZONE-PLAYER_GRAPHICS-OPTIONS');
+				break;
+			default://ISPL
+				$("#captions_div").hide();
+				$("#cancel_match_setup_btn").hide();
+				$("#expiry_message").hide();
+				addItemsToList('ZONE-PLAYER-OPTIONS',null);
+				break;
+			}
+			break;	
 		case '6': //ZONE PLAYERS CHANGE ON
 			processAuctionProcedures('POPULATE-ZONE_PLAYERS_STATS');
 			break
 			
 		case 'q':
-			$("#captions_div").hide();
-			$("#cancel_match_setup_btn").hide();
-			$("#expiry_message").hide();
-			addItemsToList('ZONEWISE_PLAYER_SOLD-OPTIONS',null);
+		switch ($('#selected_broadcaster').val()){
+			case 'MUMBAI_T20_VIZ':
+				$("#captions_div").hide();
+				$("#cancel_match_setup_btn").hide();
+				$("#expiry_message").hide();
+				processAuctionProcedures('ZONEWISE_PLAYER_SOLD_GRAPHICS-OPTIONS');
+				break;
+			default://ISPL
+				$("#captions_div").hide();
+				$("#cancel_match_setup_btn").hide();
+				$("#expiry_message").hide();
+				addItemsToList('ZONEWISE_PLAYER_SOLD-OPTIONS',null);
+				break;
+			}
 			break;
 			
 		/*case 'F5':
@@ -791,7 +811,12 @@ function processAuctionProcedures(whatToProcess)
 				addItemsToList('POPULATE-PROFILE',data);
 				match_data = data;
 				break;
-				
+			case "ZONEWISE_PLAYER_SOLD_GRAPHICS-OPTIONS":	
+				addItemsToList('ZONEWISE_PLAYER_SOLD-OPTIONS',data);
+				break;
+			case 'ZONE-PLAYER_GRAPHICS-OPTIONS':
+				addItemsToList('ZONE-PLAYER-OPTIONS',data);
+				break;
 			case 'SQUAD_GRAPHICS-OPTIONS':  
 				addItemsToList('SQUAD-OPTIONS',data);
 				addItemsToList('POPULATE-TEAM',data);
@@ -1120,39 +1145,51 @@ function addItemsToList(whatToProcess, dataToProcess)
 					select.id = 'selectShowData';
 					select.name = select.id;
 					
-					option = document.createElement('option');
-					option.value = 'EAST ZONE';
-					option.text = 'EAST ZONE';
-					select.appendChild(option);
-					
-					option = document.createElement('option');
-					option.value = 'WEST ZONE';
-					option.text = 'WEST ZONE';
-					select.appendChild(option);
-					
-					option = document.createElement('option');
-					option.value = 'NORTH ZONE';
-					option.text = 'NORTH ZONE';
-					select.appendChild(option);
-					
-					option = document.createElement('option');
-					option.value = 'SOUTH ZONE';
-					option.text = 'SOUTH ZONE';
-					select.appendChild(option);
-					
-					option = document.createElement('option');
-					option.value = 'CENTRAL ZONE';
-					option.text = 'CENTRAL ZONE';
-					select.appendChild(option);
-					
-					option = document.createElement('option');
-					option.value = 'U19';
-					option.text = 'UNDER 19';
-					select.appendChild(option);
-					
-					select.setAttribute('onchange',"processUserSelection(this)");
-					row.insertCell(cellCount).appendChild(select);
-					cellCount = cellCount + 1;
+					switch ($('#selected_broadcaster').val().toUpperCase()) {
+						case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
+							option = document.createElement('option');
+							option.value = 'EAST ZONE';
+							option.text = 'EAST ZONE';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'WEST ZONE';
+							option.text = 'WEST ZONE';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'NORTH ZONE';
+							option.text = 'NORTH ZONE';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'SOUTH ZONE';
+							option.text = 'SOUTH ZONE';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'CENTRAL ZONE';
+							option.text = 'CENTRAL ZONE';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'U19';
+							option.text = 'UNDER 19';
+							select.appendChild(option);
+						break;
+						default:
+							dataToProcess.forEach(function(flip){
+								option = document.createElement('option');
+								option.value = flip;
+								option.text = flip;
+								select.appendChild(option);
+							});
+						break;
+						}
+						
+						select.setAttribute('onchange',"processUserSelection(this)");
+						row.insertCell(cellCount).appendChild(select);
+						cellCount = cellCount + 1;
 					break;
 				case 'SINGLE_PURSE-OPTIONS':
 				switch ($('#selected_broadcaster').val().toUpperCase()) {

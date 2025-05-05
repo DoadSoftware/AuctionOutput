@@ -13,6 +13,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -313,6 +316,16 @@ public class IndexController
 		case "LOF_SQUAD_SIZE_CATEGORY_WISE_GRAPHICS-OPTIONS": case "LOF_SQUAD_GRAPHICS-OPTIONS": case "TEAM_CURRENT_BID_GRAPHICS-OPTIONS":
 		case "FF_TOP_FIVE_SOLD_TEAM_GRAPHICS-OPTIONS": case "FLIPPER_SQUAD_GRAPHICS-OPTIONS":
 		    return (List<T>) session_team;
+		case "ZONEWISE_PLAYER_SOLD_GRAPHICS-OPTIONS": case "ZONE-PLAYER_GRAPHICS-OPTIONS":
+		    Set<String> allCategories = session_auction.getPlayersList().stream()
+		        .map(Player::getCategory)
+		        .filter(Objects::nonNull)
+		        .map(String::trim)
+		        .map(String::toUpperCase)
+		        .collect(Collectors.toSet());
+		    ArrayList<String> array = new ArrayList<>(allCategories);
+		    return (List<T>) array;
+
 		}
 	    return null;
 	}

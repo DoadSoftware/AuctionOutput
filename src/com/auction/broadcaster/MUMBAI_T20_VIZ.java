@@ -335,7 +335,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 					}else {
 						whichSideNotProfile = 1;
 					}
-					side2ValueToProcess = valueToProcess;
+					side2ValueToProcess = valueToProcess.split(",")[0];
 					populateLofZoneWisePlayerSold(print_writer, whichSideNotProfile, side2ValueToProcess, auction, auctionService, session_selected_broadcaster);
 					processPreview(print_writer, whatToProcess, whichSideNotProfile);
 					break;
@@ -2370,8 +2370,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		        for(int k=1; k<=2; k++) {
 		        	
 		        	int j=0;
-			    	Map<String, Integer> category = teamZone.getCategory();
-			    	for (Map.Entry<String, Integer> entry : category.entrySet()) {
+			    	for (Map.Entry<String, Integer> entry : teamZone.getCategory().entrySet()) {
 			    		j++;
 			            print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + k + "$SquadSize_Category$Team" + i + "$Highlight$Category$" + j + "$txt_Category*GEOM*TEXT SET " + entry.getKey() + "\0");
 			            print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + k + "$SquadSize_Category$Team" + i + "$Dehighlight$txt_Value*GEOM*TEXT SET \0");
@@ -2419,8 +2418,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 			    	print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side"+whichSide+"$SquadSize_Team$Title$txt_Value*GEOM*TEXT SET "
 			    			+(teamZone.getPlayers())+"\0");
 			    	int j=0;
-			    	Map<String, Integer> category = teamZone.getCategory();
-			    	for (Map.Entry<String, Integer> entry : category.entrySet()) {
+			    	for (Map.Entry<String, Integer> entry : teamZone.getCategory().entrySet()) {
 			    		j++;
 			            print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side"+whichSide+"$SquadSize_Team$Row" + j + "$txt_Category*GEOM*TEXT SET "+entry.getKey()+"\0");
 			            print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side"+whichSide+"$SquadSize_Team$Row" + j + "$txt_Value*GEOM*TEXT SET "+entry.getValue()+"\0");
@@ -2470,6 +2468,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$HeaderStyle1$txt_Header1*GEOM*TEXT SET " + "T20 MUMBAI LEAGUE" + " \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$HeaderStyle1$txt_Header2*GEOM*TEXT SET " + "AUCTION" + " \0");
 		
+		auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(auction.getTeam(), 
+				auction.getPlayers(), auction.getPlayersList()));
+		
 		if(which_zone.equalsIgnoreCase("U19")) {
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$SubHead$Side" + whichSide + "$txt_SubHeader*GEOM*TEXT SET " + "UNDER 19 PICKS" + " \0");
 		}else {
@@ -2481,10 +2482,8 @@ public class MUMBAI_T20_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$TitleText$RupeeSymbol*ACTIVE SET 0\0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$TitleText$txt_Title*ACTIVE SET 0\0");
 		
-		
-		
 		int row = 0;
-		for(Team tm : auction.getTeam()) {
+		for(PlayerCount tm : auction.getTeamZoneList()) {
 			row++;
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$NameGrp$txt_FirstName"
 					+ "*GEOM*TEXT SET " + tm.getTeamName2() + " \0");
@@ -2494,33 +2493,8 @@ public class MUMBAI_T20_VIZ extends Scene{
 					+ "*TEXTURE*IMAGE SET " + logo_path + tm.getTeamName4() + " \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$Select_DataType"
 					+ "*FUNCTION*Omo*vis_con SET 0 \0");
-			
-			switch(which_zone) {
-			case "EAST ZONE":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$txt_Value*GEOM*TEXT SET " 
-						+ AuctionFunctions.PlayerCountZoneWise(auction.getTeam(), auction.getPlayers(), auction.getPlayersList()).get(which_zone).get((row-1)).getEastZone() + " \0");
-				break;
-			case "WEST ZONE":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$txt_Value*GEOM*TEXT SET " 
-						+ AuctionFunctions.PlayerCountZoneWise(auction.getTeam(), auction.getPlayers(), auction.getPlayersList()).get(which_zone).get((row-1)).getWestZone() + " \0");
-				break;
-			case "NORTH ZONE":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$txt_Value*GEOM*TEXT SET " 
-						+ AuctionFunctions.PlayerCountZoneWise(auction.getTeam(), auction.getPlayers(), auction.getPlayersList()).get(which_zone).get((row-1)).getNorthZone() + " \0");
-				break;
-			case "SOUTH ZONE":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$txt_Value*GEOM*TEXT SET " 
-						+ AuctionFunctions.PlayerCountZoneWise(auction.getTeam(), auction.getPlayers(), auction.getPlayersList()).get(which_zone).get((row-1)).getSouthZone() + " \0");
-				break;
-			case "CENTRAL ZONE":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$txt_Value*GEOM*TEXT SET " 
-						+ AuctionFunctions.PlayerCountZoneWise(auction.getTeam(), auction.getPlayers(), auction.getPlayersList()).get(which_zone).get((row-1)).getCentralZone() + " \0");
-				break;
-			case "U19":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$txt_Value*GEOM*TEXT SET " 
-						+ AuctionFunctions.PlayerCountZoneWise(auction.getTeam(), auction.getPlayers(), auction.getPlayersList()).get(which_zone).get((row-1)).getU19() + " \0");
-				break;
-			}
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$txt_Value*GEOM*TEXT SET " 
+					+ tm.getCategory().get(which_zone) + " \0");
 		}
 	}
 	
