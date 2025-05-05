@@ -592,7 +592,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change$BasePriceHead SHOW 0.0 \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change$CurrentBid SHOW 0.0 \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change$Right_Data_Move SHOW 1.560 \0");
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$In_Out$CenterData SHOW 2.500 \0");
+					//print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$In_Out$CenterData SHOW 2.500 \0");
 					break;
 				
 				case "ANIMATE-IN-PLAYERPROFILE": 
@@ -654,6 +654,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 					break;
 				//Flipper
 				case "ANIMATE-IN-FLIPPER": case "ANIMATE-IN-FLIPPER_SQUAD":
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Move_For_Stats START \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Flipper START \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Scroll START \0");
 					which_graphics_onscreen = whatToProcess.replace("ANIMATE-IN-", "");
@@ -957,6 +958,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe SHOW 0.0 \0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change SHOW 0.0 \0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*StartFlare SHOW 0.0 \0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*EndFlare SHOW 0.0 \0");
 					
 					rtm_googly_on_screen = "";
 		            which_graphics_onscreen = "";
@@ -1129,6 +1131,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_LowerThird SHOW 0\0");
 						break;
 					case "FLIPPER": case "FLIPPER_SQUAD":
+						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Move_For_Stats CONTINUE REVERSE\0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Flipper CONTINUE \0");
 						which_graphics_onscreen = "";
 						TimeUnit.MILLISECONDS.sleep(2000);
