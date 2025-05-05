@@ -29,7 +29,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 	private String slashOrDash = "-";
 	public String session_selected_broadcaster = "MUMBAI_T20_VIZ";
 	public Data data = new Data();
-	public String which_graphics_onscreen = "",which_data="", rtm_googly_on_screen = "";
+	public String which_graphics_onscreen = "",which_data="", rtm_googly_on_screen = "",which_stat = "";
 	public int current_layer = 2, whichSide = 1, whichSideNotProfile=1, rowHighlight = 1,prevRowHighlight = 1, rtmGooglyWhichSide = 1;
 	public int player_id = 0,team_id=0,player_number=0;
 	public int zoneSize = 0, current_index = 0;
@@ -230,7 +230,12 @@ public class MUMBAI_T20_VIZ extends Scene{
 					}
 					side2ValueToProcess = valueToProcess;
 					
-					
+					which_stat = valueToProcess.split(",")[1];
+					if(valueToProcess.split(",").length != 2) {
+						which_stat = "";
+					}else {
+						which_stat = valueToProcess.split(",")[1];
+					}
 					
 					populateProfileStats(print_writer, valueToProcess.split(",")[0], 
 							valueToProcess.split(",").length != 2 ? 0 : auctionService.getStatsTypes().stream()
@@ -432,6 +437,13 @@ public class MUMBAI_T20_VIZ extends Scene{
 					}
 					player_id = Integer.valueOf(valueToProcess.split(",")[0]);
 					side2ValueToProcess = valueToProcess;
+					
+					if(valueToProcess.split(",").length != 3) {
+						which_stat = "";
+					}else {
+						which_stat = valueToProcess.split(",")[2];
+					}
+					
 					populatePlayerProfileLT(print_writer, whichSideNotProfile, Integer.valueOf(valueToProcess.split(",")[0]), valueToProcess.split(",")[1], 
 							valueToProcess.split(",").length != 3 ? 0 : auctionService.getStatsTypes().stream()
 							        .filter(st -> st.getStats_short_name().equalsIgnoreCase(valueToProcess.split(",")[2]))
@@ -442,6 +454,13 @@ public class MUMBAI_T20_VIZ extends Scene{
 				case "POPULATE-PLAYERPROFILE_LT_STATS":
 					whichSideNotProfile = 2;
 					side2ValueToProcess = valueToProcess;
+					
+					if(valueToProcess.split(",").length != 2) {
+						which_stat = "";
+					}else {
+						which_stat = valueToProcess.split(",")[1];
+					}
+					
 					ChangeOnLTStats(print_writer, whichSideNotProfile, player_id, valueToProcess.split(",")[0],
 							valueToProcess.split(",").length != 2 ? 0 : auctionService.getStatsTypes().stream()
 							        .filter(st -> st.getStats_short_name().equalsIgnoreCase(valueToProcess.split(",")[1]))
@@ -518,6 +537,13 @@ public class MUMBAI_T20_VIZ extends Scene{
 							print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change$Stats$Change_In START \0");
 							
 							if(whatToProcess.equalsIgnoreCase("ANIMATE-IN-PROFILE_STATS")) {
+								
+								if(side2ValueToProcess.split(",").length != 2) {
+									which_stat = "";
+								}else {
+									which_stat = side2ValueToProcess.split(",")[1];
+								}
+								
 								populateProfileStats(print_writer, side2ValueToProcess.split(",")[0], 
 										side2ValueToProcess.split(",").length != 2 ? 0 : auctionService.getStatsTypes().stream()
 										        .filter(st -> st.getStats_short_name().equalsIgnoreCase(side2ValueToProcess.split(",")[1]))
@@ -603,6 +629,13 @@ public class MUMBAI_T20_VIZ extends Scene{
 					
 				case "ANIMATE-IN-PLAYERPROFILE_LT_STATS":
 					ChangeOn(print_writer, which_graphics_onscreen, whatToProcess);
+					
+					if(side2ValueToProcess.split(",").length != 2) {
+						which_stat = "";
+					}else {
+						which_stat = side2ValueToProcess.split(",")[1];
+					}
+					
 					ChangeOnLTStats(print_writer, 1, player_id, side2ValueToProcess.split(",")[0],
 							side2ValueToProcess.split(",").length != 2 ? 0 : auctionService.getStatsTypes().stream()
 							        .filter(st -> st.getStats_short_name().equalsIgnoreCase(side2ValueToProcess.split(",")[1]))
@@ -644,6 +677,13 @@ public class MUMBAI_T20_VIZ extends Scene{
 									session_selected_broadcaster);
 							break;
 						case "ANIMATE-IN-PLAYERPROFILE_LT":
+							
+							if(side2ValueToProcess.split(",").length != 3) {
+								which_stat = "";
+							}else {
+								which_stat = side2ValueToProcess.split(",")[2];
+							}
+							
 							populatePlayerProfileLT(print_writer, 1, Integer.valueOf(side2ValueToProcess.split(",")[0]), side2ValueToProcess.split(",")[1], 
 									side2ValueToProcess.split(",").length != 3 ? 0 : auctionService.getStatsTypes().stream()
 									        .filter(st -> st.getStats_short_name().equalsIgnoreCase(side2ValueToProcess.split(",")[2]))
@@ -1639,8 +1679,12 @@ public class MUMBAI_T20_VIZ extends Scene{
 						auctionService.getAllPlayer().get(playerId - 1).getFirstname() + " \0");
 			}
 			
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$MoveForStats$TopDataGrp$Side" + which_side + "$img_Text1$txt_Role*GEOM*TEXT SET " + 
-					auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase() + " \0");
+			if(auctionService.getAllPlayer().get(playerId - 1).getRole().equalsIgnoreCase("Batsman")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$MoveForStats$TopDataGrp$Side" + which_side + "$img_Text1$txt_Role*GEOM*TEXT SET BATTER\0");
+			}else {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$MoveForStats$TopDataGrp$Side" + which_side + "$img_Text1$txt_Role*GEOM*TEXT SET " + 
+						auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase() + " \0");
+			}
 			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$MoveForStats$TopDataGrp$Side" + which_side + "$img_Text1$txt_Category*GEOM*TEXT SET " + 
 					auction.getPlayersList().get(playerId - 1).getCategory().toUpperCase() + " \0");
@@ -3408,7 +3452,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		}
 		
 		Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
-		System.out.println(top_sold.size());
+		//System.out.println(top_sold.size());
 		if(auctionService.getAllPlayer().get(playerId - 1).getSurname() != null) {
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_FirstName*GEOM*TEXT SET " 
 					+ auctionService.getAllPlayer().get(playerId - 1).getFirstname() + "\0");
@@ -3419,8 +3463,6 @@ public class MUMBAI_T20_VIZ extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_LastName*GEOM*TEXT SET " 
 					+ auctionService.getAllPlayer().get(playerId - 1).getFirstname() + "\0");
 		}
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET " + 
-				auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase() + "\0");
 		
 		if(auctionService.getAllPlayer().get(playerId - 1).getIconic().equalsIgnoreCase(AuctionUtil.YES)) {
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$Select_Icon*FUNCTION*Omo*vis_con SET 1\0");
@@ -3429,16 +3471,40 @@ public class MUMBAI_T20_VIZ extends Scene{
 		}
 		
 		if(show_stats.equalsIgnoreCase("category")) {
+			
+			if(auctionService.getAllPlayer().get(playerId - 1).getRole().equalsIgnoreCase("Batsman")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET BATTER\0");
+			}else {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET " + 
+						auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase() + "\0");
+			}
+			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Select_DataType*FUNCTION*Omo*vis_con SET 0\0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Single_Data$txt_Text*GEOM*TEXT SET " + 
 					auctionService.getAllPlayer().get(playerId - 1).getCategory().toUpperCase() + "\0");
 		}
 		else if(show_stats.equalsIgnoreCase("player")) {
+			
+			if(auctionService.getAllPlayer().get(playerId - 1).getRole().equalsIgnoreCase("Batsman")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET BATTER\0");
+			}else {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET " + 
+						auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase() + "\0");
+			}
+			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Select_DataType*FUNCTION*Omo*vis_con SET 0\0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Single_Data$txt_Text*GEOM*TEXT SET " + 
 					"T20 MUMBAI LEAGUE" + "\0");
 		}
 		else if(show_stats.equalsIgnoreCase("thisyearteam")) {
+			
+			if(auctionService.getAllPlayer().get(playerId - 1).getRole().equalsIgnoreCase("Batsman")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET BATTER\0");
+			}else {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET " + 
+						auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase() + "\0");
+			}
+			
 			for(Player plyr : top_sold) {
 				System.out.println("plyr = " + plyr.getPlayerId() + " id = " + playerId);
 				if(Integer.valueOf(plyr.getPlayerId()) == Integer.valueOf(playerId)) {
@@ -3462,6 +3528,14 @@ public class MUMBAI_T20_VIZ extends Scene{
 			}
 		}
 		else if(show_stats.equalsIgnoreCase("prevteam")) {
+			
+			if(auctionService.getAllPlayer().get(playerId - 1).getRole().equalsIgnoreCase("Batsman")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET BATTER\0");
+			}else {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET " + 
+						auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase() + "\0");
+			}
+			
 			team_id = auctionService.getAllPlayer().get(playerId - 1).getLastYearTeam();
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Select_DataType*FUNCTION*Omo*vis_con SET 3\0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$TeamWithPrice$txt_Title*GEOM*TEXT SET " + 
@@ -3476,6 +3550,15 @@ public class MUMBAI_T20_VIZ extends Scene{
 		}
 		else if(show_stats.equalsIgnoreCase("stats")) {
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Select_DataType*FUNCTION*Omo*vis_con SET 2\0");
+			
+			if(which_stat.equalsIgnoreCase("FC")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET F-C CAREER\0");
+			}else if(which_stat.equalsIgnoreCase("LIST A")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET LIST A CAREER\0");
+			}else if(which_stat.equalsIgnoreCase("DT20")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET T20\0");
+			}
+			
 			for(Statistics stat : stats) {
 				if(stat.getPlayer_id() == playerId && stat.getStats_type_id() == st) {
 					switch (auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase()) {
@@ -3540,13 +3623,34 @@ public class MUMBAI_T20_VIZ extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Select_DataType*FUNCTION*Omo*vis_con SET 0\0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Single_Data$txt_Text*GEOM*TEXT SET " + 
 					auctionService.getAllPlayer().get(playerId - 1).getCategory().toUpperCase() + "\0");
+			
+			if(auctionService.getAllPlayer().get(playerId - 1).getRole().equalsIgnoreCase("Batsman")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET BATTER\0");
+			}else {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET " + 
+						auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase() + "\0");
+			}
 		}
 		else if(show_stats.equalsIgnoreCase("player")) {
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Select_DataType*FUNCTION*Omo*vis_con SET 0\0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Single_Data$txt_Text*GEOM*TEXT SET " + 
 					"T20 MUMBAI LEAGUE" + "\0");
+			if(auctionService.getAllPlayer().get(playerId - 1).getRole().equalsIgnoreCase("Batsman")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET BATTER\0");
+			}else {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET " + 
+						auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase() + "\0");
+			}
 		}
 		else if(show_stats.equalsIgnoreCase("thisyearteam")) {
+			
+			if(auctionService.getAllPlayer().get(playerId - 1).getRole().equalsIgnoreCase("Batsman")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET BATTER\0");
+			}else {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET " + 
+						auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase() + "\0");
+			}
+			
 			for(Player plyr : top_sold) {
 				if(plyr.getPlayerId() == playerId) {
 					if(plyr.getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD) || plyr.getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)) {
@@ -3569,6 +3673,13 @@ public class MUMBAI_T20_VIZ extends Scene{
 			}
 		}
 		else if(show_stats.equalsIgnoreCase("prevteam")) {
+			if(auctionService.getAllPlayer().get(playerId - 1).getRole().equalsIgnoreCase("Batsman")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET BATTER\0");
+			}else {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET " + 
+						auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase() + "\0");
+			}
+			
 			team_id = auctionService.getAllPlayer().get(playerId - 1).getLastYearTeam();
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Select_DataType*FUNCTION*Omo*vis_con SET 3\0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$TeamWithPrice$txt_Title*GEOM*TEXT SET " + 
@@ -3582,7 +3693,17 @@ public class MUMBAI_T20_VIZ extends Scene{
 					AuctionFunctions.ConvertToLakh(Double.valueOf(price)) + " L" + "\0");
 		}
 		else if(show_stats.equalsIgnoreCase("stats")) {
+			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Select_DataType*FUNCTION*Omo*vis_con SET 2\0");
+			
+			if(which_stat.equalsIgnoreCase("FC")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET F-C CAREER\0");
+			}else if(which_stat.equalsIgnoreCase("LIST A")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET LIST A CAREER\0");
+			}else if(which_stat.equalsIgnoreCase("DT20")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET T20\0");
+			}
+			
 			for(Statistics stat : stats) {
 				if(stat.getPlayer_id() == playerId && stat.getStats_type_id() == sta) {
 					switch (auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase()) {
@@ -4412,6 +4533,15 @@ public class MUMBAI_T20_VIZ extends Scene{
 			break;
 		case "STATS":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Select_DataType*FUNCTION*Omo*vis_con SET 2\0");
+			
+			if(which_stat.equalsIgnoreCase("FC")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Stats$1$txt_TYPE*GEOM*TEXT SET F-C CAREER\0");
+			}else if(which_stat.equalsIgnoreCase("LIST A")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Stats$1$txt_TYPE*GEOM*TEXT SET LIST A CAREER\0");
+			}else if(which_stat.equalsIgnoreCase("DT20")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Stats$1$txt_TYPE*GEOM*TEXT SET T20 CAREER\0");
+			}
+			
 			for(Statistics stats : auctionService.getAllStats()) {
 				if(stats.getPlayer_id() == player.getPlayerId() && stats.getStats_type_id() == stat) {
 					switch (player.getRole().toUpperCase()) {
