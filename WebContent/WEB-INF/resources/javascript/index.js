@@ -591,7 +591,8 @@ function processAuctionProcedures(whatToProcess)
 	case 'POPULATE-PLAYERPROFILE_FF':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':
-			valueToProcess = $('#selectPlayerName option:selected').val() + ',' + $('#selectShowProfileStats option:selected').val();
+			valueToProcess = $('#selectPlayerName option:selected').val() + ',' + $('#selectShowProfileStats option:selected').val() 
+				+ ',' + $('#PlayerData option:selected').val();
 			break;
 		}
 		break;
@@ -1431,6 +1432,40 @@ function addItemsToList(whatToProcess, dataToProcess)
 								select.setAttribute('onchange',"processUserSelection(this)");
 								row.insertCell(cellCount).appendChild(select);
 								cellCount = cellCount + 1;
+								
+							    // Second cell: reserved for conditional dropdown
+							    const seCell = row.insertCell(cellCount);
+							    seCell.id = 'Playerstats'; // So we can target it easily later
+							    cellCount++;
+							
+							    // Add event listener to the main dropdown
+							    $(select).on('change', function () {
+							        const selectedValue = this.value;
+							        const container = document.getElementById('Playerstats');
+							
+							        // Remove old dropdown if it exists
+							        const existing = document.getElementById('PlayerData');
+							        if (existing) existing.remove();
+							
+							        // Show second dropdown only if "stats" is selected
+							        if (selectedValue === 'with_info') {
+							            const statsDropdown = document.createElement('select');
+							            statsDropdown.id = 'PlayerData';
+							            statsDropdown.name = 'PlayerData';
+							
+							            ['FC', 'LIST A', 'DT20'].forEach(value => {
+							                const option = document.createElement('option');
+							                option.value = value;
+							                option.text = value;
+							                option.style.fontWeight = 'bold';
+							                statsDropdown.appendChild(option);
+							            });
+							
+							            container.appendChild(statsDropdown);
+							        }
+							    });							
+							    $(select).trigger('change');
+								
 								break;
 							case 'LT_PLAYERPROFILE-OPTIONS':
 								select = document.createElement('select');
