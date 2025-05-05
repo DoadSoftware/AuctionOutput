@@ -80,6 +80,9 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 'F5': //FF SQUAD SIZE, RTM AVAILABLE, PURSE REM
 			processAuctionProcedures('POPULATE-FF_RTM_AND_PURSE_REMAINING');
 			break;
+		case 'r'://size
+			processAuctionProcedures('POPULATE-FF_SIZE_AND_PURSE_REMAINING');
+			break;
 		case 'F6': //FF TOP BUY AUCTION
 			processAuctionProcedures('POPULATE-FF_TOP_BUYS_AUCTION');
 			break;
@@ -602,14 +605,20 @@ function processAuctionProcedures(whatToProcess)
 			break;
 		}
 		break;
-	case 'POPULATE-PLAYERPROFILE_LT_STATS': case 'POPULATE-ZONE_PLAYERS_STATS': case 'POPULATE-ZONEWISE_PLAYERS_SOLD':
+	case 'POPULATE-PLAYERPROFILE_LT_STATS':  case 'POPULATE-ZONEWISE_PLAYERS_SOLD':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':
 			valueToProcess = $('#selectShowData option:selected').val() + ',' + $('#PlayerData option:selected').val();
 			break;
 		}
 		break;
-		
+	case 'POPULATE-ZONE_PLAYERS_STATS':
+		switch ($('#selected_broadcaster').val().toUpperCase()) {
+		case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':
+			valueToProcess = $('#selectShowData option:selected').val();
+			break;
+		}
+		break;
 	case 'POPULATE-FF-PLAYERPROFILE':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'HANDBALL':
@@ -887,7 +896,7 @@ function processAuctionProcedures(whatToProcess)
 			
 			case 'POPULATE-FF_RTM_AND_PURSE_REMAINING': case 'POPULATE-FF_TOP_BUYS_AUCTION': case 'POPULATE-FF_TOP_BUY_TEAM': case 'POPULATE-TEAM_CURR_BID':
 			case 'POPULATE-FF_ICONIC_PLAYERS': case 'POPULATE-FF_FIVE_TOP_BUYS_AUCTION': case 'POPULATE-FF_FIVE_TOP_BUY_TEAM':
-			
+			case 'POPULATE-FF_SIZE_AND_PURSE_REMAINING':
 			case 'POPULATE-LT_ICONIC_PLAYERS': case 'POPULATE-PLAYERPROFILE_LT': case 'POPULATE-PLAYERPROFILE_LT_STATS': case 'POPULATE-ZONE_PLAYERS_STATS':
 			case 'POPULATE-ZONEWISE_PLAYERS_SOLD':
 			
@@ -988,6 +997,9 @@ function processAuctionProcedures(whatToProcess)
 							break;
 						case 'POPULATE-FF_RTM_AND_PURSE_REMAINING':
 							processAuctionProcedures('ANIMATE-IN-FF_RTM_AND_PURSE_REMAINING');
+							break;
+						case 'POPULATE-FF_SIZE_AND_PURSE_REMAINING':
+							processAuctionProcedures('ANIMATE-IN-FF_SIZE_AND_PURSE_REMAINING');
 							break;
 						case 'POPULATE-FF_TOP_BUYS_AUCTION':
 							processAuctionProcedures('ANIMATE-IN-FF_TOP_BUYS_AUCTION');
