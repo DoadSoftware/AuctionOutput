@@ -97,6 +97,27 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				break;
 			}
 			break;	
+		case 'Alt_b': //FF 5 TOP BUY AUCTION
+			switch ($('#selected_broadcaster').val()){
+			case 'MUMBAI_T20_VIZ':
+				$("#captions_div").hide();
+				$("#cancel_match_setup_btn").hide();
+				$("#expiry_message").hide();
+				processAuctionProcedures('FF_SQUAD_GRAPHICS-OPTIONS');
+				break;
+			}
+			break;	
+			
+		case 'Alt_d': //FF 5 TOP BUY AUCTION
+			switch ($('#selected_broadcaster').val()){
+			case 'MUMBAI_T20_VIZ':
+				$("#captions_div").hide();
+				$("#cancel_match_setup_btn").hide();
+				$("#expiry_message").hide();
+				processAuctionProcedures('FF_SQUAD_ROLE_GRAPHICS-OPTIONS');
+				break;
+			}
+			break;	
 		
 		case 'F7': // FF TOP BUY TEAMS
 			$("#captions_div").hide();
@@ -432,7 +453,7 @@ function processUserSelection(whichInput)
 	case 'populate_squad_size_category_wise_btn': case 'populate_ff_playerprofile_btn': case 'populate_ff_Top_Sold_team_btn': case 'populate_lt_playerprofile_btn':
 	case 'populate_lt_playerprofile_stats_btn': case 'populate_Lof_squad_btn': case 'populate_flipper_btn': case 'populate_zonePlayer_stats_btn':
 	case 'populate_team_curr_bid_btn': case 'populate_ff_Top_Five_Sold_team_btn': case 'populate_zonewisePlayer_sold_btn':case "populate_profile_Change_stats_btn":
-	case 'populate_flipper_squad_btn':
+	case 'populate_flipper_squad_btn':case "populate_Squad_team_btn":case "populate_Squad_Role_team_btn":
 		processWaitingButtonSpinner('START_WAIT_TIMER');
 		switch ($(whichInput).attr('name')) {
 		case 'curr_bid_section':
@@ -507,6 +528,12 @@ function processUserSelection(whichInput)
 			break;
 		case 'populate_ff_Top_Sold_team_btn':
 			processAuctionProcedures('POPULATE-FF_TOP_BUY_TEAM');
+			break;
+		case "populate_Squad_team_btn":
+			processAuctionProcedures('POPULATE-FF_SQUAD_TEAM');
+			break;
+		case "populate_Squad_Role_team_btn":
+			processAuctionProcedures('POPULATE-FF_SQUAD_ROLE_TEAM');
 			break;
 		case 'populate_ff_Top_Five_Sold_team_btn':
 			processAuctionProcedures('POPULATE-FF_FIVE_TOP_BUY_TEAM');
@@ -674,6 +701,7 @@ function processAuctionProcedures(whatToProcess)
 		}
 		break;
 	case 'POPULATE-LOF_TEAM_TOP_SOLD': case 'POPULATE-FF_TOP_BUY_TEAM': case 'POPULATE-LOF_SQUAD': case 'POPULATE-TEAM_CURR_BID':
+	case "POPULATE-FF_SQUAD_TEAM":case "POPULATE-FF_SQUAD_ROLE_TEAM":
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':
 			valueToProcess = $('#selectTeamName option:selected').val();
@@ -879,6 +907,16 @@ function processAuctionProcedures(whatToProcess)
 				addItemsToList('POPULATE-TEAM',data);
 				match_data = data;
 				break;
+			case "FF_SQUAD_GRAPHICS-OPTIONS":
+				addItemsToList('FF_SQUAD_TEAM-OPTIONS',data);
+				addItemsToList('POPULATE-TEAM',data);
+				match_data = data;
+				break;
+			case "FF_SQUAD_ROLE_GRAPHICS-OPTIONS":
+				addItemsToList('FF_SQUAD_ROLE_TEAM-OPTIONS',data);
+				addItemsToList('POPULATE-TEAM',data);
+				match_data = data;
+				break;
 			case 'FF_TOP_FIVE_SOLD_TEAM_GRAPHICS-OPTIONS':
 				addItemsToList('FF_TOP_FIVE_SOLD_TEAM-OPTIONS',data);
 				addItemsToList('POPULATE-TEAM',data);
@@ -900,7 +938,7 @@ function processAuctionProcedures(whatToProcess)
 			
 			case 'POPULATE-FF_RTM_AND_PURSE_REMAINING': case 'POPULATE-FF_TOP_BUYS_AUCTION': case 'POPULATE-FF_TOP_BUY_TEAM': case 'POPULATE-TEAM_CURR_BID':
 			case 'POPULATE-FF_ICONIC_PLAYERS': case 'POPULATE-FF_FIVE_TOP_BUYS_AUCTION': case 'POPULATE-FF_FIVE_TOP_BUY_TEAM':
-			
+			case "POPULATE-FF_SQUAD_TEAM":case "POPULATE-FF_SQUAD_ROLE_TEAM":
 			case 'POPULATE-LT_ICONIC_PLAYERS': case 'POPULATE-PLAYERPROFILE_LT': case 'POPULATE-PLAYERPROFILE_LT_STATS': case 'POPULATE-ZONE_PLAYERS_STATS':
 			case 'POPULATE-ZONEWISE_PLAYERS_SOLD':
 			
@@ -1011,6 +1049,12 @@ function processAuctionProcedures(whatToProcess)
 						case 'POPULATE-FF_TOP_BUY_TEAM':
 							processAuctionProcedures('ANIMATE-IN-FF_TOP_BUY_TEAM');
 							break;
+						case "POPULATE-FF_SQUAD_TEAM":
+							processAuctionProcedures('ANIMATE-IN-FF_SQUAD_TEAM');
+							break;
+						case "POPULATE-FF_SQUAD_ROLE_TEAM":
+							processAuctionProcedures('ANIMATE-IN-FF_SQUAD_ROLE_TEAM');
+							break;
 						case 'POPULATE-FF_FIVE_TOP_BUY_TEAM':
 							processAuctionProcedures('ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM');
 							break;
@@ -1118,7 +1162,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 	case'SQUAD_PLAYER-OPTIONS': case 'FF_PLAYERPROFILE-OPTIONS': case 'FF_TOP_SOLD_TEAM-OPTIONS': case 'LOF_SQUAD_SIZE_CATEGORY_WISE_-OPTIONS': 
 	case 'LT_PLAYERPROFILE-OPTIONS': case 'LT_PP_STATS-OPTIONS': case 'LOF_SQUAD-OPTIONS': case 'FLIPPER-OPTIONS': case "ZONE-PLAYER-OPTIONS":
 	case 'TEAM_CURRENT_BID-OPTIONS': case 'FF_TOP_FIVE_SOLD_TEAM-OPTIONS': case 'ZONEWISE_PLAYER_SOLD-OPTIONS':case "GRAPHICS-FF_FIVE_TOP_BUYS_AUCTION":
-	case 'PROFILE_FF_STATS-OPTIONS': case 'FLIPPER_SQUAD-OPTIONS':
+	case 'PROFILE_FF_STATS-OPTIONS': case 'FLIPPER_SQUAD-OPTIONS':case "FF_SQUAD_TEAM-OPTIONS":case "FF_SQUAD_ROLE_TEAM-OPTIONS":
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':
  			
@@ -1227,7 +1271,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 					break;
 				case 'SQUAD-OPTIONS': case 'TOP-SOLD_TEAM-OPTIONS': case 'GOOGLY-OPTIONS': case 'LOF_TOP_SOLD_TEAM-OPTIONS': case'SQUAD_PLAYER-OPTIONS':
 				case 'FF_TOP_SOLD_TEAM-OPTIONS': case 'LOF_SQUAD_SIZE_CATEGORY_WISE_-OPTIONS': case 'LOF_SQUAD-OPTIONS': case 'TEAM_CURRENT_BID-OPTIONS':
-				case 'FF_TOP_FIVE_SOLD_TEAM-OPTIONS': case 'FLIPPER_SQUAD-OPTIONS':
+				case 'FF_TOP_FIVE_SOLD_TEAM-OPTIONS': case 'FLIPPER_SQUAD-OPTIONS':case "FF_SQUAD_TEAM-OPTIONS":case "FF_SQUAD_ROLE_TEAM-OPTIONS":
 					switch ($('#selected_broadcaster').val().toUpperCase()) {
 						case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':
 							select = document.createElement('select');
@@ -1853,6 +1897,14 @@ function addItemsToList(whatToProcess, dataToProcess)
 			case 'FF_TOP_SOLD_TEAM-OPTIONS':
 				option.name = 'populate_ff_Top_Sold_team_btn';
 			    option.value = 'Populate Top buy team';
+				break;
+			case "FF_SQUAD_TEAM-OPTIONS":
+				option.name = 'populate_Squad_team_btn';
+			    option.value = 'Populate ';
+				break;
+			case "FF_SQUAD_ROLE_TEAM-OPTIONS":
+				option.name = 'populate_Squad_Role_team_btn';
+			    option.value = 'Populate ';
 				break;
 			case 'FF_TOP_FIVE_SOLD_TEAM-OPTIONS':
 				option.name = 'populate_ff_Top_Five_Sold_team_btn';
