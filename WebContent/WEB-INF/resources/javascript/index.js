@@ -276,7 +276,13 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				processAuctionProcedures('FLIPPER_GRAPHICS-OPTIONS');
 				break;
 			}
-			break;	
+			break;
+		case 'v':
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			processAuctionProcedures('FLIPPER_TEXT_GRAPHICS-OPTIONS');
+			break;
 		
 		case 'm': //LT ICONIC PPLAYERS
 			processAuctionProcedures('POPULATE-LT_ICONIC_PLAYERS');
@@ -472,6 +478,7 @@ function processUserSelection(whichInput)
 	case 'populate_lt_playerprofile_stats_btn': case 'populate_Lof_squad_btn': case 'populate_flipper_btn': case 'populate_zonePlayer_stats_btn':
 	case 'populate_team_curr_bid_btn': case 'populate_ff_Top_Five_Sold_team_btn': case 'populate_zonewisePlayer_sold_btn':case "populate_profile_Change_stats_btn":
 	case 'populate_flipper_squad_btn':case "populate_Squad_team_btn":case "populate_Squad_Role_team_btn":case 'populate_Lof_Team_Bid_btn': case 'populate_profileff_btn':
+	case 'populate_flipper_text_btn':
 
 		processWaitingButtonSpinner('START_WAIT_TIMER');
 		switch ($(whichInput).attr('name')) {
@@ -483,6 +490,9 @@ function processUserSelection(whichInput)
 			break;
 		case 'populate_flipper_btn':
 			processAuctionProcedures('POPULATE-L3-FLIPPER');
+			break;
+		case 'populate_flipper_text_btn':
+			processAuctionProcedures('POPULATE-L3-FLIPPER_TEXT');
 			break;
 		case 'populate_namesuper_player_btn':
 			processAuctionProcedures('POPULATE-L3-NAMESUPER-PLAYER');
@@ -633,6 +643,13 @@ function processAuctionProcedures(whatToProcess)
 	case 'POPULATE-L3-FLIPPER':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':
+			valueToProcess = $('#selectFlipper option:selected').val();
+			break;
+		}
+		break;
+	case 'POPULATE-L3-FLIPPER_TEXT':
+		switch ($('#selected_broadcaster').val().toUpperCase()) {
+		case 'MUMBAI_T20_VIZ':
 			valueToProcess = $('#selectFlipper option:selected').val();
 			break;
 		}
@@ -865,6 +882,10 @@ function processAuctionProcedures(whatToProcess)
 				addItemsToList('FLIPPER-OPTIONS',data);
 				match_data = data;
 				break;
+			case "FLIPPER_TEXT_GRAPHICS-OPTIONS":
+				addItemsToList('FLIPPER_TEXT-OPTIONS',data);
+				match_data = data;
+				break;
 			case 'NAMESUPER_PLAYER_GRAPHICS-OPTIONS':
 				addItemsToList('NAMESUPER_PLAYER-OPTIONS',data);
 				addItemsToList('POPULATE-PLAYER',data);
@@ -970,7 +991,7 @@ function processAuctionProcedures(whatToProcess)
 			case 'POPULATE-RTM_ENABLED': case 'POPULATE-GOOGLY_POWER': case 'POPULATE-PROFILE_STATS': case 'POPULATE-LOF_REMAINING_PURSE':
 			case 'POPULATE-LOF_TOP_SOLD': case 'POPULATE-LOF_TEAM_TOP_SOLD': case "POPULATE-SQUAD-PLAYER": case 'POPULATE-PLAYERPROFILE_FF': case 'POPULATE-PROFILE_FF':
 			case 'POPULATE-LOF_REMAINING_SLOT': case 'POPULATE-LOF_SQUAD_SIZE': case 'POPULATE-LOF_RTM_REMAINING': case 'POPULATE-LOF_SQUAD_SIZE_CATEGORY_WISE':
-			case 'POPULATE-LOF_SQUAD': case 'POPULATE-LOF_SQUAD_REMAIN': case 'POPULATE-L3-FLIPPER':
+			case 'POPULATE-LOF_SQUAD': case 'POPULATE-LOF_SQUAD_REMAIN': case 'POPULATE-L3-FLIPPER': case 'POPULATE-L3-FLIPPER_TEXT':
 			
 			case 'POPULATE-FF_RTM_AND_PURSE_REMAINING': case 'POPULATE-FF_TOP_BUYS_AUCTION': case 'POPULATE-FF_TOP_BUY_TEAM': case 'POPULATE-TEAM_CURR_BID':
 			case 'POPULATE-FF_ICONIC_PLAYERS': case 'POPULATE-FF_FIVE_TOP_BUYS_AUCTION': case 'POPULATE-FF_FIVE_TOP_BUY_TEAM':
@@ -1005,6 +1026,9 @@ function processAuctionProcedures(whatToProcess)
 							break;
 						case 'POPULATE-L3-FLIPPER':
 							processAuctionProcedures('ANIMATE-IN-FLIPPER');	
+							break;
+						case 'POPULATE-L3-FLIPPER_TEXT':
+							processAuctionProcedures('ANIMATE-IN-FLIPPER_TEXT');	
 							break;
 						case 'POPULATE-TOP_SOLD': 
 							processAuctionProcedures('ANIMATE-IN-TOP_SOLD');				
@@ -1205,7 +1229,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 	case 'LT_PLAYERPROFILE-OPTIONS': case 'LT_PP_STATS-OPTIONS': case 'LOF_SQUAD-OPTIONS': case 'FLIPPER-OPTIONS': case "ZONE-PLAYER-OPTIONS":
 	case 'TEAM_CURRENT_BID-OPTIONS': case 'FF_TOP_FIVE_SOLD_TEAM-OPTIONS': case 'ZONEWISE_PLAYER_SOLD-OPTIONS':case "GRAPHICS-FF_FIVE_TOP_BUYS_AUCTION":
 	case 'PROFILE_FF_STATS-OPTIONS': case 'FLIPPER_SQUAD-OPTIONS':case "FF_SQUAD_TEAM-OPTIONS":case "FF_SQUAD_ROLE_TEAM-OPTIONS":case "LOF_TEAM_BID_OPTIONS": 
-	case 'PROFILEFF-OPTIONS':
+	case 'PROFILEFF-OPTIONS': case 'FLIPPER_TEXT-OPTIONS':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':
  			
@@ -1396,6 +1420,26 @@ function addItemsToList(whatToProcess, dataToProcess)
 							break;
 						} 
 						break;
+				case 'FLIPPER_TEXT-OPTIONS':
+					switch ($('#selected_broadcaster').val().toUpperCase()){
+						case 'MUMBAI_T20_VIZ':
+							select = document.createElement('select');
+							select.style = 'width:130px';
+							select.id = 'selectFlipper';
+							select.name = select.id;
+							
+							dataToProcess.forEach(function(flip,index,arr1){
+								option = document.createElement('option');
+								option.value = flip.flipperId;
+								option.text = flip.prompt ;
+								select.appendChild(option);
+							});
+							
+							row.insertCell(cellCount).appendChild(select);
+							cellCount = cellCount + 1;
+							break;
+					}
+					break;
 				case 'FLIPPER-OPTIONS':
 					switch ($('#selected_broadcaster').val().toUpperCase()) {
 					case 'DOAD_IN_HOUSE_EVEREST': case 'DOAD_IN_HOUSE_VIZ': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
@@ -1882,6 +1926,10 @@ function addItemsToList(whatToProcess, dataToProcess)
 			case 'FLIPPER-OPTIONS':
 				option.name = 'populate_flipper_btn';
 			    option.value = 'Populate Flipper';
+				break;
+			case 'FLIPPER_TEXT-OPTIONS':
+				option.name = 'populate_flipper_text_btn';
+			    option.value = 'Populate Flipper Text';
 				break;
 			case'NAMESUPER-OPTIONS':
 			    option.name = 'populate_namesuper_btn';
