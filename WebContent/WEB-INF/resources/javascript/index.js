@@ -629,7 +629,7 @@ function processAuctionProcedures(whatToProcess)
 			valueToProcess = '/Default/BidLt'+ ',' + $('#selectPlayerName option:selected').val();
 			break;
 		case 'VIZ_ISPL_2024': case 'MUMBAI_T20_VIZ':
-			valueToProcess = $('#selectPlayerName option:selected').val() + ',' + $('#selectShowData option:selected').val();
+			valueToProcess = $('#selectPlayerName option:selected').val();
 			break;
 		case "UTT_VIZ":
 			valueToProcess = $('#selectPlayerName option:selected').val()+','+$('#selectShowData option:selected').val();
@@ -1434,7 +1434,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 							row.insertCell(cellCount).appendChild(select);
 							cellCount = cellCount + 1;
 						}
-						else if(whatToProcess == 'PLAYERPROFILE-OPTIONS' && $('#selected_broadcaster').val().toUpperCase()==='MUMBAI_T20_VIZ'){
+						/*else if(whatToProcess == 'PLAYERPROFILE-OPTIONS' && $('#selected_broadcaster').val().toUpperCase()==='MUMBAI_T20_VIZ'){
 							
 							select = document.createElement('select');
 							select.style = 'width:150px';
@@ -1454,7 +1454,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 							select.setAttribute('onchange',"processUserSelection(this)");
 							row.insertCell(cellCount).appendChild(select);
 							cellCount = cellCount + 1;
-						}
+						}*/
 						switch(whatToProcess){
 							case 'FF_PLAYERPROFILE-OPTIONS':
 								select = document.createElement('select');

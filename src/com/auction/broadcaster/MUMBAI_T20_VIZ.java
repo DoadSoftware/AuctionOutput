@@ -72,7 +72,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 	{
 		if(data.isData_on_screen()) {
 			if(data.isPlayer_sold_or_unsold() == false) {
-				populatePlayerProfile(true,print_writer, 2, data.getPlayer_id(),"",auctionService.getAllStats(), auction, 
+				populatePlayerProfile(true,print_writer, 2, data.getPlayer_id(),auctionService.getAllStats(), auction, 
 						session_curr_bid, auctionService, session_selected_broadcaster);
 			}
 			
@@ -125,7 +125,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 				switch (whatToProcess.toUpperCase()) {
 				case "POPULATE-FF-PLAYERPROFILE":
 					data.setPlayer_id(Integer.valueOf(valueToProcess.split(",")[0]));
-					populatePlayerProfile(false,print_writer,whichSide,Integer.valueOf(valueToProcess.split(",")[0]),valueToProcess.split(",")[1], 
+					populatePlayerProfile(false,print_writer,whichSide,Integer.valueOf(valueToProcess.split(",")[0]), 
 							auctionService.getAllStats(),auction, session_curr_bid,auctionService, session_selected_broadcaster);
 					processPreview(print_writer, whatToProcess, whichSide);
 					break;
@@ -1680,7 +1680,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		}
 	}
 	
-	public void populatePlayerProfile(boolean is_this_updating,PrintWriter print_writer,int which_side, int playerId,String whichdata,List<Statistics> stats, Auction auction, 
+	public void populatePlayerProfile(boolean is_this_updating,PrintWriter print_writer,int which_side, int playerId,List<Statistics> stats, Auction auction, 
 			Auction session_curr_bid,AuctionService auctionService, String session_selected_broadcaster) throws InterruptedException 
 	{
 		if(session_curr_bid.getCurrentPlayers() != null) {
@@ -1721,10 +1721,10 @@ public class MUMBAI_T20_VIZ extends Scene{
 		if(is_this_updating == false) {
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Select*FUNCTION*Omo*vis_con SET 0\0");
 			
-			if(whichdata.equalsIgnoreCase("With_Photo")) {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$ImageGrp$Select_Image*FUNCTION*Omo*vis_con SET 1\0");
-			}else {
+			if(auctionService.getAllPlayer().get(playerId - 1).getPhotoName().trim().equalsIgnoreCase("NO")) {
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$ImageGrp$Select_Image*FUNCTION*Omo*vis_con SET 0\0");
+			}else {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$ImageGrp$Select_Image*FUNCTION*Omo*vis_con SET 1\0");
 			}
 			
 //			populateProfileStats(print_writer, "STYLE",0, which_side, auction, auctionService);
