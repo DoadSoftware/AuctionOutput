@@ -1506,7 +1506,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 							            statsDropdown.id = 'PlayerData';
 							            statsDropdown.name = 'PlayerData';
 							
-							            ['FC', 'LIST A', 'DT20'].forEach(value => {
+							            ['FC', 'LIST A', 'DT20', 'MCA T20s'].forEach(value => {
 							                const option = document.createElement('option');
 							                option.value = value;
 							                option.text = value;
@@ -1562,7 +1562,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 							            statsDropdown.id = 'PlayerData';
 							            statsDropdown.name = 'PlayerData';
 							
-							            ['FC', 'LIST A', 'DT20'].forEach(value => {
+							            ['FC', 'LIST A', 'DT20', 'MCA T20s'].forEach(value => {
 							                const option = document.createElement('option');
 							                option.value = value;
 							                option.text = value;
@@ -1623,7 +1623,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 			            statsDropdown.id = 'PlayerData';
 			            statsDropdown.name = 'PlayerData';
 			
-			            ['FC', 'LIST A', 'DT20'].forEach(value => {
+			            ['FC', 'LIST A', 'DT20', 'MCA T20s'].forEach(value => {
 			                const option = document.createElement('option');
 			                option.value = value;
 			                option.text = value;
@@ -1711,7 +1711,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 			            statsDropdown.id = 'PlayerData';
 			            statsDropdown.name = 'PlayerData';
 			
-			            ['FC', 'LIST A', 'DT20'].forEach(value => {
+			            ['FC', 'LIST A', 'DT20', 'MCA T20s'].forEach(value => {
 			                const option = document.createElement('option');
 			                option.value = value;
 			                option.text = value;

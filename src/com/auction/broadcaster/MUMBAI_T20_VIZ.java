@@ -624,6 +624,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 							print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change$Right_Data_Move START \0");
 						}
 					}
+					
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio START \0");
+					
 					//isProfileStatsOnScreen = true;
 					data.setData_on_screen(true);
 					break;
@@ -669,6 +672,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 					TimeUnit.MILLISECONDS.sleep(1200);
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Flipper START \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Scroll START \0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio START \0");
 					which_graphics_onscreen = whatToProcess.replace("ANIMATE-IN-", "");
 					break;
 					
@@ -679,7 +683,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$In_Out$TopData START \0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$In_Out$BottomData START \0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$In_Out$Logo START \0");
-						
+						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio START \0");
 						which_graphics_onscreen = whatToProcess.replace("ANIMATE-IN-", "");
 					}else {
 						ChangeOn(print_writer, which_graphics_onscreen, whatToProcess);
@@ -767,6 +771,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 							which_graphics_onscreen = "FF_ICONIC_PLAYERS";
 							break;
 						}
+						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Audio START \0");
 					}else {
 						ChangeOn(print_writer, which_graphics_onscreen, whatToProcess);
 						switch (whatToProcess.toUpperCase()) {
@@ -900,6 +905,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 							which_graphics_onscreen = "LOF_SQUAD_SIZE_CATEGORY_WISE";
 							break;
 						}
+						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio START \0");
 					}else {
 						ChangeOn(print_writer, which_graphics_onscreen, whatToProcess);
 						switch (whatToProcess.toUpperCase()) {
@@ -3630,7 +3636,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 			}else if(which_stat.equalsIgnoreCase("LIST A")) {
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET LIST A CAREER\0");
 			}else if(which_stat.equalsIgnoreCase("DT20")) {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET T20\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET T20 CAREER\0");
+			}else if(which_stat.equalsIgnoreCase("MCA T20s")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET MCA T20s 24-25\0");
 			}
 			
 			for(Statistics stat : stats) {
@@ -3804,6 +3812,8 @@ public class MUMBAI_T20_VIZ extends Scene{
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET LIST A CAREER\0");
 			}else if(which_stat.equalsIgnoreCase("DT20")) {
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET T20\0");
+			}else if(which_stat.equalsIgnoreCase("MCA T20s")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET MCA T20s 24-25\0");
 			}
 			
 			for(Statistics stat : stats) {
@@ -4740,6 +4750,8 @@ public class MUMBAI_T20_VIZ extends Scene{
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Stats$0$txt_Title*GEOM*TEXT SET LIST A CAREER\0");
 			}else if(which_stat.equalsIgnoreCase("DT20")) {
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Stats$0$txt_Title*GEOM*TEXT SET T20 CAREER\0");
+			}else if(which_stat.equalsIgnoreCase("MCA T20s")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Stats$0$txt_Title*GEOM*TEXT SET MCA T20s 24-25\0");
 			}
 			
 			for(Statistics stats : auctionService.getAllStats()) {
