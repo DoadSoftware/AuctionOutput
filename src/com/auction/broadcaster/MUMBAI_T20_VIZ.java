@@ -654,7 +654,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 					if(data.getBid_result().equalsIgnoreCase("GAVEL") || data.getBid_result().equalsIgnoreCase("BID")) {
 //						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change$Gavel START \0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change$BasePriceHead START \0");
-						TimeUnit.MILLISECONDS.sleep(400);
+						TimeUnit.MILLISECONDS.sleep(500);
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change$Right_Data_Move START \0");
 						TimeUnit.MILLISECONDS.sleep(500);
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change$CurrentBid START \0");
@@ -666,7 +666,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 					data.setBid_Start_or_not(true);
 					data.setBid_result("BID");
 					
-					TimeUnit.MILLISECONDS.sleep(700);
+					TimeUnit.MILLISECONDS.sleep(600);
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$MoveForStats$CenterDataGrp$Side1$Select_DataType*FUNCTION*Omo*vis_con SET 1 \0");
 					
 					populateCurrentBid(print_writer, 1);
@@ -679,6 +679,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 					break;
 				
 				case "ANIMATE-IN-PLAYERPROFILE": 
+					
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$In_Out$Essentials START \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$In_Out$CenterData START \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$In_Out$Right_Data START \0");
@@ -701,7 +702,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 					
 					//isProfileStatsOnScreen = true;
 					if(isFlipperonScreen) {
-						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$MoveForStats*TRANSFORMATION*POSITION*A2 SET 40.0\0");
+						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$MoveForStats*ANIMATION*KEY*$A1*VALUE SET 0.0 40.0 0.0 \0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Move_For_Stats START\0");
 					}
 					data.setData_on_screen(true);
@@ -2594,7 +2595,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 				+ "Select_Value$txt_Title*GEOM*TEXT SET BASE PRICE\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$BasePrice$"
 				+ "Select_Value$txt_Value*GEOM*TEXT SET " +  
-				AuctionFunctions.ConvertToLakh(Double.valueOf(auctionService.getAllPlayer().get(playerId - 1).getBasePrice()+"000")).replace(".00", "")+ " L"+"\0");
+				AuctionFunctions.ConvertToLakh(Double.valueOf(auctionService.getAllPlayer().get(playerId - 1).getBasePrice()+"000"))+ " L"+"\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$"
 				+ "ImageGrp$Select_Logo*FUNCTION*Omo*vis_con SET 0\0");
 		
