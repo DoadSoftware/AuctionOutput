@@ -192,6 +192,11 @@ public class IndexController
 			case "VIZ_ISPL_2024":case "UTT_VIZ": case "MUMBAI_T20_VIZ":
 				scene.LoadScene("OVERLAYS", print_writer, session_Configurations);
 				scene.LoadScene("FULL-FRAMERS", print_writer, session_Configurations);
+				switch (session_selected_broadcaster) {
+				case "MUMBAI_T20_VIZ":
+					this_mumbai_t20_viz.resetData(print_writer);
+					break;
+				}
 				break;
 			}
 			
