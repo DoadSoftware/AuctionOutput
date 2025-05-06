@@ -1227,7 +1227,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 
 					case "IDENT": case "PLAYERPROFILE_FF": case "FF_RTM_AND_PURSE_REMAINING": case "FF_TOP_BUYS_AUCTION": case "FF_TOP_BUY_TEAM":
 					case "SQUAD": case "REMAINING_PURSE_ALL": case "FF_ICONIC_PLAYERS": case "ZONE-PLAYER_STATS": case "FF_FIVE_TOP_BUYS_AUCTION":
-					case "FF_FIVE_TOP_BUY_TEAM":case "FF_SQUAD_TEAM":
+					case "FF_FIVE_TOP_BUY_TEAM":case "FF_SQUAD_TEAM": case "FF_SQUAD_ROLE_TEAM":
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Essentials CONTINUE\0");
 						switch (which_graphics_onscreen) {
 						case "IDENT":
@@ -1402,9 +1402,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
 					"$SquadCategoryData$PlayerName$img_Icon*TEXTURE*IMAGE SET " + setPlayerRole(player)+ "\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-					"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + (player.getFirstname()==null ? "" :player.getFirstname())+ "\0");
+					"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + player.getFull_name() + "\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-					"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET " + (player.getSurname()==null ? "" :player.getSurname())+ "\0");
+					"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET \0");
 			
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
 					"$SquadCategoryData$PlayerName$Iconic_Icon$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
@@ -1432,9 +1432,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
 						"$SquadCategoryData$PlayerName$img_Icon*TEXTURE*IMAGE SET " + setPlayerRole(ply)+ "\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + (ply.getFirstname()==null ? "" :ply.getFirstname())+ "\0");
+						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + ply.getFull_name() + "\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET " + (ply.getSurname()==null ? "" :ply.getSurname())+ "\0");
+						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET \0");
 				
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
 						"$SquadCategoryData$PlayerName$Iconic_Icon$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
@@ -1470,9 +1470,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
 						"$SquadCategoryData$PlayerName$img_Icon*TEXTURE*IMAGE SET " + setPlayerRole(ply)+ "\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + (ply.getFirstname()==null ? "" :ply.getFirstname())+ "\0");
+						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + ply.getFull_name() + "\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET " + (ply.getSurname()==null ? "" :ply.getSurname())+ "\0");
+						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET \0");
 				
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
 						"$SquadCategoryData$PlayerName$Iconic_Icon$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
@@ -1508,9 +1508,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
 						"$SquadCategoryData$PlayerName$img_Icon*TEXTURE*IMAGE SET " + setPlayerRole(ply)+ "\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + (ply.getFirstname()==null ? "" :ply.getFirstname())+ "\0");
+						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + ply.getFull_name() + "\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET " + (ply.getSurname()==null ? "" :ply.getSurname())+ "\0");
+						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET \0");
 				
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
 						"$SquadCategoryData$PlayerName$Iconic_Icon$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
@@ -1539,9 +1539,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
 						"$SquadCategoryData$PlayerName$img_Icon*TEXTURE*IMAGE SET " + setPlayerRole(ply)+ "\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + (ply.getFirstname()==null ? "" :ply.getFirstname())+ "\0");
+						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + ply.getFull_name() + "\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET " + (ply.getSurname()==null ? "" :ply.getSurname())+ "\0");
+						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET \0");
 				
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
 						"$SquadCategoryData$PlayerName$Iconic_Icon$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
@@ -1570,9 +1570,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
 						"$SquadCategoryData$PlayerName$img_Icon*TEXTURE*IMAGE SET " + setPlayerRole(ply)+ "\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + (ply.getFirstname()==null ? "" :ply.getFirstname())+ "\0");
+						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + ply.getFull_name() + "\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET " + (ply.getSurname()==null ? "" :ply.getSurname())+ "\0");
+						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET \0");
 				
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
 						"$SquadCategoryData$PlayerName$Iconic_Icon$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
@@ -1648,9 +1648,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_New$DataAll$Row" + row +
 						"$SquadCategoryData$PlayerName$img_Icon*TEXTURE*IMAGE SET " + setPlayerRole(ply)+ "\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_New$DataAll$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + (ply.getFirstname()==null ? "" :ply.getFirstname())+ "\0");
+						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + ply.getFull_name()+ "\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_New$DataAll$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET " + (ply.getSurname()==null ? "" :ply.getSurname())+ "\0");
+						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET \0");
 				
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_New$DataAll$Row" + row +
 						"$SquadCategoryData$PlayerName$Iconic_Icon$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
@@ -1678,9 +1678,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_New$DataAll$Row" + row +
 						"$SquadCategoryData$PlayerName$img_Icon*TEXTURE*IMAGE SET " + setPlayerRole(ply)+ "\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_New$DataAll$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + (ply.getFirstname()==null ? "" :ply.getFirstname())+ "\0");
+						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + ply.getFull_name()+ "\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_New$DataAll$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET " + (ply.getSurname()==null ? "" :ply.getSurname())+ "\0");
+						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET \0");
 				
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_New$DataAll$Row" + row +
 						"$SquadCategoryData$PlayerName$Iconic_Icon$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
@@ -1716,9 +1716,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_New$DataAll$Row" + row +
 						"$SquadCategoryData$PlayerName$img_Icon*TEXTURE*IMAGE SET " + setPlayerRole(ply)+ "\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_New$DataAll$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + (ply.getFirstname()==null ? "" :ply.getFirstname())+ "\0");
+						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + ply.getFull_name()+ "\0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_New$DataAll$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET " + (ply.getSurname()==null ? "" :ply.getSurname())+ "\0");
+						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET \0");
 				
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_New$DataAll$Row" + row +
 						"$SquadCategoryData$PlayerName$Iconic_Icon$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
