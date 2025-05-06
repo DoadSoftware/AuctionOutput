@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>AuctionOutput</groupId>
   <artifactId>AuctionOutput</artifactId>
-  <version>1.66</version>
+  <version>1.67</version>
   <packaging>war</packaging>
   <name>AuctionOutput</name>
   <properties>
@@ -17,7 +17,7 @@
 	<groupId>com.auction</groupId>
 	<artifactId>AuctionLibrary</artifactId>
 	<scope>compile</scope>
-	<version>1.25</version>
+	<version>1.24</version>
 </dependency>
 
 <dependency>
