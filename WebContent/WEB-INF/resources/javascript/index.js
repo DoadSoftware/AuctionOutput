@@ -80,9 +80,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 'F5': //FF SQUAD SIZE, RTM AVAILABLE, PURSE REM
 			processAuctionProcedures('POPULATE-FF_RTM_AND_PURSE_REMAINING');
 			break;
-		case 'r'://size
-			processAuctionProcedures('POPULATE-FF_SIZE_AND_PURSE_REMAINING');
-			break;
+		
 		case 'F6': //FF TOP BUY AUCTION
 			processAuctionProcedures('POPULATE-FF_TOP_BUYS_AUCTION');
 			break;
@@ -696,7 +694,7 @@ function processAuctionProcedures(whatToProcess)
 			break;
 		}
 		break;
-	case "POPULATE-FF_FIVE_TOP_BUYS_AUCTION":
+	case "POPULATE-FF_FIVE_TOP_BUYS_AUCTION":case "POPULATE-FF_RTM_AND_PURSE_REMAINING":
 		valueToProcess = $('#selectImage option:selected').val();
 		break;
 	case 'POPULATE-LOF_SQUAD_SIZE_CATEGORY_WISE':
@@ -899,7 +897,7 @@ function processAuctionProcedures(whatToProcess)
 			
 			case 'POPULATE-FF_RTM_AND_PURSE_REMAINING': case 'POPULATE-FF_TOP_BUYS_AUCTION': case 'POPULATE-FF_TOP_BUY_TEAM': case 'POPULATE-TEAM_CURR_BID':
 			case 'POPULATE-FF_ICONIC_PLAYERS': case 'POPULATE-FF_FIVE_TOP_BUYS_AUCTION': case 'POPULATE-FF_FIVE_TOP_BUY_TEAM':
-			case 'POPULATE-FF_SIZE_AND_PURSE_REMAINING':
+			
 			case 'POPULATE-LT_ICONIC_PLAYERS': case 'POPULATE-PLAYERPROFILE_LT': case 'POPULATE-PLAYERPROFILE_LT_STATS': case 'POPULATE-ZONE_PLAYERS_STATS':
 			case 'POPULATE-ZONEWISE_PLAYERS_SOLD':
 			
@@ -1000,9 +998,6 @@ function processAuctionProcedures(whatToProcess)
 							break;
 						case 'POPULATE-FF_RTM_AND_PURSE_REMAINING':
 							processAuctionProcedures('ANIMATE-IN-FF_RTM_AND_PURSE_REMAINING');
-							break;
-						case 'POPULATE-FF_SIZE_AND_PURSE_REMAINING':
-							processAuctionProcedures('ANIMATE-IN-FF_SIZE_AND_PURSE_REMAINING');
 							break;
 						case 'POPULATE-FF_TOP_BUYS_AUCTION':
 							processAuctionProcedures('ANIMATE-IN-FF_TOP_BUYS_AUCTION');
@@ -1827,7 +1822,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 			case "GRAPHICS-FF_FIVE_TOP_BUYS_AUCTION":
 				option.name = 'populate_ffTop5Buys_btn';
 			    option.value = 'Populate FF TOP 5 BUYS';
-				break;	
+				break;		
 			case 'GOOGLY-OPTIONS':
 				option.name = 'populate_googly_purse_btn';
 			    option.value = 'Googly Power';
