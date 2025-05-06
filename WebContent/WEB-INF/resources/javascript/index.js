@@ -682,8 +682,11 @@ function processAuctionProcedures(whatToProcess)
 		break;
 	case 'POPULATE-FF_FIVE_TOP_BUY_TEAM':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
-		case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':
+		case 'VIZ_ISPL_2024': case "UTT_VIZ":
 			valueToProcess = $('#selectTeamName option:selected').val()+","+$('#selectImage option:selected').val();
+			break;
+		case 'MUMBAI_T20_VIZ':
+			valueToProcess = $('#selectTeamName option:selected').val();
 			break;	
 		}
 		break;
@@ -1235,19 +1238,23 @@ function addItemsToList(whatToProcess, dataToProcess)
 							row.insertCell(cellCount).appendChild(select);
 							cellCount = cellCount + 1;
 							if(whatToProcess ==='FF_TOP_FIVE_SOLD_TEAM-OPTIONS'){
-								select = document.createElement('select');
-								select.style = 'width:100px';
-								select.id = 'selectImage';
-								select.name = select.id;
-								["WithImage","WithoutImage"].forEach(function(flip){
-										option = document.createElement('option');
-										option.value = flip;
-										option.text = flip;
-										select.appendChild(option);
-									});
-								select.setAttribute('onchange',"processUserSelection(this)");
-								row.insertCell(cellCount).appendChild(select);
-								cellCount = cellCount + 1;	
+								switch ($('#selected_broadcaster').val().toUpperCase()){
+									case 'VIZ_ISPL_2024': case "UTT_VIZ":
+										select = document.createElement('select');
+										select.style = 'width:100px';
+										select.id = 'selectImage';
+										select.name = select.id;
+										["WithImage","WithoutImage"].forEach(function(flip){
+												option = document.createElement('option');
+												option.value = flip;
+												option.text = flip;
+												select.appendChild(option);
+											});
+										select.setAttribute('onchange',"processUserSelection(this)");
+										row.insertCell(cellCount).appendChild(select);
+										cellCount = cellCount + 1;
+										break;
+								}	
 							}else if(whatToProcess ==='FLIPPER_SQUAD-OPTIONS'){
 								select = document.createElement('select');
 								select.style = 'width:130px';
