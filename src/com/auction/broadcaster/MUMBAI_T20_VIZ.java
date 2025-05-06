@@ -1252,12 +1252,12 @@ public class MUMBAI_T20_VIZ extends Scene{
 		}
 		return null;
 	}
-	private void populateFFSquadRoleTeam(PrintWriter print_writer, int whichSideNotProfile2, Integer valueOf,
+	private void populateFFSquadRoleTeam(PrintWriter print_writer, int whichSide, Integer teaam_id,
 			Auction auction, AuctionService auctionService, String session_selected_broadcaster2) {
 		auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(auction.getTeam(), 
 		        auction.getPlayers(), auction.getPlayersList()));
 		
-		PlayerCount team = auction.getTeamZoneList().stream().filter(tm->tm.getTeamId() == whichSideNotProfile2).findAny().orElse(null);
+		PlayerCount team = auction.getTeamZoneList().stream().filter(tm->tm.getTeamId() == teaam_id).findAny().orElse(null);
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$Select_HeaderType*FUNCTION*Omo*vis_con SET 3\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$Header$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
@@ -1283,21 +1283,26 @@ public class MUMBAI_T20_VIZ extends Scene{
 		int row = 2;
 		
 		Player player = team.getPlayerCategoryWise().get("ICON").get(0);
-		
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-				"$SquadCategoryData$SlectDataStyle*FUNCTION*Omo*vis_con SET 2\0");
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-				"$SquadCategoryData$PlayerName$img_Icon*TEXTURE*IMAGE SET " + setPlayerRole(player)+ "\0");
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-				"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + (player.getFirstname()==null ? "" :player.getFirstname())+ "\0");
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-				"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET " + (player.getSurname()==null ? "" :player.getSurname())+ "\0");
-		
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-				"$SquadCategoryData$PlayerName$Iconic_Icon$Select_Icon*FUNCTION*Omo*vis_con SET 1\0");
-		
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-				"$SquadCategoryData$PlayerName$txt_Value*GEOM*TEXT SET " + AuctionFunctions.ConvertToLakh(player.getSoldForPoints()) + " L \0");
+		if(player==null) {
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
+					"$SquadCategoryData$SlectDataStyle*FUNCTION*Omo*vis_con SET 0\0");
+		}else {
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
+					"$SquadCategoryData$SlectDataStyle*FUNCTION*Omo*vis_con SET 2\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
+					"$SquadCategoryData$PlayerName$img_Icon*TEXTURE*IMAGE SET " + setPlayerRole(player)+ "\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
+					"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + (player.getFirstname()==null ? "" :player.getFirstname())+ "\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
+					"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET " + (player.getSurname()==null ? "" :player.getSurname())+ "\0");
+			
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
+					"$SquadCategoryData$PlayerName$Iconic_Icon$Select_Icon*FUNCTION*Omo*vis_con SET 1\0");
+			
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
+					"$SquadCategoryData$PlayerName$txt_Value*GEOM*TEXT SET " + AuctionFunctions.ConvertToLakh(player.getSoldForPoints()) + " L \0");
+			
+		}
 		
 		row = row + 1;
 		
@@ -1405,13 +1410,13 @@ public class MUMBAI_T20_VIZ extends Scene{
 		}
 	}
 
-	private void populateFFSquadTeam(PrintWriter print_writer, int whichSideNotProfile2, Integer valueOf,
+	private void populateFFSquadTeam(PrintWriter print_writer, int whichSide, Integer teaam_id,
 			Auction auction, AuctionService auctionService, String session_selected_broadcaster2) {
 		
 		auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(auction.getTeam(), 
 		        auction.getPlayers(), auction.getPlayersList()));
 		
-		PlayerCount team = auction.getTeamZoneList().stream().filter(tm->tm.getTeamId() == whichSideNotProfile2).findAny().orElse(null);
+		PlayerCount team = auction.getTeamZoneList().stream().filter(tm->tm.getTeamId() == teaam_id).findAny().orElse(null);
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$Select_HeaderType*FUNCTION*Omo*vis_con SET 3\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$Header$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
