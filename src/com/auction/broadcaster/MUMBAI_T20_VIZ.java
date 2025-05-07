@@ -698,8 +698,6 @@ public class MUMBAI_T20_VIZ extends Scene{
 						}
 					}
 					
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio START \0");
-					
 					//isProfileStatsOnScreen = true;
 					if(isFlipperonScreen) {
 						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$MoveForStats*ANIMATION*KEY*$A1*VALUE SET 0.0 40.0 0.0 \0");
@@ -758,7 +756,6 @@ public class MUMBAI_T20_VIZ extends Scene{
 					TimeUnit.MILLISECONDS.sleep(1000);
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Flipper START \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Scroll START \0");
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio START \0");
 					which_graphics_onscreen = whatToProcess.replace("ANIMATE-IN-", "");
 					isFlipperonScreen = true;
 					break;
@@ -770,7 +767,6 @@ public class MUMBAI_T20_VIZ extends Scene{
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$In_Out$TopData START \0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$In_Out$BottomData START \0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$In_Out$Logo START \0");
-						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio START \0");
 						which_graphics_onscreen = whatToProcess.replace("ANIMATE-IN-", "");
 					}else {
 						ChangeOn(print_writer, which_graphics_onscreen, whatToProcess);
@@ -862,7 +858,6 @@ public class MUMBAI_T20_VIZ extends Scene{
 							which_graphics_onscreen = "FF_ICONIC_PLAYERS";
 							break;
 						}
-						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Audio START \0");
 					}else {
 						ChangeOn(print_writer, which_graphics_onscreen, whatToProcess);
 						switch (whatToProcess.toUpperCase()) {
@@ -1008,7 +1003,6 @@ public class MUMBAI_T20_VIZ extends Scene{
 							which_graphics_onscreen = "LOF_SQUAD_SIZE_CATEGORY_WISE";
 							break;
 						}
-						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio START \0");
 					}else {
 						ChangeOn(print_writer, which_graphics_onscreen, whatToProcess);
 						switch (whatToProcess.toUpperCase()) {
@@ -1425,7 +1419,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
 					"$SquadCategoryData$SlectDataStyle*FUNCTION*Omo*vis_con SET 1\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-					"$SquadCategoryData$Title$txt_Title*GEOM*TEXT SET " + "BATTER" + "\0");
+					"$SquadCategoryData$Title$txt_Title*GEOM*TEXT SET " + "BATTERS" + "\0");
 			
 			row = row + 1;
 			
@@ -1463,7 +1457,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
 					"$SquadCategoryData$SlectDataStyle*FUNCTION*Omo*vis_con SET 1\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-					"$SquadCategoryData$Title$txt_Title*GEOM*TEXT SET " + "WICKET KEEPER" + "\0");
+					"$SquadCategoryData$Title$txt_Title*GEOM*TEXT SET " + "WICKET - KEEPERS" + "\0");
 			
 			row = row + 1;
 			
@@ -1501,7 +1495,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
 					"$SquadCategoryData$SlectDataStyle*FUNCTION*Omo*vis_con SET 1\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$DataAll$Row" + row +
-					"$SquadCategoryData$Title$txt_Title*GEOM*TEXT SET " + "ALL ROUNDER" + "\0");
+					"$SquadCategoryData$Title$txt_Title*GEOM*TEXT SET " + "ALL - ROUNDERS" + "\0");
 			
 			row = row + 1;
 			
@@ -2275,6 +2269,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 								print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change$Unsold START \0");
 //								print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*ImageChangeForUnsold START \0");
 							}
+							print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio START \0");
 						}
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_TopData START \0");
 						TimeUnit.MILLISECONDS.sleep(2000);
@@ -3221,7 +3216,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 0 \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$TitleText$RupeeSymbol*ACTIVE SET 0\0");
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$TitleText$Left$txt_Title*GEOM*TEXT SET TEAM\0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$TitleText$Left$txt_Title*GEOM*TEXT SET \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$TitleText$Position$txt_Title*GEOM*TEXT SET SLOTS\0");
 		
 		int row = 0;
@@ -3299,7 +3294,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 0 \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$TitleText$RupeeSymbol*ACTIVE SET 0\0");
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$TitleText$Left$txt_Title*GEOM*TEXT SET TEAM\0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$TitleText$Left$txt_Title*GEOM*TEXT SET \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$TitleText$Position$txt_Title*GEOM*TEXT SET SIZE\0");
 		
 		int row = 0;
