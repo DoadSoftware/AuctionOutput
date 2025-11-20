@@ -42,6 +42,12 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				processAuctionProcedures('ANIMATE-OUT-RTM_GOOGLY');	
 			}
 			break;
+		case "o"://187
+			if(confirm('It will Also Delete Your Preview from Directory...\r\n \r\nAre You Sure To Animate Out? ') == true){
+				processAuctionProcedures('ANIMATE-OUT-CRAWLER');	
+			}
+			break;
+			
 		case 'Alt_r':
 			processAuctionProcedures('RE_READ_DATA');
 			break;
@@ -224,6 +230,14 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#expiry_message").hide();
 			addItemsToList('LOF_REMAINING_PURSE-OPTIONS',null);
 			break;
+			
+		case 'Alt_f':
+			processAuctionProcedures('POPULATE-CRAWL-PURSE_REMAINING');
+			break;
+		case 'Alt_s':
+			processAuctionProcedures('POPULATE-CRAWL-SQUAD_SIZE');
+			break;
+			
 		case 'g': //LOF TOP BUYS
 			processAuctionProcedures('POPULATE-LOF_TOP_SOLD');
 			break;
@@ -999,6 +1013,8 @@ function processAuctionProcedures(whatToProcess)
 			case 'POPULATE-LT_ICONIC_PLAYERS': case 'POPULATE-PLAYERPROFILE_LT': case 'POPULATE-PLAYERPROFILE_LT_STATS': case 'POPULATE-ZONE_PLAYERS_STATS':
 			case 'POPULATE-ZONEWISE_PLAYERS_SOLD':case "POPULATE-LOF_TEAM_BID_AUCTION":
 			
+			case 'POPULATE-CRAWL-PURSE_REMAINING': case 'POPULATE-CRAWL-SQUAD_SIZE':
+			
 				if(whatToProcess == 'POPULATE-RTM_ENABLED' || whatToProcess == 'POPULATE-CURR_BID' || whatToProcess == 'POPULATE-RTM_PLAYER')	{
 					switch(whatToProcess){
 						case 'POPULATE-RTM_ENABLED':
@@ -1066,6 +1082,14 @@ function processAuctionProcedures(whatToProcess)
 						case 'POPULATE-LOF_REMAINING_PURSE':
 							processAuctionProcedures('ANIMATE-IN-LOF_REMAINING_PURSE');				
 							break;
+							
+						case 'POPULATE-CRAWL-PURSE_REMAINING':
+							processAuctionProcedures('ANIMATE-IN-CRAWL_REMAINING_PURSE');				
+							break;
+						case 'POPULATE-CRAWL-SQUAD_SIZE':
+							processAuctionProcedures('ANIMATE-IN-CRAWL_SQUAD_SIZE');				
+							break;
+							
 						case 'POPULATE-LOF_TOP_SOLD':
 							processAuctionProcedures('ANIMATE-IN-LOF_TOP_SOLD');				
 							break;
