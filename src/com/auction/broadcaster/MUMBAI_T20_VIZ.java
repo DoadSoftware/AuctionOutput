@@ -1621,7 +1621,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_New$IconPlayer1$txt_Value*GEOM*TEXT SET "+
 				AuctionFunctions.ConvertToLakh(team.getPlayerCategoryWise().get("ICON").get(0).getSoldForPoints()) + " L \0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_New$IconPlayer1$img_Icon*TEXTURE*IMAGE SET " 
-				+ setPlayerRole(team.getPlayerCategoryWise().get("ICON").get(0))  + "\0");
+				+ setPlayerRole(team.getPlayerCategoryWise().get("ICON").get(0)) + "\0");
 		
 		for(int i= 1 ; i<=22; i++) {
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_New$DataAll$Row" + i +
