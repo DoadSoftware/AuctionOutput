@@ -97,7 +97,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 	}
 	
 	public Object ProcessGraphicOption(String whatToProcess, Auction auction, Auction session_curr_bid, AuctionService auctionService,
-			PrintWriter print_writer, List<Scene> scenes, String valueToProcess) throws InterruptedException, NumberFormatException, IllegalAccessException {
+			PrintWriter print_writer, List<Scene> scenes, String valueToProcess) throws Exception {
 		System.out.println(whatToProcess.toUpperCase());
 		switch (whatToProcess.toUpperCase()) {
 		case "POPULATE-FF-PLAYERPROFILE": case "POPULATE-SQUAD": case "POPULATE-REMAINING_PURSE_ALL": case "POPULATE-SINGLE_PURSE": case "POPULATE-TOP_SOLD":
@@ -1350,7 +1350,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 	}
 
 	private void populateFFSquadRoleTeam(PrintWriter print_writer, int whichSide, Integer teaam_id,
-			Auction auction, AuctionService auctionService, String session_selected_broadcaster2) {
+			Auction auction, AuctionService auctionService, String session_selected_broadcaster2) throws Exception {
 		auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(auction.getTeam(), 
 		        auction.getPlayers(), auction.getPlayersList()));
 		
@@ -1581,7 +1581,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 	}
 
 	private void populateFFSquadTeam(PrintWriter print_writer, int whichSide, Integer teaam_id,
-			Auction auction, AuctionService auctionService, String session_selected_broadcaster2) {
+			Auction auction, AuctionService auctionService, String session_selected_broadcaster2) throws Exception {
 		
 		auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(auction.getTeam(), 
 		        auction.getPlayers(), auction.getPlayersList()));
@@ -2986,7 +2986,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		}
 	}
 	
-	public void populateLofSquad(PrintWriter print_writer,int team_id,int which_side, Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
+	public void populateLofSquad(PrintWriter print_writer,int team_id,int which_side, Auction auction,AuctionService auctionService, String session_selected_broadcaster) throws Exception {
 		
 		int row = 0;
 		
@@ -3111,7 +3111,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 	}
 	
 	private void populateLofSquadSizeCategoryWise(PrintWriter print_writer,int team_id, int whichSide , Auction match,AuctionService auctionService, 
-		String session_selected_broadcaster) {
+		String session_selected_broadcaster) throws Exception {
 		Auction session_auction = match;
 
 		session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(), 
@@ -3164,7 +3164,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		}
 	}
 	private void populateLofSquadSizeCategoryWiseOnly(PrintWriter print_writer,int team_id, int whichSide , Auction match,AuctionService auctionService, 
-			String session_selected_broadcaster) {
+			String session_selected_broadcaster) throws Exception {
 			Auction session_auction = match;
 
 			session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(), 
@@ -3241,7 +3241,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 			squadSize = 0;
 		}
 	}
-	public void populateLofZoneWisePlayerSold(PrintWriter print_writer, int whichSide, String which_zone, Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
+	public void populateLofZoneWisePlayerSold(PrintWriter print_writer, int whichSide, String which_zone, Auction auction,AuctionService auctionService, String session_selected_broadcaster) throws Exception {
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 0 \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$HeaderStyle1$txt_Header1*GEOM*TEXT SET " + "T20 MUMBAI LEAGUE" + " \0");
@@ -3357,7 +3357,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		}
 	}
 	
-	public void populateFFRTMAndPurseRemaining(PrintWriter print_writer, int whichSide , Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
+	public void populateFFRTMAndPurseRemaining(PrintWriter print_writer, int whichSide , Auction auction,AuctionService auctionService, String session_selected_broadcaster) throws Exception {
 		
 		int total = 0;
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$Select_HeaderType*FUNCTION*Omo*vis_con SET 4\0");
@@ -4315,7 +4315,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 			break;
 		}
 	}
-	public void populateFlipperSquad(PrintWriter print_writer, int whichSide, int teamId,String whichData, Auction auction, AuctionService auctionService, String session_selected_broadcaster) {
+	public void populateFlipperSquad(PrintWriter print_writer, int whichSide, int teamId,String whichData, Auction auction, AuctionService auctionService, String session_selected_broadcaster) throws Exception {
 		
 		int row=0;
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Flipper$Data$Text_All$Select*FUNCTION*Omo*vis_con SET 0\0");
@@ -4576,7 +4576,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		print_writer.println("LAYER" + current_layer + "*EVEREST*STAGE*DIRECTOR*In SHOW 0.0;");
 		print_writer.println("LAYER1*EVEREST*GLOBAL PREVIEW OFF;");
 	}
-	public void populateSquad(PrintWriter print_writer,int team_id, int which_side, Auction match, AuctionService auctionService, String session_selected_broadcaster) throws InterruptedException 
+	public void populateSquad(PrintWriter print_writer,int team_id, int which_side, Auction match, AuctionService auctionService, String session_selected_broadcaster) throws Exception 
 	{
 		int row = 0;
 		data_str.clear();

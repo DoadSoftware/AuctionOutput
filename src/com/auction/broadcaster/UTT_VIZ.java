@@ -99,7 +99,7 @@ public class UTT_VIZ extends Scene{
 	}
 	
 	public Object ProcessGraphicOption(String whatToProcess, Auction auction, Auction session_curr_bid, AuctionService auctionService,
-			PrintWriter print_writer, List<Scene> scenes, String valueToProcess) throws InterruptedException, NumberFormatException, IllegalAccessException {
+			PrintWriter print_writer, List<Scene> scenes, String valueToProcess) throws Exception {
 		System.out.println(whatToProcess.toUpperCase());
 		switch (whatToProcess.toUpperCase()) {
 		case "POPULATE-FF-PLAYERPROFILE": case "POPULATE-SQUAD": case "POPULATE-FF_FIVE_TOP_BUYS_AUCTION":case "POPULATE-PROFILE_STATS_CHANGE":
@@ -1147,7 +1147,7 @@ public class UTT_VIZ extends Scene{
 			}
 		}
 	}
-	public void populateFFTopFiveBuysTeam(PrintWriter print_writer, int whichSide, int team_id, Auction auction,AuctionService auctionService, String session_selected_broadcaster) throws InterruptedException 
+	public void populateFFTopFiveBuysTeam(PrintWriter print_writer, int whichSide, int team_id, Auction auction,AuctionService auctionService, String session_selected_broadcaster) throws Exception 
 	{
 		int row = 0;
 		List<Player> top_sold = new ArrayList<Player>();
@@ -1289,7 +1289,7 @@ public class UTT_VIZ extends Scene{
 			break;
 		}
 	}
-	public void populateFlipperSquad(PrintWriter print_writer, int whichSide, int teamId, Auction auction, AuctionService auctionService, String session_selected_broadcaster) {
+	public void populateFlipperSquad(PrintWriter print_writer, int whichSide, int teamId, Auction auction, AuctionService auctionService, String session_selected_broadcaster) throws Exception {
 		
 		int row=0;
 		data_str.clear();
@@ -1341,7 +1341,7 @@ public class UTT_VIZ extends Scene{
 		}
 	}
 	
-	public void populateSquad(PrintWriter print_writer,int team_id, int which_side, Auction match, AuctionService auctionService, String session_selected_broadcaster) throws InterruptedException 
+	public void populateSquad(PrintWriter print_writer,int team_id, int which_side, Auction match, AuctionService auctionService, String session_selected_broadcaster) throws Exception 
 	{
 		int row = 0;
 		data_str.clear();

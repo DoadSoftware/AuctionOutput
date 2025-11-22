@@ -228,7 +228,7 @@ public class IndexController
 	public @ResponseBody String processAuctionProcedures(
 			@RequestParam(value = "whatToProcess", required = false, defaultValue = "") String whatToProcess,
 			@RequestParam(value = "valueToProcess", required = false, defaultValue = "") String valueToProcess) 
-					throws IOException, IllegalAccessException, InvocationTargetException, JAXBException, InterruptedException 
+					throws Exception 
 	{
 		
 		switch (whatToProcess.toUpperCase()) {
@@ -318,10 +318,10 @@ public class IndexController
 		case "PROFILE_GRAPHICS-OPTIONS":	
 		    return (List<T>) session_player;
 		case "SQUAD_GRAPHICS-OPTIONS": case "SINGLE_PURSE_GRAPHICS-OPTIONS": case "TOP-SOLD_TEAM_GRAPHICS-OPTIONS": case "GOOGLY_GRAPHICS-OPTIONS":
-		case "LOF_TOP_SOLD_TEAM_GRAPHICS-OPTIONS": case "SQUAD_PLAYER_GRAPHICS-OPTIONS": case "FF_TOP_SOLD_TEAM_GRAPHICS-OPTIONS":
+		case "LOF_TOP_SOLD_TEAM_GRAPHICS-OPTIONS": case "CRAWL_TOP_SOLD_TEAM_GRAPHICS-OPTIONS": case "SQUAD_PLAYER_GRAPHICS-OPTIONS": case "FF_TOP_SOLD_TEAM_GRAPHICS-OPTIONS":
 		case "LOF_SQUAD_SIZE_CATEGORY_WISE_GRAPHICS-OPTIONS": case "LOF_SQUAD_GRAPHICS-OPTIONS": case "TEAM_CURRENT_BID_GRAPHICS-OPTIONS":
 		case "FF_TOP_FIVE_SOLD_TEAM_GRAPHICS-OPTIONS": case "FLIPPER_SQUAD_GRAPHICS-OPTIONS":case "FF_SQUAD_GRAPHICS-OPTIONS":
-		case "FF_SQUAD_ROLE_GRAPHICS-OPTIONS":case "LOF_TEAM_BID_GRAPHICS-OPTIONS":
+		case "FF_SQUAD_ROLE_GRAPHICS-OPTIONS":case "LOF_TEAM_BID_GRAPHICS-OPTIONS": case "CRAWL_SQUAD_GRAPHICS-OPTIONS":
 		    return (List<T>) session_team;
 		case "ZONEWISE_PLAYER_SOLD_GRAPHICS-OPTIONS": case "ZONE-PLAYER_GRAPHICS-OPTIONS":
 		    Set<String> allCategories = session_auction.getPlayersList().stream()
