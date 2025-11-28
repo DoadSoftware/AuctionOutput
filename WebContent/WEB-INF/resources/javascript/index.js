@@ -395,7 +395,8 @@ function initialiseForm(whatToProcess,dataToProcess)
 	case 'UPDATE-MATCH-ON-OUTPUT-FORM':
 		if(dataToProcess.players != null){
 			if(dataToProcess.players.length > 0){
-				document.getElementById('player_name').innerHTML = "NAME : " + dataToProcess.players[dataToProcess.players.length-1].full_name;
+				document.getElementById('player_name').innerHTML = "NAME : " + dataToProcess.players[dataToProcess.players.length-1].full_name +
+				' ('+ dataToProcess.players[dataToProcess.players.length-1].category+ ')';
 				document.getElementById('player_status').innerHTML = "STATUS : " + dataToProcess.players[dataToProcess.players.length-1].soldOrUnsold;
 				if(dataToProcess.playersList[dataToProcess.players[dataToProcess.players.length-1].playerId-1].lastYearTeam){
 					document.getElementById('player_last_year_team').innerHTML = "LAST YEAM TEAM : " + dataToProcess.team[dataToProcess.
@@ -404,6 +405,30 @@ function initialiseForm(whatToProcess,dataToProcess)
 					document.getElementById('player_last_year_team').innerHTML = "LAST YEAM TEAM : -";
 				}
 			}
+			// Get the existing tbody
+				const tbody = document.getElementById('zone_table_body');
+				
+				// Clear existing rows
+				tbody.innerHTML = "";
+				
+				// Loop through your data and create rows
+				for (let i = 0; i < dataToProcess.teamZoneList.length; i++) {
+				    const row = tbody.insertRow(); // Insert a new row
+				    row.style.fontSize = '16px';
+				    row.style.fontWeight = '800';
+				    row.style.color = '#BC8F8F';
+				
+				    row.innerHTML = `
+				        <td>${dataToProcess.teamZoneList[i].teamName1}</td>
+				        <td>${dataToProcess.teamZoneList[i].northZone || 0}</td>
+				        <td>${dataToProcess.teamZoneList[i].eastZone || 0}</td>
+				        <td>${dataToProcess.teamZoneList[i].southZone || 0}</td>
+				        <td>${dataToProcess.teamZoneList[i].westZone || 0}</td>
+				        <td>${dataToProcess.teamZoneList[i].centralZone || 0}</td>
+				        <td>${dataToProcess.teamZoneList[i].u19 || 0}</td>
+				    `;
+				}
+
 		}
 		break;
 	case 'UPDATE-CONFIG':
@@ -1118,7 +1143,7 @@ function processAuctionProcedures(whatToProcess)
 							processAuctionProcedures('ANIMATE-IN-CRAWL_REMAINING_PURSE');				
 							break;
 						case'POPULATE-CRAWL_TOP_SOLD':
-							processAuctionProcedures('ANIMATE-IN-CRAWL_REMAINING_RMT');				
+							processAuctionProcedures('ANIMATE-IN-CRAWL_TOP_SOLD');				
 							break;	
 						case 'POPULATE-CRAWL-SQUAD_SIZE':
 							processAuctionProcedures('ANIMATE-IN-CRAWL_SQUAD_SIZE');				

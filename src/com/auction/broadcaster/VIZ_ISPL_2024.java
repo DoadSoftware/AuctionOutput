@@ -504,7 +504,7 @@ public class VIZ_ISPL_2024 extends Scene{
 		case "ANIMATE-IN-LOF_SQUAD": case "ANIMATE-IN-LOF_SQUAD_REMAIN": case "ANIMATE-IN-CRAWL_SQUAD":
 			
 		case "ANIMATE-IN-CRAWL_REMAINING_PURSE": case "ANIMATE-IN-CRAWL_SQUAD_SIZE": case "ANIMATE-IN-CRAWL_REMAINING_RMT": case "ANIMATE-IN-CRAWLER_TEAM_TOP_SOLD":
-
+		case "ANIMATE-IN-CRAWL_TOP_SOLD":
 		case "ANIMATE-IN-LOF_SQUAD_SIZE_CATEGORY_WISE":
 		case "ANIMATE-IN-LT_ICONIC_PLAYERS": case "ANIMATE-IN-PLAYERPROFILE_LT": case "ANIMATE-IN-PLAYERPROFILE_LT_STATS": case "ANIMATE-IN-ZONE-PLAYER_STATS":
 		
@@ -786,7 +786,7 @@ public class VIZ_ISPL_2024 extends Scene{
 					break;
 					
 				case "ANIMATE-IN-CRAWL_REMAINING_PURSE": case "ANIMATE-IN-CRAWL_SQUAD_SIZE": case "ANIMATE-IN-CRAWL_REMAINING_RMT":
-					case "ANIMATE-IN-CRAWLER_TEAM_TOP_SOLD": case "ANIMATE-IN-CRAWL_SQUAD":
+					case "ANIMATE-IN-CRAWLER_TEAM_TOP_SOLD": case "ANIMATE-IN-CRAWL_SQUAD": case "ANIMATE-IN-CRAWL_TOP_SOLD":
 					if(which_crwaler_onscreen != null && !which_crwaler_onscreen.isEmpty()) {
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_Crawl START \0");
 						
@@ -804,8 +804,8 @@ public class VIZ_ISPL_2024 extends Scene{
 						case "ANIMATE-IN-CRAWL_SQUAD":	
 							populateCrawlerSquad(print_writer,Integer.valueOf(side2ValueToProcess.split(",")[0]),1, auction,auctionService, session_selected_broadcaster);
 							break;
-						case "ANIMATE-IN-CRAWL_REMAINING_RMT":
-							//populateCrawlerRTMRemaining(print_writer, 1, auction,auctionService,session_selected_broadcaster);
+						case "ANIMATE-IN-CRAWL_TOP_SOLD":
+							populateCrawlerTopSold(print_writer,1, auction,auctionService, session_selected_broadcaster);
 							break;
 						}
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_Crawl SHOW 0.0 \0");

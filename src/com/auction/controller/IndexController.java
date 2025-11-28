@@ -134,7 +134,7 @@ public class IndexController
 			@RequestParam(value = "select_cricket_matches", required = false, defaultValue = "") String selectedMatch,
 			@RequestParam(value = "vizIPAddress", required = false, defaultValue = "") String vizIPAddresss,
 			@RequestParam(value = "vizPortNumber", required = false, defaultValue = "") int vizPortNumber) 
-					throws UnknownHostException, IOException, JAXBException, IllegalAccessException, InvocationTargetException, ParseException, InterruptedException 
+					throws Exception 
 	{
 		if(current_date == null || current_date.isEmpty()) {
 			
@@ -205,12 +205,12 @@ public class IndexController
 			session_auction = new Auction();
 			session_auction = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON), Auction.class);
 			session_auction = AuctionFunctions.populateMatchVariables(auctionService, session_auction);
+			session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(),session_auction.getPlayers(), session_auction.getPlayersList()));
 			
 			session_curr_bid = new Auction();
 			session_curr_bid = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON), Auction.class);
 			
 			Current_File_Name = selectedMatch;
-			
 			model.addAttribute("session_auction", session_auction);
 			model.addAttribute("session_port", session_port);
 			model.addAttribute("session_selected_ip", session_selected_ip);
@@ -244,7 +244,9 @@ public class IndexController
 			if(last_match_time_stamp != new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON).lastModified()) {
 				session_auction = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON), Auction.class);
 				session_auction = AuctionFunctions.populateMatchVariables(auctionService, session_auction);
+				session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(),session_auction.getPlayers(), session_auction.getPlayersList()));
 				last_match_time_stamp = new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON).lastModified();
+				
 			}
 			
 			session_curr_bid = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON), Auction.class);
