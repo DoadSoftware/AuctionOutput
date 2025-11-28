@@ -166,7 +166,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			}
 			break
 			
-		case 'c': //SCORE BUG Which Team Current Bid
+		case '4': //SCORE BUG Which Team Current Bid
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
