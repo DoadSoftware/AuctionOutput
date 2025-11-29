@@ -312,7 +312,7 @@ public class IndexController
 	@SuppressWarnings("unchecked")
 	public <T> List<T> GetSpecificDataList(String whatToProcess) throws IOException {
 		switch (whatToProcess) {
-		case "FLIPPER_GRAPHICS-OPTIONS": case "FLIPPER_TEXT_GRAPHICS-OPTIONS":
+		case "FLIPPER_GRAPHICS-OPTIONS": case "FLIPPER_TEXT_GRAPHICS-OPTIONS": case "CRAWLERFREETEXT_GRAPHICS-OPTIONS":
 			return (List<T>) session_flipper;
 		case "NAMESUPER_GRAPHICS-OPTIONS":
 		    return (List<T>) session_nameSupers;
