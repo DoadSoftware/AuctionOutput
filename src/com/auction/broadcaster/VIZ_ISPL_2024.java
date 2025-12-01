@@ -260,16 +260,19 @@ public class VIZ_ISPL_2024 extends Scene{
 					whichSideCrawler = (which_crwaler_onscreen != null && !which_crwaler_onscreen.isEmpty() ? 2 : 1);
 					side2ValueToProcess = valueToProcess;
 					populateCrawlerRemainingPurse(print_writer, valueToProcess.split(",")[0],whichSideCrawler, auction,auctionService, session_selected_broadcaster);
+					processPreviewCrawler(print_writer, whatToProcess, whichSideCrawler);
 					break;
 				case "POPULATE-CRAWL_TOP_SOLD":
 					whichSideCrawler = (which_crwaler_onscreen != null && !which_crwaler_onscreen.isEmpty() ? 2 : 1);
 					side2ValueToProcess = valueToProcess;
 					populateCrawlerTopSold(print_writer,whichSideCrawler, auction,auctionService, session_selected_broadcaster);
+					processPreviewCrawler(print_writer, whatToProcess, whichSideCrawler);
 					break;
 				case "POPULATE-CRAWL-SQUAD_SIZE":
 					whichSideCrawler = (which_crwaler_onscreen != null && !which_crwaler_onscreen.isEmpty() ? 2 : 1);
 					side2ValueToProcess = valueToProcess;
 					populateCrawlerSquadSize(print_writer, whichSideCrawler, auction,auctionService,session_selected_broadcaster);
+					processPreviewCrawler(print_writer, whatToProcess, whichSideCrawler);
 					break;
 				case "POPULATE-LOF_TOP_SOLD":
 					if(!which_graphics_onscreen.isEmpty()) {
@@ -294,17 +297,20 @@ public class VIZ_ISPL_2024 extends Scene{
 					whichSideCrawler = (which_crwaler_onscreen != null && !which_crwaler_onscreen.isEmpty() ? 2 : 1);
 					side2ValueToProcess = valueToProcess;
 					populateCrawlTeamTopSold(print_writer,Integer.valueOf(valueToProcess.split(",")[0]),whichSideCrawler, auction,auctionService, session_selected_broadcaster);
+					processPreviewCrawler(print_writer, whatToProcess, whichSideCrawler);
 					break;
 				case "POPULATE-L3-CRWLERFREETEXT":	
 					whichSideCrawler = (which_crwaler_onscreen != null && !which_crwaler_onscreen.isEmpty() ? 2 : 1);
 					side2ValueToProcess = valueToProcess;
 					populateFreetextcrawler(print_writer, whichSideNotProfile,Integer.valueOf(valueToProcess.split(",")[0]), auction,auctionService, 
 							session_selected_broadcaster);
+					processPreviewCrawler(print_writer, whatToProcess, whichSideCrawler);
 					break;
 				case "POPULATE-CRAWLE_SQUAD":
 					whichSideCrawler = (which_crwaler_onscreen != null && !which_crwaler_onscreen.isEmpty() ? 2 : 1);
 					side2ValueToProcess = valueToProcess;
 					populateCrawlerSquad(print_writer,Integer.valueOf(valueToProcess.split(",")[0]),whichSideCrawler, auction,auctionService, session_selected_broadcaster);
+					processPreviewCrawler(print_writer, whatToProcess, whichSideCrawler);
 					break;
 				case "POPULATE-LOF_SQUAD":
 					if(!which_graphics_onscreen.isEmpty()) {
@@ -776,9 +782,7 @@ public class VIZ_ISPL_2024 extends Scene{
 					rtm_googly_on_screen = "RTM";
 					break;
 				case "ANIMATE-IN-RTM_ENABLED":
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_RTM$Text$Change_Out START\0");
-					TimeUnit.MILLISECONDS.sleep(250);
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_RTM$Text$Change_In START\0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_RTM START\0");
 					TimeUnit.MILLISECONDS.sleep(500);
 					populateRTMEnabled(print_writer, 1);
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_RTM SHOW 0\0");
@@ -828,8 +832,9 @@ public class VIZ_ISPL_2024 extends Scene{
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_Crawl SHOW 0.0 \0");
 					}else {
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Crawl$In_Out START \0");
+						
 					}
-					
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side1$Crawl*GEOM*start INVOKE\0");
 					which_crwaler_onscreen = whatToProcess.replace("ANIMATE-IN-", "");
 					break;
 				
@@ -1944,14 +1949,12 @@ public class VIZ_ISPL_2024 extends Scene{
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + "TOP BUYS" + " \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlHeader$Side" + which_side + "$txt_Header2*GEOM*TEXT SET " + "" + " \0");
 		
-		
-		
-		for(int m=0; m<= 10 - 1; m++) {
+		for(int m=0; m < top_sold.size(); m++) {
 			if(top_sold.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD) || top_sold.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)) {
 				row = row + 1;
 	        	if(row <= 10) {
 	        		
-	        		crawler_Data = crawler_Data + auctionService.getAllPlayer().get(top_sold.get(m).getPlayerId()-1).getFull_name() + ": " +
+	        		crawler_Data = crawler_Data + auctionService.getAllPlayer().get(top_sold.get(m).getPlayerId()-1).getFull_name() + " : " +
 	        				AuctionFunctions.ConvertToLakh(top_sold.get(m).getSoldForPoints()) + " L" +" ("+ 
 	        				auction.getTeam().get(top_sold.get(m).getTeamId()-1).getTeamName4() + ")\n";
 	        		
@@ -1961,9 +1964,6 @@ public class VIZ_ISPL_2024 extends Scene{
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*text SET " + crawler_Data + " \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*build INVOKE\0");
 		
-		if(which_side == 1) {
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*start INVOKE\0");
-		}
 	}
 	public void populateCrawlTeamTopSold(PrintWriter print_writer,int team_id,int which_side, Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
 	
@@ -1988,7 +1988,7 @@ public class VIZ_ISPL_2024 extends Scene{
         	if(top_sold.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD) || top_sold.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)) {
         		row = row + 1;
         		if(row <= 5) {
-        			crawler_Data = crawler_Data + auctionService.getAllPlayer().get(top_sold.get(m).getPlayerId()-1).getFull_name()  +": "+ 
+        			crawler_Data = crawler_Data + auctionService.getAllPlayer().get(top_sold.get(m).getPlayerId()-1).getFull_name() + " : "+ 
         					AuctionFunctions.ConvertToLakh(top_sold.get(m).getSoldForPoints()) + " L" + "\n";
         		}
         	}
@@ -1996,9 +1996,6 @@ public class VIZ_ISPL_2024 extends Scene{
         print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*text SET " + crawler_Data + " \0");
         print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*build INVOKE\0");
 
-       	if(which_side == 1) {
-       		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*start INVOKE\0");
-       	}
 	}
 	public void populateCrawlerRemainingPurse(PrintWriter print_writer,String which_type,int which_side, Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
 		
@@ -2011,7 +2008,7 @@ public class VIZ_ISPL_2024 extends Scene{
 		
 		for(int i=0; i <= auction.getTeam().size()-1; i++) {
 			
-			crawler_Data = crawler_Data + auction.getTeam().get(i).getTeamName1() + ": ";
+			crawler_Data = crawler_Data + auction.getTeam().get(i).getTeamName1() + " : ";
 			
 			if(auction.getPlayers() != null ) {
 				for(int j=0; j <= auction.getPlayers().size()-1; j++) {
@@ -2031,10 +2028,6 @@ public class VIZ_ISPL_2024 extends Scene{
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*text SET " + crawler_Data + " \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*build INVOKE\0");
-		
-		if(which_side == 1) {
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*start INVOKE\0");
-		}
 		
 	}
 	public void populateCrawlerSquadSize(PrintWriter print_writer, int which_side , Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
@@ -2214,9 +2207,7 @@ public class VIZ_ISPL_2024 extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*text SET " + crawler_Data + " \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*build INVOKE\0");
 		}
-		if(which_side == 1) {
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*start INVOKE\0");
-		}
+		
 	}
 	public void populateCrawlerSquad(PrintWriter print_writer,int team_id,int which_side, Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
 		
@@ -2240,16 +2231,13 @@ public class VIZ_ISPL_2024 extends Scene{
 		
 		
 		for(int m=0; m<= squad.size() - 1; m++) {
-			crawler_Data = crawler_Data + auctionService.getAllPlayer().get(squad.get(m).getPlayerId()-1).getFull_name() + ": " +
+			crawler_Data = crawler_Data + auctionService.getAllPlayer().get(squad.get(m).getPlayerId()-1).getFull_name() + " : " +
 		             AuctionFunctions.ConvertToLakh(squad.get(m).getSoldForPoints())+" L" + "\n";
 			
 		}
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*text SET " + crawler_Data + " \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*build INVOKE\0");
 		
-		if(which_side == 1) {
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*start INVOKE\0");
-		}
 	}
 	
 	public void populateLofSquad(PrintWriter print_writer,int team_id,int which_side, Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
@@ -4240,15 +4228,25 @@ public class VIZ_ISPL_2024 extends Scene{
 
 	public void populateRTMAvailable(PrintWriter print_writer, int whichSide, Auction current_bid, AuctionService auctionService) {
 		if(!which_graphics_onscreen.isEmpty()) {
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$RTM$TextGrp$Side"+whichSide+"$txt_Bottom*GEOM*TEXT SET AVAILABLE\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$RTM$TextAll$Side" + whichSide + "$select_Status*FUNCTION*Omo*vis_con SET 0\0");
 		}else {
 			Player player = auctionService.getAllPlayer().stream().filter(plyr -> plyr.getPlayerId() == current_bid.getCurrentPlayers().getPlayerId()).findAny().orElse(null);
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$RTM$img_TeamLogo*TEXTURE*IMAGE SET " + logo_path + auctionService.getTeams().get(player.getLastYearTeam()-1).getTeamName4() + "\0");
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$RTM$TextGrp$Side"+whichSide+"$txt_Bottom*GEOM*TEXT SET AVAILABLE\0");
+			
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$RTM$img_TeamLogoBW*TEXTURE*IMAGE SET " + logo_path + 
+					auctionService.getTeams().get(player.getLastYearTeam()-1).getTeamName4() + "\0");
+			
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$RTM$OuterRing$img_Base1*TEXTURE*IMAGE SET " + base_path_1 + 
+					auctionService.getTeams().get(player.getLastYearTeam()-1).getTeamName4() + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$RTM$TextAll$img_Base1*TEXTURE*IMAGE SET " + base_path_1 + 
+					auctionService.getTeams().get(player.getLastYearTeam()-1).getTeamName4() + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$RTM$TextAll$img_Text1*TEXTURE*IMAGE SET " + text_path_1 + 
+					auctionService.getTeams().get(player.getLastYearTeam()-1).getTeamName4() + "\0");
+			
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$RTM$TextAll$Side" + whichSide + "$select_Status*FUNCTION*Omo*vis_con SET 0\0");
 		}
 	}
 	public void populateRTMEnabled(PrintWriter print_writer, int whichSide) {
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$RTM$TextGrp$Side"+whichSide+"$txt_Bottom*GEOM*TEXT SET ENABLED\0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$RTM$TextAll$Side" + whichSide + "$select_Status*FUNCTION*Omo*vis_con SET 1\0");
 	}
 	public void populateGooglyPower(PrintWriter print_writer, int teamId, AuctionService auctionService) {
 		Team team = auctionService.getTeams().stream().filter(tm -> tm.getTeamId() == teamId).findAny().orElse(null);
@@ -4722,6 +4720,32 @@ public class VIZ_ISPL_2024 extends Scene{
 			}
 		}
 		print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/Overlays " + "C:/Temp/Preview.jpg " + previewCommand + "\0");
+	}
+	
+	public void processPreviewCrawler(PrintWriter print_writer, String whatToProcess, int whichSide) throws InterruptedException {
+		String previewCommand = "";
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + whichSide + "$Crawl*GEOM*start INVOKE\0");
+		
+		TimeUnit.MILLISECONDS.sleep(1500);
+		
+		if(whichSide == 1) {
+			switch (whatToProcess.toUpperCase()) {
+			case "POPULATE-CRAWLE_SQUAD": case "POPULATE-CRAWL-PURSE_REMAINING": case "POPULATE-CRAWL-SQUAD_SIZE": case "POPULATE-CRAWL_TOP_SOLD": 
+			case "POPULATE-CRAWLER_TEAM_TOP_SOLD": case "POPULATE-L3-CRWLERFREETEXT":
+				previewCommand = "anim_Crawl$In_Out 1.000 anim_Crawl$In_Out$In 1.000";
+				break;
+			}
+		}else {
+			switch (whatToProcess.toUpperCase()) {
+			case "POPULATE-CRAWLE_SQUAD": case "POPULATE-CRAWL-PURSE_REMAINING": case "POPULATE-CRAWL-SQUAD_SIZE": case "POPULATE-CRAWL_TOP_SOLD": 
+			case "POPULATE-CRAWLER_TEAM_TOP_SOLD": case "POPULATE-L3-CRWLERFREETEXT":
+				previewCommand = "Change_Crawl 0.800 Change_Crawl$Header 0.800 Change_Crawl$Crawl 0.800";
+				break;
+			}
+		}
+		print_writer.println("-1 RENDERER PREVIEW SCENE*/Default/Overlays " + "C:/Temp/Preview.jpg " + previewCommand + "\0");
+		
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + whichSide + "$Crawl*GEOM*reset INVOKE\0");
 	}
 	
 	public void processAnimation(PrintWriter print_writer, String animationName,String animationCommand, String which_broadcaster,int which_layer)
