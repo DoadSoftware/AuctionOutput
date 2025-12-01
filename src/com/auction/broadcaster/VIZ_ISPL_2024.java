@@ -465,7 +465,6 @@ public class VIZ_ISPL_2024 extends Scene{
 					}
 					player_id = Integer.valueOf(valueToProcess.split(",")[0]);
 					side2ValueToProcess = valueToProcess;
-					System.out.println("valueToProcess - " + valueToProcess);
 					populatePlayerProfileLT(print_writer, whichSideNotProfile, player_id, valueToProcess.split(",")[1], valueToProcess.split(",")[2], 
 							auctionService.getAllStats(), auction, auctionService, session_selected_broadcaster);
 					processPreviewLowerThirds(print_writer, whatToProcess, whichSideNotProfile);
@@ -558,8 +557,9 @@ public class VIZ_ISPL_2024 extends Scene{
 							TimeUnit.MILLISECONDS.sleep(1000);
 							print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change$Stats SHOW 0\0");
 						}else {
+							print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$In_Out$StatBase START \0");
 							print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_ScoreBug$In_Out$Stats START \0");
-							print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Move_For_Stats START \0");
+							print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*MoveForStats_RTM START \0");
 						}
 						isProfileStatsOnScreen = true;
 					}
@@ -802,8 +802,8 @@ public class VIZ_ISPL_2024 extends Scene{
 					which_graphics_onscreen = "LOF_SQUAD";
 					break;
 					
-				case "ANIMATE-IN-CRAWL_REMAINING_PURSE": case "ANIMATE-IN-CRAWL_SQUAD_SIZE": case "ANIMATE-IN-CRAWL_REMAINING_RMT":
-					case "ANIMATE-IN-CRAWLER_TEAM_TOP_SOLD": case "ANIMATE-IN-CRAWL_SQUAD": case "ANIMATE-IN-CRAWL_TOP_SOLD": case "ANIMATE-IN-FREEETEXTCRAWLER":
+				case "ANIMATE-IN-CRAWL_REMAINING_PURSE": case "ANIMATE-IN-CRAWL_SQUAD_SIZE": case "ANIMATE-IN-CRAWLER_TEAM_TOP_SOLD": 
+				case "ANIMATE-IN-CRAWL_SQUAD": case "ANIMATE-IN-CRAWL_TOP_SOLD": case "ANIMATE-IN-FREEETEXTCRAWLER":
 					if(which_crwaler_onscreen != null && !which_crwaler_onscreen.isEmpty()) {
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_Crawl START \0");
 						
@@ -1037,10 +1037,12 @@ public class VIZ_ISPL_2024 extends Scene{
 					
 				case "ANIMATE-OUT-CRAWLER":
 					switch(which_crwaler_onscreen) {
-					case "CRAWL_REMAINING_PURSE": case "CRAWL_SQUAD_SIZE": case "CRAWL_REMAINING_RMT": case "CRAWLER_TEAM_TOP_SOLD": case "CRAWL_SQUAD": 
-					case "FREEETEXTCRAWLER":
+					case "CRAWL_REMAINING_PURSE": case "CRAWL_SQUAD_SIZE": case "CRAWL_TOP_SOLD": case "CRAWLER_TEAM_TOP_SOLD": 
+					case "CRAWL_SQUAD": case "FREEETEXTCRAWLER":
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Crawl$In_Out CONTINUE \0");
 						which_crwaler_onscreen = "";
+						TimeUnit.MILLISECONDS.sleep(1200);
+						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Crawl SHOW 0.0\0");
 						break;
 					}
 					break;
@@ -1601,7 +1603,7 @@ public class VIZ_ISPL_2024 extends Scene{
 					}
 					
 					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Main$NameGrp$Side" + which_side + "$img_Text1$txt_Role*GEOM*TEXT SET " + 
-							auction.getPlayersList().get(playerId - 1).getRole().toUpperCase() + " \0");
+							auction.getPlayersList().get(playerId - 1).getRole().replace("Batsman", "Batter").toUpperCase() + " \0");
 				}
 				
 				//Auction Result
@@ -3388,17 +3390,18 @@ public class VIZ_ISPL_2024 extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
 		}
 		
-		if(show_stats.equalsIgnoreCase("category")) {
+		switch (show_stats) {
+		case "category":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Select_DataType*FUNCTION*Omo*vis_con SET 0\0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Single_Data$txt_Text*GEOM*TEXT SET " + 
 					auctionService.getAllPlayer().get(playerId - 1).getCategory().toUpperCase() + "\0");
-		}
-		else if(show_stats.equalsIgnoreCase("player")) {
+			break;
+		case "player":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Select_DataType*FUNCTION*Omo*vis_con SET 0\0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Single_Data$txt_Text*GEOM*TEXT SET " + 
 					"ISPL PLAYER AUCTION" + "\0");
-		}
-		else if(show_stats.equalsIgnoreCase("thisyearteam")) {
+			break;
+		case "thisyearteam":
 			for(Player plyr : top_sold) {
 				if(plyr.getPlayerId() == playerId) {
 					if(plyr.getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD) || plyr.getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)) {
@@ -3419,8 +3422,8 @@ public class VIZ_ISPL_2024 extends Scene{
 				}
 				break;
 			}
-		}
-		else if(show_stats.equalsIgnoreCase("prevteam")) {
+			break;
+		case "prevteam":
 			team_id = auctionService.getAllPlayer().get(playerId - 1).getLastYearTeam();
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Select_DataType*FUNCTION*Omo*vis_con SET 3\0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$TeamWithPrice$txt_Title*GEOM*TEXT SET " + 
@@ -3432,11 +3435,11 @@ public class VIZ_ISPL_2024 extends Scene{
 			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$TeamWithPrice$txt_Value*GEOM*TEXT SET " + 
 					AuctionFunctions.ConvertToLakh(Double.valueOf(price)) + " L" + "\0");
-		}
-		else if(show_stats.equalsIgnoreCase("stats")) {
+			break;
+		case "ISPL S-1": case "ISPL S-2":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Select_DataType*FUNCTION*Omo*vis_con SET 2\0");
 			
-			statsType = auctionService.getStatsTypes().stream().filter(stype -> stype.getStats_short_name().equalsIgnoreCase(which_stats)).findAny().orElse(null);
+			statsType = auctionService.getStatsTypes().stream().filter(stype -> stype.getStats_short_name().equalsIgnoreCase(show_stats)).findAny().orElse(null);
 			stat = auctionService.getAllStats().stream().filter(st -> st.getPlayer_id() == playerId && statsType.getStats_id() == st.getStats_type_id()).findAny().orElse(null);
 			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Stats$1$txt_Title*GEOM*TEXT SET MATCHES\0");
@@ -3471,7 +3474,9 @@ public class VIZ_ISPL_2024 extends Scene{
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Stats$3$txt_Text*GEOM*TEXT SET " 
 						+ (stat.getWickets().equalsIgnoreCase("0") ? "-" : stat.getWickets()) + "\0");
 			}
+			break;
 		}
+		
 	}
 	public void ChangeOnLTStats(PrintWriter print_writer,int which_side, int playerId, String show_stats, String which_stats, List<Statistics> stats, Auction auction, 
 			AuctionService auctionService, String session_selected_broadcaster) throws InterruptedException 
@@ -3485,17 +3490,18 @@ public class VIZ_ISPL_2024 extends Scene{
 		
 		Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
 		
-		if(show_stats.equalsIgnoreCase("category")) {
+		switch (show_stats) {
+		case "category":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Select_DataType*FUNCTION*Omo*vis_con SET 0\0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Single_Data$txt_Text*GEOM*TEXT SET " + 
 					auctionService.getAllPlayer().get(playerId - 1).getCategory().toUpperCase() + "\0");
-		}
-		else if(show_stats.equalsIgnoreCase("player")) {
+			break;
+		case "player":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Select_DataType*FUNCTION*Omo*vis_con SET 0\0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Single_Data$txt_Text*GEOM*TEXT SET " + 
 					"ISPL PLAYER AUCTION" + "\0");
-		}
-		else if(show_stats.equalsIgnoreCase("thisyearteam")) {
+			break;
+		case "thisyearteam":
 			for(Player plyr : top_sold) {
 				if(plyr.getPlayerId() == playerId) {
 					if(plyr.getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD) || plyr.getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)) {
@@ -3516,8 +3522,8 @@ public class VIZ_ISPL_2024 extends Scene{
 				}
 				break;
 			}
-		}
-		else if(show_stats.equalsIgnoreCase("prevteam")) {
+			break;
+		case "prevteam":
 			team_id = auctionService.getAllPlayer().get(playerId - 1).getLastYearTeam();
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Select_DataType*FUNCTION*Omo*vis_con SET 3\0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$TeamWithPrice$txt_Title*GEOM*TEXT SET " + 
@@ -3529,11 +3535,11 @@ public class VIZ_ISPL_2024 extends Scene{
 			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$TeamWithPrice$txt_Value*GEOM*TEXT SET " + 
 					AuctionFunctions.ConvertToLakh(Double.valueOf(price)) + " L" + "\0");
-		}
-		else if(show_stats.equalsIgnoreCase("stats")) {
+			break;
+		case "ISPL S-1": case "ISPL S-2":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Select_DataType*FUNCTION*Omo*vis_con SET 2\0");
 			
-			statsType = auctionService.getStatsTypes().stream().filter(stype -> stype.getStats_short_name().equalsIgnoreCase(which_stats)).findAny().orElse(null);
+			statsType = auctionService.getStatsTypes().stream().filter(stype -> stype.getStats_short_name().equalsIgnoreCase(show_stats)).findAny().orElse(null);
 			stat = auctionService.getAllStats().stream().filter(st -> st.getPlayer_id() == playerId && statsType.getStats_id() == st.getStats_type_id()).findAny().orElse(null);
 			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Stats$1$txt_Title*GEOM*TEXT SET MATCHES\0");
@@ -3568,7 +3574,9 @@ public class VIZ_ISPL_2024 extends Scene{
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$BottomGrp$Side" + which_side + "$Stats$3$txt_Text*GEOM*TEXT SET " 
 						+ (stat.getWickets().equalsIgnoreCase("0") ? "-" : stat.getWickets()) + "\0");
 			}
+			break;
 		}
+		
 	}
 	
 	public void populateNameSuper(PrintWriter print_writer, int whichSide, int nameSuperId, Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
@@ -4248,11 +4256,14 @@ public class VIZ_ISPL_2024 extends Scene{
 			}
 			
 			break;
-		case "STATS":
+		case "ISPL S-1": case "ISPL S-2":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Select_DataType*FUNCTION*Omo*vis_con SET 2\0");
 			
-			statsType = auctionService.getStatsTypes().stream().filter(stype -> stype.getStats_short_name().equalsIgnoreCase(whichType.split(",")[1])).findAny().orElse(null);
+			statsType = auctionService.getStatsTypes().stream().filter(stype -> stype.getStats_short_name().equalsIgnoreCase(whichType.split(",")[0])).findAny().orElse(null);
 			stat = auctionService.getAllStats().stream().filter(st -> st.getPlayer_id() == player.getPlayerId() && statsType.getStats_id() == st.getStats_type_id()).findAny().orElse(null);
+			
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Stats$txt_Text*GEOM*TEXT SET " + 
+					(whichType.split(",")[0].equalsIgnoreCase("ISPL S-1") ? "ISPL SEASON 1" : "ISPL SEASON 2") + "\0");
 			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Stats$1$txt_Title*GEOM*TEXT SET MATCHES\0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Stats$1$txt_Text*GEOM*TEXT SET "+(stat.getMatches().equalsIgnoreCase("0") ? "-" : stat.getMatches())+"\0");

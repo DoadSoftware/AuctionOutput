@@ -1804,22 +1804,33 @@ function addItemsToList(whatToProcess, dataToProcess)
 								select.id = 'selectShowData';
 								select.name = select.id;
 								
-							    ['player', 'thisyearteam', 'prevteam', 'stats', 'category'].forEach(value => {
-						            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
-								        return; // skip these options for Mumbai
-								    }
-						            const option = document.createElement('option');
-						            option.value = value;
-						            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
-						            select.appendChild(option);
-						        });
+								const broadcaster = $('#selected_broadcaster').val().toUpperCase();
+							    if(broadcaster === 'VIZ_ISPL_2024'){
+									['player', 'thisyearteam', 'prevteam', 'ISPL S-1', 'ISPL S-2', 'category'].forEach(value => {
+							            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
+									        return; // skip these options for Mumbai
+									    }
+							            const option = document.createElement('option');
+							            option.value = value;
+							            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
+							            select.appendChild(option);
+							        });
+								} else {
+							        ['player', 'thisyearteam', 'prevteam', 'stats', 'category'].forEach(value => {
+							            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
+									        return; // skip these options for Mumbai
+									    }
+							            const option = document.createElement('option');
+							            option.value = value;
+							            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
+							            select.appendChild(option);
+							        });
+							    }
 								
 								select.setAttribute('onchange',"processUserSelection(this)");
 								row.insertCell(0).appendChild(select);
 								cellCount = cellCount + 1;
 								
-								/////
-							
 							    // Second cell: reserved for conditional dropdown
 							    const secCell = row.insertCell(1);
 							    secCell.id = 'Playerstats'; // So we can target it easily later
@@ -1867,16 +1878,28 @@ function addItemsToList(whatToProcess, dataToProcess)
 				select.id = 'selectShowData';
 				select.name = select.id;
 				
-			    ['player', 'thisyearteam', 'prevteam', 'stats', 'category'].forEach(value => {
-		            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
-				        return; // skip these options for Mumbai
-				    }
-		            const option = document.createElement('option');
-		            option.value = value;
-		            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
-		            select.appendChild(option);
-		        });
-			    
+			    if($('#selected_broadcaster').val().toUpperCase() === 'VIZ_ISPL_2024'){
+					['player', 'thisyearteam', 'prevteam', 'ISPL S-1', 'ISPL S-2', 'category'].forEach(value => {
+			            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
+					        return; // skip these options for Mumbai
+					    }
+			            const option = document.createElement('option');
+			            option.value = value;
+			            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
+			            select.appendChild(option);
+			        });
+				} else {
+			        ['player', 'thisyearteam', 'prevteam', 'stats', 'category'].forEach(value => {
+			            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
+					        return; // skip these options for Mumbai
+					    }
+			            const option = document.createElement('option');
+			            option.value = value;
+			            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
+			            select.appendChild(option);
+			        });
+			    }
+				
 				select.setAttribute('onchange',"processUserSelection(this)");
 				row.insertCell(0).appendChild(select);
 				cellCount = cellCount + 1;
@@ -1952,7 +1975,14 @@ function addItemsToList(whatToProcess, dataToProcess)
 			            option.text = value.charAt(0).toUpperCase() + value.slice(1);
 			            select.appendChild(option);
 			        });
-			    } else {
+			    } else if(broadcaster === 'VIZ_ISPL_2024'){
+					['style', 'freetext', 'prevteam', 'ISPL S-1', 'ISPL S-2', 'category'].forEach(value => {
+			            const option = document.createElement('option');
+			            option.value = value;
+			            option.text = value.charAt(0).toUpperCase() + value.slice(1);
+			            select.appendChild(option);
+			        });
+				} else {
 			        ['style', 'freetext', 'prevteam', 'stats', 'category'].forEach(value => {
 			            if (broadcaster === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
 					        return; // skip these options for Mumbai
@@ -1989,7 +2019,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 			            statsDropdown.id = 'PlayerData';
 			            statsDropdown.name = 'PlayerData';
 			
-			            ['ISPL S-1', 'ISPL S-2'].forEach(value => {
+			            ['FC', 'LIST A', 'DT20', 'MCA T20s'].forEach(value => {
 			                const option = document.createElement('option');
 			                option.value = value;
 			                option.text = value;

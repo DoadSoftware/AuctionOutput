@@ -72,6 +72,7 @@ public class IndexController
 	public static String Current_File_Name = "";
 	public int current_layer = 1;
 	public static long last_match_time_stamp = 0;
+	public static long last_bid_time_stamp = 0;
 	
 	List<NameSuper> session_nameSupers = new ArrayList<NameSuper>();
 	List<Flipper> session_flipper = new ArrayList<Flipper>();
@@ -249,7 +250,10 @@ public class IndexController
 				
 			}
 			
-			session_curr_bid = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON), Auction.class);
+			if(last_bid_time_stamp != new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON).lastModified()) {
+				session_curr_bid = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON), Auction.class);
+				last_bid_time_stamp = new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON).lastModified();
+			}
 			
 			switch (session_selected_broadcaster) {
 			case "HANDBALL": case "ISPL":
