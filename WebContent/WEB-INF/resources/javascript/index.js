@@ -424,15 +424,33 @@ function initialiseForm(whatToProcess,dataToProcess)
 				    row.style.fontWeight = '800';
 				    row.style.color = '#BC8F8F';
 				
+				    const north = dataToProcess.teamZoneList[i].northZone || 0;
+				    const east = dataToProcess.teamZoneList[i].eastZone || 0;
+				    const south = dataToProcess.teamZoneList[i].southZone || 0;
+				    const west = dataToProcess.teamZoneList[i].westZone || 0;
+				    const central = dataToProcess.teamZoneList[i].centralZone || 0;
+				    const u19 = dataToProcess.teamZoneList[i].u19 || 0;
+				
 				    row.innerHTML = `
 				        <td>${dataToProcess.teamZoneList[i].teamName1}</td>
-				        <td>${dataToProcess.teamZoneList[i].northZone || 0}</td>
-				        <td>${dataToProcess.teamZoneList[i].eastZone || 0}</td>
-				        <td>${dataToProcess.teamZoneList[i].southZone || 0}</td>
-				        <td>${dataToProcess.teamZoneList[i].westZone || 0}</td>
-				        <td>${dataToProcess.teamZoneList[i].centralZone || 0}</td>
-				        <td>${dataToProcess.teamZoneList[i].u19 || 0}</td>
+				        <td>${north}</td>
+				        <td>${east}</td>
+				        <td>${south}</td>
+				        <td>${west}</td>
+				        <td>${central}</td>
+				        <td>${u19}</td>
 				    `;
+				
+				    // Highlight any cell exceeding 8 (skip team name cell index 0)
+				    const zoneValues = [north, east, south, west, central, u19];
+				
+				    zoneValues.forEach((value, index) => {
+				        // index + 1 because cell 0 is the team name
+				        if (value >= 8) {
+				            row.cells[index + 1].style.backgroundColor = "#E34234";
+				            row.cells[index + 1].style.color = "white";
+				        }
+				    });
 				}
 
 		}

@@ -95,6 +95,9 @@ public class VIZ_ISPL_2024 extends Scene{
 	
 	public Object ProcessGraphicOption(String whatToProcess, Auction auction, Auction session_curr_bid, AuctionService auctionService,
 			PrintWriter print_writer, List<Scene> scenes, String valueToProcess) throws Exception {
+		
+		System.out.println("whatToProcess - " + whatToProcess);
+		
 		switch (whatToProcess.toUpperCase()) {
 		case "POPULATE-FF-PLAYERPROFILE": case "POPULATE-SQUAD": case "POPULATE-REMAINING_PURSE_ALL": case "POPULATE-SINGLE_PURSE": case "POPULATE-TOP_SOLD":
 		case "POPULATE-L3-NAMESUPER": case "POPULATE-TOP_SOLD_TEAM": case "POPULATE-IDENT": case "POPULATE-RTM_AVAILABLE": case "POPULATE-RTM_ENABLED":
@@ -2655,7 +2658,7 @@ public class VIZ_ISPL_2024 extends Scene{
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$SubHead$Side" + whichSide + "$txt_SubHeader*GEOM*TEXT SET " + "RTM REMAINING" + " \0");
 		
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$select_GraphicsType*FUNCTION*Omo*vis_con SET 0 \0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 0 \0");
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 				+ logo_path + "ISPL" + "\0");
@@ -4269,7 +4272,8 @@ public class VIZ_ISPL_2024 extends Scene{
 			case "POPULATE-LOF_REMAINING_SLOT": case "POPULATE-LOF_SQUAD_SIZE": case "POPULATE-LOF_RTM_REMAINING": case "POPULATE-LOF_SQUAD_SIZE_CATEGORY_WISE": 
 			case "POPULATE-LOF_SQUAD": case "POPULATE-ZONEWISE_PLAYERS_SOLD":
 				previewCommand = previewCommand + "anim_LOF$In_Out 2.000 anim_LOF$In_Out$Essentials 2.000 anim_LOF$In_Out$Essentials$In 1.100 "
-						+ "anim_LOF$In_Out$Header 2.000 anim_LOF$In_Out$Header$In 1.200 anim_LOF$In_Out$SubHeader 2.000 anim_LOF$In_Out$SubHeader$In 1.300 anim_LOF$In_Out$Main 2.000 ";
+						+ "anim_LOF$In_Out$Header 2.000 anim_LOF$In_Out$Header$In 1.200 anim_LOF$In_Out$SubHeader 2.000 anim_LOF$In_Out$SubHeader$In 1.300 "
+						+ "anim_LOF$In_Out$Main 2.000 ";
 				switch (whatToProcess.toUpperCase()) {
 				case "POPULATE-LOF_REMAINING_PURSE": case "POPULATE-LOF_REMAINING_SLOT": case "POPULATE-LOF_SQUAD_SIZE": case "POPULATE-LOF_RTM_REMAINING":
 				case "POPULATE-ZONEWISE_PLAYERS_SOLD":
@@ -4283,7 +4287,8 @@ public class VIZ_ISPL_2024 extends Scene{
 					previewCommand = previewCommand + "anim_LOF$In_Out$Main$TopBuys 2.000 anim_LOF$In_Out$Main$TopBuys$In 1.700";
 					break;
 				case "POPULATE-SQUAD-PLAYER":
-					previewCommand = previewCommand + "anim_LOF$In_Out$Main$SquadSize_Category 2.000 anim_LOF$In_Out$Main$SquadSize_Category$In 1.900 CtegoryHighlight$Side1$"+rowHighlight +" 1.200";
+					previewCommand = previewCommand + "anim_LOF$In_Out$Main$SquadSize_Category 2.000 anim_LOF$In_Out$Main$SquadSize_Category$In 1.900 "
+							+ "CtegoryHighlight$Side1$"+rowHighlight +" 1.200";
 					for(int i = rowHighlight; i<=8; i++) {
 						previewCommand = previewCommand + " MoveForCatHighlight$Side1$"+(i+1) +" 1.200";
 					}
@@ -4319,7 +4324,7 @@ public class VIZ_ISPL_2024 extends Scene{
 				break;
 			case "SQUAD-PLAYER":
 				if(!whatToProcess.equalsIgnoreCase("POPULATE-SQUAD-PLAYER")) {
-					previewCommand = previewCommand + "Change_LOF$SquadSize_Category$Change_Out 0.800";
+					previewCommand = previewCommand + "Change_LOF$SquadSize_Category$Change_Out 0.800 ";
 				}
 				break;
 			case "LOF_SQUAD_SIZE_CATEGORY_WISE":
@@ -4329,7 +4334,7 @@ public class VIZ_ISPL_2024 extends Scene{
 			
 			switch (whatToProcess.toUpperCase()) {
 			case "POPULATE-PROFILE_STATS": case "POPULATE-TEAM_CURR_BID":
-				previewCommand = previewCommand+ "Change$Stats$Change_Out 1.000 Change$Stats$Change_In 1.300";
+				previewCommand = previewCommand + "Change$Stats$Change_Out 1.000 Change$Stats$Change_In 1.300";
 				break;
 			case "POPULATE-LOF_REMAINING_PURSE": case "POPULATE-LOF_REMAINING_SLOT": case "POPULATE-LOF_SQUAD_SIZE": case "POPULATE-LOF_RTM_REMAINING":
 			case "POPULATE-ZONEWISE_PLAYERS_SOLD":
@@ -4343,7 +4348,10 @@ public class VIZ_ISPL_2024 extends Scene{
 				break;
 			case "POPULATE-SQUAD-PLAYER":
 				if(!which_graphics_onscreen.equalsIgnoreCase("SQUAD-PLAYER")) {
-					previewCommand = previewCommand + "Change_LOF$SquadSize_Category$Change_In 1.700";
+					previewCommand = previewCommand + "Change_LOF$SquadSize_Category$Change_In 1.700 CtegoryHighlight$Side2$" + rowHighlight + " 0.800 ";
+					for(int i=rowHighlight;i<=8;i++) {
+						previewCommand = previewCommand + "MoveForCatHighlight$Side2$" + (i+1) + " 1.000 ";
+					}
 				}
 				break;
 			case "POPULATE-LOF_SQUAD_SIZE_CATEGORY_WISE":
