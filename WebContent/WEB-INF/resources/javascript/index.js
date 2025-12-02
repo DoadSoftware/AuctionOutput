@@ -144,7 +144,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processAuctionProcedures('FF_TOP_SOLD_TEAM_GRAPHICS-OPTIONS');
 			break;
 		case 'y': //FF 5 TOP BUY AUCTION
-			$("#captions_div").hide();
+		    $("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
 			processAuctionProcedures('FF_TOP_FIVE_SOLD_TEAM_GRAPHICS-OPTIONS');
@@ -1494,7 +1494,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 							cellCount = cellCount + 1;
 							if(whatToProcess ==='FF_TOP_FIVE_SOLD_TEAM-OPTIONS'){
 								switch ($('#selected_broadcaster').val().toUpperCase()){
-									case 'VIZ_ISPL_2024': case "UTT_VIZ":
+									 case "UTT_VIZ":
 										select = document.createElement('select');
 										select.style = 'width:100px';
 										select.id = 'selectImage';
@@ -1745,15 +1745,25 @@ function addItemsToList(whatToProcess, dataToProcess)
 								select.id = 'selectShowProfileStats';
 								select.name = select.id;
 								
-								option = document.createElement('option');
+								/*option = document.createElement('option');
 								option.value = 'with_data';
 								option.text = 'Rank & Style';
+								select.appendChild(option);*/
+								
+								option = document.createElement('option');
+								option.value = 'ISPL S-1';
+								option.text = 'ISPL S-1';
 								select.appendChild(option);
 								
 								option = document.createElement('option');
+								option.value = 'ISPL S-2';
+								option.text = 'ISPL S-2';
+								select.appendChild(option);
+								
+								/*option = document.createElement('option');
 								option.value = 'with_info';
 								option.text = 'Info';
-								select.appendChild(option);
+								select.appendChild(option);*/
 								
 								option = document.createElement('option');
 								option.value = 'without';
