@@ -23,6 +23,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$('#select_graphic_options_div').hide();
 			$("#cancel_match_setup_btn").show();
 			$("#expiry_message").show();
+			$("#auction_div").hide();
 			break;
 		case ' '://Space
 			processAuctionProcedures('CLEAR-ALL');
@@ -31,12 +32,16 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			if(confirm('It will Also Delete Your Preview from Directory...\r\n \r\nAre You Sure To Animate Out? ') == true){
 				processAuctionProcedures('ANIMATE-OUT');	
 			}
-		break;
+			break;
 		case "="://187
 			if(confirm('It will Also Delete Your Preview from Directory...\r\n \r\nAre You Sure To Animate Out? ') == true){
 				processAuctionProcedures('ANIMATE-OUT-PROFILE');	
 			}
 			break;
+		case '`':
+			processAuctionProcedures('ANIMATE-OUT-ALL_GFX');
+			break;
+			
 		case "0"://187
 			if(confirm('It will Also Delete Your Preview from Directory...\r\n \r\nAre You Sure To Animate Out? ') == true){
 				processAuctionProcedures('ANIMATE-OUT-RTM_GOOGLY');	
@@ -63,6 +68,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('PLAYERPROFILE_GRAPHICS-OPTIONS');
 			break;
 		case 'F2': //FF REMAINING PURSE ALL
@@ -72,12 +78,14 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('SQUAD_GRAPHICS-OPTIONS');
 			break;
 		case 'c': //FF SQUAD
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('FLIPPER_SQUAD_GRAPHICS-OPTIONS');
 			break;
 			
@@ -97,6 +105,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				$("#captions_div").hide();
 				$("#cancel_match_setup_btn").hide();
 				$("#expiry_message").hide();
+				$("#auction_div").hide();
 				addItemsToList('GRAPHICS-FF_FIVE_TOP_BUYS_AUCTION',null);
 				break;
 			default://ISPL
@@ -110,6 +119,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				$("#captions_div").hide();
 				$("#cancel_match_setup_btn").hide();
 				$("#expiry_message").hide();
+				$("#auction_div").hide();
 				processAuctionProcedures('FF_SQUAD_GRAPHICS-OPTIONS');
 				break;
 			}
@@ -121,6 +131,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				$("#captions_div").hide();
 				$("#cancel_match_setup_btn").hide();
 				$("#expiry_message").hide();
+				$("#auction_div").hide();
 				processAuctionProcedures('FF_SQUAD_ROLE_GRAPHICS-OPTIONS');
 				break;
 			}
@@ -132,6 +143,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				$("#captions_div").hide();
 				$("#cancel_match_setup_btn").hide();
 				$("#expiry_message").hide();
+				$("#auction_div").hide();
 				processAuctionProcedures('LOF_TEAM_BID_GRAPHICS-OPTIONS');
 				break;
 			}
@@ -141,12 +153,14 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('FF_TOP_SOLD_TEAM_GRAPHICS-OPTIONS');
 			break;
 		case 'y': //FF 5 TOP BUY AUCTION
 		    $("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('FF_TOP_FIVE_SOLD_TEAM_GRAPHICS-OPTIONS');
 			break;
 			
@@ -170,18 +184,21 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('TEAM_CURRENT_BID_GRAPHICS-OPTIONS');
 			break;
 		case '3': //SCORE BUG Which Team Current Bid
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			addItemsToList('PROFILE_FF_STATS-OPTIONS',null);
 			break;	
 		case 'F9': //SCORE BUG BOTTOM
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			addItemsToList('PROFILE_STATS-OPTIONS',null);
 			break;
 		case '9': //SCORE BUG ANIMATE OUT BOTTOM
@@ -191,12 +208,14 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('FF_PLAYERPROFILE_GRAPHICS-OPTIONS');
 			break
 		case 'Control_F10': //changed
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('PROFILE_GRAPHICS-OPTIONS');
 			break	
 		case 'F11': //FF ICONIC PLAYERS
@@ -219,15 +238,17 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			}
 			break;
 		case 'e': //POP UP GOOGLY POWER
-			$("#captions_div").hide();
-			$("#cancel_match_setup_btn").hide();
-			$("#expiry_message").hide();
-			processAuctionProcedures('GOOGLY_GRAPHICS-OPTIONS');
+			//$("#captions_div").hide();
+			//$("#cancel_match_setup_btn").hide();
+			//$("#expiry_message").hide();
+			//processAuctionProcedures('GOOGLY_GRAPHICS-OPTIONS');
+			processAuctionProcedures('ANIMATE-IN-GOOGLY_POWER');
 			break;
 		case 'f': //LOF PURSE REMAINING
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			addItemsToList('LOF_REMAINING_PURSE-OPTIONS',null);
 			break;
 			
@@ -247,24 +268,28 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('LOF_TOP_SOLD_TEAM_GRAPHICS-OPTIONS');
 			break;
 		case 'Alt_w':
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('CRAWL_TOP_SOLD_TEAM_GRAPHICS-OPTIONS');
 			break;
 		case 'Alt_e': //LOF SQUAD
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('CRAWL_SQUAD_GRAPHICS-OPTIONS');
 			break;
 		case 'l': //LOF SQUAD
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('LOF_SQUAD_GRAPHICS-OPTIONS');
 			break;
 		case '7':
@@ -275,18 +300,21 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('SQUAD_PLAYER_GRAPHICS-OPTIONS');
 			break;
 		case 'k': //LOF SQUAD SIZE CATEGORY WISE
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('LOF_SQUAD_SIZE_CATEGORY_WISE_GRAPHICS-OPTIONS');
 			break;
 		case 'z':
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('NAMESUPER_GRAPHICS-OPTIONS');
 			break;
 		case 'x':
@@ -295,12 +323,14 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				$("#captions_div").hide();
 				$("#cancel_match_setup_btn").hide();
 				$("#expiry_message").hide();
+				$("#auction_div").hide();
 				addItemsToList('FLIPPER-OPTIONS',null);
 				break;
 			default://ISPL
 				$("#captions_div").hide();
 				$("#cancel_match_setup_btn").hide();
 				$("#expiry_message").hide();
+				$("#auction_div").hide();
 				processAuctionProcedures('FLIPPER_GRAPHICS-OPTIONS');
 				break;
 			}
@@ -309,12 +339,14 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		    $("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('CRAWLERFREETEXT_GRAPHICS-OPTIONS');
 	    	break;	
 		case 'v':
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('FLIPPER_TEXT_GRAPHICS-OPTIONS');
 			break;
 		
@@ -325,12 +357,14 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			processAuctionProcedures('LT_PLAYERPROFILE_GRAPHICS-OPTIONS');
 			break;
 		case 'b': //LT PLAYER PROFILE STATS
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
+			$("#auction_div").hide();
 			addItemsToList('LT_PP_STATS-OPTIONS',null);
 			break;
 		case 'F12':
@@ -339,12 +373,14 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				$("#captions_div").hide();
 				$("#cancel_match_setup_btn").hide();
 				$("#expiry_message").hide();
+				$("#auction_div").hide();
 				processAuctionProcedures('ZONE-PLAYER_GRAPHICS-OPTIONS');
 				break;
 			default://ISPL
 				$("#captions_div").hide();
 				$("#cancel_match_setup_btn").hide();
 				$("#expiry_message").hide();
+				$("#auction_div").hide();
 				addItemsToList('ZONE-PLAYER-OPTIONS',null);
 				break;
 			}
@@ -359,12 +395,14 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				$("#captions_div").hide();
 				$("#cancel_match_setup_btn").hide();
 				$("#expiry_message").hide();
+				$("#auction_div").hide();
 				processAuctionProcedures('ZONEWISE_PLAYER_SOLD_GRAPHICS-OPTIONS');
 				break;
 			default://ISPL
 				$("#captions_div").hide();
 				$("#cancel_match_setup_btn").hide();
 				$("#expiry_message").hide();
+				$("#auction_div").hide();
 				addItemsToList('ZONEWISE_PLAYER_SOLD-OPTIONS',null);
 				break;
 			}
@@ -673,6 +711,7 @@ function processUserSelection(whichInput)
 		document.getElementById('select_graphic_options_div').style.display = 'none';
 		$("#captions_div").show();
 		$("#cancel_match_setup_btn").show();
+		$("#auction_div").show();
 		break;
 	case 'select_broadcaster':
 		switch ($('#select_broadcaster :selected').val().toUpperCase()) {
@@ -1126,6 +1165,7 @@ function processAuctionProcedures(whatToProcess)
 						$('#select_graphic_options_div').empty();
 						document.getElementById('select_graphic_options_div').style.display = 'none';
 						$("#captions_div").show();
+						$("#auction_div").show();
 						
 			        	switch(whatToProcess) {
 						case 'POPULATE-IDENT':
