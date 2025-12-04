@@ -2173,7 +2173,7 @@ public class VIZ_ISPL_2024 extends Scene{
 
         Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
 
-        print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + "TEAM TOP BUYS" + " \0");
+        print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + "TOP BUYS" + " \0");
         print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlHeader$Side" + which_side + "$txt_Header2*GEOM*TEXT SET " + auction.getTeam().get(team_id-1).getTeamName4() + " \0");
 
         for(int m=0; m<= top_sold.size() - 1; m++) {
@@ -2403,7 +2403,7 @@ public class VIZ_ISPL_2024 extends Scene{
 	}
 	public void populateCrawlerSquad(PrintWriter print_writer,int team_id,int which_side, Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
 		
-		String crawler_Data = "",teamname ="";
+		String crawler_Data = "";
 		squad.clear();
 		
 		if(auction.getPlayers() != null) {
@@ -2414,20 +2414,18 @@ public class VIZ_ISPL_2024 extends Scene{
 			}
 		}
 		Collections.sort(squad,new AuctionFunctions.PlayerStatsComparator());
-        for(Team tm:auctionService.getTeams()) {
-        	if(tm.getTeamId() == team_id) {
-        		teamname = tm.getTeamName1();
-        	}
-        }
 		
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + teamname + " \0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + auction.getTeam().get(team_id-1).getTeamName1() + " \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlHeader$Side" + which_side + "$txt_Header2*GEOM*TEXT SET " + "SQUAD" + " \0");
 		
 		
 		for(int m=0; m<= squad.size() - 1; m++) {
-			crawler_Data = crawler_Data + auctionService.getAllPlayer().get(squad.get(m).getPlayerId()-1).getFull_name() + 
-					(squad.get(m).getSoldOrUnsold().equalsIgnoreCase("RETAIN") ? " (R)" : "") + " : " +
-		             AuctionFunctions.ConvertToLakh(squad.get(m).getSoldForPoints())+" L" + "\n";
+			if(squad.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD) || squad.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)
+					|| squad.get(m).getSoldOrUnsold().equalsIgnoreCase("RETAIN")) {
+				crawler_Data = crawler_Data + auctionService.getAllPlayer().get(squad.get(m).getPlayerId()-1).getFull_name() + 
+						(squad.get(m).getSoldOrUnsold().equalsIgnoreCase("RETAIN") ? " (R)" : "") + " : " +
+			             AuctionFunctions.ConvertToLakh(squad.get(m).getSoldForPoints())+" L" + "\n";
+			}
 		}
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*text SET " + crawler_Data + " \0");
@@ -2438,6 +2436,8 @@ public class VIZ_ISPL_2024 extends Scene{
 	public void populateLofSquad(PrintWriter print_writer,int team_id,int which_side, Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
 		
 		int row = 0;
+		squad.clear();
+		
 		if(auction.getPlayers() != null) {
 			for(Player plyr : auction.getPlayers()){
 				if(plyr.getTeamId() == team_id) {
@@ -2469,10 +2469,10 @@ public class VIZ_ISPL_2024 extends Scene{
 	        		row = row + 1;
 	        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "*ACTIVE SET 1 \0");
 	        		
-	        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$BaseGrp$img_Base1*TEXTURE*IMAGE SET " 
-			        		+ base_path_1 + auction.getTeam().get(team_id-1).getTeamName4() + " \0");
-			        print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$img_Text1*TEXTURE*IMAGE SET " 
-			        		+ text_path_1 + auction.getTeam().get(team_id-1).getTeamName4() + " \0");
+	        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$BaseGrp$img_Base1"
+	        				+ "*TEXTURE*IMAGE SET " + base_path_1 + auction.getTeam().get(team_id-1).getTeamName4() + " \0");
+			        print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$img_Text1"
+			        		+ "*TEXTURE*IMAGE SET " + text_path_1 + auction.getTeam().get(team_id-1).getTeamName4() + " \0");
 	        		
 	        		if(auctionService.getAllPlayer().get(squad.get(m).getPlayerId()-1).getSurname() != null) {
 	        			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$NameGrp$txt_FirstName"
@@ -2540,6 +2540,11 @@ public class VIZ_ISPL_2024 extends Scene{
 	        	if(row < 5) {
 	        		row = row + 1;
 	        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "*ACTIVE SET 1 \0");
+	        		
+	        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$BaseGrp$img_Base1"
+	        				+ "*TEXTURE*IMAGE SET " + base_path_1 + auction.getTeam().get(team_id-1).getTeamName4() + " \0");
+			        print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$img_Text1"
+			        		+ "*TEXTURE*IMAGE SET " + text_path_1 + auction.getTeam().get(team_id-1).getTeamName4() + " \0");
 	        		
 	        		if(auctionService.getAllPlayer().get(squad.get(m).getPlayerId()-1).getSurname() != null) {
 	        			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$NameGrp$txt_FirstName"
