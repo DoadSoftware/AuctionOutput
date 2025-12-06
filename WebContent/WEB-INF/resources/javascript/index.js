@@ -245,11 +245,18 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processAuctionProcedures('ANIMATE-IN-GOOGLY_POWER');
 			break;
 		case 'f': //LOF PURSE REMAINING
-			$("#captions_div").hide();
-			$("#cancel_match_setup_btn").hide();
-			$("#expiry_message").hide();
-			$("#auction_div").hide();
-			addItemsToList('LOF_REMAINING_PURSE-OPTIONS',null);
+			switch ($('#selected_broadcaster').val()){
+			case 'VIZ_ISPL_2024':
+				processAuctionProcedures('POPULATE-LOF_REMAINING_PURSE');
+				break;
+			default://ISPL
+				$("#captions_div").hide();
+				$("#cancel_match_setup_btn").hide();
+				$("#expiry_message").hide();
+				$("#auction_div").hide();
+				addItemsToList('LOF_REMAINING_PURSE-OPTIONS',null);
+				break;
+			}
 			break;
 			
 		case 'Alt_f':
@@ -884,12 +891,15 @@ function processAuctionProcedures(whatToProcess)
 		break;
 		
 	case 'POPULATE-LOF_REMAINING_PURSE':
-		switch ($('#selected_broadcaster').val().toUpperCase()) {
-		case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':
-			valueToProcess = $('#selectType option:selected').val();
-			break;	
-		}
-		break;
+		switch ($('#selected_broadcaster').val()){
+			case 'VIZ_ISPL_2024':
+				valueToProcess = 'name';
+				break;
+			default://ISPL
+				valueToProcess = $('#selectType option:selected').val();
+				break;
+			}
+			break;
 	case 'POPULATE-LOF_TEAM_TOP_SOLD': case 'POPULATE-FF_TOP_BUY_TEAM': case 'POPULATE-LOF_SQUAD': case 'POPULATE-TEAM_CURR_BID': 
 	case "POPULATE-FF_SQUAD_TEAM":case "POPULATE-FF_SQUAD_ROLE_TEAM": case 'POPULATE-CRAWLER_TEAM_TOP_SOLD': case 'POPULATE-CRAWLE_SQUAD':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
