@@ -2136,10 +2136,10 @@ function addItemsToList(whatToProcess, dataToProcess)
 					option.text = 'Team Name';
 					select.appendChild(option);
 					
-					option = document.createElement('option');
+					/*option = document.createElement('option');
 					option.value = 'logo';
 					option.text = 'Team Logo';
-					select.appendChild(option);
+					select.appendChild(option);*/
 					
 					select.setAttribute('onchange',"processUserSelection(this)");
 					row.insertCell(cellCount).appendChild(select);
