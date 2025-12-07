@@ -221,6 +221,10 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 'F11': //FF ICONIC PLAYERS
 			processAuctionProcedures('POPULATE-FF_ICONIC_PLAYERS');
 			break;
+		case 'Alt_F11': //FF ICONIC PLAYERS
+			processAuctionProcedures('POPULATE-FF_RETAIN_PLAYERS');
+			break;
+			
 		case 'a': //LOF SLOT REMAINING
 			processAuctionProcedures('POPULATE-LOF_REMAINING_SLOT');
 			break;
@@ -1169,7 +1173,7 @@ function processAuctionProcedures(whatToProcess)
 			
 			case 'POPULATE-FF_RTM_AND_PURSE_REMAINING': case 'POPULATE-FF_TOP_BUYS_AUCTION': case 'POPULATE-FF_TOP_BUY_TEAM': case 'POPULATE-TEAM_CURR_BID':
 			case 'POPULATE-FF_ICONIC_PLAYERS': case 'POPULATE-FF_FIVE_TOP_BUYS_AUCTION': case 'POPULATE-FF_FIVE_TOP_BUY_TEAM':
-			case "POPULATE-FF_SQUAD_TEAM":case "POPULATE-FF_SQUAD_ROLE_TEAM":
+			case "POPULATE-FF_SQUAD_TEAM":case "POPULATE-FF_SQUAD_ROLE_TEAM": case 'POPULATE-FF_RETAIN_PLAYERS':
 			case 'POPULATE-LT_ICONIC_PLAYERS': case 'POPULATE-PLAYERPROFILE_LT': case 'POPULATE-PLAYERPROFILE_LT_STATS': case 'POPULATE-ZONE_PLAYERS_STATS':
 			case 'POPULATE-ZONEWISE_PLAYERS_SOLD':case "POPULATE-LOF_TEAM_BID_AUCTION": case 'POPULATE-ZONE_PLAYERS_FULL':
 			
@@ -1323,6 +1327,9 @@ function processAuctionProcedures(whatToProcess)
 							break;
 						case 'POPULATE-FF_ICONIC_PLAYERS':
 							processAuctionProcedures('ANIMATE-IN-FF_ICONIC_PLAYERS');
+							break;
+						case 'POPULATE-FF_RETAIN_PLAYERS':
+							processAuctionProcedures('ANIMATE-IN-FF_RETAIN_PLAYERS');
 							break;
 						case 'POPULATE-LT_ICONIC_PLAYERS':
 							processAuctionProcedures('ANIMATE-IN-LT_ICONIC_PLAYERS');

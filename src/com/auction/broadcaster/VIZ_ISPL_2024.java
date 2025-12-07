@@ -108,7 +108,7 @@ public class VIZ_ISPL_2024 extends Scene{
 		case "POPULATE-FF_TOP_BUY_TEAM": case "POPULATE-LOF_SQUAD_SIZE_CATEGORY_WISE": case "POPULATE-FF_ICONIC_PLAYERS": case "POPULATE-LT_ICONIC_PLAYERS": 
 		case "POPULATE-PLAYERPROFILE_LT": case "POPULATE-PLAYERPROFILE_LT_STATS": case "POPULATE-LOF_SQUAD": case "POPULATE-LOF_SQUAD_REMAIN":
 		case "POPULATE-L3-FLIPPER": case "POPULATE-ZONE_PLAYERS_STATS": case "POPULATE-TEAM_CURR_BID": case "POPULATE-FF_FIVE_TOP_BUYS_AUCTION":
-		case "POPULATE-FF_FIVE_TOP_BUY_TEAM": case "POPULATE-ZONEWISE_PLAYERS_SOLD": case "POPULATE-ZONE_PLAYERS_FULL":
+		case "POPULATE-FF_FIVE_TOP_BUY_TEAM": case "POPULATE-ZONEWISE_PLAYERS_SOLD": case "POPULATE-ZONE_PLAYERS_FULL": case "POPULATE-FF_RETAIN_PLAYERS":
 		case "POPULATE-CRAWLE_SQUAD":
 		case "POPULATE-CRAWL-PURSE_REMAINING": case "POPULATE-CRAWL-SQUAD_SIZE": case "POPULATE-CRAWL_TOP_SOLD": case "POPULATE-CRAWLER_TEAM_TOP_SOLD":
 		case "POPULATE-L3-CRWLERFREETEXT":	
@@ -457,6 +457,15 @@ public class VIZ_ISPL_2024 extends Scene{
 					populateFFIconicPlayers(print_writer, whichSideNotProfile, auction, auctionService, session_selected_broadcaster);
 					processPreviewFullFrames(print_writer, whatToProcess, whichSideNotProfile);
 					break;
+				case "POPULATE-FF_RETAIN_PLAYERS":
+					if(!which_graphics_onscreen.isEmpty()) {
+						whichSideNotProfile = 2;
+					}else {
+						whichSideNotProfile = 1;
+					}
+					populateFFRetainPlayers(print_writer, whichSideNotProfile, auction, auctionService, session_selected_broadcaster);
+					processPreviewFullFrames(print_writer, whatToProcess, whichSideNotProfile);
+					break;
 				case "POPULATE-LT_ICONIC_PLAYERS":
 					populateLTIconicPlayers(print_writer, whichSideNotProfile, auction, auctionService, session_selected_broadcaster);
 					processPreviewLowerThirds(print_writer, whatToProcess, whichSideNotProfile);
@@ -532,7 +541,7 @@ public class VIZ_ISPL_2024 extends Scene{
 		case "ANIMATE-IN-LT_ICONIC_PLAYERS": case "ANIMATE-IN-PLAYERPROFILE_LT": case "ANIMATE-IN-PLAYERPROFILE_LT_STATS": case "ANIMATE-IN-ZONE-PLAYER_STATS":
 		
 		case "ANIMATE-IN-FF_RTM_AND_PURSE_REMAINING": case "ANIMATE-IN-FF_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_TOP_BUY_TEAM": case "ANIMATE-IN-FF_ICONIC_PLAYERS":
-		case "ANIMATE-IN-FF_FIVE_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM": case "ANIMATE-IN-ZONE-PLAYER_FULL":
+		case "ANIMATE-IN-FF_FIVE_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM": case "ANIMATE-IN-ZONE-PLAYER_FULL": case "ANIMATE-IN-FF_RETAIN_PLAYERS":
 		
 			switch (session_selected_broadcaster.toUpperCase()) {
 			case "VIZ_ISPL_2024":
@@ -679,7 +688,7 @@ public class VIZ_ISPL_2024 extends Scene{
 				case "ANIMATE-IN-IDENT": case "ANIMATE-IN-PLAYERPROFILE_FF": case "ANIMATE-IN-FF_RTM_AND_PURSE_REMAINING": case "ANIMATE-IN-FF_TOP_BUYS_AUCTION":
 				case "ANIMATE-IN-FF_TOP_BUY_TEAM": case "ANIMATE-IN-REMAINING_PURSE_ALL": case "ANIMATE-IN-SQUAD": case "ANIMATE-IN-FF_ICONIC_PLAYERS":
 				case "ANIMATE-IN-ZONE-PLAYER_STATS": case "ANIMATE-IN-FF_FIVE_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM":
-				case "ANIMATE-IN-ZONE-PLAYER_FULL":
+				case "ANIMATE-IN-ZONE-PLAYER_FULL": case "ANIMATE-IN-FF_RETAIN_PLAYERS":
 					if(which_graphics_onscreen.isEmpty()) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Loop START\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Wipe START \0");
@@ -735,6 +744,10 @@ public class VIZ_ISPL_2024 extends Scene{
 							print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$IconPlayers START\0");
 							which_graphics_onscreen = "FF_ICONIC_PLAYERS";
 							break;
+						case "ANIMATE-IN-FF_RETAIN_PLAYERS":
+							print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$Retain_Image START\0");
+							which_graphics_onscreen = "FF_RETAIN_PLAYERS";
+							break;
 						}
 					}else {
 						ChangeOn(print_writer, which_graphics_onscreen, whatToProcess);
@@ -772,7 +785,10 @@ public class VIZ_ISPL_2024 extends Scene{
 							populateFFTopBuysTeam(print_writer, 1, Integer.valueOf(side2ValueToProcess), auction, auctionService, session_selected_broadcaster);
 							break;
 						case "ANIMATE-IN-FF_ICONIC_PLAYERS":
-							populateFFIconicPlayers(print_writer, whichSide, auction, auctionService, session_selected_broadcaster);
+							populateFFIconicPlayers(print_writer, 1, auction, auctionService, session_selected_broadcaster);
+							break;
+						case "ANIMATE-IN-FF_RETAIN_PLAYERS":
+							populateFFRetainPlayers(print_writer, 1, auction, auctionService, session_selected_broadcaster);
 							break;
 						}
 						TimeUnit.MILLISECONDS.sleep(2000);
@@ -1420,7 +1436,7 @@ public class VIZ_ISPL_2024 extends Scene{
 		//FF	
 		case "IDENT": case "PLAYERPROFILE_FF": case "REMAINING_PURSE_ALL": case "SQUAD": case "FF_RTM_AND_PURSE_REMAINING": 
 		case "FF_TOP_BUYS_AUCTION": case "FF_TOP_BUY_TEAM": case "FF_ICONIC_PLAYERS": case "ZONE-PLAYER_STATS": 
-		case "FF_FIVE_TOP_BUYS_AUCTION": case "FF_FIVE_TOP_BUY_TEAM": case "ZONE-PLAYER_FULL":
+		case "FF_FIVE_TOP_BUYS_AUCTION": case "FF_FIVE_TOP_BUY_TEAM": case "ZONE-PLAYER_FULL": case "FF_RETAIN_PLAYERS":
 			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Header START\0");
 			switch (which_graphics_onscreen.toUpperCase()) {
 			case "IDENT":
@@ -1449,6 +1465,9 @@ public class VIZ_ISPL_2024 extends Scene{
 				break;
 			case "FF_ICONIC_PLAYERS":
 				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$IconPlayers START\0");
+				break;
+			case "FF_RETAIN_PLAYERS":
+				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Retain_Image START\0");
 				break;
 			}
 			break;
@@ -1544,6 +1563,9 @@ public class VIZ_ISPL_2024 extends Scene{
 		case "ANIMATE-IN-FF_ICONIC_PLAYERS":
 			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$IconPlayers START\0");
 			break;
+		case "ANIMATE-IN-FF_RETAIN_PLAYERS":
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Retain_Image START\0");
+			break;
 			
 		}
 	}
@@ -1602,7 +1624,7 @@ public class VIZ_ISPL_2024 extends Scene{
 		//FF
 		case "ANIMATE-IN-IDENT": case "ANIMATE-IN-PLAYERPROFILE_FF": case "ANIMATE-IN-REMAINING_PURSE_ALL": case "ANIMATE-IN-SQUAD": case "ANIMATE-IN-FF_TOP_BUYS_AUCTION": 
 		case "ANIMATE-IN-FF_TOP_BUY_TEAM": case "ANIMATE-IN-FF_ICONIC_PLAYERS": case "ANIMATE-IN-FF_RTM_AND_PURSE_REMAINING": case "ANIMATE-IN-ZONE-PLAYER_STATS":
-		case "ANIMATE-IN-FF_FIVE_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM": case "ANIMATE-IN-ZONE-PLAYER_FULL":
+		case "ANIMATE-IN-FF_FIVE_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM": case "ANIMATE-IN-ZONE-PLAYER_FULL": case "ANIMATE-IN-FF_RETAIN_PLAYERS":
 			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Header SHOW 0.0\0");
 			switch (whatToProcess.toUpperCase()) {
 				case "ANIMATE-IN-IDENT":
@@ -1641,7 +1663,11 @@ public class VIZ_ISPL_2024 extends Scene{
 					break;
 				case "ANIMATE-IN-FF_ICONIC_PLAYERS":
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$IconPlayers SHOW 2.480\0");
-					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$TopBuys SHOW 0.0\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$IconPlayers SHOW 0.0\0");
+					break;
+				case "ANIMATE-IN-FF_RETAIN_PLAYERS":
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$Retain_Image SHOW 2.480\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Retain_Image SHOW 0.0\0");
 					break;
 			}
 			break;
@@ -1756,6 +1782,10 @@ public class VIZ_ISPL_2024 extends Scene{
 		case "FF_ICONIC_PLAYERS":
 			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$IconPlayers SHOW 0.0\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$IconPlayers SHOW 0.0\0");
+			break;
+		case "FF_RETAIN_PLAYERS":
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$Retain_Image SHOW 0.0\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Retain_Image SHOW 0.0\0");
 			break;
 		}
 		prevRowHighlight = rowHighlight;
@@ -3363,6 +3393,9 @@ public class VIZ_ISPL_2024 extends Scene{
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$IconPlayers$Player" + row + "*ACTIVE SET 1\0");
 					Player plyr = auction.getPlayersList().stream().filter(pyr -> pyr.getPlayerId() == player.getPlayerId()).findAny().orElse(null);
 					
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$IconPlayers$Player" + row + "$select_Type"
+							+ "*FUNCTION*Omo*vis_con SET 1\0");
+					
 					if(plyr.getSurname() != null) {
 	        			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$IconPlayers$Player" + row + "$NameGrp$txt_FirstName"
 	        					+ "*GEOM*TEXT SET " + plyr.getFirstname() + "\0");
@@ -3375,8 +3408,8 @@ public class VIZ_ISPL_2024 extends Scene{
 		        				+ "*GEOM*TEXT SET \0");
 	        		}
 					
-					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$IconPlayers$Player" + row + "$ImageGrp$img_Player"
-							+ "*TEXTURE*IMAGE SET " + photo_path + plyr.getPhotoName() + AuctionUtil.PNG_EXTENSION + "\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$IconPlayers$Player" + row + "$select_Type$WithData$"
+							+ "ImageGrp$img_Player*TEXTURE*IMAGE SET " + photo_path + plyr.getPhotoName() + AuctionUtil.PNG_EXTENSION + "\0");
 					
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$IconPlayers$Player" + row + "$Data2$TeamLogo$"
 							+ "img_TeamLogoBW*TEXTURE*IMAGE SET " + logo_path_bw + auctionService.getTeams().get(plyr.getTeamId() - 1).getTeamName4() + "\0");
@@ -3401,6 +3434,102 @@ public class VIZ_ISPL_2024 extends Scene{
 							+ "*FUNCTION*Omo*vis_con SET 1\0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$IconPlayers$Player"+row+"$Data2$txt_Value"
 							+ "*GEOM*TEXT SET " + AuctionFunctions.ConvertToLakh(player.getSoldForPoints())+ " L" + "\0");
+				}
+			}
+		}
+	}
+	public void populateFFRetainPlayers(PrintWriter print_writer, int whichSide, Auction auction,AuctionService auctionService, String session_selected_broadcaster) throws InterruptedException 
+	{
+		int row = 0;
+		List<Player> top_sold = new ArrayList<Player>();
+		
+		if(auction.getPlayers() != null) {
+			top_sold = auction.getPlayers();
+		}
+		
+		Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
+		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$Select_HeaderType*FUNCTION*Omo*vis_con SET 2\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$Select_Gavel*FUNCTION*Omo*vis_con SET 0\0");
+		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$Header$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
+		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$Header$txt_Header1*GEOM*TEXT SET RETAINED PLAYERS\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$Header$txt_Header2*GEOM*TEXT SET \0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$SubHeader$txt_SubHeader*GEOM*TEXT SET ISPL PLAYER AUCTION 2025\0");
+		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$LogoGrp$img_TeamLogoBW"
+				+ "*TEXTURE*IMAGE SET " + logo_path + "ISPL" + "\0");
+		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$LogoGrp$img_Base2"
+				+ "*TEXTURE*IMAGE SET " + base_path_2 + "ISPL" + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$LogoGrp$OuterRingStart$img_Base1"
+				+ "*TEXTURE*IMAGE SET " + base_path_1 + "ISPL" + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$LogoGrp$LogoBaseAll$img_Base1"
+				+ "*TEXTURE*IMAGE SET " + base_path_1 + "ISPL" + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$LogoGrp$Logo$img_Text1"
+				+ "*TEXTURE*IMAGE SET " + text_path_1 + "ISPL" + "\0");
+		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_GraphicsType*FUNCTION*Omo*vis_con SET 10\0");
+		
+		for(int i=1; i<=4; i++) {
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + i + "*ACTIVE SET 0\0");
+		}
+		
+		for(Player player : top_sold) {
+			if(player.getSoldOrUnsold().equalsIgnoreCase("RETAIN")) {
+				row = row + 1;
+				if(row <= 4) {
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "*ACTIVE SET 1\0");
+					Player plyr = auction.getPlayersList().stream().filter(pyr -> pyr.getPlayerId() == player.getPlayerId()).findAny().orElse(null);
+					
+					if(plyr.getSurname() != null) {
+	        			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$Name_Category$"
+	        					+ "NameGrp$txt_FirstName*GEOM*TEXT SET " + plyr.getFirstname() + "\0");
+		        		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$Name_Category$"
+		        				+ "NameGrp$txt_LastName*GEOM*TEXT SET " + plyr.getSurname() + "\0");
+	        		}else {
+	        			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$Name_Category$"
+	        					+ "NameGrp$txt_FirstName*GEOM*TEXT SET " + plyr.getFull_name()+"\0");
+		        		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$Name_Category$"
+		        				+ "NameGrp$txt_LastName*GEOM*TEXT SET \0");
+	        		}
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$Iconic_Icon$"
+							+ "Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$ImageGrp$"
+							+ "Select_Logo*FUNCTION*Omo*vis_con SET 1\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$ImageGrp$"
+							+ "img_Player*TEXTURE*IMAGE SET " + photo_path + plyr.getPhotoName() + AuctionUtil.PNG_EXTENSION + "\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$ImageGrp$"
+							+ "img_TeamLogo*TEXTURE*IMAGE SET " + logo_path + auctionService.getTeams().get(plyr.getTeamId() - 1).getTeamName4() + "\0");
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$Base$"
+							+ "img_Base1*TEXTURE*IMAGE SET " + base_path_1 + auctionService.getTeams().get(plyr.getTeamId() - 1).getTeamName4() + "\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$Icon$"
+							+ "img_Text1*TEXTURE*IMAGE SET " + text_path_1 + auctionService.getTeams().get(plyr.getTeamId() - 1).getTeamName4() + "\0");
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$Name_Category$"
+							+ "img_Base2*TEXTURE*IMAGE SET " + base_path_2 + auctionService.getTeams().get(plyr.getTeamId() - 1).getTeamName4() + "\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$Name_Category$"
+							+ "img_Text2*TEXTURE*IMAGE SET " + text_path_2 + auctionService.getTeams().get(plyr.getTeamId() - 1).getTeamName4() + "\0");
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$Select_DataType$"
+							+ "Data1$img_Text1*TEXTURE*IMAGE SET " + text_path_1 + auctionService.getTeams().get(plyr.getTeamId() - 1).getTeamName4() + "\0");
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$Name_Category$"
+							+ "txt_Category*GEOM*TEXT SET " + plyr.getCategory().toUpperCase() + "\0");
+					
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$Icon$"
+							+ "img_Icon*TEXTURE*IMAGE SET " + icon_path + styleIcons(plyr) + "\0");
+					 
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$Select_DataType"
+							+ "*FUNCTION*Omo*vis_con SET 0\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$Data1$"
+							+ "txt_TeamName*GEOM*TEXT SET " + auctionService.getTeams().get(plyr.getTeamId() - 1).getTeamName1() + "\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Retain_Image$RetainPlayer" + row + "$Data1$Price$"
+							+ "txt_Value*GEOM*TEXT SET " + AuctionFunctions.ConvertToLakh(player.getSoldForPoints())+ " L" + "\0");
 				}
 			}
 		}
@@ -4559,7 +4688,7 @@ public class VIZ_ISPL_2024 extends Scene{
 			case "POPULATE-IDENT": case "POPULATE-PLAYERPROFILE_FF": case "POPULATE-FF_RTM_AND_PURSE_REMAINING": case "POPULATE-FF_TOP_BUYS_AUCTION": 
 			case "POPULATE-FF_TOP_BUY_TEAM": case "POPULATE-REMAINING_PURSE_ALL": case "POPULATE-SQUAD": case "POPULATE-FF_ICONIC_PLAYERS":
 			case "POPULATE-ZONE_PLAYERS_STATS": case "POPULATE-FF_FIVE_TOP_BUYS_AUCTION": case "POPULATE-FF_FIVE_TOP_BUY_TEAM":
-			case "POPULATE-ZONE_PLAYERS_FULL":
+			case "POPULATE-ZONE_PLAYERS_FULL": case "POPULATE-FF_RETAIN_PLAYERS":
 				previewCommand = "anim_Fullframe$In_Out$Essentials 2.480 anim_Fullframe$In_Out$Essentials$In 1.300 ";
 				switch(whatToProcess.toUpperCase()) {
 				case "POPULATE-IDENT":
@@ -4596,6 +4725,10 @@ public class VIZ_ISPL_2024 extends Scene{
 				case "POPULATE-FF_ICONIC_PLAYERS":
 					previewCommand = previewCommand + "anim_Fullframe$In_Out$Header 2.480 anim_Fullframe$In_Out$Header$In 2.340 "
 							+ "anim_Fullframe$In_Out$Main$IconPlayers 2.480 anim_Fullframe$In_Out$Main$IconPlayers$In 2.000";
+					break;
+				case "POPULATE-FF_RETAIN_PLAYERS":
+					previewCommand = previewCommand + "anim_Fullframe$In_Out$Header 2.480 anim_Fullframe$In_Out$Header$In 2.340 "
+							+ "anim_Fullframe$In_Out$Main$Retain_Image 2.480 anim_Fullframe$In_Out$Main$Retain_Image$In 1.780";
 					break;
 				}
 				break;
@@ -4638,6 +4771,11 @@ public class VIZ_ISPL_2024 extends Scene{
 				previewCommand = "Change$Header 2.660 Change$Header$Change_Out 0.640 Change$Header$Change_In 2.660 "
 						+ "Change$IconPlayers 2.000 Change$IconPlayers$Change_Out 0.560 Change$IconPlayers$Change_In 2.000 ";
 				break;
+			case "FF_RETAIN_PLAYERS":
+				previewCommand = "Change$Header 2.660 Change$Header$Change_Out 0.640 Change$Header$Change_In 2.660 "
+						+ "Change$Retain_Image 1.300 Change$Retain_Image$Change_Out 0.860 Change$Retain_Image$Change_In 1.300 ";
+				break;
+				
 			}
 			
 			switch (whatToProcess.toUpperCase()) {
@@ -4673,6 +4811,9 @@ public class VIZ_ISPL_2024 extends Scene{
 				break;
 			case "POPULATE-FF_ICONIC_PLAYERS":
 				previewCommand = previewCommand + "Change$IconPlayers 2.000 Change$IconPlayers$Change_Out 0.560 Change$IconPlayers$Change_In 2.000 ";
+				break;
+			case "POPULATE-FF_RETAIN_PLAYERS":
+				previewCommand = previewCommand + "Change$Retain_Image 1.300 Change$Retain_Image$Change_Out 0.860 Change$Retain_Image$Change_In 1.300 ";
 				break;
 			}
 		}
