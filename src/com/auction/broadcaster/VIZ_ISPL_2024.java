@@ -662,6 +662,8 @@ public class VIZ_ISPL_2024 extends Scene{
 				//LT
 				case "ANIMATE-IN-NAMESUPER": case "ANIMATE-IN-PLAYERPROFILE_LT":
 					if(which_graphics_onscreen.isEmpty()) {
+						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio_Lt$In START \0");
+						
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$In_Out$Essentials START \0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$In_Out$TopData START \0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$In_Out$BottomData START \0");
@@ -690,6 +692,8 @@ public class VIZ_ISPL_2024 extends Scene{
 				case "ANIMATE-IN-ZONE-PLAYER_STATS": case "ANIMATE-IN-FF_FIVE_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM":
 				case "ANIMATE-IN-ZONE-PLAYER_FULL": case "ANIMATE-IN-FF_RETAIN_PLAYERS":
 					if(which_graphics_onscreen.isEmpty()) {
+						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*AudioFF$In START\0");
+						
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Loop START\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Wipe START \0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Essentials START\0");
@@ -1109,6 +1113,8 @@ public class VIZ_ISPL_2024 extends Scene{
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change SHOW 0\0");
 						break;
 					case "NAMESUPER":
+						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio_Lt$Out START \0");
+						
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$In_Out$Essentials CONTINUE \0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$In_Out$TopData CONTINUE \0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$In_Out$BottomData CONTINUE \0");
@@ -1265,6 +1271,8 @@ public class VIZ_ISPL_2024 extends Scene{
 						which_graphics_onscreen = "";
 						break;
 					case "PLAYERPROFILE_LT":
+						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio_Lt$Out START \0");
+						
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$In_Out$Essentials CONTINUE\0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$In_Out$TopData CONTINUE\0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird$In_Out$BottomData CONTINUE\0");
@@ -1313,6 +1321,7 @@ public class VIZ_ISPL_2024 extends Scene{
 					case "IDENT": case "PLAYERPROFILE_FF": case "FF_RTM_AND_PURSE_REMAINING": case "FF_TOP_BUYS_AUCTION": case "FF_TOP_BUY_TEAM":
 					case "SQUAD": case "REMAINING_PURSE_ALL": case "FF_ICONIC_PLAYERS": case "ZONE-PLAYER_STATS": case "FF_FIVE_TOP_BUYS_AUCTION":
 					case "FF_FIVE_TOP_BUY_TEAM": case "ZONE-PLAYER_FULL":
+						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*AudioFF$Out START\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Essentials CONTINUE\0");
 						switch (which_graphics_onscreen) {
 						case "IDENT":
@@ -4266,8 +4275,9 @@ public class VIZ_ISPL_2024 extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$select_GraphicsType*FUNCTION*Omo*vis_con SET 2\0");
 
 		for(int i=1;i<=16;i++) {
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + i 
-					+ "$Select_DataType*FUNCTION*Omo*vis_con SET 0\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + i + "$Select_DataType"
+					+ "*FUNCTION*Omo*vis_con SET 0\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + i + "*ACTIVE SET 0\0");
 			
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + i + "$Select_DataType$Blank"
 					+ "$Base$img_Base1*TEXTURE*IMAGE SET " + base_path_1 + "ISPL" + "\0");
@@ -4286,6 +4296,7 @@ public class VIZ_ISPL_2024 extends Scene{
 			row = row + 1;
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
 					+ "$Select_DataType*FUNCTION*Omo*vis_con SET 2\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row + "*ACTIVE SET 1\0");
 			
 			if(plyr.getSurname() != null) {
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row + "$WithData$NameGrp$"
