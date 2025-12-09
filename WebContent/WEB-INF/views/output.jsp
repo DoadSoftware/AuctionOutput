@@ -122,6 +122,13 @@
 			    <label id="player_status" class="col-sm-4 col-form-label text-left">STATUS :</label>
 			    <label id="player_last_year_team" class="col-sm-4 col-form-label text-left">LAST YEAR TEAM :</label>
 			    
+			    <div class="custom-toggle">
+			        <label for="audioOnOrOff">
+			            <i class="fas fa-volume-up"></i> Audio
+			            <input type="checkbox" id="audioOnOrOff" name="audioOnOrOff" onclick="processUserSelection(this)">
+			            <span class="slider"></span>
+			        </label>
+			    </div>
 			     
 			    <!--
 			    <div class="left">

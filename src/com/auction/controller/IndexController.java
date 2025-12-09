@@ -236,8 +236,15 @@ public class IndexController
 		case "GET-CONFIG-DATA":
 			session_Configurations = (Configurations)JAXBContext.newInstance(Configurations.class).createUnmarshaller().unmarshal(
 					new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CONFIGURATIONS_DIRECTORY + valueToProcess));
-				
 				return JSONObject.fromObject(session_Configurations).toString();
+		case "TURN_ON_OR_OFF_AUDIO":
+			System.out.println(whatToProcess + " - " + valueToProcess);
+			if(valueToProcess.equalsIgnoreCase("TRUE")) {
+				this_ispl_viz_2024.enableAudio = "TRUE";
+			}else {
+				this_ispl_viz_2024.enableAudio = "FALSE";
+			}
+			return null;	
 		case "RE_READ_DATA":
 			getDataFromDB();
 			return JSONObject.fromObject(session_auction).toString();

@@ -529,6 +529,9 @@ function processUserSelection(whichInput)
 	case 'select_configuration_file':
 		processAuctionProcedures('GET-CONFIG-DATA');
 		break;
+	case 'audioOnOrOff':
+		processAuctionProcedures('TURN_ON_OR_OFF_AUDIO');
+		break;
 		
 	case 'animateout_profile_graphic_btn':
 		processAuctionProcedures('ANIMATE-OUT-PROFILE');
@@ -779,7 +782,9 @@ function processAuctionProcedures(whatToProcess)
 	case 'GET-CONFIG-DATA':
 		valueToProcess = $('#select_configuration_file option:selected').val();
 		break;
-	
+	case 'TURN_ON_OR_OFF_AUDIO':
+		valueToProcess = $('#audioOnOrOff').is(":checked");
+		break;
 	case 'READ-MATCH-AND-POPULATE': 
 		valueToProcess = $('#matchFileTimeStamp').val();
 		break;
