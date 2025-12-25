@@ -1,6 +1,9 @@
 package com.auction.broadcaster;
 
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -2167,8 +2170,15 @@ public class KCL extends Scene{
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Ident$InfoGrp$Info1$txt_Info*GEOM*TEXT SET " 
 				+ "KABADDI CHAMPIONS LEAGUE" + "\0");
+		String venue = "";
+	    try {
+	        venue = new String(Files.readAllBytes(Paths.get("C:/Sports/Auction/MatchIdent.txt"))).trim();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Ident$InfoGrp$Info2$txt_Info*GEOM*TEXT SET "
-				+ "GRAND HYATT - MUMBAI" + "\0");
+				+ venue.toUpperCase() + "\0");
 	}
 	
 	public void populateCurrentBid(PrintWriter print_writer,int which_side) {
@@ -3488,7 +3498,7 @@ public class KCL extends Scene{
 			}
 			
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$PurseRemaining$DataAll$Team" + row + "$Value$txt_Value"
-					+ "*GEOM*TEXT SET " + AuctionFunctions.ConvertToLakh((Integer.valueOf(tm.getTeamTotalPurse()) - total)) + " L" + "\0");
+					+ "*GEOM*TEXT SET " + AuctionFunctions.ConvertToLakh((Integer.valueOf(tm.getTeamTotalPurse()) - total)) + " K" + "\0");
 			
 			if((Integer.valueOf(tm.getTeamTotalPurse()) - total) == 100000) {
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$PurseRemaining$DataAll$Team" 
