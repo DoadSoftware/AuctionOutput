@@ -1,5 +1,31 @@
 var match_data,session_auction;
-let selectedArray = []; 
+let selectedArray = [];
+var which_GFX = "";
+let currentTeamIndex = 0,id = 0;  
+let teamRotationInterval = null; 
+
+
+// Function to start rotating teams
+function startTeamRotation() {
+    teamRotationInterval = setInterval(function() {
+        if (teams && teams.length > 0) {
+	        // Get the current team based on the index
+	         let team = teams[(currentTeamIndex + 1) % teams.length];
+	         id = team.teamId;
+	        // Move to the next team, circularly
+	        currentTeamIndex = (currentTeamIndex + 1) % teams.length;
+	        processAuctionProcedures('POPULATE-SQUAD_ANIMATION');
+        }
+    }, 10000);
+}
+
+function stopTeamRotation() {
+    if (teamRotationInterval) {
+        clearInterval(teamRotationInterval);
+        teamRotationInterval = null;
+    }
+}
+ 
 function processWaitingButtonSpinner(whatToProcess) 
 {
 	switch (whatToProcess) {
@@ -72,6 +98,8 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processAuctionProcedures('PLAYERPROFILE_GRAPHICS-OPTIONS');
 			break;
 		case 'F2': //FF REMAINING PURSE ALL
+			stopTeamRotation();
+			which_GFX = "";
 			processAuctionProcedures('POPULATE-REMAINING_PURSE_ALL');
 			break;
 		case 'F3': //FF SQUAD
@@ -79,6 +107,8 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
 			$("#auction_div").hide();
+			stopTeamRotation();
+			which_GFX = "";
 			processAuctionProcedures('SQUAD_GRAPHICS-OPTIONS');
 			break;
 		case 'c': //FF SQUAD
@@ -90,6 +120,8 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			break;
 			
 		case 'F4': //FF IDENT
+			stopTeamRotation();
+			which_GFX = "";
 			processAuctionProcedures('POPULATE-IDENT');
 			break;
 		case 'F5': //FF SQUAD SIZE, RTM AVAILABLE, PURSE REM
@@ -97,9 +129,13 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			break;
 		
 		case 'F6': //FF TOP BUY AUCTION
+			stopTeamRotation();
+			which_GFX = "";
 			processAuctionProcedures('POPULATE-FF_TOP_BUYS_AUCTION');
 			break;
 		case 't': //FF 5 TOP BUY AUCTION
+			stopTeamRotation();
+			which_GFX = "";
 			switch ($('#selected_broadcaster').val()){
 			case 'UTT_VIZ':
 				$("#captions_div").hide();
@@ -114,6 +150,8 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			}
 			break;	
 		case 'Alt_b': //FF 5 TOP BUY AUCTION
+			stopTeamRotation();
+			which_GFX = "";
 			switch ($('#selected_broadcaster').val()){
 			case 'MUMBAI_T20_VIZ': case 'KCL': case 'KCL_BIGSCREEN':
 				$("#captions_div").hide();
@@ -126,6 +164,8 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			break;	
 			
 		case 'Alt_d': //FF 5 TOP BUY AUCTION
+			stopTeamRotation();
+			which_GFX = "";
 			switch ($('#selected_broadcaster').val()){
 			case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN':
 				$("#captions_div").hide();
@@ -150,6 +190,8 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			break;
 		
 		case 'F7': // FF TOP BUY TEAMS
+			stopTeamRotation();
+			which_GFX = "";
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
@@ -157,6 +199,8 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processAuctionProcedures('FF_TOP_SOLD_TEAM_GRAPHICS-OPTIONS');
 			break;
 		case 'y': //FF 5 TOP BUY AUCTION
+			stopTeamRotation();
+			which_GFX = "";
 		    $("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
@@ -164,6 +208,8 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processAuctionProcedures('FF_TOP_FIVE_SOLD_TEAM_GRAPHICS-OPTIONS');
 			break;
 		case 'Control_y': //SINGLE PURSE
+			stopTeamRotation();
+			which_GFX = "";
 		    $("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
@@ -212,6 +258,8 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processAuctionProcedures('ANIMATE-OUT-PLAYER_STAT');
 			break;
 		case 'F10': //changed
+			stopTeamRotation();
+			which_GFX = "";
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
@@ -236,7 +284,15 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processAuctionProcedures('POPULATE-LOF_REMAINING_SLOT');
 			break;
 		case 's': // LOF SQUAD SIZE
-			processAuctionProcedures('POPULATE-LOF_SQUAD_SIZE');
+			switch ($('#selected_broadcaster').val()){
+			case 'KCL_BIGSCREEN':
+				processAuctionProcedures('SQUAD_ANIMATION_GRAPHICS-OPTIONS');
+				break;
+			default://ISPL
+				processAuctionProcedures('POPULATE-LOF_SQUAD_SIZE');
+				break;
+			}
+			
 			break;
 		case 'd': // LOF RTM REMAINING
 			switch ($('#selected_broadcaster').val()){
@@ -386,6 +442,8 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			addItemsToList('LT_PP_STATS-OPTIONS',null);
 			break;
 		case 'F12':
+			stopTeamRotation();
+			which_GFX = "";
 		switch ($('#selected_broadcaster').val()){
 			case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN':
 				$("#captions_div").hide();
@@ -408,6 +466,8 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			break
 			
 		case 'Alt_F12':
+			stopTeamRotation();
+			which_GFX = "";
 			$("#captions_div").hide();
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
@@ -673,7 +733,7 @@ function processUserSelection(whichInput)
 	case 'populate_freetextcrawler_btn': case 'populate_flipper_btn': case 'populate_zonePlayer_stats_btn': case 'populate_team_curr_bid_btn': 
 	case 'populate_ff_Top_Five_Sold_team_btn': case 'single_Sold_team_btn': case 'populate_zonewisePlayer_sold_btn':case "populate_profile_Change_stats_btn":
 	case 'populate_flipper_squad_btn':case "populate_Squad_team_btn":case "populate_Squad_Role_team_btn":case 'populate_Lof_Team_Bid_btn': 
-	case 'populate_profileff_btn': case 'populate_flipper_text_btn':
+	case 'populate_profileff_btn': case 'populate_flipper_text_btn': case 'populate_squad_animation_btn':
 
 		processWaitingButtonSpinner('START_WAIT_TIMER');
 		switch ($(whichInput).attr('name')) {
@@ -751,6 +811,9 @@ function processUserSelection(whichInput)
 			break;
 		case 'populate_Lof_squad_btn':
 			processAuctionProcedures('POPULATE-LOF_SQUAD');
+			break;
+		case 'populate_squad_animation_btn':
+			processAuctionProcedures('POPULATE-SQUAD_ANIMATION');
 			break;
 		case 'populate_crawle_squad_btn':
 			processAuctionProcedures('POPULATE-CRAWLE_SQUAD');
@@ -978,6 +1041,18 @@ function processAuctionProcedures(whatToProcess)
 			break;	
 		}
 		break;
+	case 'POPULATE-SQUAD_ANIMATION':
+		switch ($('#selected_broadcaster').val().toUpperCase()) {
+		case 'KCL_BIGSCREEN':
+			let team_index;
+			if(which_GFX=== "POPULATE-SQUAD_ANIMATION"){
+				team_index = id;
+			}else{
+				team_index =$('#selectTeamName option:selected').val();
+			}
+			valueToProcess = team_index;
+			break;	
+		}
 		
 	case 'POPULATE-FF_FIVE_TOP_BUY_TEAM':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
@@ -1187,7 +1262,12 @@ function processAuctionProcedures(whatToProcess)
 				addItemsToList('CRAWL_TOP_SOLD_TEAM-OPTIONS',data);
 				addItemsToList('POPULATE-TEAM',data);
 				match_data = data;
-				break;	
+				break;
+			case 'SQUAD_ANIMATION_GRAPHICS-OPTIONS':
+				addItemsToList('SQUAD_ANIMATION-OPTIONS',data);
+				addItemsToList('POPULATE-TEAM',data);
+				match_data = data;
+				break;		
 			case 'LOF_SQUAD_GRAPHICS-OPTIONS':
 				addItemsToList('LOF_SQUAD-OPTIONS',data);
 				addItemsToList('POPULATE-TEAM',data);
@@ -1243,6 +1323,22 @@ function processAuctionProcedures(whatToProcess)
 				addItemsToList('POPULATE-TEAM',data);
 				match_data = data;
 				break;
+			case 'POPULATE-SQUAD_ANIMATION': 
+				if (which_GFX == 'POPULATE-SQUAD_ANIMATION') {
+					processAuctionProcedures('ANIMATE-IN-SQUAD_ANIMATION');
+				}else{
+				  if(confirm('Animate In?') == true){
+					$('#select_graphic_options_div').empty();
+					document.getElementById('select_graphic_options_div').style.display = 'none';
+					$("#captions_div").show();
+					$("#auction_div").show();
+					
+					processAuctionProcedures('ANIMATE-IN-SQUAD_ANIMATION');
+					which_GFX = 'POPULATE-SQUAD';
+					startTeamRotation(); 
+				}
+			}
+			break;	
 			
 			case 'POPULATE-FF-PLAYERPROFILE': case 'POPULATE-SQUAD': case 'POPULATE-REMAINING_PURSE_ALL': case 'POPULATE-SINGLE_PURSE': case 'POPULATE-TOP_SOLD':
 			case 'POPULATE-L3-NAMESUPER': case 'POPULATE-TOP_SOLD_TEAM': case 'POPULATE-IDENT': case 'POPULATE-FLIPPER_SQUAD':
@@ -1520,7 +1616,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 	case 'LT_PLAYERPROFILE-OPTIONS': case 'LT_PP_STATS-OPTIONS': case 'LOF_SQUAD-OPTIONS': case 'FLIPPER-OPTIONS': case 'FREETEXT-OPTIONS': case "ZONE-PLAYER-OPTIONS":
 	case 'TEAM_CURRENT_BID-OPTIONS': case 'FF_TOP_FIVE_SOLD_TEAM-OPTIONS': case 'SINGLE_TEAM-OPTIONS':  case 'ZONEWISE_PLAYER_SOLD-OPTIONS':case "GRAPHICS-FF_FIVE_TOP_BUYS_AUCTION":
 	case 'PROFILE_FF_STATS-OPTIONS': case 'FLIPPER_SQUAD-OPTIONS':case "FF_SQUAD_TEAM-OPTIONS":case "FF_SQUAD_ROLE_TEAM-OPTIONS":case "LOF_TEAM_BID_OPTIONS": 
-	case 'PROFILEFF-OPTIONS': case 'FLIPPER_TEXT-OPTIONS': case 'CRAWL_TOP_SOLD_TEAM-OPTIONS': case 'CRAWL_SQUAD-OPTIONS': case 'ZONE-PLAYER_FULL-OPTIONS':
+	case 'PROFILEFF-OPTIONS': case 'FLIPPER_TEXT-OPTIONS': case 'CRAWL_TOP_SOLD_TEAM-OPTIONS': case 'CRAWL_SQUAD-OPTIONS': case 'ZONE-PLAYER_FULL-OPTIONS': case 'SQUAD_ANIMATION-OPTIONS':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN':
  			
@@ -1678,6 +1774,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 				case 'SQUAD-OPTIONS': case 'TOP-SOLD_TEAM-OPTIONS': case 'GOOGLY-OPTIONS': case 'CRAWL_TOP_SOLD_TEAM-OPTIONS': case 'LOF_TOP_SOLD_TEAM-OPTIONS': case'SQUAD_PLAYER-OPTIONS':
 				case 'FF_TOP_SOLD_TEAM-OPTIONS': case 'LOF_SQUAD_SIZE_CATEGORY_WISE_-OPTIONS': case 'LOF_SQUAD-OPTIONS': case 'CRAWL_SQUAD-OPTIONS': case 'TEAM_CURRENT_BID-OPTIONS':
 				case 'FF_TOP_FIVE_SOLD_TEAM-OPTIONS': case 'SINGLE_TEAM-OPTIONS': case 'FLIPPER_SQUAD-OPTIONS':case "FF_SQUAD_TEAM-OPTIONS":case "FF_SQUAD_ROLE_TEAM-OPTIONS":
+				case 'SQUAD_ANIMATION-OPTIONS':
 					switch ($('#selected_broadcaster').val().toUpperCase()) {
 						case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN':
 							select = document.createElement('select');
@@ -2377,6 +2474,10 @@ function addItemsToList(whatToProcess, dataToProcess)
 			case 'LOF_SQUAD-OPTIONS':
 				option.name = 'populate_Lof_squad_btn';
 			    option.value = 'Populate LT Squad';
+				break;
+			case 'SQUAD_ANIMATION-OPTIONS':
+				option.name = 'populate_squad_animation_btn';
+			    option.value = 'Populate Squad';
 				break;
 			case 'CRAWL_SQUAD-OPTIONS':	
 				option.name = 'populate_crawle_squad_btn';
