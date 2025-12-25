@@ -110,7 +110,7 @@ public class KCL extends Scene{
 		case "POPULATE-LOF_SQUAD_SIZE": case "POPULATE-LOF_RTM_REMAINING": case "POPULATE-FF_RTM_AND_PURSE_REMAINING": case "POPULATE-FF_TOP_BUYS_AUCTION":
 		case "POPULATE-FF_TOP_BUY_TEAM": case "POPULATE-LOF_SQUAD_SIZE_CATEGORY_WISE": case "POPULATE-FF_ICONIC_PLAYERS": case "POPULATE-LT_ICONIC_PLAYERS": 
 		case "POPULATE-PLAYERPROFILE_LT": case "POPULATE-PLAYERPROFILE_LT_STATS": case "POPULATE-LOF_SQUAD": case "POPULATE-LOF_SQUAD_REMAIN":
-		case "POPULATE-L3-FLIPPER": case "POPULATE-ZONE_PLAYERS_STATS": case "POPULATE-TEAM_CURR_BID": case "POPULATE-FF_FIVE_TOP_BUYS_AUCTION":
+		case "POPULATE-L3-FLIPPER": case "POPULATE-ZONE_PLAYERS_STATS": case "POPULATE-ZONE_PLAYERS_FULL": case "POPULATE-TEAM_CURR_BID": case "POPULATE-FF_FIVE_TOP_BUYS_AUCTION":
 		case "POPULATE-FF_FIVE_TOP_BUY_TEAM": case "POPULATE-ZONEWISE_PLAYERS_SOLD": case "POPULATE-FLIPPER_SQUAD": case "POPULATE-FF_SQUAD_TEAM":
 		case "POPULATE-FF_SQUAD_ROLE_TEAM":case "POPULATE-LOF_TEAM_BID_AUCTION": case "POPULATE-L3-FLIPPER_TEXT": case "POPULATE-PROFILE_FF":
 			
@@ -520,31 +520,42 @@ public class KCL extends Scene{
 							auction, auctionService, session_selected_broadcaster);
 					processPreviewLowerThirds(print_writer, whatToProcess, whichSideNotProfile);
 					break;
-				case "POPULATE-ZONE_PLAYERS_STATS":
+				case "POPULATE-ZONE_PLAYERS_STATS": case "POPULATE-ZONE_PLAYERS_FULL":
 					if(!which_graphics_onscreen.isEmpty()) {
 						whichSideNotProfile = 2;
 					}else {
 						whichSideNotProfile = 1;
 					}
-					if(!which_graphics_onscreen.equalsIgnoreCase("ZONE-PLAYER_STATS") || 
+					if((!which_graphics_onscreen.equalsIgnoreCase("ZONE-PLAYER_STATS") && !which_graphics_onscreen.equalsIgnoreCase("ZONE-PLAYER_FULL")) || 
 							(!valueToProcess.equalsIgnoreCase("undefined") && !side2ValueToProcess.equalsIgnoreCase(valueToProcess))) {
 						squad.clear();
 						current_index = 0;
-						squad = auction.getPlayersList().stream()
-							    .filter(ply -> ply.getCategory().contains(valueToProcess.split(",")[0]))
-							    .collect(Collectors.toList());
+						
+						if(valueToProcess.split(",")[0].equalsIgnoreCase("A") || valueToProcess.split(",")[0].equalsIgnoreCase("B")) {
+							squad = auction.getPlayersList().stream()
+								    .filter(ply -> ply.getCategory().equalsIgnoreCase(valueToProcess.split(",")[0]))
+								    .collect(Collectors.toList());
+						}else {
+							squad = auction.getPlayersList().stream()
+								    .filter(ply -> ply.getCategory().contains(valueToProcess.split(",")[0]))
+								    .collect(Collectors.toList());
+						}
+						
 						Iterator<Player> squadIterator = squad.iterator();
 
-						while (squadIterator.hasNext()) {
-						    Player sq = squadIterator.next();						    
-						    for (Player ply : auction.getPlayers()) {
-						        if (sq.getPlayerId() == ply.getPlayerId() &&
-						            (ply.getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM) || ply.getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD))) {						                
-						            squadIterator.remove();
-						            break;
-						        }
-						    }
+						if(whatToProcess.equalsIgnoreCase("POPULATE-ZONE_PLAYERS_STATS")) {
+							while (squadIterator.hasNext()) {
+							    Player sq = squadIterator.next();						    
+							    for (Player ply : auction.getPlayers()) {
+							        if (sq.getPlayerId() == ply.getPlayerId() &&
+							            (ply.getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM) || ply.getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD))) {						                
+							            squadIterator.remove();
+							            break;
+							        }
+							    }
+							}
 						}
+						
 						zoneSize = squad.size();
 						side2ValueToProcess = valueToProcess;
 					}
@@ -583,7 +594,7 @@ public class KCL extends Scene{
 		case "ANIMATE-IN-LT_ICONIC_PLAYERS": case "ANIMATE-IN-PLAYERPROFILE_LT": case "ANIMATE-IN-PLAYERPROFILE_LT_STATS": case "ANIMATE-IN-ZONE-PLAYER_STATS":
 		
 		case "ANIMATE-IN-FF_RTM_AND_PURSE_REMAINING": case "ANIMATE-IN-FF_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_TOP_BUY_TEAM": case "ANIMATE-IN-FF_ICONIC_PLAYERS":
-		case "ANIMATE-IN-FF_FIVE_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM":case "ANIMATE-IN-FF_SQUAD_TEAM":
+		case "ANIMATE-IN-FF_FIVE_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM":case "ANIMATE-IN-FF_SQUAD_TEAM": case "ANIMATE-IN-ZONE-PLAYER_FULL":
 		
 			switch (session_selected_broadcaster.toUpperCase()) {
 			case "KCL":
@@ -798,7 +809,7 @@ public class KCL extends Scene{
 				case "ANIMATE-IN-IDENT": case "ANIMATE-IN-PLAYERPROFILE_FF": case "ANIMATE-IN-FF_RTM_AND_PURSE_REMAINING": case "ANIMATE-IN-FF_TOP_BUYS_AUCTION":
 				case "ANIMATE-IN-FF_TOP_BUY_TEAM": case "ANIMATE-IN-REMAINING_PURSE_ALL": case "ANIMATE-IN-SQUAD": case "ANIMATE-IN-FF_ICONIC_PLAYERS":
 				case "ANIMATE-IN-ZONE-PLAYER_STATS": case "ANIMATE-IN-FF_FIVE_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM":case "ANIMATE-IN-FF_SQUAD_TEAM":
-				case "ANIMATE-IN-FF_SQUAD_ROLE_TEAM": case "ANIMATE-IN-PROFILE_FF":
+				case "ANIMATE-IN-FF_SQUAD_ROLE_TEAM": case "ANIMATE-IN-PROFILE_FF": case "ANIMATE-IN-ZONE-PLAYER_FULL":
 					if(which_graphics_onscreen.isEmpty()) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*StartFlare START \0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Essentials START\0");
@@ -852,6 +863,10 @@ public class KCL extends Scene{
 							print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$Squad START\0");
 							which_graphics_onscreen = "ZONE-PLAYER_STATS";
 							break;
+						case "ANIMATE-IN-ZONE-PLAYER_FULL":
+							print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$Squad START\0");
+							which_graphics_onscreen = "ZONE-PLAYER_FULL";
+							break;	
 						case "ANIMATE-IN-FF_ICONIC_PLAYERS":
 							print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$IconPlayers START\0");
 							which_graphics_onscreen = "FF_ICONIC_PLAYERS";
@@ -878,7 +893,7 @@ public class KCL extends Scene{
 							populateSquad(print_writer, Integer.valueOf(side2ValueToProcess.split(",")[0]), 
 									1, auction, auctionService, session_selected_broadcaster);
 							break;
-						case "ANIMATE-IN-ZONE-PLAYER_STATS":
+						case "ANIMATE-IN-ZONE-PLAYER_STATS": case "ANIMATE-IN-ZONE-PLAYER_FULL":
 							populateZoneSquad(print_writer, side2ValueToProcess.split(",")[0], 1, auction, auctionService, session_selected_broadcaster);
 							break;
 						case "ANIMATE-IN-FF_RTM_AND_PURSE_REMAINING":
@@ -1040,7 +1055,7 @@ public class KCL extends Scene{
 							populateLofSquadSizeCategoryWiseOnly(print_writer,  Integer.valueOf(side2ValueToProcess), 1, auction, auctionService, session_selected_broadcaster);
 							break;
 						}
-						which_graphics_onscreen = whatToProcess.replace("ANIMATE-IN-", "");
+						//which_graphics_onscreen = whatToProcess.replace("ANIMATE-IN-", "");
 						TimeUnit.MILLISECONDS.sleep(2000);
 						cutBack(print_writer, which_graphics_onscreen, whatToProcess);
 						which_graphics_onscreen = whatToProcess.replace("ANIMATE-IN-", "");
@@ -1766,19 +1781,25 @@ public class KCL extends Scene{
 		case "SQUAD-PLAYER":
 			if(!whatToProcess.equalsIgnoreCase("ANIMATE-IN-SQUAD-PLAYER")) {
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_LOF$SquadSize_Category START \0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*CtegoryHighlight$Side1$" + prevRowHighlight + " CONTINUE REVERSE\0");
+				for(int i=prevRowHighlight;i<=8;i++) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*MoveForCatHighlight$Side1$" + i + " CONTINUE REVERSE\0");
+				}
+				prevRowHighlight = 0;
+			}else {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*CtegoryHighlight$Side1$" + prevRowHighlight + " CONTINUE REVERSE\0");
+				for(int i=1;i<=8;i++) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*MoveForCatHighlight$Side1$" + i + " CONTINUE REVERSE\0");
+				}
 			}
-			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*CtegoryHighlight$Side1$"+prevRowHighlight +" CONTINUE REVERSE\0");
-			for(int i=1;i<=7;i++) {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*MoveForCatHighlight$Side1$"+(i+1)+" CONTINUE REVERSE\0");
-			}
-			break;
+			break;	
 		case "LOF_SQUAD_SIZE_CATEGORY_WISE":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_LOF$SquadSize_Team START \0");
 			break;
 			
 		//FF	
 		case "IDENT": case "PLAYERPROFILE_FF": case "REMAINING_PURSE_ALL": case "SQUAD": case "FF_RTM_AND_PURSE_REMAINING": 
-		case "FF_TOP_BUYS_AUCTION": case "FF_TOP_BUY_TEAM": case "FF_ICONIC_PLAYERS": case "ZONE-PLAYER_STATS": 
+		case "FF_TOP_BUYS_AUCTION": case "FF_TOP_BUY_TEAM": case "FF_ICONIC_PLAYERS": case "ZONE-PLAYER_STATS": case "ZONE-PLAYER_FULL":
 		case "FF_FIVE_TOP_BUYS_AUCTION": case "FF_FIVE_TOP_BUY_TEAM":case "FF_SQUAD_TEAM":case "FF_SQUAD_ROLE_TEAM":
 			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*StartFlare START \0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Header START\0");
@@ -1795,7 +1816,7 @@ public class KCL extends Scene{
 			case "SQUAD":
 				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Squad$Change_Out START\0");
 				break;
-			case "ZONE-PLAYER_STATS":
+			case "ZONE-PLAYER_STATS": case "ZONE-PLAYER_FULL":
 				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Squad START\0");
 				break;	
 			case "FF_TOP_BUYS_AUCTION": case "FF_TOP_BUY_TEAM":
@@ -1816,6 +1837,11 @@ public class KCL extends Scene{
 			}
 			break;
 		
+		//Flipper	
+		case "FLIPPER":
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_Flipper$Header START \0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_Flipper$Text START \0");
+			break;	
 		//LT
 		case "NAMESUPER":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_LowerThird$TopData START \0");
@@ -1867,13 +1893,13 @@ public class KCL extends Scene{
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_LOF$SquadSize_Category START \0");
 				TimeUnit.MILLISECONDS.sleep(2200);
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*CtegoryHighlight$Side2$"+rowHighlight +" START\0");
-				for(int i=rowHighlight;i<=7;i++) {
+				for(int i=rowHighlight;i<=8;i++) {
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*MoveForCatHighlight$Side2$"+(i+1)+" START\0");
 				}
 			}else {
 				TimeUnit.MILLISECONDS.sleep(1000);
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*CtegoryHighlight$Side1$"+rowHighlight +" START\0");
-				for(int i=rowHighlight;i<=7;i++) {
+				for(int i=rowHighlight;i<=8;i++) {
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*MoveForCatHighlight$Side1$"+(i+1)+" START\0");
 				}
 			}
@@ -1972,9 +1998,11 @@ public class KCL extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_LOF$SquadSize_Category SHOW 0\0");
 			if(!whichGraphicOnScreen.equalsIgnoreCase("SQUAD-PLAYER")) {
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*CtegoryHighlight$Side1$"+rowHighlight +" SHOW 1.000\0");
-				for(int i=rowHighlight;i<=7;i++) {
+				for(int i=rowHighlight;i<=8;i++) {
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*MoveForCatHighlight$Side1$"+(i+1)+" SHOW 1.000\0");
 				}
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*CtegoryHighlight$Side2 SHOW 0.0\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*MoveForCatHighlight$Side2 SHOW 0.0\0");
 			}
 			break;
 		case "ANIMATE-IN-LOF_SQUAD_SIZE_CATEGORY_WISE":
@@ -1983,12 +2011,13 @@ public class KCL extends Scene{
 			break;
 		case "ANIMATE-IN-LOF_SQUAD":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LOF$In_Out$Main$Squad SHOW 2.000\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_LOF$Squad SHOW 0\0");
 			break;
 			
 		//FF
 		case "ANIMATE-IN-IDENT": case "ANIMATE-IN-PLAYERPROFILE_FF": case "ANIMATE-IN-REMAINING_PURSE_ALL": case "ANIMATE-IN-SQUAD": case "ANIMATE-IN-FF_TOP_BUYS_AUCTION": 
 		case "ANIMATE-IN-FF_TOP_BUY_TEAM": case "ANIMATE-IN-FF_ICONIC_PLAYERS": case "ANIMATE-IN-FF_RTM_AND_PURSE_REMAINING": case "ANIMATE-IN-ZONE-PLAYER_STATS":
-		case "ANIMATE-IN-FF_FIVE_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM":case "ANIMATE-IN-FF_SQUAD_TEAM": case "ANIMATE-IN-PROFILE_FF":
+		case "ANIMATE-IN-FF_FIVE_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM":case "ANIMATE-IN-FF_SQUAD_TEAM": case "ANIMATE-IN-PROFILE_FF": case "ANIMATE-IN-ZONE-PLAYER_FULL":
 			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Header SHOW 0.0\0");
 			switch (whatToProcess.toUpperCase()) {
 				case "ANIMATE-IN-IDENT":
@@ -2003,7 +2032,7 @@ public class KCL extends Scene{
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$PurseRemaining SHOW 2.480\0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$PurseRemaining SHOW 0.0\0");
 					break;
-				case "ANIMATE-IN-SQUAD": case "ANIMATE-IN-ZONE-PLAYER_STATS":
+				case "ANIMATE-IN-SQUAD": case "ANIMATE-IN-ZONE-PLAYER_STATS": case "ANIMATE-IN-ZONE-PLAYER_FULL":
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$Squad SHOW 2.480\0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Squad SHOW 0.0\0");
 					break;
@@ -2083,7 +2112,11 @@ public class KCL extends Scene{
 				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_LOF$SquadSize_Team SHOW 0\0");
 			}
 			break;
-				
+		//Flipper	
+		case "FLIPPER":
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_Flipper$Header SHOW 0.0\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_Flipper$Text SHOW 0.0\0");
+			break;
 		//LT
 		case "NAMESUPER":
 			print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_LowerThird$TopData SHOW 0 \0");
@@ -4794,7 +4827,7 @@ public class KCL extends Scene{
 		        	
 		        	
 		        	print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$SquadData$Category" 
-			            		+"*FUNCTION*Grid*num_row SET 2\0");
+			            		+"*FUNCTION*Grid*num_row SET 3\0");
 		        }
 		    } 
 		}
