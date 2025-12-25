@@ -107,7 +107,7 @@ public class Scene {
 		print_writer.println("-1 IMAGE INFO\0");
 		
 		switch (config.getBroadcaster().toUpperCase()) {
-		case "VIZ_ISPL_2024":case "UTT_VIZ": case "MUMBAI_T20_VIZ": case "KCL":
+		case "VIZ_ISPL_2024":case "UTT_VIZ": case "MUMBAI_T20_VIZ": case "KCL":  case "KCL_BIGSCREEN":
 			switch (whatToProcess) {
 			case "OVERLAYS":
 				print_writer.println("-1 RENDERER*FRONT_LAYER SET_OBJECT SCENE*/Default/Overlays \0");
