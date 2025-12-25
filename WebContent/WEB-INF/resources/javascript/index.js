@@ -1854,7 +1854,9 @@ function addItemsToList(whatToProcess, dataToProcess)
 							row.insertCell(cellCount).appendChild(select);
 							cellCount = cellCount + 1;
 						}*/
-						switch(whatToProcess){
+						switch ($('#selected_broadcaster').val().toUpperCase()) {
+					case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ': 
+					       switch(whatToProcess){
 							case 'FF_PLAYERPROFILE-OPTIONS': case 'PROFILEFF-OPTIONS':
 								select = document.createElement('select');
 								select.style = 'width:100px';
@@ -2004,10 +2006,12 @@ function addItemsToList(whatToProcess, dataToProcess)
 								
 								/////
 								break;
-						}
-						break;
-				} 
-				break;
+						      }
+					     break;
+				          }
+			          break;
+	                  	} 
+	                break;
 			case 'LT_PP_STATS-OPTIONS':
 				select = document.createElement('select');
 				select.style = 'width:100px';
