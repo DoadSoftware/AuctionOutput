@@ -250,7 +250,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			break;
 		case 'f': //LOF PURSE REMAINING
 			switch ($('#selected_broadcaster').val()){
-			case 'VIZ_ISPL_2024':
+			case 'VIZ_ISPL_2024': case 'KCL':
 				processAuctionProcedures('POPULATE-LOF_REMAINING_PURSE');
 				break;
 			default://ISPL
@@ -476,9 +476,54 @@ function initialiseForm(whatToProcess,dataToProcess)
 				
 				// Clear existing rows
 				tbody.innerHTML = "";
-				
-				// Loop through your data and create rows
-				for (let i = 0; i < dataToProcess.teamZoneList.length; i++) {
+				if($('#selected_broadcaster').val().toUpperCase() == 'KCL'){
+					for (let i = 0; i < dataToProcess.teamZoneList.length; i++) {
+
+					    const row = tbody.insertRow();
+					    row.style.fontSize = '16px';
+					    row.style.fontWeight = '800';
+					    row.style.color = '#BC8F8F';
+					
+					    const team = dataToProcess.teamZoneList[i];
+					
+					    let categoryList = [];
+					    let cTotal = 0;
+					
+					    // 🔥 iterate category map (same as Java entrySet)
+					    for (const key in team.category) {
+					        if (key.trim().includes("C")) {
+					            cTotal += Number(team.category[key]);
+					        } else {
+					            categoryList.push({
+					                name: key,
+					                value: team.category[key]
+					            });
+					        }
+					    }
+					
+					    // 🔥 add C only once
+					    categoryList.push({
+					        name: "C",
+					        value: cTotal
+					    });
+					
+					    // ---- render row ----
+					    row.innerHTML = `
+					        <td>${team.teamName1}</td>
+					        ${categoryList.map(c => `<td>${c.value}</td>`).join("")}
+					    `;
+					
+					    // ---- highlight logic ----
+					    categoryList.forEach((cat, index) => {
+					        if (cat.value >= 8) {
+					            row.cells[index + 1].style.backgroundColor = "#E34234";
+					            row.cells[index + 1].style.color = "white";
+					        }
+					    });
+					}
+
+				}else{
+					for (let i = 0; i < dataToProcess.teamZoneList.length; i++) {
 				    const row = tbody.insertRow(); // Insert a new row
 				    row.style.fontSize = '16px';
 				    row.style.fontWeight = '800';
@@ -512,7 +557,7 @@ function initialiseForm(whatToProcess,dataToProcess)
 				        }
 				    });
 				}
-
+				}
 		}
 		break;
 	case 'UPDATE-CONFIG':
