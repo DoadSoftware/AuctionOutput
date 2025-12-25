@@ -1521,6 +1521,22 @@ function addItemsToList(whatToProcess, dataToProcess)
 					select.name = select.id;
 					
 					switch ($('#selected_broadcaster').val().toUpperCase()) {
+						case 'KCL':
+							option = document.createElement('option');
+							option.value = 'A';
+							option.text = 'A';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'B';
+							option.text = 'B';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'C';
+							option.text = 'C';
+							select.appendChild(option);
+							break;
 						case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
 							option = document.createElement('option');
 							option.value = 'EAST ZONE';
