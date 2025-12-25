@@ -193,13 +193,16 @@ public class IndexController
 //				print_writer.println("LAYER3*EVEREST*STAGE*DIRECTOR*Loop START;");
 				this_doad.which_graphics_onscreen = "BG";
 				break;
-			case "VIZ_ISPL_2024":case "UTT_VIZ": case "MUMBAI_T20_VIZ":
+			case "VIZ_ISPL_2024":case "UTT_VIZ": case "MUMBAI_T20_VIZ": case "KCL":
 				scene.LoadScene("OVERLAYS", print_writer, session_Configurations);
 				scene.LoadScene("FULL-FRAMERS", print_writer, session_Configurations);
 				switch (session_selected_broadcaster) {
 				case "MUMBAI_T20_VIZ":
 					this_mumbai_t20_viz.resetData(print_writer);
 					break;
+				case "KCL":
+					this_kcl.resetData(print_writer);
+					break;	
 				}
 				break;
 			}
