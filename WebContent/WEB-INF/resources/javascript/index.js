@@ -989,6 +989,16 @@ function processAuctionProcedures(whatToProcess)
 			break;	
 		}
 		break;
+	case 'POPULATE-FF_SINGLEPURSE_TEAM':
+		switch ($('#selected_broadcaster').val().toUpperCase()) {
+		case 'VIZ_ISPL_2024': case "UTT_VIZ":
+			valueToProcess = $('#selectTeamName option:selected').val()+","+$('#selectImage option:selected').val();
+			break;
+		case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN':
+			valueToProcess = $('#selectTeamName option:selected').val();
+			break;	
+		}
+		break;
 	case "POPULATE-SQUAD-PLAYER":
 		switch ($('#selected_broadcaster').val().toUpperCase()) {	
 		case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN':
@@ -1243,7 +1253,7 @@ function processAuctionProcedures(whatToProcess)
 			case 'POPULATE-LOF_SQUAD': case 'POPULATE-CRAWLE_SQUAD': case 'POPULATE-LOF_SQUAD_REMAIN': case 'POPULATE-L3-CRWLERFREETEXT': case 'POPULATE-L3-FLIPPER': case 'POPULATE-L3-FLIPPER_TEXT':
 			
 			case 'POPULATE-FF_RTM_AND_PURSE_REMAINING': case 'POPULATE-FF_TOP_BUYS_AUCTION': case 'POPULATE-FF_TOP_BUY_TEAM': case 'POPULATE-TEAM_CURR_BID':
-			case 'POPULATE-FF_ICONIC_PLAYERS': case 'POPULATE-FF_FIVE_TOP_BUYS_AUCTION': case 'POPULATE-FF_FIVE_TOP_BUY_TEAM':
+			case 'POPULATE-FF_ICONIC_PLAYERS': case 'POPULATE-FF_FIVE_TOP_BUYS_AUCTION':  case 'POPULATE-FF_FIVE_TOP_BUY_TEAM': case 'POPULATE-FF_SINGLEPURSE_TEAM':
 			case "POPULATE-FF_SQUAD_TEAM":case "POPULATE-FF_SQUAD_ROLE_TEAM": case 'POPULATE-FF_RETAIN_PLAYERS':
 			case 'POPULATE-LT_ICONIC_PLAYERS': case 'POPULATE-PLAYERPROFILE_LT': case 'POPULATE-PLAYERPROFILE_LT_STATS': case 'POPULATE-ZONE_PLAYERS_STATS':
 			case 'POPULATE-ZONEWISE_PLAYERS_SOLD':case "POPULATE-LOF_TEAM_BID_AUCTION": case 'POPULATE-ZONE_PLAYERS_FULL':
@@ -1396,6 +1406,9 @@ function processAuctionProcedures(whatToProcess)
 						case 'POPULATE-FF_FIVE_TOP_BUY_TEAM':
 							processAuctionProcedures('ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM');
 							break;
+						case 'POPULATE-FF_SINGLEPURSE_TEAM':
+							processAuctionProcedures('ANIMATE-SINGLEPURSE_TEAM');
+							break;	
 						case 'POPULATE-FF_ICONIC_PLAYERS':
 							processAuctionProcedures('ANIMATE-IN-FF_ICONIC_PLAYERS');
 							break;
