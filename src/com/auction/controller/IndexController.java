@@ -253,8 +253,10 @@ public class IndexController
 			System.out.println(whatToProcess + " - " + valueToProcess);
 			if(valueToProcess.equalsIgnoreCase("TRUE")) {
 				this_ispl_viz_2024.enableAudio = "TRUE";
+				this_kcl.enableAudio = "TRUE";
 			}else {
 				this_ispl_viz_2024.enableAudio = "FALSE";
+				this_kcl.enableAudio = "FALSE";
 			}
 			return null;	
 		case "RE_READ_DATA":

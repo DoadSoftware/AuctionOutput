@@ -434,7 +434,15 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			break;
 		
 		case 'm': //LT ICONIC PPLAYERS
-			processAuctionProcedures('POPULATE-LT_ICONIC_PLAYERS');
+			
+			switch ($('#selected_broadcaster').val()){
+			case 'KCL':
+				processAuctionProcedures('LOF_SLOT_CHANGEON');
+				break;
+			default://ISPL
+				processAuctionProcedures('POPULATE-LT_ICONIC_PLAYERS');
+				break;
+			}
 			break;
 		case 'n': //LT PLAYER PROFILE
 			$("#captions_div").hide();
