@@ -274,52 +274,56 @@ public class IndexController
 				last_bid_time_stamp = new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON).lastModified();
 			}
 			
-			switch (session_selected_broadcaster) {
-			case "HANDBALL": case "ISPL":
-				this_doad.updateData(session_selected_scenes.get(0), session_auction,auctionService,print_writer);
-				break;
-			case "ISPL_VIZ":
-				if(this_ispl_viz.data.isBid_Start_or_not() == true) {
-					this_ispl_viz.data.setWhichside(2);
+			if(session_selected_broadcaster != null) {
+				switch (session_selected_broadcaster) {
+				case "HANDBALL": case "ISPL":
+					this_doad.updateData(session_selected_scenes.get(0), session_auction,auctionService,print_writer);
+					break;
+				case "ISPL_VIZ":
+					if(this_ispl_viz.data.isBid_Start_or_not() == true) {
+						this_ispl_viz.data.setWhichside(2);
+					}
+					this_ispl_viz.updateData(session_selected_scenes.get(0), session_auction,
+							session_curr_bid,auctionService,print_writer);
+					break;
+				case "VIZ_ISPL_2024":
+					if(this_ispl_viz_2024.data.isBid_Start_or_not() == true) {
+						this_ispl_viz_2024.data.setWhichside(2);
+					}
+					this_ispl_viz_2024.updateData(session_auction,session_curr_bid,auctionService,print_writer);
+					break;
+				case "UTT_VIZ":
+					if(this_utt_viz.data.isBid_Start_or_not() == true) {
+						this_utt_viz.data.setWhichside(2);
+					}
+					this_utt_viz.updateData(session_auction,session_curr_bid,auctionService,print_writer);
+					break;
+				case "KCL":
+					if(this_kcl.data.isBid_Start_or_not() == true) {
+						this_kcl.data.setWhichside(2);
+					}
+					this_kcl.updateData(session_auction,session_curr_bid,auctionService,print_writer);
+					break;
+				case "KCL_BIGSCREEN":
+					if(this_KCL_BIGSCREEN.data.isBid_Start_or_not() == true) {
+						this_KCL_BIGSCREEN.data.setWhichside(2);
+					}
+					this_KCL_BIGSCREEN.updateData(session_auction,session_curr_bid,auctionService,print_writer);
+					break;	
+				case "MUMBAI_T20_VIZ":
+					if(this_mumbai_t20_viz.data.isBid_Start_or_not() == true) {
+						this_mumbai_t20_viz.data.setWhichside(2);
+					}
+					this_mumbai_t20_viz.updateData(session_auction,session_curr_bid,auctionService,print_writer);
+					break;
+					
 				}
-				this_ispl_viz.updateData(session_selected_scenes.get(0), session_auction,
-						session_curr_bid,auctionService,print_writer);
-				break;
-			case "VIZ_ISPL_2024":
-				if(this_ispl_viz_2024.data.isBid_Start_or_not() == true) {
-					this_ispl_viz_2024.data.setWhichside(2);
-				}
-				this_ispl_viz_2024.updateData(session_auction,session_curr_bid,auctionService,print_writer);
-				break;
-			case "UTT_VIZ":
-				if(this_utt_viz.data.isBid_Start_or_not() == true) {
-					this_utt_viz.data.setWhichside(2);
-				}
-				this_utt_viz.updateData(session_auction,session_curr_bid,auctionService,print_writer);
-				break;
-			case "KCL":
-				if(this_kcl.data.isBid_Start_or_not() == true) {
-					this_kcl.data.setWhichside(2);
-				}
-				this_kcl.updateData(session_auction,session_curr_bid,auctionService,print_writer);
-				break;
-			case "KCL_BIGSCREEN":
-				if(this_KCL_BIGSCREEN.data.isBid_Start_or_not() == true) {
-					this_KCL_BIGSCREEN.data.setWhichside(2);
-				}
-				this_KCL_BIGSCREEN.updateData(session_auction,session_curr_bid,auctionService,print_writer);
-				break;	
-			case "MUMBAI_T20_VIZ":
-				if(this_mumbai_t20_viz.data.isBid_Start_or_not() == true) {
-					this_mumbai_t20_viz.data.setWhichside(2);
-				}
-				this_mumbai_t20_viz.updateData(session_auction,session_curr_bid,auctionService,print_writer);
-				break;
-				
 			}
+			
 			return JSONObject.fromObject(session_auction).toString();
 		
 		default:
+			System.out.println("whatToProcess = " + whatToProcess + "   " + "valueToProcess = " + valueToProcess);
 			if(whatToProcess.contains("_GRAPHICS-OPTIONS")) {
 				return JSONArray.fromObject(GetSpecificDataList(whatToProcess)).toString();
 			}

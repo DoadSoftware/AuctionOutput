@@ -1,5 +1,6 @@
 var match_data,session_auction;
 let selectedArray = [];
+let teams = [];
 var which_GFX = "";
 let currentTeamIndex = 0,id = 0;  
 let teamRotationInterval = null; 
@@ -52,10 +53,18 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#auction_div").hide();
 			break;
 		case ' '://Space
+			if(which_GFX === "POPULATE-SQUAD"){
+				stopTeamRotation();
+				which_GFX = "";
+			 }
 			processAuctionProcedures('CLEAR-ALL');
 			break;
 		case '-'://189
 			if(confirm('It will Also Delete Your Preview from Directory...\r\n \r\nAre You Sure To Animate Out? ') == true){
+				if(which_GFX === "POPULATE-SQUAD"){
+					stopTeamRotation();
+					which_GFX = "";
+				 }
 				processAuctionProcedures('ANIMATE-OUT');	
 			}
 			break;
@@ -1053,6 +1062,7 @@ function processAuctionProcedures(whatToProcess)
 			valueToProcess = team_index;
 			break;	
 		}
+		break;
 		
 	case 'POPULATE-FF_FIVE_TOP_BUY_TEAM':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
@@ -1265,7 +1275,7 @@ function processAuctionProcedures(whatToProcess)
 				break;
 			case 'SQUAD_ANIMATION_GRAPHICS-OPTIONS':
 				addItemsToList('SQUAD_ANIMATION-OPTIONS',data);
-				addItemsToList('POPULATE-TEAM',data);
+				addItemsToList('POPULATE-TEAM_ANIMATION',data);
 				match_data = data;
 				break;		
 			case 'LOF_SQUAD_GRAPHICS-OPTIONS':
@@ -1334,7 +1344,7 @@ function processAuctionProcedures(whatToProcess)
 					$("#auction_div").show();
 					
 					processAuctionProcedures('ANIMATE-IN-SQUAD_ANIMATION');
-					which_GFX = 'POPULATE-SQUAD';
+					which_GFX = 'POPULATE-SQUAD_ANIMATION';
 					startTeamRotation(); 
 				}
 			}
@@ -1550,6 +1560,22 @@ function addItemsToList(whatToProcess, dataToProcess)
 	var cellCount = 0;
 
 	switch (whatToProcess) {
+	case 'POPULATE-TEAM_ANIMATION':
+		$('#selectTeamName').empty();
+		
+		teams = dataToProcess.map(function(tm) {
+            return { teamId: tm.teamId, teamName: tm.teamName1 };
+        });
+        
+		dataToProcess.forEach(function(tm,index,arr1){
+			$('#selectTeamName').append(
+					$(document.createElement('option')).prop({
+					value: tm.teamId,
+					text: tm.teamName1
+				}))
+		});
+		
+		break;
 	case 'POPULATE-TEAM':
 		$('#selectTeamName').empty();
 		

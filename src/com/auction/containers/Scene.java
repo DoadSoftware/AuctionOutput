@@ -112,7 +112,7 @@ public class Scene {
 			case "OVERLAYS":
 				print_writer.println("-1 RENDERER*FRONT_LAYER SET_OBJECT SCENE*/Default/Overlays \0");
 				print_writer.println("-1 RENDERER*FRONT_LAYER*SCENE_DATA INITIALIZE \0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE SHOW 0.0 \0");
+//				print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE SHOW 0.0 \0");
 				break;
 			case "FULL-FRAMERS":
 				print_writer.println("-1 RENDERER*BACK_LAYER SET_OBJECT SCENE*/Default/" + 
