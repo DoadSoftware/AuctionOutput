@@ -1010,12 +1010,18 @@ public class KCL extends Scene{
 							prevRowHighlight = rowHighlight;
 							which_graphics_onscreen = "SQUAD-PLAYER";
 							break;
-						case "ANIMATE-IN-LOF_REMAINING_SLOT": case "ANIMATE-IN-LOF_SQUAD_SIZE": case "ANIMATE-IN-LOF_RTM_REMAINING": 
+						case "ANIMATE-IN-LOF_REMAINING_SLOT": case "ANIMATE-IN-LOF_SQUAD_SIZE":
+							print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LOF$In_Out$Main$RemainingPurse START \0");
+							print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LOF$In_Out$Main$Name START \0");
+							print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LOF$In_Out$Main$Logo START \0");
+							which_graphics_onscreen = whatToProcess.replace("ANIMATE-IN-", "");
+							break;
+						case "ANIMATE-IN-LOF_RTM_REMAINING": 
 						case "ANIMATE-IN-ZONEWISE_PLAYERS_SOLD":
 							print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LOF$In_Out$Main$RemainingPurse START \0");
 							print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LOF$In_Out$Main$Name START \0");
 							which_graphics_onscreen = whatToProcess.replace("ANIMATE-IN-", "");
-							break;
+							break;	
 						case "ANIMATE-IN-LOF_SQUAD_SIZE_CATEGORY_WISE":
 							print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LOF$In_Out$Main$SquadSize_Team START \0");
 							which_graphics_onscreen = "LOF_SQUAD_SIZE_CATEGORY_WISE";
@@ -2512,9 +2518,10 @@ public class KCL extends Scene{
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$Name$txt_LastName*GEOM*TEXT SET " 
 					+ auctionService.getAllPlayer().get(playerId - 1).getSurname() + "\0");
 		}else {
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$Name$txt_FirstName*GEOM*TEXT SET " + "" + "\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$Name$txt_FirstName*GEOM*TEXT SET " + 
+					auctionService.getAllPlayer().get(playerId - 1).getFirstname() + "\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$Name$txt_LastName*GEOM*TEXT SET " 
-					+ auctionService.getAllPlayer().get(playerId - 1).getFirstname() + "\0");
+					+ "" + "\0");
 		}
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$BasePrice"
@@ -2698,9 +2705,10 @@ public class KCL extends Scene{
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$Name$txt_LastName*GEOM*TEXT SET " 
 					+ auctionService.getAllPlayer().get(playerId - 1).getSurname() + "\0");
 		}else {
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$Name$txt_FirstName*GEOM*TEXT SET " + "" + "\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$Name$txt_FirstName*GEOM*TEXT SET " + 
+					auctionService.getAllPlayer().get(playerId - 1).getFirstname() + "\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$Name$txt_LastName*GEOM*TEXT SET " 
-					+ auctionService.getAllPlayer().get(playerId - 1).getFirstname() + "\0");
+					+ "" + "\0");
 		}
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$ImageGrp$Abhishek_Kumar_Dalhor"
@@ -2874,7 +2882,7 @@ public class KCL extends Scene{
 		int total = 0;
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + which_side + "$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 0 \0");
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + which_side + "$HeaderStyle1$txt_Header1*GEOM*TEXT SET " + "KABADDI CHAMPIONS LEAGUE" + " \0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + which_side + "$HeaderStyle1$txt_Header1*GEOM*TEXT SET " + "KCL" + " \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + which_side + "$HeaderStyle1$txt_Header2*GEOM*TEXT SET " + "AUCTION" + " \0");
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + which_side + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
@@ -2889,6 +2897,9 @@ public class KCL extends Scene{
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 0 \0");
 		for(int i=0; i <= auction.getTeam().size()-1; i++) {
 			
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$RemainingPurse$Row" + (i+1) + "$Select_DataType"
+					+ "*FUNCTION*Omo*vis_con SET 1 \0");
+			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$RemainingPurse$Row" + (i+1) + "$NameGrp$txt_FirstName"
 					+ "*GEOM*TEXT SET " + auction.getTeam().get(i).getTeamName2() + " \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$RemainingPurse$Row" + (i+1) + "$NameGrp$txt_LastName"
@@ -2900,8 +2911,8 @@ public class KCL extends Scene{
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$RemainingPurse$Row" + (i+1) + "$Select_DataType"
 						+ "*FUNCTION*Omo*vis_con SET 1 \0");
 			}else {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$RemainingPurse$Row" + (i+1) + "$Select_DataType"
-						+ "*FUNCTION*Omo*vis_con SET 0 \0");
+//				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$RemainingPurse$Row" + (i+1) + "$Select_DataType"
+//						+ "*FUNCTION*Omo*vis_con SET 0 \0");
 			}
 			
 			if(auction.getPlayers() != null ) {
@@ -2938,8 +2949,8 @@ public class KCL extends Scene{
 		}
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + which_side + "$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 0 \0");
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + which_side + "$HeaderStyle1$txt_Header1*GEOM*TEXT SET " + "KABADDI CHAMPIONS LEAGUE" + " \0");
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + which_side + "$HeaderStyle1$txt_Header2*GEOM*TEXT SET " + "AUCTION" + " \0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + which_side + "$HeaderStyle1$txt_Header1*GEOM*TEXT SET " + "" + " \0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + which_side + "$HeaderStyle1$txt_Header2*GEOM*TEXT SET " + "KCL AUCTION" + " \0");
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + which_side + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 				+ logo_path + "TLogo" + "\0");
@@ -3073,9 +3084,9 @@ public class KCL extends Scene{
 		        		
 	        		}else {
 	        			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$NameGrp$txt_FirstName"
-		    					+ "*GEOM*TEXT SET \0");
+		    					+ "*GEOM*TEXT SET " + auctionService.getAllPlayer().get(top_sold.get(m).getPlayerId()-1).getFull_name() + "\0");
 		        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$NameGrp$txt_LastName"
-		    					+ "*GEOM*TEXT SET " + auctionService.getAllPlayer().get(top_sold.get(m).getPlayerId()-1).getFull_name() + " \0");
+		    					+ "*GEOM*TEXT SET " + "" + " \0");
 	        		}
 	        		if(auctionService.getAllPlayer().get(top_sold.get(m).getPlayerId()-1).getIconic().equalsIgnoreCase("YES")){
 	        			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$Select_IconPlayer"
@@ -3187,9 +3198,9 @@ public class KCL extends Scene{
 		        		
 	        		}else {
 	        			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$Squad$Row" + row + "$NameGrp$txt_FirstName"
-		    					+ "*GEOM*TEXT SET \0");
+		    					+ "*GEOM*TEXT SET " + squad.get(m).getFull_name() + "\0");
 		        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$Squad$Row" + row + "$NameGrp$txt_LastName"
-		    					+ "*GEOM*TEXT SET " +  squad.get(m).getFull_name() + " \0");
+		    					+ "*GEOM*TEXT SET " +  "" + " \0");
 	        		}
 	        		if(squad.get(m).getIconic().equalsIgnoreCase("YES")){
 	        			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$Squad$Row" + row + "$Select_IconPlayer"
@@ -3243,9 +3254,9 @@ public class KCL extends Scene{
 		        		
 	        		}else {
 	        			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$Squad$Row" + row + "$NameGrp$txt_FirstName"
-		    					+ "*GEOM*TEXT SET \0");
+		    					+ "*GEOM*TEXT SET " + squad.get(m).getFull_name() + "\0");
 		        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$Squad$Row" + row + "$NameGrp$txt_LastName"
-		    					+ "*GEOM*TEXT SET " + squad.get(m).getFull_name() + " \0");
+		    					+ "*GEOM*TEXT SET " + "" + " \0");
 	        		}
 	        		if(squad.get(m).getIconic().equalsIgnoreCase("YES")){
 	        			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$Squad$Row" + row + "$Select_IconPlayer"
@@ -3280,7 +3291,7 @@ public class KCL extends Scene{
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side"+whichSide+"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 1" + "\0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side"+whichSide+"$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 0"+ "\0");
 		
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side"+whichSide+"$HeaderStyle1$txt_Header1*GEOM*TEXT SET KABADDI CHAMPIONS LEAGUE"+ "\0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side"+whichSide+"$HeaderStyle1$txt_Header1*GEOM*TEXT SET KCL"+ "\0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side"+whichSide+"$HeaderStyle1$txt_Header2*GEOM*TEXT SET AUCTION"+ "\0");
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
@@ -3416,7 +3427,7 @@ public class KCL extends Scene{
 		int squadSize = 0;
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 0 \0");
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$HeaderStyle1$txt_Header1*GEOM*TEXT SET " + "KABADDI CHAMPIONS LEAGUE" + " \0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$HeaderStyle1$txt_Header1*GEOM*TEXT SET " + "KCL" + " \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$HeaderStyle1$txt_Header2*GEOM*TEXT SET " + "AUCTION" + " \0");
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
@@ -3439,7 +3450,7 @@ public class KCL extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$LogoGrp$MainBase"
 					+ "*TEXTURE*IMAGE SET " + logo_path + tm.getTeamName4() + " \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$Select_DataType"
-					+ "*FUNCTION*Omo*vis_con SET 0 \0");
+					+ "*FUNCTION*Omo*vis_con SET 1 \0");
 			for(Player auc : auction.getPlayers()) {
 				if(tm.getTeamId() == auc.getTeamId()) {
 					squadSize++;
@@ -3495,7 +3506,7 @@ public class KCL extends Scene{
 		int squadSize = 0;
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 0 \0");
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$HeaderStyle1$txt_Header1*GEOM*TEXT SET " + "KABADDI CHAMPIONS LEAGUE" + " \0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$HeaderStyle1$txt_Header1*GEOM*TEXT SET " + "KCL" + " \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$HeaderStyle1$txt_Header2*GEOM*TEXT SET " + "AUCTION" + " \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 				+ logo_path + "TLogo" + "\0");
@@ -3517,7 +3528,7 @@ public class KCL extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$LogoGrp$MainBase"
 					+ "*TEXTURE*IMAGE SET " + logo_path + tm.getTeamName4() + " \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$Select_DataType"
-					+ "*FUNCTION*Omo*vis_con SET 0 \0");
+					+ "*FUNCTION*Omo*vis_con SET 1\0");
 			for(Player auc : auction.getPlayers()) {
 				if(tm.getTeamId() == auc.getTeamId()) {
 					squadSize++;
@@ -3570,8 +3581,8 @@ public class KCL extends Scene{
 		
 		int total = 0;
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$Select_HeaderType*FUNCTION*Omo*vis_con SET 3\0");
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$txt_Header1*GEOM*TEXT SET KABADDI CHAMPIONS\0");
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$txt_Header2*GEOM*TEXT SET LEAGUE\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$txt_Header1*GEOM*TEXT SET \0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$txt_Header2*GEOM*TEXT SET KABADDI CHAMPIONS LEAGUE\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$txt_SubHeader*GEOM*TEXT SET AUCTION 2025\0");
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$LogoGrp$img_TeamLogo*TEXTURE*IMAGE SET " + logo_path + "TLogo" + "\0");
@@ -3640,8 +3651,8 @@ public class KCL extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$Select_HeaderType*FUNCTION*Omo*vis_con SET 3\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$Header$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
 		
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$Header$txt_Header1*GEOM*TEXT SET TOP BUYS\0");
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$Header$txt_Header2*GEOM*TEXT SET \0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$Header$txt_Header1*GEOM*TEXT SET \0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$Header$txt_Header2*GEOM*TEXT SET TOP BUYS\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$SubHeader$txt_SubHeader*GEOM*TEXT SET KABADDI CHAMPIONS LEAGUE AUCTION 2025\0");
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$LogoGrp$img_TeamLogo"
@@ -3705,8 +3716,8 @@ public class KCL extends Scene{
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$Header$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
 		
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$Header$txt_Header1*GEOM*TEXT SET TOP BUYS\0");
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$Header$txt_Header2*GEOM*TEXT SET \0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$Header$txt_Header1*GEOM*TEXT SET \0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$Header$txt_Header2*GEOM*TEXT SET TOP BUYS\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$SubHeader$txt_SubHeader*GEOM*TEXT SET "
 				+ "KABADDI CHAMPIONS LEAGUE PLAYER AUCTION 2025\0");
 		
@@ -3738,9 +3749,9 @@ public class KCL extends Scene{
 		        				"$NameGrp$txt_LastName*GEOM*TEXT SET "+auctionService.getAllPlayer().get(plyr.getPlayerId() - 1).getSurname()+"\0");
 	        		}else {
 	        			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + row + 
-	        					"$NameGrp$txt_FirstName*GEOM*TEXT SET "+""+"\0");
+	        					"$NameGrp$txt_FirstName*GEOM*TEXT SET "+auctionService.getAllPlayer().get(plyr.getPlayerId() - 1).getFull_name()+"\0");
 		        		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + row + 
-		        				"$NameGrp$txt_LastName*GEOM*TEXT SET "+auctionService.getAllPlayer().get(plyr.getPlayerId() - 1).getFull_name()+"\0");
+		        				"$NameGrp$txt_LastName*GEOM*TEXT SET "+""+"\0");
 	        		}
 	        		
 	        		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + row + 
@@ -3817,8 +3828,8 @@ public class KCL extends Scene{
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$Header$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
 		
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$Header$txt_Header1*GEOM*TEXT SET " + team.getTeamName2() + "\0");
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$Header$txt_Header2*GEOM*TEXT SET " + team.getTeamName3() + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$Header$txt_Header1*GEOM*TEXT SET " + "" + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$Header$txt_Header2*GEOM*TEXT SET " + team.getTeamName1() + "\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$SubHeader$txt_SubHeader*GEOM*TEXT SET TOP BUYS\0");
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$LogoGrp$img_TeamLogo"
@@ -3849,9 +3860,9 @@ public class KCL extends Scene{
 		        				"$NameGrp$txt_LastName*GEOM*TEXT SET "+auctionService.getAllPlayer().get(plyr.getPlayerId() - 1).getSurname()+"\0");
 	        		}else {
 	        			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + row + 
-	        					"$NameGrp$txt_FirstName*GEOM*TEXT SET "+""+"\0");
+	        					"$NameGrp$txt_FirstName*GEOM*TEXT SET "+auctionService.getAllPlayer().get(plyr.getPlayerId() - 1).getFull_name()+"\0");
 		        		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + row + 
-		        				"$NameGrp$txt_LastName*GEOM*TEXT SET "+auctionService.getAllPlayer().get(plyr.getPlayerId() - 1).getFull_name()+"\0");
+		        				"$NameGrp$txt_LastName*GEOM*TEXT SET "+""+"\0");
 	        		}
 	        		
 //	        		if(auctionService.getAllPlayer().get(plyr.getPlayerId() - 1).getIconic().equalsIgnoreCase("YES")) {
@@ -3936,8 +3947,8 @@ public class KCL extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$Select_HeaderType*FUNCTION*Omo*vis_con SET 3\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$Header$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
 		
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$Header$txt_Header1*GEOM*TEXT SET " + team.getTeamName2() + "\0");
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$Header$txt_Header2*GEOM*TEXT SET " + team.getTeamName3() + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$Header$txt_Header1*GEOM*TEXT SET " + "" + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$Header$txt_Header2*GEOM*TEXT SET " + team.getTeamName1() + "\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$SubHeader$txt_SubHeader*GEOM*TEXT SET TOP BUYS\0");
 			
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$LogoGrp$img_TeamLogo"
@@ -4176,9 +4187,10 @@ public class KCL extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_LastName*GEOM*TEXT SET " 
 					+ auctionService.getAllPlayer().get(playerId - 1).getSurname() + "\0");
 		}else {
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_FirstName*GEOM*TEXT SET \0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_FirstName*GEOM*TEXT SET " + 
+					auctionService.getAllPlayer().get(playerId - 1).getFirstname() + "\0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_LastName*GEOM*TEXT SET " 
-					+ auctionService.getAllPlayer().get(playerId - 1).getFirstname() + "\0");
+					+ "" + "\0");
 		}
 		
 		if(auctionService.getAllPlayer().get(playerId - 1).getIconic().equalsIgnoreCase(AuctionUtil.YES)) {
@@ -4743,8 +4755,8 @@ public class KCL extends Scene{
 	        			print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"$txt_PlayerFirstName*GEOM*TEXT SET "+ auctionService.getAllPlayer().get(top_sold.get(m).getPlayerId()-1).getFirstname() + "\0");
 	        			print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"$txt_PlayerLastName*GEOM*TEXT SET "+ auctionService.getAllPlayer().get(top_sold.get(m).getPlayerId()-1).getSurname() + "\0");
 	        		}else {
-	        			print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"$txt_PlayerFirstName*GEOM*TEXT SET "+ "" + "\0");
-	        			print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"$txt_PlayerLastName*GEOM*TEXT SET "+ auctionService.getAllPlayer().get(top_sold.get(m).getPlayerId()-1).getFirstname() + "\0");
+	        			print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"$txt_PlayerFirstName*GEOM*TEXT SET "+ auctionService.getAllPlayer().get(top_sold.get(m).getPlayerId()-1).getFirstname() + "\0");
+	        			print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"$txt_PlayerLastName*GEOM*TEXT SET "+ "" + "\0");
 	        		}
 	        		print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"$txt_PurseValue*GEOM*TEXT SET "+ AuctionFunctions.ConvertToLakh(top_sold.get(m).getSoldForPoints())  + "\0");
 	        		print_writer.println("-1 RENDERER*TREE*$Main$Row"+row+"$txt_Unit*GEOM*TEXT SET "+ "LAKHS" + "\0");
@@ -4903,17 +4915,26 @@ public class KCL extends Scene{
 		session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(), 
 				session_auction.getPlayers(), session_auction.getPlayersList()));
 		
+		int total = 0;
+		
+		
+		for(int j=0; j <= match.getPlayers().size()-1; j++) {
+			if(match.getPlayers().get(j).getTeamId() == team_id) {
+				total = total + match.getPlayers().get(j).getSoldForPoints();
+			}
+		}
+		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$Select_HeaderType*FUNCTION*Omo*vis_con SET 2\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$Header$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$Select_Gavel*FUNCTION*Omo*vis_con SET 1\0");
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$Header$txt_Header1"
-				+ "*GEOM*TEXT SET " + match.getTeam().get(team_id-1).getTeamName2() + "\0");
+				+ "*GEOM*TEXT SET " + "" + "\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$Header$txt_Header2"
-				+ "*GEOM*TEXT SET " + match.getTeam().get(team_id-1).getTeamName3() + "\0");
+				+ "*GEOM*TEXT SET " + match.getTeam().get(team_id-1).getTeamName1() + "\0");
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$SubHeader"
-				+ "$txt_SubHeader*GEOM*TEXT SET " + "SQUAD" + "\0");
+				+ "$txt_SubHeader*GEOM*TEXT SET PURSE REMAINING : " + AuctionFunctions.ConvertToLakh((Integer.valueOf(match.getTeam().get(team_id-1).getTeamTotalPurse()) - total)) + " K\0");
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$LogoGrp$img_TeamLogo"
 				+ "*TEXTURE*IMAGE SET " + logo_path + match.getTeam().get(team_id-1).getTeamName4() + "\0");
@@ -5005,9 +5026,9 @@ public class KCL extends Scene{
 									+ "txt_LastName*GEOM*TEXT SET " + plyr.getSurname() + "\0");
 						}else {
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row + "$WithData$NameGrp$"
-									+ "txt_FirstName*GEOM*TEXT SET " + "" + "\0");
+									+ "txt_FirstName*GEOM*TEXT SET " + plyr.getFirstname() + "\0");
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row + "$WithData$NameGrp$"
-									+ "txt_LastName*GEOM*TEXT SET " + plyr.getFirstname() + "\0");
+									+ "txt_LastName*GEOM*TEXT SET " + "" + "\0");
 						}
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row + "$WithData$ImageGrp$"
@@ -5105,9 +5126,9 @@ public class KCL extends Scene{
 							+ "txt_LastName*GEOM*TEXT SET " + plyr.getSurname() + "\0");
 				}else {
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row + "$WithData$NameGrp$"
-							+ "txt_FirstName*GEOM*TEXT SET " + "" + "\0");
+							+ "txt_FirstName*GEOM*TEXT SET " + plyr.getFirstname() + "\0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row + "$WithData$NameGrp$"
-							+ "txt_LastName*GEOM*TEXT SET " + plyr.getFirstname() + "\0");
+							+ "txt_LastName*GEOM*TEXT SET " + "" + "\0");
 				}
 				
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row + "$Icon"
