@@ -126,7 +126,7 @@ public class KCL_BIGSCREEN extends Scene{
 						TimeUnit.MILLISECONDS.sleep(1500);
 						break;
 					case "SQUAD": case "REMAINING_PURSE_ALL": case "SINGLE_PURSE": case "TOP_SOLD": case "NAMESUPER":
-					case "TOP_SOLD_TEAM": case "IDENT":case "FF_RTM_AND_PURSE_REMAINING":
+					case "TOP_SOLD_TEAM": case "IDENT":case "FF_RTM_AND_PURSE_REMAINING": case "SINGLEPURSE_TEAM":
 						print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Out START \0");
 						TimeUnit.MILLISECONDS.sleep(1500);
 						break;
@@ -605,6 +605,8 @@ public class KCL_BIGSCREEN extends Scene{
 		
 		case "ANIMATE-IN-FF_RTM_AND_PURSE_REMAINING": case "ANIMATE-IN-FF_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_TOP_BUY_TEAM": case "ANIMATE-IN-FF_ICONIC_PLAYERS":
 		case "ANIMATE-IN-FF_FIVE_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM":case "ANIMATE-IN-FF_SQUAD_TEAM":
+			
+		case "ANIMATE-SINGLEPURSE_TEAM":
 		
 			switch (session_selected_broadcaster.toUpperCase()) {
 			case "KCL_BIGSCREEN":
@@ -819,7 +821,7 @@ public class KCL_BIGSCREEN extends Scene{
 				case "ANIMATE-IN-IDENT": case "ANIMATE-IN-PLAYERPROFILE_FF": case "ANIMATE-IN-FF_RTM_AND_PURSE_REMAINING": case "ANIMATE-IN-FF_TOP_BUYS_AUCTION":
 				case "ANIMATE-IN-FF_TOP_BUY_TEAM": case "ANIMATE-IN-REMAINING_PURSE_ALL": case "ANIMATE-IN-SQUAD": case "ANIMATE-IN-FF_ICONIC_PLAYERS":
 				case "ANIMATE-IN-ZONE-PLAYER_STATS": case "ANIMATE-IN-FF_FIVE_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM":case "ANIMATE-IN-FF_SQUAD_TEAM":
-				case "ANIMATE-IN-FF_SQUAD_ROLE_TEAM": case "ANIMATE-IN-PROFILE_FF":
+				case "ANIMATE-IN-FF_SQUAD_ROLE_TEAM": case "ANIMATE-IN-PROFILE_FF":  case "ANIMATE-SINGLEPURSE_TEAM":
 					if(which_graphics_onscreen.isEmpty()) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*StartFlare START \0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Essentials START\0");
@@ -828,6 +830,10 @@ public class KCL_BIGSCREEN extends Scene{
 						case "ANIMATE-IN-IDENT":
 							print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$MatchId START\0");
 							which_graphics_onscreen = "IDENT";
+							break;
+						case "ANIMATE-SINGLEPURSE_TEAM":	
+							print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$SinglePurse START\0");
+							which_graphics_onscreen = "SINGLEPURSE_TEAM";
 							break;
 						case "ANIMATE-IN-PLAYERPROFILE_FF": case "ANIMATE-IN-PROFILE_FF":
 							print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$Profile START\0");
@@ -883,6 +889,9 @@ public class KCL_BIGSCREEN extends Scene{
 						switch (whatToProcess.toUpperCase()) {
 						case "ANIMATE-IN-IDENT":
 							populateIdent(print_writer,1,session_selected_broadcaster);
+							break;
+						case "ANIMATE-SINGLEPURSE_TEAM":
+							populateSingleTeam(print_writer, 1, Integer.valueOf(side2ValueToProcess.split(",")[0]), session_curr_bid, auctionService, valueToProcess);
 							break;
 						case "ANIMATE-IN-PLAYERPROFILE_FF":
 							populatePlayerProfileFF(print_writer, 1, Integer.valueOf(side2ValueToProcess.split(",")[0]), side2ValueToProcess.split(",")[1], 
@@ -1243,7 +1252,7 @@ public class KCL_BIGSCREEN extends Scene{
 
 					case "IDENT": case "PLAYERPROFILE_FF": case "FF_RTM_AND_PURSE_REMAINING": case "FF_TOP_BUYS_AUCTION": case "FF_TOP_BUY_TEAM":
 					case "SQUAD": case "REMAINING_PURSE_ALL": case "FF_ICONIC_PLAYERS": case "ZONE-PLAYER_STATS": case "FF_FIVE_TOP_BUYS_AUCTION":
-					case "FF_FIVE_TOP_BUY_TEAM":case "FF_SQUAD_TEAM": case "FF_SQUAD_ROLE_TEAM":
+					case "FF_FIVE_TOP_BUY_TEAM":case "FF_SQUAD_TEAM": case "FF_SQUAD_ROLE_TEAM": case "SINGLEPURSE_TEAM":
 						
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side2$Select_GraphicsType*FUNCTION*Omo*vis_con SET 10\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side2$Select_HeaderType*FUNCTION*Omo*vis_con SET 0\0");
@@ -1278,6 +1287,9 @@ public class KCL_BIGSCREEN extends Scene{
 							break;
 						case "FF_FIVE_TOP_BUYS_AUCTION": case "FF_FIVE_TOP_BUY_TEAM":
 							print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$TopBuysImage START\0");
+							break;
+						case "ANIMATE-SINGLEPURSE_TEAM":	
+							print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$SinglePurse START\0");
 							break;
 						}
 						
@@ -1332,11 +1344,7 @@ public class KCL_BIGSCREEN extends Scene{
 		return null;
 	}
 	
-	private void populateSingleTeam(PrintWriter print_writer, int whichSideNotProfile2, Integer valueOf,
-			Auction auction, AuctionService auctionService, String session_selected_broadcaster2) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	private void populateLofBidTeam(PrintWriter print_writer, Auction auction, int whichSide) {
 		
@@ -1380,7 +1388,94 @@ public class KCL_BIGSCREEN extends Scene{
 			row ++;
 		}
 	}
+ 
+	private void populateSingleTeam(PrintWriter print_writer, int whichSideNotProfile2, Integer valueOf,
+			Auction match, AuctionService auctionService, String session_selected_broadcaster2) throws Exception {
+		
+		data_str.clear();
+		data_str = AuctionFunctions.getSquadDataKCLInZone(match,team_id);
+		
+		List<String> count = new ArrayList<String>();
+		
+		Auction session_auction = match;
+		match.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(match.getTeam(), 
+				match.getPlayers(), match.getPlayersList()));
+		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$Select_HeaderType*FUNCTION*Omo*vis_con SET 3\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$Header$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 11\0");
+		
+		for(Team team:auctionService.getTeams()) {
+			int total =0;
+			if(team.getTeamId() == valueOf) {
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$LogoGrp$img_TeamLogo"
+						+ "*TEXTURE*IMAGE SET " + logo_path + team.getTeamName4() + "\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$LogoGrp$Shadow$img_TeamLogo"
+						+ "*TEXTURE*IMAGE SET " + logo_path + team.getTeamName4() + "\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$LogoGrp$img_LogoBase"
+						+ "*TEXTURE*IMAGE SET " + logo_base + team.getTeamName4() + "\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$Header$txt_Header1*GEOM*TEXT SET " + team.getTeamName2() + "\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$Header$txt_Header2*GEOM*TEXT SET " + team.getTeamName3() + "\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType3$SubHeader$txt_SubHeader*GEOM*TEXT SET SQUAD\0");
+				
+				//row1
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$SinglePurse$DataAll$Row1" +
+						"$txt_Title*GEOM*TEXT SET SQUAD SIZE\0");
+				//row2
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$SinglePurse$DataAll$Row2" +
+						"$txt_Title*GEOM*TEXT SET PURSE REMAINING\0");
+				//totalpurse
+				if(auctionService.getAllPlayer() != null ) {
+					for(int j=0; j <= auctionService.getAllPlayer().size()-1; j++) {
+						if(auctionService.getAllPlayer().get(j).getTeamId() == valueOf) {
+							total = total + auctionService.getAllPlayer().get(j).getSoldForPoints();
+						}
+					}
+				}
+				
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$SinglePurse$DataAll$Row2" +
+						"$txt_Value*GEOM*TEXT SET "+ AuctionFunctions.ConvertToLakh((Integer.valueOf(team.getTeamTotalPurse()) - total)) + " \0");
+				
+				for (int i = 1; i <= match.getTeamZoneList().size(); i++) {
+					PlayerCount teamZone = match.getTeamZoneList().get(i - 1); 
+				    if (teamZone.getTeamId() == valueOf) {
+				        
+				        print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$SinglePurse$DataAll$Row1" +
+								"$txt_Text*GEOM*TEXT SET " + teamZone.getPlayers() + "\0");
 
+				        for(int k=1; k<=2; k++) {
+				        	count = new ArrayList<String>();
+				        	int j=0;
+				        	int cTotal = 0;
+				        	
+				        	for (Map.Entry<String, Integer> entry : teamZone.getCategory().entrySet()) {
+				        		if(entry.getKey().trim().contains("C")) {
+				        			cTotal += entry.getValue();
+				        		}else {
+				        			count.add(entry.getKey() + "-" + entry.getValue());
+				        		}
+				        	}
+				        	count.add(2, "C" + "-" + cTotal);
+				        	for(int s=0;s<=count.size()-1;s++) {
+				        		j++;
+				        		
+				        		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$SinglePurse$DataAll$Row" + j +
+										"$txt_Title*GEOM*TEXT SET " + count.get(s).split("-")[0] + "\0");
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$SinglePurse$DataAll$Row" + j +
+										"$txt_Text*GEOM*TEXT SET " + count.get(s).split("-")[1] + "\0");
+				        	}
+				         }
+				    } 
+				}
+				
+			}
+		}
+		
+		
+		
+		
+		
+	}
 	private void populateFFSquadRoleTeam(PrintWriter print_writer, int whichSide, Integer teaam_id,
 			Auction auction, AuctionService auctionService, String session_selected_broadcaster2) throws Exception {
 		auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(auction.getTeam(), 
@@ -1808,7 +1903,7 @@ public class KCL_BIGSCREEN extends Scene{
 			break;
 			
 		//FF	
-		case "IDENT": case "PLAYERPROFILE_FF": case "REMAINING_PURSE_ALL": case "SQUAD": case "FF_RTM_AND_PURSE_REMAINING": 
+		case "IDENT": case "SINGLEPURSE_TEAM": case "PLAYERPROFILE_FF": case "REMAINING_PURSE_ALL": case "SQUAD": case "FF_RTM_AND_PURSE_REMAINING": 
 		case "FF_TOP_BUYS_AUCTION": case "FF_TOP_BUY_TEAM": case "FF_ICONIC_PLAYERS": case "ZONE-PLAYER_STATS": 
 		case "FF_FIVE_TOP_BUYS_AUCTION": case "FF_FIVE_TOP_BUY_TEAM":case "FF_SQUAD_TEAM":case "FF_SQUAD_ROLE_TEAM":
 			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*StartFlare START \0");
@@ -1841,6 +1936,9 @@ public class KCL_BIGSCREEN extends Scene{
 			case "FF_FIVE_TOP_BUYS_AUCTION": case "FF_FIVE_TOP_BUY_TEAM":
 				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$TopBuysImage$Change_Out START\0");
 				break;
+			case "ANIMATE-SINGLEPURSE_TEAM":
+				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$MatchId$SinglePurse START\0");
+				break;	
 			case "FF_ICONIC_PLAYERS":
 				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$IconPlayers START\0");
 				break;
@@ -1919,6 +2017,9 @@ public class KCL_BIGSCREEN extends Scene{
 		case "ANIMATE-IN-IDENT":
 			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$MatchId$Change_In START\0");
 			break;
+		case "ANIMATE-SINGLEPURSE_TEAM":
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$SinglePurse$Change_In START\0");
+			break;	
 		case "ANIMATE-IN-PLAYERPROFILE_FF": case "ANIMATE-IN-PROFILE_FF":
 			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*StartFlare START \0");
 			if(!which_graphics_onscreen.equalsIgnoreCase("PLAYERPROFILE_FF")) {
@@ -2054,6 +2155,10 @@ public class KCL_BIGSCREEN extends Scene{
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$TopBuysImage SHOW 2.480\0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$TopBuysImage SHOW 0.0\0");
 					break;
+				case "ANIMATE-SINGLEPURSE_TEAM":
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$SinglePurse SHOW 2.480\0");
+					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$SinglePurse SHOW 0.0\0");
+					break;	
 				case "ANIMATE-IN-FF_ICONIC_PLAYERS":
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$IconPlayers SHOW 2.480\0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$TopBuys SHOW 0.0\0");
@@ -2139,6 +2244,11 @@ public class KCL_BIGSCREEN extends Scene{
 			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$MatchId SHOW 0.0\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$MatchId SHOW 0.0\0");
 			break;
+		case "SINGLEPURSE_TEAM":
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$SinglePurse SHOW 0.0\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$SinglePurse SHOW 0.0\0");
+			break;	
+			
 		case "PLAYERPROFILE_FF":
 			if(!whatToProcess.equalsIgnoreCase("ANIMATE-IN-PLAYERPROFILE_FF") || 
 					!whatToProcess.equalsIgnoreCase("ANIMATE-IN-PROFILE_FF")) {
