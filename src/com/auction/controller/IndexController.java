@@ -281,6 +281,11 @@ public class IndexController
 				}
 			}
 			
+			if(last_bid_time_stamp != new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON).lastModified()) {
+				session_curr_bid = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON), Auction.class);
+				last_bid_time_stamp = new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON).lastModified();
+			}
+			
 			if(session_selected_broadcaster != null) {
 				switch (session_selected_broadcaster) {
 				case "HANDBALL": case "ISPL":

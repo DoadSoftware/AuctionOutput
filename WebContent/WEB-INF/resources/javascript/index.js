@@ -74,7 +74,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			}
 			break;
 		case '`':
-			processAuctionProcedures('ANIMATE-OUT-ALL_GFX');
+			//processAuctionProcedures('ANIMATE-OUT-ALL_GFX');
 			break;
 			
 		case "0"://187
