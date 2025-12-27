@@ -471,6 +471,7 @@ public class KCL_BIGSCREEN extends Scene{
 							break;
 						}
 					}else {
+						System.out.println("which_graphics_onscreen = " + which_graphics_onscreen + "      whatToProcess = " + whatToProcess);
 						ChangeOn(print_writer, which_graphics_onscreen, whatToProcess);
 						switch (whatToProcess.toUpperCase()) {
 						case "ANIMATE-IN-IDENT":
@@ -718,6 +719,7 @@ public class KCL_BIGSCREEN extends Scene{
 					case "IDENT": case "PLAYERPROFILE_FF": case "FF_RTM_AND_PURSE_REMAINING": case "FF_TOP_BUYS_AUCTION": case "FF_TOP_BUY_TEAM":
 					case "SQUAD": case "REMAINING_PURSE_ALL": case "FF_ICONIC_PLAYERS": case "ZONE-PLAYER_STATS": case "FF_FIVE_TOP_BUYS_AUCTION":
 					case "FF_FIVE_TOP_BUY_TEAM":case "FF_SQUAD_TEAM": case "FF_SQUAD_ROLE_TEAM": case "ANIMATE-SINGLEPURSE_TEAM": case "SQUAD_ANIMATION":
+					case "ZONE-PLAYER_FULL":	
 						
 						print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side2$Select_GraphicsType*FUNCTION*Omo*vis_con SET 10\0");
 						print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Header$Side2$Select_HeaderType*FUNCTION*Omo*vis_con SET 0\0");
@@ -745,7 +747,7 @@ public class KCL_BIGSCREEN extends Scene{
 						case "REMAINING_PURSE_ALL":case "FF_RTM_AND_PURSE_REMAINING":
 							print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Change$PurseRemaining START\0");
 							break;
-						case "SQUAD": case "ZONE-PLAYER_STATS": case "SQUAD_ANIMATION":
+						case "SQUAD": case "ZONE-PLAYER_STATS": case "SQUAD_ANIMATION": case "ZONE-PLAYER_FULL":
 							print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Change$Squad START\0");
 							break;
 						case "FF_ICONIC_PLAYERS":
@@ -789,7 +791,7 @@ public class KCL_BIGSCREEN extends Scene{
 						case "REMAINING_PURSE_ALL":case "FF_RTM_AND_PURSE_REMAINING":
 							print_writer.println("-1 RENDERER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$PurseRemaining SHOW 0\0");
 							break;
-						case "SQUAD": case "ZONE-PLAYER_STATS": case "SQUAD_ANIMATION":
+						case "SQUAD": case "ZONE-PLAYER_STATS": case "SQUAD_ANIMATION": case "ZONE-PLAYER_FULL":
 							print_writer.println("-1 RENDERER*STAGE*DIRECTOR*anim_Fullframe$In_Out$Main$Squad SHOW 0\0");
 							break;
 						case "FF_ICONIC_PLAYERS":
@@ -1364,6 +1366,9 @@ public class KCL_BIGSCREEN extends Scene{
 		switch (whatToProcess.toUpperCase()) {
 		
 		//FF	
+		case "ANIMATE-IN-ZONE-PLAYER_FULL": case "ANIMATE-IN-ZONE-PLAYER_STATS":
+			print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Change$Squad$Change_In START\0");
+			break;
 		case "ANIMATE-IN-IDENT":
 			print_writer.println("-1 RENDERER*STAGE*DIRECTOR*Change$MatchId$Change_In START\0");
 			break;
