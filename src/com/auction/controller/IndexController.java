@@ -269,11 +269,16 @@ public class IndexController
 				session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(),session_auction.getPlayers(), session_auction.getPlayersList()));
 				last_match_time_stamp = new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON).lastModified();
 				
-			}
-			
-			if(last_bid_time_stamp != new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON).lastModified()) {
-				session_curr_bid = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON), Auction.class);
-				last_bid_time_stamp = new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON).lastModified();
+				if(session_selected_broadcaster != null) {
+					switch (session_selected_broadcaster) {
+					case "KCL_BIGSCREEN":
+						if(this_KCL_BIGSCREEN.data.isBid_Start_or_not() == true) {
+							this_KCL_BIGSCREEN.data.setWhichside(2);
+						}
+						this_KCL_BIGSCREEN.updateData(session_auction,session_curr_bid,auctionService,print_writer);
+						break;
+					}
+				}
 			}
 			
 			if(session_selected_broadcaster != null) {
@@ -305,12 +310,6 @@ public class IndexController
 						this_kcl.data.setWhichside(2);
 					}
 					this_kcl.updateData(session_auction,session_curr_bid,auctionService,print_writer);
-					break;
-				case "KCL_BIGSCREEN":
-					if(this_KCL_BIGSCREEN.data.isBid_Start_or_not() == true) {
-						this_KCL_BIGSCREEN.data.setWhichside(2);
-					}
-					this_KCL_BIGSCREEN.updateData(session_auction,session_curr_bid,auctionService,print_writer);
 					break;	
 				case "MUMBAI_T20_VIZ":
 					if(this_mumbai_t20_viz.data.isBid_Start_or_not() == true) {
@@ -318,7 +317,6 @@ public class IndexController
 					}
 					this_mumbai_t20_viz.updateData(session_auction,session_curr_bid,auctionService,print_writer);
 					break;
-					
 				}
 			}
 			
@@ -349,8 +347,7 @@ public class IndexController
 				break;	
 			case "KCL_BIGSCREEN":
 				this_KCL_BIGSCREEN.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
-				break;		
-				
+				break;
 			}
 			return JSONObject.fromObject(session_auction).toString();
 		}

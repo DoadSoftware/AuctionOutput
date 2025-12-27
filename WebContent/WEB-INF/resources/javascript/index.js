@@ -53,7 +53,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#auction_div").hide();
 			break;
 		case ' '://Space
-			if(which_GFX === "POPULATE-SQUAD"){
+			if(which_GFX === "POPULATE-SQUAD_ANIMATION"){
 				stopTeamRotation();
 				which_GFX = "";
 			 }
@@ -61,7 +61,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			break;
 		case '-'://189
 			if(confirm('It will Also Delete Your Preview from Directory...\r\n \r\nAre You Sure To Animate Out? ') == true){
-				if(which_GFX === "POPULATE-SQUAD"){
+				if(which_GFX === "POPULATE-SQUAD_ANIMATION"){
 					stopTeamRotation();
 					which_GFX = "";
 				 }
