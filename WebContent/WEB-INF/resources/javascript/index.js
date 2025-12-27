@@ -104,7 +104,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			$("#cancel_match_setup_btn").hide();
 			$("#expiry_message").hide();
 			$("#auction_div").hide();
-			processAuctionProcedures('PLAYERPROFILE_GRAPHICS-OPTIONS');
+			processAuctionProcedures('PLAYERPROFILE_MAIN_GRAPHICS-OPTIONS');
 			break;
 		case 'F2': //FF REMAINING PURSE ALL
 			stopTeamRotation();
@@ -708,7 +708,7 @@ function processUserSelection(whichInput)
 			processAuctionProcedures('NAMESUPER_GRAPHICS-OPTIONS');
 			break;
 		case 'playerprofile_graphic_btn':
-			processAuctionProcedures('PLAYERPROFILE_GRAPHICS-OPTIONS');
+			processAuctionProcedures('PLAYERPROFILE_MAIN_GRAPHICS-OPTIONS');
 			break;
 		case 'ff_playerprofile_graphic_btn':
 			processAuctionProcedures('FF_PLAYERPROFILE_GRAPHICS-OPTIONS');
@@ -929,7 +929,7 @@ function processAuctionProcedures(whatToProcess)
 			valueToProcess = '/Default/LT'+ ',' + $('#selectNameSuper option:selected').val();
 			break;
 		case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN':
-			valueToProcess = $('#selectNameSuper option:selected').val();
+			valueToProcess = $('#selectNameSuper option:selected').val() + ',' + $('#selectLogo option:selected').val();
 			break;
 		}
 		break;
@@ -970,7 +970,7 @@ function processAuctionProcedures(whatToProcess)
 			valueToProcess = $('#selectPlayerName option:selected').val() + ',' + $('#selectShowData option:selected').val() + ',' + $('#PlayerData option:selected').val();
 			break;
 		case 'KCL': case 'KCL_BIGSCREEN':
-			valueToProcess = $('#selectPlayerName option:selected').val();
+			valueToProcess = $('#selectPlayerName option:selected').val() + ',' + $('#selectLogo option:selected').val();
 			break;	
 		}
 		break;
@@ -980,7 +980,7 @@ function processAuctionProcedures(whatToProcess)
 			valueToProcess = $('#selectShowData option:selected').val() + ',' + $('#PlayerData option:selected').val();
 			break;
 		case 'KCL': case 'KCL_BIGSCREEN':
-			valueToProcess = $('#selectShowData option:selected').val();
+			valueToProcess = $('#selectShowData option:selected').val() + ',' + $('#selectLogo option:selected').val();
 			break;	
 		}
 		break;
@@ -1228,7 +1228,11 @@ function processAuctionProcedures(whatToProcess)
 				addItemsToList('POPULATE-PLAYER',data);
 				match_data = data;
 				break;
-			
+			case 'PLAYERPROFILE_MAIN_GRAPHICS-OPTIONS':
+				addItemsToList('PLAYERPROFILE_MAIN-OPTIONS',data);
+				addItemsToList('POPULATE-PROFILE',data);
+				match_data = data;
+				break;
 			case 'PLAYERPROFILE_GRAPHICS-OPTIONS': 
 				addItemsToList('PLAYERPROFILE-OPTIONS',data);
 				addItemsToList('POPULATE-PROFILE',data);
@@ -1644,7 +1648,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 		
 		break;
 		
-	case'NAMESUPER-OPTIONS': case 'NAMESUPER_PLAYER-OPTIONS':  case'PLAYERPROFILE-OPTIONS': case 'SQUAD-OPTIONS': case 'SINGLE_PURSE-OPTIONS': 
+	case'NAMESUPER-OPTIONS': case 'NAMESUPER_PLAYER-OPTIONS':  case'PLAYERPROFILE-OPTIONS': case 'SQUAD-OPTIONS': case 'SINGLE_PURSE-OPTIONS': case 'PLAYERPROFILE_MAIN-OPTIONS':
 	case 'TOP-SOLD_TEAM-OPTIONS': case 'GOOGLY-OPTIONS': case 'PROFILE_STATS-OPTIONS': case 'LOF_REMAINING_PURSE-OPTIONS': case 'LOF_TOP_SOLD_TEAM-OPTIONS': 
 	case'SQUAD_PLAYER-OPTIONS': case 'FF_PLAYERPROFILE-OPTIONS': case 'FF_TOP_SOLD_TEAM-OPTIONS': case 'LOF_SQUAD_SIZE_CATEGORY_WISE_-OPTIONS': 
 	case 'LT_PLAYERPROFILE-OPTIONS': case 'LT_PP_STATS-OPTIONS': case 'LOF_SQUAD-OPTIONS': case 'FLIPPER-OPTIONS': case 'FREETEXT-OPTIONS': case "ZONE-PLAYER-OPTIONS":
@@ -1937,6 +1941,24 @@ function addItemsToList(whatToProcess, dataToProcess)
 						row.insertCell(cellCount).appendChild(select);
 						cellCount = cellCount + 1;
 						
+						select = document.createElement('select');
+						select.id = 'selectLogo';
+						select.name = select.id;
+						
+						option = document.createElement('option');
+						option.value = 'WITHOUT_LOGO';
+						option.text = 'WITHOUT LOGO';
+						select.appendChild(option);
+						
+						option = document.createElement('option');
+						option.value = 'WITH_LOGO';
+						option.text = 'WITH LOGO';
+						select.appendChild(option);
+					
+						select.setAttribute('onchange',"processUserSelection(this)");
+						row.insertCell(cellCount).appendChild(select);
+						cellCount = cellCount + 1;
+						
 						switch ($('#selected_broadcaster').val().toUpperCase()) {
 						case 'DOAD_IN_HOUSE_EVEREST': 
 							select = document.createElement('input');
@@ -2011,7 +2033,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 						break;
 				}
 				break;
-			case 'PLAYERPROFILE-OPTIONS': case 'FF_PLAYERPROFILE-OPTIONS': case 'LT_PLAYERPROFILE-OPTIONS': case 'PROFILEFF-OPTIONS':
+			case 'PLAYERPROFILE_MAIN-OPTIONS':
 				switch ($('#selected_broadcaster').val().toUpperCase()) {
 					case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN':
 						select = document.createElement('select');
@@ -2038,6 +2060,62 @@ function addItemsToList(whatToProcess, dataToProcess)
 							option = document.createElement('option');
 							option.value = 'WithOut_Photo';
 							option.text = 'WithOut Photo';
+							select.appendChild(option);
+							
+							select.setAttribute('onchange',"processUserSelection(this)");
+							row.insertCell(cellCount).appendChild(select);
+							cellCount = cellCount + 1;
+						}
+			          break;
+	                  	} 
+	                break;	
+			case 'FF_PLAYERPROFILE-OPTIONS': case 'LT_PLAYERPROFILE-OPTIONS': case 'PROFILEFF-OPTIONS': case 'PLAYERPROFILE-OPTIONS':
+				switch ($('#selected_broadcaster').val().toUpperCase()) {
+					case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN':
+						select = document.createElement('select');
+						select.id = 'selectPlayerName';
+						select.name = select.id;
+						
+						select.setAttribute('onchange',"processUserSelection(this)");
+						row.insertCell(cellCount).appendChild(select);
+						$(select).select2();
+						cellCount = cellCount + 1;
+						
+						if($('#selected_broadcaster').val().toUpperCase()==='UTT_VIZ'){
+							
+							select = document.createElement('select');
+							select.style = 'width:150px';
+							select.id = 'selectShowData';
+							select.name = select.id;
+							
+							option = document.createElement('option');
+							option.value = 'With_Photo';
+							option.text = 'With Photo';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'WithOut_Photo';
+							option.text = 'WithOut Photo';
+							select.appendChild(option);
+							
+							select.setAttribute('onchange',"processUserSelection(this)");
+							row.insertCell(cellCount).appendChild(select);
+							cellCount = cellCount + 1;
+						}else if(whatToProcess.toUpperCase()==='LT_PLAYERPROFILE-OPTIONS'){
+							
+							select = document.createElement('select');
+							select.style = 'width:150px';
+							select.id = 'selectLogo';
+							select.name = select.id;
+							
+							option = document.createElement('option');
+							option.value = 'WITHOUT_LOGO';
+							option.text = 'WITHOUT LOGO';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
+							option.value = 'WITH_LOGO';
+							option.text = 'WITH LOGO';
 							select.appendChild(option);
 							
 							select.setAttribute('onchange',"processUserSelection(this)");
@@ -2239,11 +2317,8 @@ function addItemsToList(whatToProcess, dataToProcess)
 			            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
 			            select.appendChild(option);
 			        });
-				}else if($('#selected_broadcaster').val().toUpperCase() === 'KCL' || $('#selected_broadcaster').val().toUpperCase() === 'KCL_BIGSCREEN'){
+				}else if($('#selected_broadcaster').val().toUpperCase() === 'KCL'){
 					['player'].forEach(value => {
-			            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
-					        return; // skip these options for Mumbai
-					    }
 			            const option = document.createElement('option');
 			            option.value = value;
 			            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
@@ -2270,6 +2345,27 @@ function addItemsToList(whatToProcess, dataToProcess)
 			    secCell.id = 'Playerstats'; // So we can target it easily later
 			    cellCount++;
 			
+				if($('#selected_broadcaster').val().toUpperCase()==='KCL'){
+							
+					select = document.createElement('select');
+					select.style = 'width:150px';
+					select.id = 'selectLogo';
+					select.name = select.id;
+					
+					option = document.createElement('option');
+					option.value = 'WITHOUT_LOGO';
+					option.text = 'WITHOUT LOGO';
+					select.appendChild(option);
+					
+					option = document.createElement('option');
+					option.value = 'WITH_LOGO';
+					option.text = 'WITH LOGO';
+					select.appendChild(option);
+					
+					select.setAttribute('onchange',"processUserSelection(this)");
+					row.insertCell(cellCount).appendChild(select);
+					cellCount = cellCount + 1;
+				}
 			    // Add event listener to the main dropdown
 			    $(select).on('change', function () {
 			        const selectedValue = this.value;
@@ -2453,7 +2549,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 			    option.value = 'Populate Lof Remaining Purse';
 				break;
 			
-			case 'PLAYERPROFILE-OPTIONS':
+			case 'PLAYERPROFILE-OPTIONS': case 'PLAYERPROFILE_MAIN-OPTIONS':
 			    option.name = 'populate_playerprofile_btn';
 			    option.value = 'Populate Playerprofile';
 				break;
