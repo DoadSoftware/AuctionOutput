@@ -34,6 +34,7 @@ import com.auction.broadcaster.ISPL_VIZ;
 import com.auction.broadcaster.KCL;
 import com.auction.broadcaster.KCL_BIGSCREEN;
 import com.auction.broadcaster.MUMBAI_T20_VIZ;
+import com.auction.broadcaster.PWL;
 import com.auction.broadcaster.UTT_VIZ;
 import com.auction.broadcaster.VIZ_ISPL_2024;
 import com.auction.containers.Configurations;
@@ -68,9 +69,10 @@ public class IndexController
 	public static VIZ_ISPL_2024 this_ispl_viz_2024;
 	public static MUMBAI_T20_VIZ this_mumbai_t20_viz;
 	public static KCL this_kcl;
+	public static PWL this_pwl;
 	public static KCL_BIGSCREEN this_KCL_BIGSCREEN;
 	public static PrintWriter print_writer;
-	public static String expiry_date = "2025-12-31";
+	public static String expiry_date = "2026-12-31";
 	public static String error_message = "";
 	public static String current_date = "";
 	public static String Current_File_Name = "";
@@ -163,6 +165,7 @@ public class IndexController
 			this_ispl_viz_2024 = new VIZ_ISPL_2024();
 			this_mumbai_t20_viz = new MUMBAI_T20_VIZ();
 			this_kcl = new KCL();
+			this_pwl =new PWL();
 			this_KCL_BIGSCREEN = new KCL_BIGSCREEN();
 			this_utt_viz = new UTT_VIZ();
 			session_selected_broadcaster = select_broadcaster;
@@ -196,7 +199,7 @@ public class IndexController
 //				print_writer.println("LAYER3*EVEREST*STAGE*DIRECTOR*Loop START;");
 				this_doad.which_graphics_onscreen = "BG";
 				break;
-			case "VIZ_ISPL_2024":case "UTT_VIZ": case "MUMBAI_T20_VIZ": case "KCL": case "KCL_BIGSCREEN":
+			case "VIZ_ISPL_2024":case "UTT_VIZ": case "MUMBAI_T20_VIZ": case "KCL": case "KCL_BIGSCREEN": case "PWL":
 				scene.LoadScene("OVERLAYS", print_writer, session_Configurations);
 				scene.LoadScene("FULL-FRAMERS", print_writer, session_Configurations);
 				switch (session_selected_broadcaster) {
@@ -205,6 +208,9 @@ public class IndexController
 					break;
 				case "KCL":
 					this_kcl.resetData(print_writer);
+					break;
+				case "PWL":
+					this_pwl.resetData(print_writer);
 					break;
 				case "KCL_BIGSCREEN":
 					this_KCL_BIGSCREEN.resetData(print_writer);
@@ -254,9 +260,11 @@ public class IndexController
 			if(valueToProcess.equalsIgnoreCase("TRUE")) {
 				this_ispl_viz_2024.enableAudio = "TRUE";
 				this_kcl.enableAudio = "TRUE";
+				this_pwl.enableAudio ="TRUE";
 			}else {
 				this_ispl_viz_2024.enableAudio = "FALSE";
 				this_kcl.enableAudio = "FALSE";
+				this_pwl.enableAudio ="FALSE";
 			}
 			return null;	
 		case "RE_READ_DATA":
@@ -315,7 +323,13 @@ public class IndexController
 						this_kcl.data.setWhichside(2);
 					}
 					this_kcl.updateData(session_auction,session_curr_bid,auctionService,print_writer);
-					break;	
+					break;
+				case "PWL":
+					if(this_pwl.data.isBid_Start_or_not() == true) {
+						this_pwl.data.setWhichside(2);
+					}
+					this_pwl.updateData(session_auction,session_curr_bid,auctionService,print_writer);
+					break;
 				case "MUMBAI_T20_VIZ":
 					if(this_mumbai_t20_viz.data.isBid_Start_or_not() == true) {
 						this_mumbai_t20_viz.data.setWhichside(2);
@@ -349,7 +363,10 @@ public class IndexController
 				break;
 			case "KCL":
 				this_kcl.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
-				break;	
+				break;
+			case "PWL":
+				this_pwl.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
+				break;
 			case "KCL_BIGSCREEN":
 				this_KCL_BIGSCREEN.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
 				break;
@@ -368,11 +385,12 @@ public class IndexController
 		case "PLAYERPROFILE_GRAPHICS-OPTIONS": case "FF_PLAYERPROFILE_GRAPHICS-OPTIONS": case "LT_PLAYERPROFILE_GRAPHICS-OPTIONS":
 		case "PROFILE_GRAPHICS-OPTIONS": case "PLAYERPROFILE_MAIN_GRAPHICS-OPTIONS":
 		    return (List<T>) session_player;
-		case "SQUAD_GRAPHICS-OPTIONS": case "SINGLE_PURSE_GRAPHICS-OPTIONS": case "TOP-SOLD_TEAM_GRAPHICS-OPTIONS": case "GOOGLY_GRAPHICS-OPTIONS":
+		case "SQUAD_GRAPHICS-OPTIONS": case "SQUAD_CATEGORY_GRAPHICS-OPTIONS": case "SINGLE_PURSE_GRAPHICS-OPTIONS": case "TOP-SOLD_TEAM_GRAPHICS-OPTIONS": case "GOOGLY_GRAPHICS-OPTIONS":
 		case "LOF_TOP_SOLD_TEAM_GRAPHICS-OPTIONS": case "CRAWL_TOP_SOLD_TEAM_GRAPHICS-OPTIONS": case "SQUAD_PLAYER_GRAPHICS-OPTIONS": case "FF_TOP_SOLD_TEAM_GRAPHICS-OPTIONS":
 		case "LOF_SQUAD_SIZE_CATEGORY_WISE_GRAPHICS-OPTIONS": case "LOF_SQUAD_GRAPHICS-OPTIONS": case "TEAM_CURRENT_BID_GRAPHICS-OPTIONS":
 		case "FF_TOP_FIVE_SOLD_TEAM_GRAPHICS-OPTIONS": case "SINGLE_GRAPHICS-OPTIONS": case "FLIPPER_SQUAD_GRAPHICS-OPTIONS":case "FF_SQUAD_GRAPHICS-OPTIONS":
 		case "FF_SQUAD_ROLE_GRAPHICS-OPTIONS":case "LOF_TEAM_BID_GRAPHICS-OPTIONS": case "CRAWL_SQUAD_GRAPHICS-OPTIONS": case "SQUAD_ANIMATION_GRAPHICS-OPTIONS":
+			System.out.println("Comiong in controller sssss");
 		    return (List<T>) session_team;
 		case "ZONEWISE_PLAYER_SOLD_GRAPHICS-OPTIONS": case "ZONE-PLAYER_GRAPHICS-OPTIONS":
 		    Set<String> allCategories = session_auction.getPlayersList().stream()
