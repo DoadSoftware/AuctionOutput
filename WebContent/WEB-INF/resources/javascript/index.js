@@ -1,7 +1,7 @@
 var match_data,session_auction;
 let selectedArray = [];
 let teams = [];
-var which_GFX = "";
+var which_GFX = "",selectedSubHeader = "";
 let currentTeamIndex = 0,id = 0;  
 let teamRotationInterval = null; 
 
@@ -295,6 +295,10 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 's': // LOF SQUAD SIZE
 			switch ($('#selected_broadcaster').val()){
 			case 'KCL_BIGSCREEN':
+				$("#captions_div").hide();
+				$("#cancel_match_setup_btn").hide();
+				$("#expiry_message").hide();
+				$("#auction_div").hide();
 				processAuctionProcedures('SQUAD_ANIMATION_GRAPHICS-OPTIONS');
 				break;
 			default://ISPL
@@ -830,6 +834,7 @@ function processUserSelection(whichInput)
 			processAuctionProcedures('POPULATE-LOF_SQUAD');
 			break;
 		case 'populate_squad_animation_btn':
+			selectedSubHeader = $('#selectSubHeader option:selected').val();
 			processAuctionProcedures('POPULATE-SQUAD_ANIMATION');
 			break;
 		case 'populate_crawle_squad_btn':
@@ -1010,7 +1015,26 @@ function processAuctionProcedures(whatToProcess)
 			break;
 		}
 		break;
-	case 'POPULATE-SQUAD': case 'POPULATE-FLIPPER_SQUAD':
+	case 'POPULATE-SQUAD':
+		switch ($('#selected_broadcaster').val().toUpperCase()) {
+		case 'HANDBALL':
+			valueToProcess = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_Handball_Auction_2023/Scenes/Squad.sum' + ',' + $('#selectTeamName option:selected').val();
+			break;
+		case 'ISPL':
+			valueToProcess = 'D:/DOAD_In_House_Everest/Everest_Cricket/Everest_ISPL_Auction_2024/Scenes/Squad.sum' + ',' + $('#selectTeamName option:selected').val();
+			break;	
+		case 'ISPL_VIZ': 
+			valueToProcess = '/Default/Squad'+ ',' + $('#selectTeamName option:selected').val();
+			break;
+		case 'VIZ_ISPL_2024': case "UTT_VIZ":
+			valueToProcess = $('#selectTeamName option:selected').val();
+			break;
+		case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN':
+			valueToProcess = $('#selectTeamName option:selected').val() + ',' + $('#selectSubHeader option:selected').val();
+			break;
+		}
+		break;
+	case 'POPULATE-FLIPPER_SQUAD':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'HANDBALL':
 			valueToProcess = 'D:/DOAD_In_House_Everest/Everest_Sports/Everest_Handball_Auction_2023/Scenes/Squad.sum' + ',' + $('#selectTeamName option:selected').val();
@@ -1028,7 +1052,7 @@ function processAuctionProcedures(whatToProcess)
 			valueToProcess = $('#selectTeamName option:selected').val() + ',' + $('#selectcrawlerData option:selected').val();
 			break;
 		}
-		break;
+		break;	
 	case 'POPULATE-SINGLE_PURSE':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
 		case 'HANDBALL':
@@ -1067,7 +1091,7 @@ function processAuctionProcedures(whatToProcess)
 			}else{
 				team_index =$('#selectTeamName option:selected').val();
 			}
-			valueToProcess = team_index;
+			valueToProcess = team_index + ',' + selectedSubHeader;
 			break;	
 		}
 		break;
@@ -1858,6 +1882,24 @@ function addItemsToList(whatToProcess, dataToProcess)
 								
 								row.insertCell(cellCount).appendChild(select);
 								cellCount = cellCount + 1;
+							}else if(whatToProcess ==='SQUAD-OPTIONS' || whatToProcess ==='SQUAD_ANIMATION-OPTIONS'){
+								select = document.createElement('select');
+								select.style = 'width:130px';
+								select.id = 'selectSubHeader';
+								select.name = select.id;
+								
+								option = document.createElement('option');
+								option.value = 'PurseRemaining';
+								option.text = 'PURSE REM';
+								select.appendChild(option);
+								
+								option = document.createElement('option');
+								option.value = 'Squad';
+								option.text = 'SQUAD';
+								select.appendChild(option);
+								
+								row.insertCell(cellCount).appendChild(select);
+								cellCount = cellCount + 1;
 							}
 							break;
 						} 
@@ -2606,6 +2648,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 			    option.value = 'Populate LT Squad';
 				break;
 			case 'SQUAD_ANIMATION-OPTIONS':
+				
 				option.name = 'populate_squad_animation_btn';
 			    option.value = 'Populate Squad';
 				break;

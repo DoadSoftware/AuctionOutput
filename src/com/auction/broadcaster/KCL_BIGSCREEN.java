@@ -97,10 +97,10 @@ public class KCL_BIGSCREEN extends Scene{
 			}else if(which_graphics_onscreen.equalsIgnoreCase("REMAINING_PURSE_ALL")) {
 				populateRemainingPurse(true,print_writer, whichSideNotProfile, auction, auctionService, session_selected_broadcaster);
 			}else if(which_graphics_onscreen.equalsIgnoreCase("SQUAD")) {
-				populateSquad(true,print_writer, Integer.valueOf(side2ValueToProcess.split(",")[0]), 
+				populateSquad(true,print_writer, Integer.valueOf(side2ValueToProcess.split(",")[0]),side2ValueToProcess.split(",")[1], 
 						whichSideNotProfile, auction, auctionService, session_selected_broadcaster);
 			}else if(which_graphics_onscreen.equalsIgnoreCase("SQUAD_ANIMATION")) {
-				populateSquadAnimation(true,print_writer, side2val, 
+				populateSquadAnimation(true,print_writer, Integer.valueOf(side2ValueToProcess.split(",")[0]),side2ValueToProcess.split(",")[1], 
 						whichSideNotProfile, auction, auctionService, session_selected_broadcaster);
 			}else if(which_graphics_onscreen.equalsIgnoreCase("ZONE-PLAYER_STATS")) {
 				populateZoneSquad(true,print_writer, side2ValueToProcess.split(",")[0], whichSideNotProfile, 
@@ -184,7 +184,7 @@ public class KCL_BIGSCREEN extends Scene{
 						whichSideNotProfile = 1;
 					}
 					side2ValueToProcess = valueToProcess;
-					populateSquad(false,print_writer, Integer.valueOf(valueToProcess.split(",")[0]), whichSideNotProfile, auction, auctionService, session_selected_broadcaster);
+					populateSquad(false,print_writer, Integer.valueOf(valueToProcess.split(",")[0]),valueToProcess.split(",")[1], whichSideNotProfile, auction, auctionService, session_selected_broadcaster);
 					processPreviewFullFrames(print_writer, whatToProcess, whichSideNotProfile);
 					break;
 				case "POPULATE-SQUAD_ANIMATION":
@@ -193,8 +193,8 @@ public class KCL_BIGSCREEN extends Scene{
 					}else {
 						whichSideNotProfile = 1;
 					}
-					side2val = Integer.valueOf(valueToProcess);
-					populateSquadAnimation(false,print_writer, side2val, whichSideNotProfile, auction, auctionService, session_selected_broadcaster);
+					side2ValueToProcess = valueToProcess;
+					populateSquadAnimation(false,print_writer, Integer.valueOf(side2ValueToProcess.split(",")[0]),side2ValueToProcess.split(",")[1], whichSideNotProfile, auction, auctionService, session_selected_broadcaster);
 					processPreviewFullFrames(print_writer, whatToProcess, whichSideNotProfile);
 					break;
 				case "POPULATE-TOP_SOLD":
@@ -492,11 +492,11 @@ public class KCL_BIGSCREEN extends Scene{
 							populateRemainingPurse(true,print_writer, 1, auction, auctionService, session_selected_broadcaster);
 							break;
 						case "ANIMATE-IN-SQUAD":
-							populateSquad(true,print_writer, Integer.valueOf(side2ValueToProcess.split(",")[0]), 
+							populateSquad(true,print_writer, Integer.valueOf(side2ValueToProcess.split(",")[0]),side2ValueToProcess.split(",")[1], 
 									1, auction, auctionService, session_selected_broadcaster);
 							break;
 						case "ANIMATE-IN-SQUAD_ANIMATION":
-							populateSquadAnimation(true,print_writer, side2val, 
+							populateSquadAnimation(true,print_writer, Integer.valueOf(side2ValueToProcess.split(",")[0]),side2ValueToProcess.split(",")[1], 
 									1, auction, auctionService, session_selected_broadcaster);
 							break;
 						case "ANIMATE-IN-ZONE-PLAYER_STATS": case "ANIMATE-IN-ZONE-PLAYER_FULL":
@@ -1418,6 +1418,7 @@ public class KCL_BIGSCREEN extends Scene{
 			break;
 			
 		}
+		TimeUnit.MILLISECONDS.sleep(2000);
 	}
 	public void cutBack(PrintWriter print_writer, String whichGraphicOnScreen, String whatToProcess) throws InterruptedException { 
 		
@@ -3206,7 +3207,7 @@ public class KCL_BIGSCREEN extends Scene{
 		}
 	}
 	
-	public void populateSquad(boolean is_this_updating,PrintWriter print_writer,int team_id, int which_side, Auction match, AuctionService auctionService, String session_selected_broadcaster) throws Exception 
+	public void populateSquad(boolean is_this_updating,PrintWriter print_writer,int team_id,String sub, int which_side, Auction match, AuctionService auctionService, String session_selected_broadcaster) throws Exception 
 	{
 		int row = 0;
 		
@@ -3235,8 +3236,17 @@ public class KCL_BIGSCREEN extends Scene{
 		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$Header$txt_Header2"
 				+ "*GEOM*TEXT SET " + "" + "\0");
 		
-		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$SubHeader"
-				+ "$txt_SubHeader*GEOM*TEXT SET PURSE REMAINING : " + AuctionFunctions.ConvertToLakh((Integer.valueOf(match.getTeam().get(team_id-1).getTeamTotalPurse()) - total)) + " K\0");
+		if(sub.equalsIgnoreCase("PurseRemaining")) {
+			print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$SubHeader"
+					+ "$txt_SubHeader*GEOM*TEXT SET PURSE REMAINING : " + AuctionFunctions.ConvertToLakh((Integer.valueOf(match.getTeam().get(team_id-1).getTeamTotalPurse()) - total)) + " K\0");
+			
+		}else {
+			print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$SubHeader"
+					+ "$txt_SubHeader*GEOM*TEXT SET SQUAD\0");
+			
+		}
+//		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$SubHeader"
+//				+ "$txt_SubHeader*GEOM*TEXT SET PURSE REMAINING : " + AuctionFunctions.ConvertToLakh((Integer.valueOf(match.getTeam().get(team_id-1).getTeamTotalPurse()) - total)) + " K\0");
 		
 		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$LogoGrp$img_TeamLogo"
 				+ "*TEXTURE*IMAGE SET " + logo_path + match.getTeam().get(team_id-1).getTeamName4() + "\0");
@@ -3375,7 +3385,7 @@ public class KCL_BIGSCREEN extends Scene{
 		}
 	}
 	
-	public void populateSquadAnimation(boolean is_this_updating,PrintWriter print_writer,int team_id, int which_side, Auction match, AuctionService auctionService, String session_selected_broadcaster) throws Exception 
+	public void populateSquadAnimation(boolean is_this_updating,PrintWriter print_writer,int team_id,String sub, int which_side, Auction match, AuctionService auctionService, String session_selected_broadcaster) throws Exception 
 	{
 		int row = 0;
 		
@@ -3404,8 +3414,16 @@ public class KCL_BIGSCREEN extends Scene{
 		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$Header$txt_Header2"
 				+ "*GEOM*TEXT SET " + "" + "\0");
 		
-		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$SubHeader"
-				+ "$txt_SubHeader*GEOM*TEXT SET PURSE REMAINING : " + AuctionFunctions.ConvertToLakh((Integer.valueOf(match.getTeam().get(team_id-1).getTeamTotalPurse()) - total)) + " K\0");
+		if(sub.equalsIgnoreCase("PurseRemaining")) {
+			print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$SubHeader"
+					+ "$txt_SubHeader*GEOM*TEXT SET PURSE REMAINING : " + AuctionFunctions.ConvertToLakh((Integer.valueOf(match.getTeam().get(team_id-1).getTeamTotalPurse()) - total)) + " K\0");
+			
+		}else {
+			print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$SubHeader"
+					+ "$txt_SubHeader*GEOM*TEXT SET SQUAD\0");
+			
+		}
+		
 		
 		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$LogoGrp$img_TeamLogo"
 				+ "*TEXTURE*IMAGE SET " + logo_path + match.getTeam().get(team_id-1).getTeamName4() + "\0");
