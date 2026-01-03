@@ -568,13 +568,11 @@ function initialiseForm(whatToProcess,dataToProcess)
 					document.getElementById('player_last_year_team').innerHTML = "LAST YEAM TEAM : -";
 				}
 			}
-			// Get the existing tbody
 				const tbody = document.getElementById('zone_table_body');
 				
-				// Clear existing rows
 				tbody.innerHTML = "";
 				if($('#selected_broadcaster').val().toUpperCase() == 'KCL' || $('#selected_broadcaster').val().toUpperCase() == 'KCL_BIGSCREEN'
-				|| $('#selected_broadcaster').val().toUpperCase() == 'PWL'){
+				){
 					for (let i = 0; i < dataToProcess.teamZoneList.length; i++) {
 
 					    const row = tbody.insertRow();
@@ -587,7 +585,6 @@ function initialiseForm(whatToProcess,dataToProcess)
 					    let categoryList = [];
 					    let cTotal = 0;
 					
-					    // 🔥 iterate category map (same as Java entrySet)
 					    for (const key in team.category) {
 					        if (key.trim().includes("C")) {
 					            cTotal += Number(team.category[key]);
@@ -599,19 +596,68 @@ function initialiseForm(whatToProcess,dataToProcess)
 					        }
 					    }
 					
-					    // 🔥 add C only once
 					    categoryList.push({
 					        name: "C",
 					        value: cTotal
 					    });
 					
-					    // ---- render row ----
 					    row.innerHTML = `
 					        <td>${team.teamName1}</td>
 					        ${categoryList.map(c => `<td>${c.value}</td>`).join("")}
 					    `;
 					
-					    // ---- highlight logic ----
+					    
+					    categoryList.forEach((cat, index) => {
+					        if (cat.value >= 8) {
+					            row.cells[index + 1].style.backgroundColor = "#E34234";
+					            row.cells[index + 1].style.color = "white";
+					        }
+					    });
+					}
+
+				}else if($('#selected_broadcaster').val().toUpperCase() == 'PWL'){
+					const order = ["A+", "A", "B", "C"]; // same order as Java
+
+					for (let i = 0; i < dataToProcess.teamZoneList.length; i++) {
+					
+					    const row = tbody.insertRow();
+					    row.style.fontSize = '16px';
+					    row.style.fontWeight = '800';
+					    row.style.color = '#BC8F8F';
+					
+					    const team = dataToProcess.teamZoneList[i];
+					
+					    let categoryList = [];
+					    let cTotal = 0;
+					
+					    
+					    for (const key in team.category) {
+					        if (key.trim().includes("C")) {
+					            cTotal += Number(team.category[key]);
+					        } else {
+					            categoryList.push({
+					                name: key,
+					                value: Number(team.category[key])
+					            });
+					        }
+					    }
+					
+					    categoryList.push({
+					        name: "C",
+					        value: cTotal
+					    });
+					
+					    categoryList.sort((a, b) => {
+					        return order.indexOf(a.name) - order.indexOf(b.name);
+					    });
+					
+					    
+					    row.innerHTML = `
+					        <td>${team.teamName1}</td>
+					        ${categoryList.map(c => `<td>${c.value}</td>`).join("")}
+					    `;
+					
+					   
 					    categoryList.forEach((cat, index) => {
 					        if (cat.value >= 8) {
 					            row.cells[index + 1].style.backgroundColor = "#E34234";
@@ -644,7 +690,7 @@ function initialiseForm(whatToProcess,dataToProcess)
 				        <td>${u19}</td>
 				    `;
 				
-				    // Highlight any cell exceeding 8 (skip team name cell index 0)
+				    
 				    const zoneValues = [north, east, south, west, central, u19];
 				
 				    zoneValues.forEach((value, index) => {
@@ -1783,6 +1829,12 @@ function addItemsToList(whatToProcess, dataToProcess)
 					
 					switch ($('#selected_broadcaster').val().toUpperCase()) {
 						case 'KCL': case 'KCL_BIGSCREEN': case 'PWL':
+							
+							option = document.createElement('option');
+							option.value = 'A+';
+							option.text = 'A+';
+							select.appendChild(option);
+							
 							option = document.createElement('option');
 							option.value = 'A';
 							option.text = 'A';
