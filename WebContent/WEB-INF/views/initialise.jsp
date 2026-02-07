@@ -65,6 +65,7 @@
 			    <div class="col-sm-6 col-md-6">
 			      <select id="select_broadcaster" name="select_broadcaster" class="browser-default custom-select custom-select-sm"
 			      		onchange="processUserSelection(this)">
+			      		<option value="PSL">PSL</option>
 			      		<option value="PWL">PWL</option>
 			      		<option value="KCL">KCL</option>
 			      		<option value="KCL_BIGSCREEN">KCL BIG SCREEN</option>

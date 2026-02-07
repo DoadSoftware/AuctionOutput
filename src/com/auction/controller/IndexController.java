@@ -34,6 +34,7 @@ import com.auction.broadcaster.ISPL_VIZ;
 import com.auction.broadcaster.KCL;
 import com.auction.broadcaster.KCL_BIGSCREEN;
 import com.auction.broadcaster.MUMBAI_T20_VIZ;
+import com.auction.broadcaster.PSL;
 import com.auction.broadcaster.PWL;
 import com.auction.broadcaster.UTT_VIZ;
 import com.auction.broadcaster.VIZ_ISPL_2024;
@@ -67,6 +68,7 @@ public class IndexController
 	public static ISPL_VIZ this_ispl_viz;
 	public static UTT_VIZ this_utt_viz;
 	public static VIZ_ISPL_2024 this_ispl_viz_2024;
+	public static PSL this_psl;
 	public static MUMBAI_T20_VIZ this_mumbai_t20_viz;
 	public static KCL this_kcl;
 	public static PWL this_pwl;
@@ -163,6 +165,7 @@ public class IndexController
 			this_ispl = new ISPL();
 			this_ispl_viz = new ISPL_VIZ();
 			this_ispl_viz_2024 = new VIZ_ISPL_2024();
+			this_psl = new PSL();
 			this_mumbai_t20_viz = new MUMBAI_T20_VIZ();
 			this_kcl = new KCL();
 			this_pwl =new PWL();
@@ -199,7 +202,7 @@ public class IndexController
 //				print_writer.println("LAYER3*EVEREST*STAGE*DIRECTOR*Loop START;");
 				this_doad.which_graphics_onscreen = "BG";
 				break;
-			case "VIZ_ISPL_2024":case "UTT_VIZ": case "MUMBAI_T20_VIZ": case "KCL": case "KCL_BIGSCREEN": case "PWL":
+			case "VIZ_ISPL_2024": case "PSL": case "UTT_VIZ": case "MUMBAI_T20_VIZ": case "KCL": case "KCL_BIGSCREEN": case "PWL":
 				scene.LoadScene("OVERLAYS", print_writer, session_Configurations);
 				scene.LoadScene("FULL-FRAMERS", print_writer, session_Configurations);
 				switch (session_selected_broadcaster) {
@@ -259,10 +262,12 @@ public class IndexController
 			System.out.println(whatToProcess + " - " + valueToProcess);
 			if(valueToProcess.equalsIgnoreCase("TRUE")) {
 				this_ispl_viz_2024.enableAudio = "TRUE";
+				this_psl.enableAudio = "TRUE";
 				this_kcl.enableAudio = "TRUE";
 				this_pwl.enableAudio ="TRUE";
 			}else {
 				this_ispl_viz_2024.enableAudio = "FALSE";
+				this_psl.enableAudio = "FALSE";
 				this_kcl.enableAudio = "FALSE";
 				this_pwl.enableAudio ="FALSE";
 			}
@@ -312,6 +317,12 @@ public class IndexController
 					}
 					this_ispl_viz_2024.updateData(session_auction,session_curr_bid,auctionService,print_writer);
 					break;
+				case "PSL":	
+					if(this_psl.data.isBid_Start_or_not() == true) {
+						this_psl.data.setWhichside(2);
+					}
+					this_psl.updateData(session_auction,session_curr_bid,auctionService,print_writer);
+					break;
 				case "UTT_VIZ":
 					if(this_utt_viz.data.isBid_Start_or_not() == true) {
 						this_utt_viz.data.setWhichside(2);
@@ -358,6 +369,9 @@ public class IndexController
 			case "VIZ_ISPL_2024":
 				this_ispl_viz_2024.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
 				break;
+			case "PSL":
+				this_psl.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
+				break;				
 			case "MUMBAI_T20_VIZ":
 				this_mumbai_t20_viz.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
 				break;
