@@ -2587,6 +2587,13 @@ function addItemsToList(whatToProcess, dataToProcess)
 			            option.text = value.charAt(0).toUpperCase() + value.slice(1);
 			            select.appendChild(option);
 			        });
+				}else if(broadcaster === 'PSL'){
+					['style', 'freetext', 'prevteam'].forEach(value => {
+			            const option = document.createElement('option');
+			            option.value = value;
+			            option.text = value.charAt(0).toUpperCase() + value.slice(1);
+			            select.appendChild(option);
+			        });
 				} else {
 			        ['style', 'freetext', 'prevteam', 'stats', 'category'].forEach(value => {
 			            if (broadcaster === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
@@ -2623,15 +2630,23 @@ function addItemsToList(whatToProcess, dataToProcess)
 			            const statsDropdown = document.createElement('select');
 			            statsDropdown.id = 'PlayerData';
 			            statsDropdown.name = 'PlayerData';
-			
-			            ['FC', 'LIST A', 'DT20', 'MCA T20s'].forEach(value => {
-			                const option = document.createElement('option');
-			                option.value = value;
-			                option.text = value;
-			                option.style.fontWeight = 'bold';
-			                statsDropdown.appendChild(option);
-			            });
-			
+						if(broadcaster === 'PSL'){
+							['FC', 'LIST A', 'DT20'].forEach(value => {
+				                const option = document.createElement('option');
+				                option.value = value;
+				                option.text = value;
+				                option.style.fontWeight = 'bold';
+				                statsDropdown.appendChild(option);
+				            });
+						}else{
+							['FC', 'LIST A', 'DT20', 'MCA T20s'].forEach(value => {
+				                const option = document.createElement('option');
+				                option.value = value;
+				                option.text = value;
+				                option.style.fontWeight = 'bold';
+				                statsDropdown.appendChild(option);
+				            });
+						}
 			            container.appendChild(statsDropdown);
 			        }
 			    });
