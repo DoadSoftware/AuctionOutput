@@ -143,7 +143,13 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processAuctionProcedures('POPULATE-IDENT');
 			break;
 		case 'F5': //FF SQUAD SIZE, RTM AVAILABLE, PURSE REM
-			processAuctionProcedures('POPULATE-FF_RTM_AND_PURSE_REMAINING');
+			switch ($('#selected_broadcaster').val()){
+			case 'PSL':
+				break;
+			default:
+				processAuctionProcedures('POPULATE-FF_RTM_AND_PURSE_REMAINING');
+				break;
+			}
 			break;
 		
 		case 'F6': //FF TOP BUY AUCTION
@@ -292,14 +298,26 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processAuctionProcedures('PROFILE_GRAPHICS-OPTIONS');
 			break	
 		case 'F11': //FF ICONIC PLAYERS
-			processAuctionProcedures('POPULATE-FF_ICONIC_PLAYERS');
+			switch ($('#selected_broadcaster').val()){
+			case 'PSL':
+				break;
+			default:
+				processAuctionProcedures('POPULATE-FF_ICONIC_PLAYERS');
+				break;
+			}
 			break;
 		case 'Alt_F11': //FF ICONIC PLAYERS
 			processAuctionProcedures('POPULATE-FF_RETAIN_PLAYERS');
 			break;
 			
 		case 'a': //LOF SLOT REMAINING
-			processAuctionProcedures('POPULATE-LOF_REMAINING_SLOT');
+			switch ($('#selected_broadcaster').val()){
+			case 'PSL':
+				break;
+			default://ISPL
+				processAuctionProcedures('POPULATE-LOF_REMAINING_SLOT');
+				break;
+			}
 			break;
 		case 's': // LOF SQUAD SIZE
 			switch ($('#selected_broadcaster').val()){
@@ -314,11 +332,10 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				processAuctionProcedures('POPULATE-LOF_SQUAD_SIZE');
 				break;
 			}
-			
 			break;
 		case 'd': // LOF RTM REMAINING
 			switch ($('#selected_broadcaster').val()){
-			case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN': case 'PWL':
+			case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN': case 'PWL': case 'PSL':
 				alert('GFX IS NOT ACTIVE FOR THIS AUCTION');
 				break;
 			default://ISPL
@@ -393,18 +410,30 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			break;
 			
 		case 'j': //LOF SQUAD SIZE CATEGORY WISE HAVING SUB CATEGORY
-			$("#captions_div").hide();
-			$("#cancel_match_setup_btn").hide();
-			$("#expiry_message").hide();
-			$("#auction_div").hide();
-			processAuctionProcedures('SQUAD_PLAYER_GRAPHICS-OPTIONS');
+			switch ($('#selected_broadcaster').val()){
+			case 'PSL':
+				break;
+			default://ISPL
+				$("#captions_div").hide();
+				$("#cancel_match_setup_btn").hide();
+				$("#expiry_message").hide();
+				$("#auction_div").hide();
+				processAuctionProcedures('SQUAD_PLAYER_GRAPHICS-OPTIONS');
+				break;
+			}
 			break;
 		case 'k': //LOF SQUAD SIZE CATEGORY WISE
-			$("#captions_div").hide();
-			$("#cancel_match_setup_btn").hide();
-			$("#expiry_message").hide();
-			$("#auction_div").hide();
-			processAuctionProcedures('LOF_SQUAD_SIZE_CATEGORY_WISE_GRAPHICS-OPTIONS');
+			switch ($('#selected_broadcaster').val()){
+			case 'PSL':
+				break;
+			default://ISPL
+				$("#captions_div").hide();
+				$("#cancel_match_setup_btn").hide();
+				$("#expiry_message").hide();
+				$("#auction_div").hide();
+				processAuctionProcedures('LOF_SQUAD_SIZE_CATEGORY_WISE_GRAPHICS-OPTIONS');
+				break;
+			}
 			break;
 		case 'z':
 			$("#captions_div").hide();
@@ -465,22 +494,30 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processAuctionProcedures('LT_PLAYERPROFILE_GRAPHICS-OPTIONS');
 			break;
 		case 'b': //LT PLAYER PROFILE STATS
-			$("#captions_div").hide();
-			$("#cancel_match_setup_btn").hide();
-			$("#expiry_message").hide();
-			$("#auction_div").hide();
-			addItemsToList('LT_PP_STATS-OPTIONS',null);
+			switch ($('#selected_broadcaster').val()){
+			case 'PSL':
+				break;
+			default:
+				$("#captions_div").hide();
+				$("#cancel_match_setup_btn").hide();
+				$("#expiry_message").hide();
+				$("#auction_div").hide();
+				addItemsToList('LT_PP_STATS-OPTIONS',null);
+				break;
+			}
 			break;
 		case 'F12':
 			stopTeamRotation();
 			which_GFX = "";
-		switch ($('#selected_broadcaster').val()){
+			switch ($('#selected_broadcaster').val()){
 			case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN': case 'PWL':
 				$("#captions_div").hide();
 				$("#cancel_match_setup_btn").hide();
 				$("#expiry_message").hide();
 				$("#auction_div").hide();
 				processAuctionProcedures('ZONE-PLAYER_GRAPHICS-OPTIONS');
+				break;
+			case 'PSL':
 				break;
 			default://ISPL
 				$("#captions_div").hide();
@@ -1989,23 +2026,27 @@ function addItemsToList(whatToProcess, dataToProcess)
 								cellCount = cellCount + 1;
 							}
 							else if(whatToProcess ==='SQUAD-OPTIONS' || whatToProcess ==='SQUAD_ANIMATION-OPTIONS'){
-								select = document.createElement('select');
-								select.style = 'width:130px';
-								select.id = 'selectSubHeader';
-								select.name = select.id;
-								
-								option = document.createElement('option');
-								option.value = 'PurseRemaining';
-								option.text = 'PURSE REM';
-								select.appendChild(option);
-								
-								option = document.createElement('option');
-								option.value = 'Squad';
-								option.text = 'SQUAD';
-								select.appendChild(option);
-								
-								row.insertCell(cellCount).appendChild(select);
-								cellCount = cellCount + 1;
+								switch ($('#selected_broadcaster').val().toUpperCase()){
+								case 'PWL':
+									select = document.createElement('select');
+									select.style = 'width:130px';
+									select.id = 'selectSubHeader';
+									select.name = select.id;
+									
+									option = document.createElement('option');
+									option.value = 'PurseRemaining';
+									option.text = 'PURSE REM';
+									select.appendChild(option);
+									
+									option = document.createElement('option');
+									option.value = 'Squad';
+									option.text = 'SQUAD';
+									select.appendChild(option);
+									
+									row.insertCell(cellCount).appendChild(select);
+									cellCount = cellCount + 1;
+									break;
+								}
 							}
 							break;
 						} 
@@ -2251,24 +2292,30 @@ function addItemsToList(whatToProcess, dataToProcess)
 							cellCount = cellCount + 1;
 						}else if(whatToProcess.toUpperCase()==='LT_PLAYERPROFILE-OPTIONS'){
 							
-							select = document.createElement('select');
-							select.style = 'width:150px';
-							select.id = 'selectLogo';
-							select.name = select.id;
-							
-							option = document.createElement('option');
-							option.value = 'WITHOUT_LOGO';
-							option.text = 'WITHOUT LOGO';
-							select.appendChild(option);
-							
-							option = document.createElement('option');
-							option.value = 'WITH_LOGO';
-							option.text = 'WITH LOGO';
-							select.appendChild(option);
-							
-							select.setAttribute('onchange',"processUserSelection(this)");
-							row.insertCell(cellCount).appendChild(select);
-							cellCount = cellCount + 1;
+							switch ($('#selected_broadcaster').val().toUpperCase()){
+							case 'PSL':
+								break;
+							default:
+								select = document.createElement('select');
+								select.style = 'width:150px';
+								select.id = 'selectLogo';
+								select.name = select.id;
+								
+								option = document.createElement('option');
+								option.value = 'WITHOUT_LOGO';
+								option.text = 'WITHOUT LOGO';
+								select.appendChild(option);
+								
+								option = document.createElement('option');
+								option.value = 'WITH_LOGO';
+								option.text = 'WITH LOGO';
+								select.appendChild(option);
+								
+								select.setAttribute('onchange',"processUserSelection(this)");
+								row.insertCell(cellCount).appendChild(select);
+								cellCount = cellCount + 1;
+								break;
+							}
 						}
 						/*else if(whatToProcess == 'PLAYERPROFILE-OPTIONS' && $('#selected_broadcaster').val().toUpperCase()==='MUMBAI_T20_VIZ'){
 							
@@ -2300,20 +2347,24 @@ function addItemsToList(whatToProcess, dataToProcess)
 									select.id = 'selectShowProfileStats';
 									select.name = select.id;
 									
+									switch ($('#selected_broadcaster').val().toUpperCase()){
+									case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
+										option = document.createElement('option');
+										option.value = 'ISPL S-1';
+										option.text = 'ISPL S-1';
+										select.appendChild(option);
+										
+										option = document.createElement('option');
+										option.value = 'ISPL S-2';
+										option.text = 'ISPL S-2';
+										select.appendChild(option);
+										break;
+									}
+									
 									/*option = document.createElement('option');
 									option.value = 'with_data';
 									option.text = 'Rank & Style';
 									select.appendChild(option);*/
-									
-									option = document.createElement('option');
-									option.value = 'ISPL S-1';
-									option.text = 'ISPL S-1';
-									select.appendChild(option);
-									
-									option = document.createElement('option');
-									option.value = 'ISPL S-2';
-									option.text = 'ISPL S-2';
-									select.appendChild(option);
 									
 									/*option = document.createElement('option');
 									option.value = 'with_info';
@@ -2370,7 +2421,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 									select.name = select.id;
 									
 									const broadcaster = $('#selected_broadcaster').val().toUpperCase();
-								    if(broadcaster === 'VIZ_ISPL_2024' || broadcaster === 'PSL'){
+								    if(broadcaster === 'VIZ_ISPL_2024'){
 										['player', 'thisyearteam', 'prevteam', 'ISPL S-1', 'ISPL S-2', 'category'].forEach(value => {
 								            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
 										        return; // skip these options for Mumbai
@@ -2380,7 +2431,18 @@ function addItemsToList(whatToProcess, dataToProcess)
 								            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
 								            select.appendChild(option);
 								        });
-									}else if(broadcaster === 'KCL' || broadcaster === 'KCL_BIGSCREEN'|| broadcaster === 'PWL'){
+									}else if(broadcaster === 'PSL'){
+										['player'].forEach(value => {
+								            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
+										        return; // skip these options for Mumbai
+										    }
+								            const option = document.createElement('option');
+								            option.value = value;
+								            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
+								            select.appendChild(option);
+								        });
+									}
+									else if(broadcaster === 'KCL' || broadcaster === 'KCL_BIGSCREEN'|| broadcaster === 'PWL'){
 										['player', 'thisyearteam','category'].forEach(value => {
 								            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
 										        return; // skip these options for Mumbai
@@ -2588,7 +2650,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 			            select.appendChild(option);
 			        });
 				}else if(broadcaster === 'PSL'){
-					['style', 'freetext', 'prevteam'].forEach(value => {
+					['style', 'freetext'].forEach(value => {
 			            const option = document.createElement('option');
 			            option.value = value;
 			            option.text = value.charAt(0).toUpperCase() + value.slice(1);

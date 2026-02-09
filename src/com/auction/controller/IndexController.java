@@ -74,7 +74,7 @@ public class IndexController
 	public static PWL this_pwl;
 	public static KCL_BIGSCREEN this_KCL_BIGSCREEN;
 	public static PrintWriter print_writer;
-	public static String expiry_date = "2026-12-31";
+	public static String expiry_date = "2026-02-14";
 	public static String error_message = "";
 	public static String current_date = "";
 	public static String Current_File_Name = "";
