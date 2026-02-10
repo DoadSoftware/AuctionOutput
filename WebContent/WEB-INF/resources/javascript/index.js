@@ -191,7 +191,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			stopTeamRotation();
 			which_GFX = "";
 			switch ($('#selected_broadcaster').val()){
-			case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN': case 'PWL':
+			case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN': case 'PWL': case 'PSL':
 				$("#captions_div").hide();
 				$("#cancel_match_setup_btn").hide();
 				$("#expiry_message").hide();
@@ -307,7 +307,20 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			}
 			break;
 		case 'Alt_F11': //FF ICONIC PLAYERS
-			processAuctionProcedures('POPULATE-FF_RETAIN_PLAYERS');
+			switch ($('#selected_broadcaster').val()){
+			case 'PSL':
+				$("#captions_div").hide();
+				$("#cancel_match_setup_btn").hide();
+				$("#expiry_message").hide();
+				$("#auction_div").hide();
+				stopTeamRotation();
+				which_GFX = "";
+				processAuctionProcedures('RETAIN_PLAYERS_GRAPHICS-OPTIONS');
+				break;
+			default://ISPL
+				processAuctionProcedures('POPULATE-FF_RETAIN_PLAYERS');
+				break;
+			}
 			break;
 			
 		case 'a': //LOF SLOT REMAINING
@@ -494,17 +507,11 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			processAuctionProcedures('LT_PLAYERPROFILE_GRAPHICS-OPTIONS');
 			break;
 		case 'b': //LT PLAYER PROFILE STATS
-			switch ($('#selected_broadcaster').val()){
-			case 'PSL':
-				break;
-			default:
-				$("#captions_div").hide();
-				$("#cancel_match_setup_btn").hide();
-				$("#expiry_message").hide();
-				$("#auction_div").hide();
-				addItemsToList('LT_PP_STATS-OPTIONS',null);
-				break;
-			}
+			$("#captions_div").hide();
+			$("#cancel_match_setup_btn").hide();
+			$("#expiry_message").hide();
+			$("#auction_div").hide();
+			addItemsToList('LT_PP_STATS-OPTIONS',null);
 			break;
 		case 'F12':
 			stopTeamRotation();
@@ -847,7 +854,7 @@ function processUserSelection(whichInput)
 	case 'populate_freetextcrawler_btn': case 'populate_flipper_btn': case 'populate_zonePlayer_stats_btn': case 'populate_team_curr_bid_btn': 
 	case 'populate_ff_Top_Five_Sold_team_btn': case 'single_Sold_team_btn': case 'populate_zonewisePlayer_sold_btn':case "populate_profile_Change_stats_btn":
 	case 'populate_flipper_squad_btn':case "populate_Squad_team_btn":case "populate_Squad_Role_team_btn":case 'populate_Lof_Team_Bid_btn': 
-	case 'populate_profileff_btn': case 'populate_flipper_text_btn': case 'populate_squad_animation_btn':
+	case 'populate_profileff_btn': case 'populate_flipper_text_btn': case 'populate_squad_animation_btn': case 'populate_retain_players_squad_btn':
 
 		processWaitingButtonSpinner('START_WAIT_TIMER');
 		switch ($(whichInput).attr('name')) {
@@ -898,6 +905,9 @@ function processUserSelection(whichInput)
 			break;
 		case 'populate_squad_btn':
 			processAuctionProcedures('POPULATE-SQUAD');
+			break;
+		case 'populate_retain_players_squad_btn':
+			processAuctionProcedures('POPULATE-FF_RETAIN_PLAYERS');
 			break;
 		case 'populate_category_btn':
 			processAuctionProcedures('POPULATE-LOF_CATRGORY');
@@ -1110,6 +1120,11 @@ function processAuctionProcedures(whatToProcess)
 			valueToProcess = $('#selectPlayerName option:selected').val()+','+$('#selectShowData option:selected').val();
 			break;
 		}
+		break;
+	case 'POPULATE-FF_RETAIN_PLAYERS':
+		case 'PSL':
+			valueToProcess = $('#selectTeamName option:selected').val();
+			break;
 		break;
 	case 'POPULATE-SQUAD':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
@@ -1389,6 +1404,11 @@ function processAuctionProcedures(whatToProcess)
 				break;
 			case 'SQUAD_GRAPHICS-OPTIONS':  
 				addItemsToList('SQUAD-OPTIONS',data);
+				addItemsToList('POPULATE-TEAM',data);
+				match_data = data;
+				break;
+			case 'RETAIN_PLAYERS_GRAPHICS-OPTIONS':
+				addItemsToList('RETAIN_PLAYERS-OPTIONS',data);
 				addItemsToList('POPULATE-TEAM',data);
 				match_data = data;
 				break;
@@ -1779,7 +1799,8 @@ function addItemsToList(whatToProcess, dataToProcess)
 		
 		break;
 		
-	case'NAMESUPER-OPTIONS': case 'NAMESUPER_PLAYER-OPTIONS':  case'PLAYERPROFILE-OPTIONS': case 'SQUADCATEGORIES-OPTIONS': case 'SQUAD-OPTIONS': case 'SINGLE_PURSE-OPTIONS': case 'PLAYERPROFILE_MAIN-OPTIONS':
+	case'NAMESUPER-OPTIONS': case 'NAMESUPER_PLAYER-OPTIONS':  case'PLAYERPROFILE-OPTIONS': case 'SQUADCATEGORIES-OPTIONS': case 'SQUAD-OPTIONS': case 'SINGLE_PURSE-OPTIONS': 
+	case 'PLAYERPROFILE_MAIN-OPTIONS': case 'RETAIN_PLAYERS-OPTIONS':
 	case 'TOP-SOLD_TEAM-OPTIONS': case 'GOOGLY-OPTIONS': case 'PROFILE_STATS-OPTIONS': case 'LOF_REMAINING_PURSE-OPTIONS': case 'LOF_TOP_SOLD_TEAM-OPTIONS': 
 	case'SQUAD_PLAYER-OPTIONS': case 'FF_PLAYERPROFILE-OPTIONS': case 'FF_TOP_SOLD_TEAM-OPTIONS': case 'LOF_SQUAD_SIZE_CATEGORY_WISE_-OPTIONS': 
 	case 'LT_PLAYERPROFILE-OPTIONS': case 'LT_PP_STATS-OPTIONS': case 'LOF_SQUAD-OPTIONS': case 'FLIPPER-OPTIONS': case 'FREETEXT-OPTIONS': case "ZONE-PLAYER-OPTIONS":
@@ -1978,7 +1999,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 				case 'SQUAD-OPTIONS': case 'TOP-SOLD_TEAM-OPTIONS': case 'GOOGLY-OPTIONS': case 'CRAWL_TOP_SOLD_TEAM-OPTIONS': case 'LOF_TOP_SOLD_TEAM-OPTIONS': case'SQUAD_PLAYER-OPTIONS':
 				case 'FF_TOP_SOLD_TEAM-OPTIONS': case 'LOF_SQUAD_SIZE_CATEGORY_WISE_-OPTIONS': case 'LOF_SQUAD-OPTIONS': case 'CRAWL_SQUAD-OPTIONS': case 'TEAM_CURRENT_BID-OPTIONS':
 				case 'FF_TOP_FIVE_SOLD_TEAM-OPTIONS': case 'SINGLE_TEAM-OPTIONS': case 'FLIPPER_SQUAD-OPTIONS':case "FF_SQUAD_TEAM-OPTIONS":case "FF_SQUAD_ROLE_TEAM-OPTIONS":
-				case 'SQUAD_ANIMATION-OPTIONS':
+				case 'SQUAD_ANIMATION-OPTIONS': case 'RETAIN_PLAYERS-OPTIONS':
 					switch ($('#selected_broadcaster').val().toUpperCase()) {
 						case 'HANDBALL': case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':  case 'PSL': case "UTT_VIZ": case 'MUMBAI_T20_VIZ':  case 'KCL': case 'PWL': case 'KCL_BIGSCREEN':
 							select = document.createElement('select');
@@ -2025,7 +2046,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 								row.insertCell(cellCount).appendChild(select);
 								cellCount = cellCount + 1;
 							}
-							else if(whatToProcess ==='SQUAD-OPTIONS' || whatToProcess ==='SQUAD_ANIMATION-OPTIONS'){
+							else if(whatToProcess === 'SQUAD-OPTIONS' || whatToProcess === 'SQUAD_ANIMATION-OPTIONS'){
 								switch ($('#selected_broadcaster').val().toUpperCase()){
 								case 'PWL':
 									select = document.createElement('select');
@@ -2423,30 +2444,21 @@ function addItemsToList(whatToProcess, dataToProcess)
 									const broadcaster = $('#selected_broadcaster').val().toUpperCase();
 								    if(broadcaster === 'VIZ_ISPL_2024'){
 										['player', 'thisyearteam', 'prevteam', 'ISPL S-1', 'ISPL S-2', 'category'].forEach(value => {
-								            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
-										        return; // skip these options for Mumbai
-										    }
 								            const option = document.createElement('option');
 								            option.value = value;
 								            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
 								            select.appendChild(option);
 								        });
 									}else if(broadcaster === 'PSL'){
-										['player'].forEach(value => {
-								            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
-										        return; // skip these options for Mumbai
-										    }
+										['player', 'PSL CAREER', 'T20I CAREER', 'T20 CAREER'].forEach(value => {
 								            const option = document.createElement('option');
 								            option.value = value;
-								            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
+								            option.text = value;
 								            select.appendChild(option);
 								        });
 									}
 									else if(broadcaster === 'KCL' || broadcaster === 'KCL_BIGSCREEN'|| broadcaster === 'PWL'){
 										['player', 'thisyearteam','category'].forEach(value => {
-								            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
-										        return; // skip these options for Mumbai
-										    }
 								            const option = document.createElement('option');
 								            option.value = value;
 								            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
@@ -2527,7 +2539,16 @@ function addItemsToList(whatToProcess, dataToProcess)
 			            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
 			            select.appendChild(option);
 			        });
-				}else if($('#selected_broadcaster').val().toUpperCase() === 'KCL'){
+				}
+				else if($('#selected_broadcaster').val().toUpperCase() === 'PSL'){
+					['player', 'PSL CAREER', 'T20I CAREER', 'T20 CAREER'].forEach(value => {
+			            const option = document.createElement('option');
+			            option.value = value;
+			            option.text = value;
+			            select.appendChild(option);
+			        });
+				}
+				else if($('#selected_broadcaster').val().toUpperCase() === 'KCL'){
 					['player'].forEach(value => {
 			            const option = document.createElement('option');
 			            option.value = value;
@@ -2650,7 +2671,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 			            select.appendChild(option);
 			        });
 				}else if(broadcaster === 'PSL'){
-					['style', 'freetext'].forEach(value => {
+					['style', 'PSL CAREER', 'T20I CAREER', 'T20 CAREER', 'freetext'].forEach(value => {
 			            const option = document.createElement('option');
 			            option.value = value;
 			            option.text = value.charAt(0).toUpperCase() + value.slice(1);
@@ -2813,6 +2834,10 @@ function addItemsToList(whatToProcess, dataToProcess)
 			case 'SQUAD-OPTIONS':
 			    option.name = 'populate_squad_btn';
 			    option.value = 'Populate Squad';
+				break;
+			case 'RETAIN_PLAYERS-OPTIONS':
+				option.name = 'populate_retain_players_squad_btn';
+			    option.value = 'Populate Reatin Player';
 				break;
 			case 'SQUADCATEGORIES-OPTIONS':
 				 option.name = 'populate_category_btn';

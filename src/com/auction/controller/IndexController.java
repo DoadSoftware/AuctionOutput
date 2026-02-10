@@ -185,8 +185,7 @@ public class IndexController
 			switch (session_selected_broadcaster) {
 				
 			case "HANDBALL":
-				session_selected_scenes.add(new Scene("D:/DOAD_In_House_Everest/Everest_Sports/Everest_Handball_Auction_2023/Scenes/BG.sum"
-						,"3")); // Front layer
+				session_selected_scenes.add(new Scene("D:/DOAD_In_House_Everest/Everest_Sports/Everest_Handball_Auction_2023/Scenes/BG.sum","3")); // Front layer
 				session_selected_scenes.add(new Scene("","1"));
 				session_selected_scenes.get(0).scene_load(print_writer, session_selected_broadcaster);
 //				print_writer.println("LAYER3*EVEREST*STAGE*DIRECTOR*In START;");
@@ -194,8 +193,7 @@ public class IndexController
 				this_doad.which_graphics_onscreen = "BG";
 				break;
 			case "ISPL":
-				session_selected_scenes.add(new Scene("D:/DOAD_In_House_Everest/Everest_Cricket/Everest_ISPL_Auction_2024/Scenes/BG.sum"
-						,"3")); // Front layer
+				session_selected_scenes.add(new Scene("D:/DOAD_In_House_Everest/Everest_Cricket/Everest_ISPL_Auction_2024/Scenes/BG.sum","3")); // Front layer
 				session_selected_scenes.add(new Scene("","1"));
 				session_selected_scenes.get(0).scene_load(print_writer, session_selected_broadcaster);
 //				print_writer.println("LAYER3*EVEREST*STAGE*DIRECTOR*In START;");
@@ -217,7 +215,10 @@ public class IndexController
 					break;
 				case "KCL_BIGSCREEN":
 					this_KCL_BIGSCREEN.resetData(print_writer);
-					break;	
+					break;
+				case "PSL":
+					this_psl.resetData(print_writer);
+					break;
 				}
 				break;
 			}
@@ -404,6 +405,7 @@ public class IndexController
 		case "LOF_SQUAD_SIZE_CATEGORY_WISE_GRAPHICS-OPTIONS": case "LOF_SQUAD_GRAPHICS-OPTIONS": case "TEAM_CURRENT_BID_GRAPHICS-OPTIONS":
 		case "FF_TOP_FIVE_SOLD_TEAM_GRAPHICS-OPTIONS": case "SINGLE_GRAPHICS-OPTIONS": case "FLIPPER_SQUAD_GRAPHICS-OPTIONS":case "FF_SQUAD_GRAPHICS-OPTIONS":
 		case "FF_SQUAD_ROLE_GRAPHICS-OPTIONS":case "LOF_TEAM_BID_GRAPHICS-OPTIONS": case "CRAWL_SQUAD_GRAPHICS-OPTIONS": case "SQUAD_ANIMATION_GRAPHICS-OPTIONS":
+		case "RETAIN_PLAYERS_GRAPHICS-OPTIONS":
 			System.out.println("Comiong in controller sssss");
 		    return (List<T>) session_team;
 		case "ZONEWISE_PLAYER_SOLD_GRAPHICS-OPTIONS": case "ZONE-PLAYER_GRAPHICS-OPTIONS":
