@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,7 @@ import com.auction.containers.Data;
 import com.auction.containers.Scene;
 import com.auction.model.Player;
 import com.auction.model.PlayerCount;
+import com.auction.model.Squad;
 import com.auction.model.Statistics;
 import com.auction.model.StatsType;
 import com.auction.model.Team;
@@ -2269,8 +2271,11 @@ public class PSL extends Scene{
 		String crawler_Data = "";
 		List<Player> top_sold = new ArrayList<Player>();
 		
-		if(auction.getPlayers() != null) {
-			top_sold = auction.getPlayers();
+		if (auction.getPlayers() != null) {
+		    top_sold.addAll(auction.getPlayers());
+		    for (Squad squad : auctionService.getSquads()) {
+		        top_sold.removeIf(player -> player.getPlayerId() == squad.getPlayer_id());
+		    }
 		}
 		
 		Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
@@ -2300,13 +2305,15 @@ public class PSL extends Scene{
         String crawler_Data = "";
         List<Player> top_sold = new ArrayList<Player>();
 
-        if(auction.getPlayers() != null) {
-        	for(Player plyr : auction.getPlayers()){
-        		if(plyr.getTeamId() == team_id) {
-        			top_sold.add(plyr);
-        		}
-        	}
-        }
+        if (auction.getPlayers() != null && auctionService.getSquads() != null) {
+		    for (Player plyr : auction.getPlayers()) {
+		        if (plyr.getTeamId() == team_id) {
+		            top_sold.add(plyr);
+		        }
+		    }
+		    Set<Integer> squadPlayerIds = auctionService.getSquads().stream().map(Squad::getPlayer_id).collect(Collectors.toSet());
+		    top_sold.removeIf(player -> squadPlayerIds.contains(player.getPlayerId()));
+		}
 
         Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
 
@@ -2395,8 +2402,11 @@ public class PSL extends Scene{
 		int row = 0;
 		List<Player> top_sold = new ArrayList<Player>();
 		
-		if(auction.getPlayers() != null) {
-			top_sold = auction.getPlayers();
+		if (auction.getPlayers() != null) {
+		    top_sold.addAll(auction.getPlayers());
+		    for (Squad squad : auctionService.getSquads()) {
+		        top_sold.removeIf(player -> player.getPlayerId() == squad.getPlayer_id());
+		    }
 		}
 		
 		Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
@@ -2459,12 +2469,14 @@ public class PSL extends Scene{
 		int row = 0;
 		List<Player> top_sold = new ArrayList<Player>();
 		
-		if(auction.getPlayers() != null) {
-			for(Player plyr : auction.getPlayers()){
-				if(plyr.getTeamId() == team_id) {
-					top_sold.add(plyr);
-				}
-			}
+		if (auction.getPlayers() != null && auctionService.getSquads() != null) {
+		    for (Player plyr : auction.getPlayers()) {
+		        if (plyr.getTeamId() == team_id) {
+		            top_sold.add(plyr);
+		        }
+		    }
+		    Set<Integer> squadPlayerIds = auctionService.getSquads().stream().map(Squad::getPlayer_id).collect(Collectors.toSet());
+		    top_sold.removeIf(player -> squadPlayerIds.contains(player.getPlayerId()));
 		}
 		
 		Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
@@ -3087,8 +3099,11 @@ public class PSL extends Scene{
 		int row = 0;
 		List<Player> top_sold = new ArrayList<Player>();
 		
-		if(auction.getPlayers() != null) {
-			top_sold = auction.getPlayers();
+		if (auction.getPlayers() != null) {
+		    top_sold.addAll(auction.getPlayers());
+		    for (Squad squad : auctionService.getSquads()) {
+		        top_sold.removeIf(player -> player.getPlayerId() == squad.getPlayer_id());
+		    }
 		}
 		
 		Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
@@ -3157,8 +3172,11 @@ public class PSL extends Scene{
 		int row = 0;
 		List<Player> top_sold = new ArrayList<Player>();
 		
-		if(auction.getPlayers() != null) {
-			top_sold = auction.getPlayers();
+		if (auction.getPlayers() != null) {
+		    top_sold.addAll(auction.getPlayers());
+		    for (Squad squad : auctionService.getSquads()) {
+		        top_sold.removeIf(player -> player.getPlayerId() == squad.getPlayer_id());
+		    }
 		}
 		
 		Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
@@ -3242,13 +3260,16 @@ public class PSL extends Scene{
 		int row = 0;
 		List<Player> top_sold = new ArrayList<Player>();
 		
-		if(auction.getPlayers() != null) {
-			for(Player plyr : auction.getPlayers()){
-				if(plyr.getTeamId() == team_id) {
-					top_sold.add(plyr);
-				}
-			}
+		if (auction.getPlayers() != null && auctionService.getSquads() != null) {
+		    for (Player plyr : auction.getPlayers()) {
+		        if (plyr.getTeamId() == team_id) {
+		            top_sold.add(plyr);
+		        }
+		    }
+		    Set<Integer> squadPlayerIds = auctionService.getSquads().stream().map(Squad::getPlayer_id).collect(Collectors.toSet());
+		    top_sold.removeIf(player -> squadPlayerIds.contains(player.getPlayerId()));
 		}
+
 		Team team = auctionService.getTeams().stream().filter(tm -> tm.getTeamId() == team_id).findAny().orElse(null);
 		
 		Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
@@ -3330,13 +3351,16 @@ public class PSL extends Scene{
 		int row = 0;
 		List<Player> top_sold = new ArrayList<Player>();
 		
-		if(auction.getPlayers() != null) {
-			for(Player plyr : auction.getPlayers()){
-				if(plyr.getTeamId() == teamId) {
-					top_sold.add(plyr);
-				}
-			}
+		if (auction.getPlayers() != null && auctionService.getSquads() != null) {
+		    for (Player plyr : auction.getPlayers()) {
+		        if (plyr.getTeamId() == teamId) {
+		            top_sold.add(plyr);
+		        }
+		    }
+		    Set<Integer> squadPlayerIds = auctionService.getSquads().stream().map(Squad::getPlayer_id).collect(Collectors.toSet());
+		    top_sold.removeIf(player -> squadPlayerIds.contains(player.getPlayerId()));
 		}
+		
 		Team team = auctionService.getTeams().stream().filter(tm -> tm.getTeamId() == teamId).findAny().orElse(null);
 		
 		Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
@@ -3619,6 +3643,14 @@ public class PSL extends Scene{
 		        		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$IconPlayers$Player" + row + "$WithData$NameGrp$"
 		        				+ "txt_LastName*GEOM*TEXT SET \0");
 	        		}
+					
+					if(plyr.getNationality().equalsIgnoreCase("PAKISTAN")) {
+						print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$IconPlayers$Player" + row + "$WithData$OverseasAll$"
+								+ "select_Overseas*FUNCTION*Omo*vis_con SET 0\0");
+					}else {
+						print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$IconPlayers$Player" + row + "$WithData$OverseasAll$"
+								+ "select_Overseas*FUNCTION*Omo*vis_con SET 1\0");
+					}
 					
 					print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$IconPlayers$Player" + row + "$WithData$ImageGrp$"
 							+ "img_Player*TEXTURE*IMAGE SET " + photo_path + plyr.getPhotoName() + AuctionUtil.PNG_EXTENSION + "\0");
