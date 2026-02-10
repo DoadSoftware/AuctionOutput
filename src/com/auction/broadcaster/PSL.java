@@ -1871,9 +1871,8 @@ public class PSL extends Scene{
 				+ "AUCTION" + "\0");
 		
 		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Ident$InfoGrp$Info1$txt_Info*GEOM*TEXT SET " 
-				+ "PAKISTAN SUPER LEAGUE" + "\0");
-		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Ident$InfoGrp$Info2$txt_Info*GEOM*TEXT SET " 
 				+ "EXPO CENTRE, LAHORE" + "\0");
+		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Ident$InfoGrp$Info2$txt_Info*GEOM*TEXT SET \0");
 		
 	}
 	
@@ -2015,12 +2014,10 @@ public class PSL extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Main$ImageGrp$Image$img_Player*TEXTURE*IMAGE SET "+ photo_path + 
 					auctionService.getAllPlayer().get(playerId - 1).getPhotoName() + AuctionUtil.PNG_EXTENSION + "\0");
 			
-			if(auctionService.getAllPlayer().get(playerId - 1).getIconic().equalsIgnoreCase(AuctionUtil.YES)) {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Main$ImageGrp$GenericImage$IconPlayer$Select_IconPlayer"
-						+ "*FUNCTION*Omo*vis_con SET 0\0");
+			if(auctionService.getAllPlayer().get(playerId - 1).getNationality().equalsIgnoreCase("PAKISTAN")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Main$ImageGrp$OverseasAll$select_Overseas*FUNCTION*Omo*vis_con SET 0\0");
 			}else {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Main$ImageGrp$GenericImage$IconPlayer$Select_IconPlayer"
-						+ "*FUNCTION*Omo*vis_con SET 0\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$Main$ImageGrp$OverseasAll$select_Overseas*FUNCTION*Omo*vis_con SET 1\0");
 			}
 			
 			if(auctionService.getAllPlayer().get(playerId - 1).getBasePrice().equalsIgnoreCase("42000")) {
@@ -2076,6 +2073,12 @@ public class PSL extends Scene{
 		
 		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$ImageGrp$Abhishek_Kumar_Dalhor"
 				+ "*TEXTURE*IMAGE SET "+ photo_path + auctionService.getAllPlayer().get(playerId - 1).getPhotoName() + AuctionUtil.PNG_EXTENSION + "\0");
+		
+		if(auctionService.getAllPlayer().get(playerId - 1).getNationality().equalsIgnoreCase("PAKISTAN")) {
+			print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$ImageGrp$OverseasAll$select_Overseas*FUNCTION*Omo*vis_con SET 0\0");
+		}else {
+			print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$ImageGrp$OverseasAll$select_Overseas*FUNCTION*Omo*vis_con SET 1\0");
+		}
 		
 		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$PlayerRole$txt_Role*GEOM*TEXT SET " + 
 				auctionService.getAllPlayer().get(playerId - 1).getRole().replace("Batsman", "BATTER").toUpperCase() + "\0");
@@ -2428,6 +2431,14 @@ public class PSL extends Scene{
 	        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuys$Row" + row + "$NameGrp$txt_Name"
 	    					+ "*GEOM*TEXT SET " + auctionService.getAllPlayer().get(top_sold.get(m).getPlayerId()-1).getTicker_name() + " \0");
 	        		
+	        		if(auctionService.getAllPlayer().get(top_sold.get(m).getPlayerId()-1).getNationality().equalsIgnoreCase("PAKISTAN")) {
+	    				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuys$Row" + row + 
+	    						"$OverseasAll$select_Overseas*FUNCTION*Omo*vis_con SET 0\0");
+	    			}else {
+	    				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuys$Row" + row + 
+	    						"$OverseasAll$select_Overseas*FUNCTION*Omo*vis_con SET 1\0");
+	    			}
+	        		
 	        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuys$Row" + row + "$Price$RupeeSymbol*ACTIVE SET 0\0");
 	        		
 	        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuys$Row" + row + "$Price$txt_Value"
@@ -2496,6 +2507,14 @@ public class PSL extends Scene{
 		        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$NameGrp$txt_LastName"
 		    					+ "*GEOM*TEXT SET " + auctionService.getAllPlayer().get(top_sold.get(m).getPlayerId()-1).getFull_name() + " \0");
 	        		}
+	        		
+	        		if(auctionService.getAllPlayer().get(top_sold.get(m).getPlayerId()-1).getNationality().equalsIgnoreCase("PAKISTAN")) {
+	    				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + 
+	    						"$OverseasAll$select_Overseas*FUNCTION*Omo*vis_con SET 0\0");
+	    			}else {
+	    				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + 
+	    						"$OverseasAll$select_Overseas*FUNCTION*Omo*vis_con SET 1\0");
+	    			}
 	        		
 	        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$Price$RupeeSymbol*ACTIVE SET 0\0");
 	        		
@@ -2607,7 +2626,6 @@ public class PSL extends Scene{
 		    					+ "*GEOM*TEXT SET " + auctionService.getAllPlayer().get(squad.get(m).getPlayerId()-1).getFirstname() + " \0");
 		        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$NameGrp$txt_LastName"
 		    					+ "*GEOM*TEXT SET " + auctionService.getAllPlayer().get(squad.get(m).getPlayerId()-1).getSurname() + " \0");
-		        		
 	        		}else {
 	        			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$NameGrp$txt_FirstName"
 		    					+ "*GEOM*TEXT SET \0");
@@ -2615,12 +2633,14 @@ public class PSL extends Scene{
 		    					+ "*GEOM*TEXT SET " + auctionService.getAllPlayer().get(squad.get(m).getPlayerId()-1).getFull_name() + " \0");
 	        		}
 	        		
-	        		if(squad.get(m).getSoldOrUnsold().equalsIgnoreCase("RETAIN")) {
-	        			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$Select_IconPlayer"
-		    					+ "*FUNCTION*Omo*vis_con SET 1\0");
-	        			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$img_Text1$IconPlayer"
-	        					+ "$Icon$img_Icon*TEXTURE*IMAGE SET " + icon_path + "Retain" + "\0");
-	        		}
+	        		if(auctionService.getAllPlayer().get(squad.get(m).getPlayerId()-1).getNationality().equalsIgnoreCase("PAKISTAN")) {
+	    				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + 
+	    						"$OverseasAll$select_Overseas*FUNCTION*Omo*vis_con SET 0\0");
+	    			}else {
+	    				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + 
+	    						"$OverseasAll$select_Overseas*FUNCTION*Omo*vis_con SET 1\0");
+	    			}
+	        		
 	        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$Price$RupeeSymbol*ACTIVE SET 0\0");
 	        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$Price$txt_Value"
 	    					+ "*GEOM*TEXT SET " + AuctionFunctions.formatAmountInCrore(squad.get(m).getSoldForPoints()).split(",")[0] + " " 
@@ -2679,6 +2699,15 @@ public class PSL extends Scene{
 		        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$NameGrp$txt_LastName"
 		    					+ "*GEOM*TEXT SET " + auctionService.getAllPlayer().get(squad.get(m).getPlayerId()-1).getFull_name() + " \0");
 	        		}
+	        		
+	        		if(auctionService.getAllPlayer().get(squad.get(m).getPlayerId()-1).getNationality().equalsIgnoreCase("PAKISTAN")) {
+	    				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + 
+	    						"$OverseasAll$select_Overseas*FUNCTION*Omo*vis_con SET 0\0");
+	    			}else {
+	    				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + 
+	    						"$OverseasAll$select_Overseas*FUNCTION*Omo*vis_con SET 1\0");
+	    			}
+	        		
 	        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$Price$RupeeSymbol*ACTIVE SET 0\0");
 	        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + which_side + "$TopBuysTeam$Row" + row + "$Price$txt_Value"
 	    					+ "*GEOM*TEXT SET " + AuctionFunctions.formatAmountInCrore(squad.get(m).getSoldForPoints()).split(",")[0] + " " 
@@ -3081,7 +3110,9 @@ public class PSL extends Scene{
 		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuys$Title$txt_Title3*GEOM*TEXT SET PRICE\0");
 		
 		for(int i=1; i<=8; i++) {
-			print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuys$Team" + i + "*ACTIVE SET 0\0");			
+			print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuys$Team" + i + "*ACTIVE SET 0\0");
+			print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuys$Team" + i + "$IconsAll$Select_Icon"
+					+ "*FUNCTION*Omo*vis_con SET 0\0");
 		}
 		
 		for(Player plyr : top_sold) {
@@ -3099,6 +3130,14 @@ public class PSL extends Scene{
         					+ auctionService.getAllPlayer().get(plyr.getPlayerId() - 1).getFull_name() + "\0");
 	        		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuys$Team" + row + "$Name$txt_LastName*GEOM*TEXT SET \0");
         		}
+        		
+        		if(auctionService.getAllPlayer().get(plyr.getPlayerId() - 1).getNationality().equalsIgnoreCase("PAKISTAN")) {
+    				print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuys$Team" + row + "$IconsAll$select_Overseas"
+    						+ "*FUNCTION*Omo*vis_con SET 0\0");
+    			}else {
+    				print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuys$Team" + row + "$IconsAll$select_Overseas"
+    						+ "*FUNCTION*Omo*vis_con SET 1\0");
+    			}
         		
         		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuys$Team" + row + "$Name*FUNCTION*Maxsize*WIDTH_X SET 530\0");
         		
@@ -3160,6 +3199,14 @@ public class PSL extends Scene{
 	        		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + row + 
 	        				"$NameGrp$txt_LastName*GEOM*TEXT SET "+auctionService.getAllPlayer().get(plyr.getPlayerId() - 1).getFull_name()+"\0");
         		}
+        		
+        		if(auctionService.getAllPlayer().get(plyr.getPlayerId() - 1).getNationality().equalsIgnoreCase("PAKISTAN")) {
+    				print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + row + "$OverseasAll$"
+    						+ "select_Overseas*FUNCTION*Omo*vis_con SET 0\0");
+    			}else {
+    				print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + row + "$OverseasAll$"
+    						+ "select_Overseas*FUNCTION*Omo*vis_con SET 1\0");
+    			}
         		
         		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + row + 
         				"$txt_Category*GEOM*TEXT SET "+auctionService.getAllPlayer().get(plyr.getPlayerId() - 1).getNationality().toUpperCase()+"\0");
@@ -3244,6 +3291,14 @@ public class PSL extends Scene{
 	        				"$Name_Category$txt_LastName*GEOM*TEXT SET "+auctionService.getAllPlayer().get(plyr.getPlayerId() - 1).getFull_name()+"\0");
         		}
         		
+        		if(auctionService.getAllPlayer().get(plyr.getPlayerId() - 1).getNationality().equalsIgnoreCase("PAKISTAN")) {
+    				print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + row + "$OverseasAll$"
+    						+ "select_Overseas*FUNCTION*Omo*vis_con SET 0\0");
+    			}else {
+    				print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + row + "$OverseasAll$"
+    						+ "select_Overseas*FUNCTION*Omo*vis_con SET 1\0");
+    			}
+        		
         		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + row + "$Name_Category$img_Base1"
         				+ "*TEXTURE*IMAGE SET " + base_path_1 + auction.getTeam().get(plyr.getTeamId() - 1).getTeamBadge() + " \0");
         		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + row + "$Name_Category$img_Text1"
@@ -3303,7 +3358,9 @@ public class PSL extends Scene{
 		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuys$Title$txt_Title3*GEOM*TEXT SET PRICE\0");
 		
 		for(int i=1; i<=8; i++) {
-			print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuys$Team"+i+"*ACTIVE SET 0\0");
+			print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuys$Team" + i + "*ACTIVE SET 0\0");
+			print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuys$Team" + i + "$IconsAll$Select_Icon"
+					+ "*FUNCTION*Omo*vis_con SET 0\0");
 		}
 		
 		for(Player plyr : top_sold) {
@@ -3321,6 +3378,14 @@ public class PSL extends Scene{
         					+ auctionService.getAllPlayer().get(plyr.getPlayerId() - 1).getFull_name() + "\0");
 	        		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuys$Team" + row + "$Name$txt_LastName*GEOM*TEXT SET \0");
         		}
+        		
+        		if(auctionService.getAllPlayer().get(plyr.getPlayerId() - 1).getNationality().equalsIgnoreCase("PAKISTAN")) {
+    				print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuys$Team" + row + "$IconsAll$select_Overseas"
+    						+ "*FUNCTION*Omo*vis_con SET 0\0");
+    			}else {
+    				print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuys$Team" + row + "$IconsAll$select_Overseas"
+    						+ "*FUNCTION*Omo*vis_con SET 1\0");
+    			}
         		
         		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuys$Team" + row + "$Name*FUNCTION*Maxsize*WIDTH_X SET 530\0");
         		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuys$Team" + row + "$txt_TeamName*GEOM*TEXT SET " 
@@ -3380,6 +3445,14 @@ public class PSL extends Scene{
 			if(squad.get(m).getSoldOrUnsold().equalsIgnoreCase("RETAIN")) {
 				print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row + 
 						"$PlayerName$img_Text1$Icons$Retain_Icon$Select_Icon*FUNCTION*Omo*vis_con SET 1\0");
+			}
+			
+			if(plyrData.getNationality().equalsIgnoreCase("PAKISTAN")) {
+				print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row + "$OverseasAll$"
+						+ "select_Overseas*FUNCTION*Omo*vis_con SET 0\0");
+			}else {
+				print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row + "$OverseasAll$"
+						+ "select_Overseas*FUNCTION*Omo*vis_con SET 1\0");
 			}
 			
 			if(plyrData.getSurname() != null) {
@@ -4088,6 +4161,14 @@ public class PSL extends Scene{
 							print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad18$Players$Player" + row + "$WithData$ImageGrp$"
 									+ "img_Player*TEXTURE*IMAGE SET " + photo_path + plyr.getPhotoName() + AuctionUtil.PNG_EXTENSION + "\0");
 							
+							if(plyr.getNationality().equalsIgnoreCase("PAKISTAN")) {
+								print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad18$Players$Player" + row 
+										+ "$OverseasAll$select_Overseas*FUNCTION*Omo*vis_con SET 0\0");
+							}else {
+								print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad18$Players$Player" + row 
+										+ "$OverseasAll$select_Overseas*FUNCTION*Omo*vis_con SET 1\0");
+							}
+							
 							print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad18$Players$Player" + row + "$WithData$NameGrp$"
 									+ "img_Base1*TEXTURE*IMAGE SET " + base_path_1 + match.getTeam().get(team_id-1).getTeamBadge() + "\0");
 							print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad18$Players$Player" + row + "$WithData$NameGrp$"
@@ -4311,19 +4392,19 @@ public class PSL extends Scene{
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Double_Data$txt_Title*GEOM*TEXT SET BAT & BOWL STYLE\0");
 				BowlStyle = "";
 				if(player.getBowlerStyle() != null) {
-					switch (player.getBowlerStyle().toUpperCase()) {
-					case "F": case "FM": case "MF": case "M": case "SM": case "RF": case "RM": case "LF": case "LM":
+					switch(player.getBowlerStyle()) {
+					case "RF": case "RFM": case "RMF": case "RM": case "RSM": case "LF": case "LFM": case "LMF": case "LM":
 						BowlStyle = "SEAM";
 						break;
-
-					case "SL": case "SO": case "CH": case "LB": case "LG": case "OB": case "WSL": case "WSR":
+					case "LSL": case "WSL": case "LCH": case "RLG": case "WSR": case "LSO": case "RLB": case "ROB":
 						BowlStyle = "SPIN";
 						break;
 					}
 				}else {
 					BowlStyle = "SEAM";
 				}
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Double_Data$txt_Text*GEOM*TEXT SET BAT "+(BowlStyle.equalsIgnoreCase("") ? "" : "& "+BowlStyle)+"\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Double_Data$txt_Text*GEOM*TEXT SET BAT "
+						+ (BowlStyle.equalsIgnoreCase("") ? "" : "& " + BowlStyle) + "\0");
 				break;
 			case "BAT/KEEPER": case "WICKET-KEEPER":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Double_Data$txt_Title*GEOM*TEXT SET BATTING STYLE\0");
