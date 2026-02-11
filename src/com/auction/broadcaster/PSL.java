@@ -112,7 +112,7 @@ public class PSL extends Scene{
 		case "POPULATE-PLAYERPROFILE_LT": case "POPULATE-PLAYERPROFILE_LT_STATS": case "POPULATE-LOF_SQUAD": case "POPULATE-LOF_SQUAD_REMAIN":
 		case "POPULATE-L3-FLIPPER": case "POPULATE-ZONE_PLAYERS_STATS": case "POPULATE-TEAM_CURR_BID": case "POPULATE-FF_FIVE_TOP_BUYS_AUCTION":
 		case "POPULATE-FF_FIVE_TOP_BUY_TEAM": case "POPULATE-ZONEWISE_PLAYERS_SOLD": case "POPULATE-ZONE_PLAYERS_FULL": case "POPULATE-FF_RETAIN_PLAYERS":
-		case "POPULATE-FF_SQUAD_ROLE_TEAM":
+		case "POPULATE-FF_SQUAD_ROLE_TEAM": case "POPULATE-RULES":
 		case "POPULATE-CRAWLE_SQUAD":
 		case "POPULATE-CRAWL-PURSE_REMAINING": case "POPULATE-CRAWL-SQUAD_SIZE": case "POPULATE-CRAWL_TOP_SOLD": case "POPULATE-CRAWLER_TEAM_TOP_SOLD":
 		case "POPULATE-L3-CRWLERFREETEXT":	
@@ -174,6 +174,15 @@ public class PSL extends Scene{
 					break;
 				case "POPULATE-TOP_SOLD":
 					populateTopSold(print_writer, valueToProcess.split(",")[0], auction,auctionService, session_selected_broadcaster);
+					break;
+				case "POPULATE-RULES":
+					if(!which_graphics_onscreen.isEmpty()) {
+						print_writer.println("-1 RENDERER*STAGE*DIRECTOR*anim_Rules$In_Out CONTINUE\0");
+						which_graphics_onscreen = "RULES";
+					}else {
+						print_writer.println("-1 RENDERER*STAGE*DIRECTOR*anim_Rules$In_Out START\0");
+						which_graphics_onscreen = "RULES";
+					}
 					break;
 				case "POPULATE-IDENT":
 					if(!which_graphics_onscreen.isEmpty()) {
@@ -1315,6 +1324,10 @@ public class PSL extends Scene{
 						
 						TimeUnit.MILLISECONDS.sleep(500);
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_LowerThird SHOW 0\0");
+						which_graphics_onscreen = "";
+						break;
+					case "RULES":
+						print_writer.println("-1 RENDERER*STAGE*DIRECTOR*anim_Rules$In_Out CONTINUE\0");
 						which_graphics_onscreen = "";
 						break;
 						
@@ -3615,7 +3628,7 @@ public class PSL extends Scene{
 		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$Header$txt_Header1*GEOM*TEXT SET HBL PSL PLAYER\0");
 		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$Header$txt_Header2*GEOM*TEXT SET AUCTION\0");
 		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$SubHeader$txt_SubHeader*GEOM*TEXT SET " 
-				+ auction.getTeam().get(team_id - 1).getTeamName1() + " - RETAINED PLAYERS\0");
+				+ auction.getTeam().get(team_id - 1).getTeamName1() + " - RETENTIONS\0");
 		print_writer.println("-1 RENDERER*TREE*$gfx_FullFrames$Header$Side" + whichSide + "$HeaderType2$LogoGrp$img_TeamLogo*TEXTURE*IMAGE SET " 
 				+ logo_path + "EVENT" + "\0");
 		
@@ -4353,57 +4366,65 @@ public class PSL extends Scene{
 			case "BOWLER":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Double_Data$txt_Title*GEOM*TEXT SET BOWLING STYLE\0");
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Double_Data$txt_Title*GEOM*TEXT SET BOWLING STYLE\0");
+				BowlStyle = "";
 				if(player.getBowlerStyle() != null) {
-					if(player.getBowlerStyle().charAt(0) == 'L') {
-						BowlStyle = "Left-Arm" ;
-					}else {
-						BowlStyle = "Right-Arm" ;
+					switch (player.getBowlerStyle()) {
+					case "WSL": case "WSR":
+						if(player.getBowlerStyle().equalsIgnoreCase("WSL")) {
+							BowlStyle = "Left-Arm Wrist Spin";
+						}else if(player.getBowlerStyle().equalsIgnoreCase("WSR")){
+							BowlStyle = "Right-Arm Wrist Spin";
+						}
+						break;
+					default:
+						if(player.getBowlerStyle().charAt(0) == 'L') {
+							BowlStyle = "Left-Arm" ;
+						}else {
+							BowlStyle = "Right-Arm" ;
+						}
+						
+						switch (player.getBowlerStyle().substring(1).trim()) {
+						case "":
+							BowlStyle = BowlStyle + " Bowler";
+							break;
+						case "F":
+							BowlStyle = BowlStyle + " Fast";
+							break;
+						case "FM":
+							BowlStyle = BowlStyle + " Fast-Medium";
+							break;
+						case "MF":
+							BowlStyle = BowlStyle + " Medium-Fast";
+							break;
+						case "M":
+							BowlStyle = BowlStyle + " Medium";
+							break;
+						case "SM":
+							BowlStyle = BowlStyle + " Slow-Medium";
+							break;
+						case "OB":
+							BowlStyle = BowlStyle + " Off-Break";
+							break;
+						case "LB": case "LG":
+							BowlStyle = BowlStyle + " Leg-Break";
+							break;
+						case "CH":
+							BowlStyle = BowlStyle + " Chinaman";
+							break;
+						case "SO":
+							BowlStyle = BowlStyle + " Orthodox";
+							break;
+						case "SL":
+							BowlStyle = "Slow Left-Arm";
+							break;
+						}
+						break;
 					}
-					if(player.getBowlerStyle() == "WSL") {
-						BowlStyle = "Left-Arm Wrist Spin";
-					}else if(player.getBowlerStyle() == "WSR"){
-						BowlStyle = "Right-Arm Wrist Spin";
-					}
-					switch (player.getBowlerStyle().substring(1).trim()) {
-					case "":
-						BowlStyle = BowlStyle + " Bowler";
-						break;
-					case "F":
-						BowlStyle = BowlStyle + " Fast";
-						break;
-					case "FM":
-						BowlStyle = BowlStyle + " Fast-Medium";
-						break;
-					case "MF":
-						BowlStyle = BowlStyle + " Medium-Fast";
-						break;
-					case "M":
-						BowlStyle = BowlStyle + " Medium";
-						break;
-					case "SM":
-						BowlStyle = BowlStyle + " Slow-Medium";
-						break;
-					case "OB":
-						BowlStyle = BowlStyle + " Off-Break";
-						break;
-					case "LB": case "LG":
-						BowlStyle = BowlStyle + " Leg-Break";
-						break;
-					case "CH":
-						BowlStyle = BowlStyle + " Chinaman";
-						break;
-					case "SO":
-						BowlStyle = BowlStyle + " Orthodox";
-						break;
-					case "SL":
-						BowlStyle = "Slow Left-Arm";
-						break;
-					
-					}
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Double_Data$txt_Text*GEOM*TEXT SET " + BowlStyle.toUpperCase() + "\0");
 				}else {
-					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Double_Data$txt_Text*GEOM*TEXT SET FAST BOWLER\0");
+					BowlStyle = "FAST BOWLER";
 				}
+				
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Double_Data$txt_Text*GEOM*TEXT SET " + BowlStyle.toUpperCase() + "\0");
 				break;
 			case "BATSMAN": case "BATTER":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Double_Data$txt_Title*GEOM*TEXT SET BATTING STYLE\0");
@@ -4420,23 +4441,67 @@ public class PSL extends Scene{
 				}
 				break;
 			case "ALL-ROUNDER":
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Double_Data$txt_Title*GEOM*TEXT SET BAT & BOWL STYLE\0");
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Double_Data$txt_Title*GEOM*TEXT SET BAT & BOWL STYLE\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Double_Data$txt_Title*GEOM*TEXT SET \0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Double_Data$txt_Title*GEOM*TEXT SET \0");
 				BowlStyle = "";
 				if(player.getBowlerStyle() != null) {
-					switch(player.getBowlerStyle()) {
-					case "RF": case "RFM": case "RMF": case "RM": case "RSM": case "LF": case "LFM": case "LMF": case "LM":
-						BowlStyle = "SEAM";
+					switch (player.getBowlerStyle()) {
+					case "WSL": case "WSR":
+						if(player.getBowlerStyle().equalsIgnoreCase("WSL")) {
+							BowlStyle = "Left-Arm Wrist Spin";
+						}else if(player.getBowlerStyle().equalsIgnoreCase("WSR")){
+							BowlStyle = "Right-Arm Wrist Spin";
+						}
 						break;
-					case "LSL": case "WSL": case "LCH": case "RLG": case "WSR": case "LSO": case "RLB": case "ROB":
-						BowlStyle = "SPIN";
+					default:
+						if(player.getBowlerStyle().charAt(0) == 'L') {
+							BowlStyle = "Left-Arm" ;
+						}else {
+							BowlStyle = "Right-Arm" ;
+						}
+						
+						switch (player.getBowlerStyle().substring(1).trim()) {
+						case "":
+							BowlStyle = BowlStyle + " Bowler";
+							break;
+						case "F":
+							BowlStyle = BowlStyle + " Fast";
+							break;
+						case "FM":
+							BowlStyle = BowlStyle + " Fast-Medium";
+							break;
+						case "MF":
+							BowlStyle = BowlStyle + " Medium-Fast";
+							break;
+						case "M":
+							BowlStyle = BowlStyle + " Medium";
+							break;
+						case "SM":
+							BowlStyle = BowlStyle + " Slow-Medium";
+							break;
+						case "OB":
+							BowlStyle = BowlStyle + " Off-Break";
+							break;
+						case "LB": case "LG":
+							BowlStyle = BowlStyle + " Leg-Break";
+							break;
+						case "CH":
+							BowlStyle = BowlStyle + " Chinaman";
+							break;
+						case "SO":
+							BowlStyle = BowlStyle + " Orthodox";
+							break;
+						case "SL":
+							BowlStyle = "Slow Left-Arm";
+							break;
+						}
 						break;
 					}
 				}else {
-					BowlStyle = "SEAM";
+					BowlStyle = "FAST BOWLER";
 				}
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Double_Data$txt_Text*GEOM*TEXT SET BAT "
-						+ (BowlStyle.equalsIgnoreCase("") ? "" : "& " + BowlStyle) + "\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Double_Data$txt_Text*GEOM*TEXT SET " 
+						+ player.getBatsmanStyle().toUpperCase() + (BowlStyle.equalsIgnoreCase("") ? "" : " & " + BowlStyle.toUpperCase()) + "\0");
 				break;
 			case "BAT/KEEPER": case "WICKET-KEEPER":
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$StatsGrp$Side"+whichSide+"$Double_Data$txt_Title*GEOM*TEXT SET BATTING STYLE\0");
@@ -4906,9 +4971,9 @@ public class PSL extends Scene{
 	public String styleIcons(Player plyr) {
 		String whichStyle = null;
 		
-		if(plyr.getRole().equalsIgnoreCase("WICKET-KEEPER")) {
+		if(plyr.getRole().equalsIgnoreCase("WICKET-KEEPER") || plyr.getRole().equalsIgnoreCase("BAT/KEEPER")) {
 			whichStyle = "WicketKeeper";
-		}else if(plyr.getRole().equalsIgnoreCase("BATSMAN") || plyr.getRole().equalsIgnoreCase("BAT/KEEPER") || plyr.getRole().equalsIgnoreCase("BATTER")) {
+		}else if(plyr.getRole().equalsIgnoreCase("BATSMAN") || plyr.getRole().equalsIgnoreCase("BATTER")) {
 			if(plyr.getBatsmanStyle().equalsIgnoreCase("LHB")) {
 				whichStyle = "Batsman_Lefthand";
 			}else {

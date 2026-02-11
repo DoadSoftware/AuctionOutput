@@ -142,6 +142,10 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			which_GFX = "";
 			processAuctionProcedures('POPULATE-IDENT');
 			break;
+		case 'Alt_a':
+			processAuctionProcedures('POPULATE-RULES');
+			break;
+			
 		case 'F5': //FF SQUAD SIZE, RTM AVAILABLE, PURSE REM
 			switch ($('#selected_broadcaster').val()){
 			case 'PSL':
