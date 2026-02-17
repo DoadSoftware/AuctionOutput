@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-                                
+                                                        
     
     
     
     
     
     
-    <wb-module deploy-name="AuctionOutput-1.61">
-                                                                
+    
+    
+    
+    
+    
+    
+    <wb-module deploy-name="AuctionOutput-1.145">
+                                                                                                                
+        
+        
+        
+        
+        
+        
         
         
         
@@ -15,7 +27,13 @@
         
         
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
-                                                                
+                                                                                                                
+        
+        
+        
+        
+        
+        
         
         
         
@@ -23,7 +41,13 @@
         
         
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
-                                                                
+                                                                                                                
+        
+        
+        
+        
+        
+        
         
         
         
@@ -31,10 +55,13 @@
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <dependent-module archiveName="AuctionLibrary-1.23.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/AuctionLibrary/AuctionLibrary">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-                                                                
+                                                                                                                
+        
+        
+        
+        
+        
+        
         
         
         
@@ -42,7 +69,13 @@
         
         
         <property name="context-root" value="AuctionOutput"/>
-                                                                
+                                                                                                                
+        
+        
+        
+        
+        
+        
         
         
         
@@ -50,7 +83,13 @@
         
         
         <property name="java-output-path" value="/Auction Output/target/classes"/>
-                                                            
+                                                                                                            
+    
+    
+    
+    
+    
+    
     
     
     
@@ -58,7 +97,13 @@
     
     
     </wb-module>
-                            
+                                                    
+
+
+
+
+
+
 
 
 
