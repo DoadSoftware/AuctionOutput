@@ -37,6 +37,7 @@ import com.auction.broadcaster.MUMBAI_T20_VIZ;
 import com.auction.broadcaster.PSL;
 import com.auction.broadcaster.PWL;
 import com.auction.broadcaster.UTT_VIZ;
+import com.auction.broadcaster.UTT_BIGSCREEN;
 import com.auction.broadcaster.VIZ_ISPL_2024;
 import com.auction.containers.Configurations;
 import com.auction.containers.Data;
@@ -67,6 +68,7 @@ public class IndexController
 	public static ISPL this_ispl;
 	public static ISPL_VIZ this_ispl_viz;
 	public static UTT_VIZ this_utt_viz;
+	public static UTT_BIGSCREEN this_utt_bigscreen;
 	public static VIZ_ISPL_2024 this_ispl_viz_2024;
 	public static PSL this_psl;
 	public static MUMBAI_T20_VIZ this_mumbai_t20_viz;
@@ -74,7 +76,7 @@ public class IndexController
 	public static PWL this_pwl;
 	public static KCL_BIGSCREEN this_KCL_BIGSCREEN;
 	public static PrintWriter print_writer;
-	public static String expiry_date = "2026-02-14";
+	public static String expiry_date = "2026-12-31";
 	public static String error_message = "";
 	public static String current_date = "";
 	public static String Current_File_Name = "";
@@ -171,6 +173,8 @@ public class IndexController
 			this_pwl =new PWL();
 			this_KCL_BIGSCREEN = new KCL_BIGSCREEN();
 			this_utt_viz = new UTT_VIZ();
+			
+			this_utt_bigscreen = new UTT_BIGSCREEN();
 			session_selected_broadcaster = select_broadcaster;
 			selected_layer = which_layer;
 			selected_scene = which_scene;
@@ -200,7 +204,14 @@ public class IndexController
 //				print_writer.println("LAYER3*EVEREST*STAGE*DIRECTOR*Loop START;");
 				this_doad.which_graphics_onscreen = "BG";
 				break;
-			case "VIZ_ISPL_2024": case "PSL": case "UTT_VIZ": case "MUMBAI_T20_VIZ": case "KCL": case "KCL_BIGSCREEN": case "PWL":
+			case "UTT_BIGSCREEN":
+				scene.LoadScene("BIGSCREEN", print_writer, session_Configurations);
+				this_utt_bigscreen.which_graphics_onscreen = "";
+				this_utt_bigscreen.resetData(print_writer);
+				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Logo$In_Out START \0");
+				break;
+			case "VIZ_ISPL_2024": case "PSL":  case "UTT_VIZ": case "MUMBAI_T20_VIZ": case "KCL": 
+			case "KCL_BIGSCREEN": case "PWL":
 				scene.LoadScene("OVERLAYS", print_writer, session_Configurations);
 				scene.LoadScene("FULL-FRAMERS", print_writer, session_Configurations);
 				switch (session_selected_broadcaster) {
@@ -218,6 +229,9 @@ public class IndexController
 					break;
 				case "PSL":
 					this_psl.resetData(print_writer);
+					break;
+				case "UTT_VIZ":
+					this_utt_viz.resetData(print_writer);
 					break;
 				}
 				break;
@@ -330,6 +344,13 @@ public class IndexController
 					}
 					this_utt_viz.updateData(session_auction,session_curr_bid,auctionService,print_writer);
 					break;
+					
+				case "UTT_BIGSCREEN":
+					if(this_utt_bigscreen.data.isBid_Start_or_not() == true) {
+						this_utt_bigscreen.data.setWhichside(2);
+					}
+					this_utt_bigscreen.updateData(session_auction,session_curr_bid,auctionService,print_writer);
+					break;	
 				case "KCL":
 					if(this_kcl.data.isBid_Start_or_not() == true) {
 						this_kcl.data.setWhichside(2);
@@ -366,6 +387,9 @@ public class IndexController
 				break;
 			case "UTT_VIZ":
 				this_utt_viz.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
+				break;
+			case "UTT_BIGSCREEN":
+				this_utt_bigscreen.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
 				break;
 			case "VIZ_ISPL_2024":
 				this_ispl_viz_2024.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
