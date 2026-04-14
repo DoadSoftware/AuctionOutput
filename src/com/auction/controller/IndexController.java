@@ -242,7 +242,8 @@ public class IndexController
 			session_auction = new Auction();
 			session_auction = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON), Auction.class);
 			session_auction = AuctionFunctions.populateMatchVariables(auctionService, session_auction);
-			session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(),session_auction.getPlayers(), session_auction.getPlayersList()));
+			session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(),session_auction.getPlayers(), 
+					session_auction.getPlayersList(),session_selected_broadcaster));
 			
 			session_curr_bid = new Auction();
 			session_curr_bid = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CURRENT_BID_JSON), Auction.class);
@@ -294,7 +295,8 @@ public class IndexController
 			if(last_match_time_stamp != new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON).lastModified()) {
 				session_auction = new ObjectMapper().readValue(new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON), Auction.class);
 				session_auction = AuctionFunctions.populateMatchVariables(auctionService, session_auction);
-				session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(),session_auction.getPlayers(), session_auction.getPlayersList()));
+				session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(),
+						session_auction.getPlayers(), session_auction.getPlayersList(),session_selected_broadcaster));
 				last_match_time_stamp = new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.AUCTION_JSON).lastModified();
 				
 				if(session_selected_broadcaster != null) {
@@ -429,7 +431,7 @@ public class IndexController
 		case "LOF_SQUAD_SIZE_CATEGORY_WISE_GRAPHICS-OPTIONS": case "LOF_SQUAD_GRAPHICS-OPTIONS": case "TEAM_CURRENT_BID_GRAPHICS-OPTIONS":
 		case "FF_TOP_FIVE_SOLD_TEAM_GRAPHICS-OPTIONS": case "SINGLE_GRAPHICS-OPTIONS": case "FLIPPER_SQUAD_GRAPHICS-OPTIONS":case "FF_SQUAD_GRAPHICS-OPTIONS":
 		case "FF_SQUAD_ROLE_GRAPHICS-OPTIONS":case "LOF_TEAM_BID_GRAPHICS-OPTIONS": case "CRAWL_SQUAD_GRAPHICS-OPTIONS": case "SQUAD_ANIMATION_GRAPHICS-OPTIONS":
-		case "RETAIN_PLAYERS_GRAPHICS-OPTIONS":
+		case "RETAIN_PLAYERS_GRAPHICS-OPTIONS": case "TEAMS_GRAPHICS-OPTIONS":
 			System.out.println("Comiong in controller sssss");
 		    return (List<T>) session_team;
 		case "ZONEWISE_PLAYER_SOLD_GRAPHICS-OPTIONS": case "ZONE-PLAYER_GRAPHICS-OPTIONS":

@@ -1352,7 +1352,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 	private void populateFFSquadRoleTeam(PrintWriter print_writer, int whichSide, Integer teaam_id,
 			Auction auction, AuctionService auctionService, String session_selected_broadcaster2) throws Exception {
 		auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(auction.getTeam(), 
-		        auction.getPlayers(), auction.getPlayersList()));
+		        auction.getPlayers(), auction.getPlayersList(),session_selected_broadcaster));
 		
 		PlayerCount team = auction.getTeamZoneList().stream().filter(tm->tm.getTeamId() == teaam_id).findAny().orElse(null);
 		
@@ -1584,7 +1584,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 			Auction auction, AuctionService auctionService, String session_selected_broadcaster2) throws Exception {
 		
 		auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(auction.getTeam(), 
-		        auction.getPlayers(), auction.getPlayersList()));
+		        auction.getPlayers(), auction.getPlayersList(),session_selected_broadcaster));
 		
 		PlayerCount team = auction.getTeamZoneList().stream().filter(tm->tm.getTeamId() == teaam_id).findAny().orElse(null);
 		
@@ -2991,7 +2991,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		int row = 0;
 		
 		auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(auction.getTeam(), 
-		        auction.getPlayers(), auction.getPlayersList()));
+		        auction.getPlayers(), auction.getPlayersList(),session_selected_broadcaster));
 
 		squad = auction.getTeamZoneList().stream() .filter(tm -> tm.getTeamId() == team_id)
 		    .flatMap(tm -> tm.getPlayer().stream()).collect(Collectors.toList());
@@ -3115,7 +3115,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		Auction session_auction = match;
 
 		session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(), 
-			session_auction.getPlayers(), session_auction.getPlayersList()));
+			session_auction.getPlayers(), session_auction.getPlayersList(),session_selected_broadcaster));
 
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side"+whichSide+"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 1" + "\0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side"+whichSide+"$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 0"+ "\0");
@@ -3168,7 +3168,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 			Auction session_auction = match;
 
 			session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(), 
-				session_auction.getPlayers(), session_auction.getPlayersList()));
+				session_auction.getPlayers(), session_auction.getPlayersList(),session_selected_broadcaster));
 			
 			Team team = auctionService.getTeams().stream().filter(tm -> tm.getTeamId() == team_id).findAny().orElse(null);
 			
@@ -3250,7 +3250,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 				+ logo_path + "TLOGO" + "\0");
 		
 		auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(auction.getTeam(), 
-				auction.getPlayers(), auction.getPlayersList()));
+				auction.getPlayers(), auction.getPlayersList(),session_selected_broadcaster));
 		
 		if(which_zone.equalsIgnoreCase("U19")) {
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$SubHead$Side" + whichSide + "$txt_SubHeader*GEOM*TEXT SET " + "UNDER 19 PICKS" + " \0");
@@ -3372,7 +3372,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$PurseRemaining$DataAll$Title$txt_Title3*GEOM*TEXT SET PURSE REMAINING\0");
 		
 		auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(auction.getTeam(), 
-				auction.getPlayers(), auction.getPlayersList()));
+				auction.getPlayers(), auction.getPlayersList(),session_selected_broadcaster));
 		int row = 0;
 		for(PlayerCount tm : auction.getTeamZoneList()) {
 			row++;
@@ -4325,7 +4325,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 			data_str = AuctionFunctions.getSquadDataMT20InZone(auction,team_id);
 			Auction session_auction = auction;
 			session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(), 
-					session_auction.getPlayers(), session_auction.getPlayersList()));
+					session_auction.getPlayers(), session_auction.getPlayersList(),session_selected_broadcaster));
 			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Flipper$Data$Header$txt_Header*GEOM*TEXT SET " + 
 					auction.getTeam().get(teamId-1).getTeamName1() + " SQUAD\0");
@@ -4584,7 +4584,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		
 		Auction session_auction = match;
 		session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(), 
-				session_auction.getPlayers(), session_auction.getPlayersList()));
+				session_auction.getPlayers(), session_auction.getPlayersList(),session_selected_broadcaster));
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$Select_HeaderType*FUNCTION*Omo*vis_con SET 2\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$Header$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");

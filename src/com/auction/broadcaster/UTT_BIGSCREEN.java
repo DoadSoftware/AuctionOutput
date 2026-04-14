@@ -1730,7 +1730,7 @@ public class UTT_BIGSCREEN extends Scene{
 		List<Player> top_sold = new ArrayList<Player>();
 		Auction session_auction = auction;
 		session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(), 
-				session_auction.getPlayers(), session_auction.getPlayersList()));
+				session_auction.getPlayers(), session_auction.getPlayersList(),session_selected_broadcaster));
 		
 		PlayerCount team = session_auction.getTeamZoneList().stream().filter(ply->ply.getTeamId()==team_id).findAny().orElse(null);
 		top_sold = team.getPlayer();
@@ -2055,7 +2055,7 @@ public void populateCrawlerSquad(PrintWriter print_writer,int team_id,int which_
 		data_str = AuctionFunctions.getSquadDataUTTZone(auction,team_id);
 		Auction session_auction = auction;
 		session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(), 
-				session_auction.getPlayers(), session_auction.getPlayersList()));
+				session_auction.getPlayers(), session_auction.getPlayersList(),session_selected_broadcaster));
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Flipper$Data$Header$txt_Header*GEOM*TEXT SET " + 
 				auction.getTeam().get(teamId-1).getTeamName1() + "\0");
@@ -2108,7 +2108,7 @@ public void populateCrawlerSquad(PrintWriter print_writer,int team_id,int which_
 		
 		Auction session_auction = match;
 		session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(), 
-				session_auction.getPlayers(), session_auction.getPlayersList()));
+				session_auction.getPlayers(), session_auction.getPlayersList(),session_selected_broadcaster));
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$Header$Side" + which_side + "$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 0\0");	
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + which_side + "$Squad$SubHeader$Select_Subheader*FUNCTION*Omo*vis_con SET 1\0");		

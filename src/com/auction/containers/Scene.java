@@ -117,7 +117,7 @@ public class Scene {
 				break;
 			case "FULL-FRAMERS":
 				print_writer.println("-1 RENDERER*BACK_LAYER SET_OBJECT SCENE*/Default/" + 
-					(config.getBroadcaster().equalsIgnoreCase("UTT_VIZ") ? "gfx_Fullframes_2026" : "FullFrames") + " \0");
+					(config.getBroadcaster().equalsIgnoreCase("UTT_VIZ") ? "gfx_Fullframes" : "FullFrames") + " \0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*SCENE_DATA INITIALIZE \0");
 				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE SHOW 0.0 \0");
 				break;

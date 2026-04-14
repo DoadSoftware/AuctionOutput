@@ -2663,7 +2663,7 @@ public class VIZ_ISPL_2024 extends Scene{
 		Auction session_auction = match;
 
 		session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(), 
-			session_auction.getPlayers(), session_auction.getPlayersList()));
+			session_auction.getPlayers(), session_auction.getPlayersList(),session_selected_broadcaster));
 
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side"+whichSide+"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 1" + "\0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side"+whichSide+"$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 0"+ "\0");
@@ -2734,7 +2734,7 @@ public class VIZ_ISPL_2024 extends Scene{
 			Auction session_auction = match;
 
 			session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(), 
-				session_auction.getPlayers(), session_auction.getPlayersList()));
+				session_auction.getPlayers(), session_auction.getPlayersList(),session_selected_broadcaster));
 			
 			Team team = auctionService.getTeams().stream().filter(tm -> tm.getTeamId() == team_id).findAny().orElse(null);
 			
@@ -4092,7 +4092,7 @@ public class VIZ_ISPL_2024 extends Scene{
 		
 		Auction session_auction = match;
 		session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(), session_auction.getPlayers(), 
-				session_auction.getPlayersList()));
+				session_auction.getPlayersList(),session_selected_broadcaster));
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$Select_HeaderType*FUNCTION*Omo*vis_con SET 2\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$HeaderType2$Header$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
