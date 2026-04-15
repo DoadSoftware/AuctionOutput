@@ -153,6 +153,12 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			which_GFX = "";
 			processAuctionProcedures('POPULATE-IDENT');
 			break;
+		case 'Shift_E':
+			stopTeamRotation();
+			which_GFX = "";
+			processAuctionProcedures('POPULATE-TEAMS_DETAILS');
+			break;
+			
 		case 'Alt_a':
 			processAuctionProcedures('POPULATE-RULES');
 			break;
@@ -1547,7 +1553,7 @@ function processAuctionProcedures(whatToProcess)
 			break;	
 			
 			case 'POPULATE-FF-PLAYERPROFILE': case 'POPULATE-SQUAD': case 'POPULATE-REMAINING_PURSE_ALL': case 'POPULATE-SINGLE_PURSE': case 'POPULATE-TOP_SOLD':
-			case 'POPULATE-L3-NAMESUPER': case 'POPULATE-TOP_SOLD_TEAM': case 'POPULATE-IDENT': case 'POPULATE-FLIPPER_SQUAD': case 'POPULATE-TEAMS':
+			case 'POPULATE-L3-NAMESUPER': case 'POPULATE-TOP_SOLD_TEAM': case 'POPULATE-IDENT': case 'POPULATE-FLIPPER_SQUAD': case 'POPULATE-TEAMS': case 'POPULATE-TEAMS_DETAILS':
 			case 'POPULATE-CURR_BID': case 'POPULATE-RTM_AVAILABLE': case 'POPULATE-RTM_PLAYER': case "POPULATE-PROFILE_STATS_CHANGE":
 			case 'POPULATE-RTM_ENABLED': case 'POPULATE-GOOGLY_POWER': case 'POPULATE-PROFILE_STATS': case 'POPULATE-LOF_REMAINING_PURSE':
 			case 'POPULATE-LOF_TOP_SOLD': case 'POPULATE-LOF_TEAM_TOP_SOLD': case 'POPULATE-CRAWLER_TEAM_TOP_SOLD': case "POPULATE-SQUAD-PLAYER": case 'POPULATE-PLAYERPROFILE_FF': case 'POPULATE-PROFILE_FF':
@@ -1584,6 +1590,9 @@ function processAuctionProcedures(whatToProcess)
 			        	switch(whatToProcess) {
 						case 'POPULATE-IDENT':
 							processAuctionProcedures('ANIMATE-IN-IDENT');
+							break;
+						case 'POPULATE-TEAMS_DETAILS':
+							processAuctionProcedures('ANIMATE-IN-TEAMS_DETAILS');
 							break;
 						case 'POPULATE-L3-NAMESUPER':
 							processAuctionProcedures('ANIMATE-IN-NAMESUPER');	
@@ -2325,6 +2334,11 @@ function addItemsToList(whatToProcess, dataToProcess)
 							select.name = select.id;
 							
 							option = document.createElement('option');
+							option.value = 'category';
+							option.text = 'category';
+							select.appendChild(option);
+							
+							option = document.createElement('option');
 							option.value = 'Rank';
 							option.text = 'Rank';
 							select.appendChild(option);
@@ -2719,7 +2733,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 			    // Determine which options to show based on broadcaster
 			    const broadcaster = $('#selected_broadcaster').val().toUpperCase();
 			    if (broadcaster === 'UTT_VIZ' || broadcaster === 'KCL' || broadcaster === 'KCL_BIGSCREEN'  || broadcaster === 'PWL') {
-			        ['rank', 'style', 'bio'].forEach(value => {
+			        ['category','rank', 'style', 'bio'].forEach(value => {
 			            const option = document.createElement('option');
 			            option.value = value;
 			            option.text = value.charAt(0).toUpperCase() + value.slice(1);
