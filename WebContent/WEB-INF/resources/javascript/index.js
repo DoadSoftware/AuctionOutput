@@ -547,7 +547,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				break;
 			case 'PSL':
 				break;
-			case 'UTT_VIZ':
+			case 'UTT_VIZ': case'UTT_BIGSCREEN':
 				processAuctionProcedures('POPULATE-ZONE_PLAYERS_STATS');
 				break;
 			default://ISPL
@@ -994,7 +994,7 @@ function processUserSelection(whichInput)
 		case "populate_Squad_Role_team_btn":
 			processAuctionProcedures('POPULATE-FF_SQUAD_ROLE_TEAM');
 			break;
-		case 'populate_ff_Top_Five_Sold_team_btn':
+		case'populate_ff_Top_Five_Sold_team_btn':
 			processAuctionProcedures('POPULATE-FF_FIVE_TOP_BUY_TEAM');
 			break;
 		case 'single_Sold_team_btn':
