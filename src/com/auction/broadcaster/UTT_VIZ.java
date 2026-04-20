@@ -1544,12 +1544,8 @@ public class UTT_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 				+ logo_path + "EVENT" + "\0");
 		
-		List<Team> teams = auction.getTeam();
-		// Sort alphabetically by team name
-		teams.sort(Comparator.comparing(Team::getTeamName1, String.CASE_INSENSITIVE_ORDER));
-		
 		int row = 0;
-		for(Team tm : teams) {
+		for(Team tm : auction.getTeam()) {
 			row++;
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$Squad_Size$Row" + row + "$NameGrp$txt_FirstName"
 					+ "*GEOM*TEXT SET " + tm.getTeamName2() + " \0");
@@ -1584,12 +1580,8 @@ public class UTT_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + whichSide + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 				+ logo_path + "EVENT" + "\0");
 		
-		List<Team> teams = auction.getTeam();
-		// Sort alphabetically by team name
-		teams.sort(Comparator.comparing(Team::getTeamName1, String.CASE_INSENSITIVE_ORDER));
-		
 		int row = 0;
-		for(Team tm : teams) {
+		for(Team tm : auction.getTeam()) {
 			row++;
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$AllGraphics$Side" + whichSide + "$Squad_Size$Row" + row + "$NameGrp$txt_FirstName"
 					+ "*GEOM*TEXT SET " + tm.getTeamName2() + " \0");
@@ -1739,11 +1731,7 @@ public class UTT_VIZ extends Scene{
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$LOF$gfx_LOF$AllGraphics$Side" + which_side + "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 0 \0");
 		
-		List<Team> teams = auction.getTeam();
-		// Sort alphabetically by team name
-		teams.sort(Comparator.comparing(Team::getTeamName1, String.CASE_INSENSITIVE_ORDER));
-		
-		for(int i=0; i <= teams.size()-1; i++) {
+		for(int i=0; i <= auction.getTeam().size()-1; i++) {
 			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$LOF$gfx_LOF$AllGraphics$Side" + which_side + "$RemainingPurse$Row" + (i+1) + "$NameGrp$txt_FirstName"
 					+ "*GEOM*TEXT SET " + auction.getTeam().get(i).getTeamName2() + " \0");
@@ -1936,12 +1924,8 @@ public class UTT_VIZ extends Scene{
 //				+ "$Team_Details$2_Column$List4$0$Select_LineNumber*FUNCTION*Omo*vis_con SET 1\0");
 //		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide 
 //				+ "$Team_Details$3_Column$List4$0$txt_Info*GEOM*TEXT SET IN LAKH\0");
-		List<Team> teams = auction.getTeam();
-
-		// Sort alphabetically by team name
-		teams.sort(Comparator.comparing(Team::getTeamName1, String.CASE_INSENSITIVE_ORDER));
 		
-		for(Team tm : teams) {
+		for(Team tm : auction.getTeam()) {
 			row++;
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide 
 					+ "$Team_Details$2_Column$List1$" + row + "$txt_Name*GEOM*TEXT SET " + tm.getTeamName1() + "\0");
@@ -2225,11 +2209,7 @@ public class UTT_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + "PURSE REMAINING" + " \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlHeader$Side" + which_side + "$txt_Header2*GEOM*TEXT SET " + "" + " \0");
 		
-		List<Team> teams = auction.getTeam();
-		// Sort alphabetically by team name
-		teams.sort(Comparator.comparing(Team::getTeamName1, String.CASE_INSENSITIVE_ORDER));
-		
-		for(int i=0; i <= teams.size()-1; i++) {
+		for(int i=0; i <= auction.getTeam().size()-1; i++) {
 			
 			crawler_Data = crawler_Data + auction.getTeam().get(i).getTeamName1() + ": ";
 			
@@ -2261,11 +2241,7 @@ public class UTT_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + "SQUAD SIZE" + " \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$Crawl$CrawlHeader$Side" + which_side + "$txt_Header2*GEOM*TEXT SET " + "" + " \0");
 		
-		List<Team> teams = auction.getTeam();
-		// Sort alphabetically by team name
-		teams.sort(Comparator.comparing(Team::getTeamName1, String.CASE_INSENSITIVE_ORDER));
-		
-		for(Team tm : teams) {
+		for(Team tm : auction.getTeam()) {
 			crawler_Data = crawler_Data + tm.getTeamName1() + " : ";
 			
 			for(Player auc : auction.getPlayers()) {
@@ -2586,11 +2562,7 @@ public class UTT_VIZ extends Scene{
 	{
 		int squadSize = 0, purse = 0, remain_purse = 0, row = 0;
 		
-		List<Team> teams = match.getTeam();
-		// Sort alphabetically by team name
-		teams.sort(Comparator.comparing(Team::getTeamName1, String.CASE_INSENSITIVE_ORDER));
-		
-		for(Team tm : teams) {
+		for(Team tm : match.getTeam()) {
 			row = row + 1;
 			
 			for(Player auc : match.getPlayers()) {
