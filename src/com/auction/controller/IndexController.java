@@ -450,7 +450,7 @@ public class IndexController
 
 	public void getDataFromDB()
 	{
-		session_flipper = auctionService.getFlipper();
+		//session_flipper = auctionService.getFlipper();
 		session_nameSupers = auctionService.getNameSupers();
 		session_team = auctionService.getTeams();
 		session_player = auctionService.getAllPlayer();

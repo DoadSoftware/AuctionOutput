@@ -74,7 +74,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			}
 			break;
 		case '`':
-			//processAuctionProcedures('ANIMATE-OUT-ALL_GFX');
+			processAuctionProcedures('ANIMATE-OUT-ALL_GFX');
 			break;
 			
 		case "0"://187
@@ -355,7 +355,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			break;
 		case 's': // LOF SQUAD SIZE
 			switch ($('#selected_broadcaster').val()){
-			case 'KCL_BIGSCREEN':
+			case 'KCL_BIGSCREEN': case 'UTT_BIGSCREEN': 
 				$("#captions_div").hide();
 				$("#cancel_match_setup_btn").hide();
 				$("#expiry_message").hide();
@@ -386,7 +386,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			break;
 		case 'f': //LOF PURSE REMAINING
 			switch ($('#selected_broadcaster').val()){
-			case 'VIZ_ISPL_2024': case 'PSL': case 'KCL': case 'KCL_BIGSCREEN': case 'PWL': 
+			case 'VIZ_ISPL_2024': case 'PSL': case 'KCL': case 'KCL_BIGSCREEN': case 'PWL': case 'UTT_VIZ':
 				processAuctionProcedures('POPULATE-LOF_REMAINING_PURSE');
 				break;
 			default://ISPL
@@ -399,7 +399,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			}
 			break;
 			
-		case 'Alt_f':
+		case 'Alt_p': //case 'Alt_f':
 			processAuctionProcedures('POPULATE-CRAWL-PURSE_REMAINING');
 			break;
 		case 'Alt_s':
@@ -1240,7 +1240,7 @@ function processAuctionProcedures(whatToProcess)
 		break;
 	case 'POPULATE-SQUAD_ANIMATION':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
-		case 'KCL_BIGSCREEN':
+		case 'KCL_BIGSCREEN': case 'UTT_BIGSCREEN': 
 			let team_index;
 			if(which_GFX=== "POPULATE-SQUAD_ANIMATION"){
 				team_index = id;
@@ -1550,9 +1550,14 @@ function processAuctionProcedures(whatToProcess)
 					startTeamRotation(); 
 				}
 			}
-			break;	
+			break;
+			case 'POPULATE-SQUAD':
+				if(confirm('Animate In?') == true){
+					processAuctionProcedures('ANIMATE-IN-SQUAD');	
+				}
+				break;	
 			
-			case 'POPULATE-FF-PLAYERPROFILE': case 'POPULATE-SQUAD': case 'POPULATE-REMAINING_PURSE_ALL': case 'POPULATE-SINGLE_PURSE': case 'POPULATE-TOP_SOLD':
+			case 'POPULATE-FF-PLAYERPROFILE': case 'POPULATE-REMAINING_PURSE_ALL': case 'POPULATE-SINGLE_PURSE': case 'POPULATE-TOP_SOLD':
 			case 'POPULATE-L3-NAMESUPER': case 'POPULATE-TOP_SOLD_TEAM': case 'POPULATE-IDENT': case 'POPULATE-FLIPPER_SQUAD': case 'POPULATE-TEAMS': case 'POPULATE-TEAMS_DETAILS':
 			case 'POPULATE-CURR_BID': case 'POPULATE-RTM_AVAILABLE': case 'POPULATE-RTM_PLAYER': case "POPULATE-PROFILE_STATS_CHANGE":
 			case 'POPULATE-RTM_ENABLED': case 'POPULATE-GOOGLY_POWER': case 'POPULATE-PROFILE_STATS': case 'POPULATE-LOF_REMAINING_PURSE':
@@ -1617,9 +1622,6 @@ function processAuctionProcedures(whatToProcess)
 							break;
 						case 'POPULATE-REMAINING_PURSE_ALL':
 							processAuctionProcedures('ANIMATE-IN-REMAINING_PURSE_ALL');				
-							break;
-						case 'POPULATE-SQUAD':
-							processAuctionProcedures('ANIMATE-IN-SQUAD');				
 							break;
 						case 'POPULATE-TEAMS':
 							processAuctionProcedures('ANIMATE-IN-TEAMS');				
@@ -1867,7 +1869,12 @@ function addItemsToList(whatToProcess, dataToProcess)
 			
 			$('#select_graphic_options_div').empty();
 			header_text = document.createElement('h6');
-			header_text.innerHTML = 'Select Graphic Options';
+
+        	let title = whatToProcess
+            	.replace('-OPTIONS', '')     // remove suffix
+            	.replace(/[-_]+/g, ' ')     // replace - and _ with space
+            	.trim();
+        	header_text.innerHTML = title;
 			document.getElementById('select_graphic_options_div').appendChild(header_text);
 			
 			table = document.createElement('table');
