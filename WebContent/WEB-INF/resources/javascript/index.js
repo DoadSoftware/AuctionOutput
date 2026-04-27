@@ -327,7 +327,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				break;
 			}
 			break;
-		case 'Alt_F11': //FF ICONIC PLAYERS
+		case 'Shift_R': //FF ICONIC PLAYERS
 			switch ($('#selected_broadcaster').val()){
 			case 'PSL':
 				$("#captions_div").hide();
@@ -1555,7 +1555,12 @@ function processAuctionProcedures(whatToProcess)
 				if(confirm('Animate In?') == true){
 					processAuctionProcedures('ANIMATE-IN-SQUAD');	
 				}
-				break;	
+				break;
+			case 'POPULATE-LOF_SQUAD':
+				if(confirm('Animate In?') == true){
+					processAuctionProcedures('ANIMATE-IN-LOF_SQUAD');	
+				}			
+				break;
 			
 			case 'POPULATE-FF-PLAYERPROFILE': case 'POPULATE-REMAINING_PURSE_ALL': case 'POPULATE-SINGLE_PURSE': case 'POPULATE-TOP_SOLD':
 			case 'POPULATE-L3-NAMESUPER': case 'POPULATE-TOP_SOLD_TEAM': case 'POPULATE-IDENT': case 'POPULATE-FLIPPER_SQUAD': case 'POPULATE-TEAMS': case 'POPULATE-TEAMS_DETAILS':
@@ -1563,7 +1568,7 @@ function processAuctionProcedures(whatToProcess)
 			case 'POPULATE-RTM_ENABLED': case 'POPULATE-GOOGLY_POWER': case 'POPULATE-PROFILE_STATS': case 'POPULATE-LOF_REMAINING_PURSE':
 			case 'POPULATE-LOF_TOP_SOLD': case 'POPULATE-LOF_TEAM_TOP_SOLD': case 'POPULATE-CRAWLER_TEAM_TOP_SOLD': case "POPULATE-SQUAD-PLAYER": case 'POPULATE-PLAYERPROFILE_FF': case 'POPULATE-PROFILE_FF':
 			case 'POPULATE-LOF_REMAINING_SLOT': case 'POPULATE-LOF_SQUAD_SIZE': case 'POPULATE-LOF_RTM_REMAINING': case 'POPULATE-LOF_SQUAD_SIZE_CATEGORY_WISE':
-			case 'POPULATE-LOF_SQUAD': case 'POPULATE-CRAWLE_SQUAD': case 'POPULATE-LOF_SQUAD_REMAIN': case 'POPULATE-L3-CRWLERFREETEXT': case 'POPULATE-L3-FLIPPER': case 'POPULATE-L3-FLIPPER_TEXT':
+			case 'POPULATE-CRAWLE_SQUAD': case 'POPULATE-LOF_SQUAD_REMAIN': case 'POPULATE-L3-CRWLERFREETEXT': case 'POPULATE-L3-FLIPPER': case 'POPULATE-L3-FLIPPER_TEXT':
 			
 			case 'POPULATE-FF_RTM_AND_PURSE_REMAINING': case 'POPULATE-FF_TOP_BUYS_AUCTION': case 'POPULATE-FF_TOP_BUY_TEAM': case 'POPULATE-TEAM_CURR_BID':
 			case 'POPULATE-FF_ICONIC_PLAYERS': case 'POPULATE-FF_FIVE_TOP_BUYS_AUCTION':  case 'POPULATE-FF_FIVE_TOP_BUY_TEAM': case 'POPULATE-FF_SINGLEPURSE_TEAM':
@@ -1669,9 +1674,6 @@ function processAuctionProcedures(whatToProcess)
 							break;
 						case 'POPULATE-CRAWLER_TEAM_TOP_SOLD':
 							processAuctionProcedures('ANIMATE-IN-CRAWLER_TEAM_TOP_SOLD');				
-							break;
-						case 'POPULATE-LOF_SQUAD':
-							processAuctionProcedures('ANIMATE-IN-LOF_SQUAD');				
 							break;
 						case 'POPULATE-CRAWLE_SQUAD':	
 							processAuctionProcedures('ANIMATE-IN-CRAWL_SQUAD');				
@@ -2072,7 +2074,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 										select.style = 'width:100px';
 										select.id = 'selectImage';
 										select.name = select.id;
-										["WithImage","WithoutImage"].forEach(function(flip){
+										["WithImage"].forEach(function(flip){
 												option = document.createElement('option');
 												option.value = flip;
 												option.text = flip;
@@ -2466,57 +2468,60 @@ function addItemsToList(whatToProcess, dataToProcess)
 									}
 									
 									option = document.createElement('option');
+									option.value = 'with_info';
+									option.text = 'Category';
+									select.appendChild(option);
+									
+									option = document.createElement('option');
 									option.value = 'with_data';
 									option.text = 'Rank & Style';
 									select.appendChild(option);
 								
 									/*option = document.createElement('option');
-									option.value = 'with_info';
-									option.text = 'Info';
-									select.appendChild(option);*/
-									
-									option = document.createElement('option');
 									option.value = 'without';
 									option.text = 'WithOut Stats';
-									select.appendChild(option);
+									select.appendChild(option);*/
 									
 									select.setAttribute('onchange',"processUserSelection(this)");
 									row.insertCell(cellCount).appendChild(select);
 									cellCount = cellCount + 1;
 									
-								    // Second cell: reserved for conditional dropdown
-								    const seCell = row.insertCell(cellCount);
-								    seCell.id = 'Playerstats'; // So we can target it easily later
-								    cellCount++;
-								
-								    // Add event listener to the main dropdown
-								    $(select).on('change', function () {
-								        const selectedValue = this.value;
-								        const container = document.getElementById('Playerstats');
-								
-								        // Remove old dropdown if it exists
-								        const existing = document.getElementById('PlayerData');
-								        if (existing) existing.remove();
-								
-								        // Show second dropdown only if "stats" is selected
-								        if (selectedValue === 'with_info') {
-								            const statsDropdown = document.createElement('select');
-								            statsDropdown.id = 'PlayerData';
-								            statsDropdown.name = 'PlayerData';
-								
-								            ['ISPL S-1', 'ISPL S-2'].forEach(value => {
-								                const option = document.createElement('option');
-								                option.value = value;
-								                option.text = value;
-								                option.style.fontWeight = 'bold';
-								                statsDropdown.appendChild(option);
-								            });
-								
-								            container.appendChild(statsDropdown);
-								        }
-								    });							
-								    $(select).trigger('change');
+									switch ($('#selected_broadcaster').val().toUpperCase()){
+									case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
+										// Second cell: reserved for conditional dropdown
+									    const seCell = row.insertCell(cellCount);
+									    seCell.id = 'Playerstats'; // So we can target it easily later
+									    cellCount++;
 									
+									    // Add event listener to the main dropdown
+									    $(select).on('change', function () {
+									        const selectedValue = this.value;
+									        const container = document.getElementById('Playerstats');
+									
+									        // Remove old dropdown if it exists
+									        const existing = document.getElementById('PlayerData');
+									        if (existing) existing.remove();
+									
+									        // Show second dropdown only if "stats" is selected
+									        if (selectedValue === 'with_info') {
+									            const statsDropdown = document.createElement('select');
+									            statsDropdown.id = 'PlayerData';
+									            statsDropdown.name = 'PlayerData';
+									
+									            ['ISPL S-1', 'ISPL S-2'].forEach(value => {
+									                const option = document.createElement('option');
+									                option.value = value;
+									                option.text = value;
+									                option.style.fontWeight = 'bold';
+									                statsDropdown.appendChild(option);
+									            });
+									
+									            container.appendChild(statsDropdown);
+									        }
+									    });							
+									    $(select).trigger('change');
+										break;
+									}
 									break;
 								case 'LT_PLAYERPROFILE-OPTIONS':
 									select = document.createElement('select');
@@ -2718,7 +2723,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 				
 				option = document.createElement('option');
 				option.value = 'with_info';
-				option.text = 'Info';
+				option.text = 'Category';
 				select.appendChild(option);
 				
 				option = document.createElement('option');
@@ -2746,7 +2751,14 @@ function addItemsToList(whatToProcess, dataToProcess)
 			            option.text = value.charAt(0).toUpperCase() + value.slice(1);
 			            select.appendChild(option);
 			        });
-			    } else if(broadcaster === 'VIZ_ISPL_2024'){
+			    }else if(broadcaster === 'UTT_BIGSCREEN'){
+					['category','rank&style'].forEach(value => {
+			            const option = document.createElement('option');
+			            option.value = value;
+			            option.text = value.charAt(0).toUpperCase() + value.slice(1);
+			            select.appendChild(option);
+			        });
+				}else if(broadcaster === 'VIZ_ISPL_2024'){
 					['style', 'freetext', 'prevteam', 'ISPL S-1', 'ISPL S-2', 'category'].forEach(value => {
 			            const option = document.createElement('option');
 			            option.value = value;
@@ -2945,7 +2957,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 				break;	
 			case 'LOF_SQUAD-OPTIONS':
 				option.name = 'populate_Lof_squad_btn';
-			    option.value = 'Populate LT Squad';
+			    option.value = 'Populate LOF Squad';
 				break;
 			case 'SQUAD_ANIMATION-OPTIONS':
 				
