@@ -1426,7 +1426,7 @@ public class UTT_BIGSCREEN extends Scene{
 			}
 			
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + which_side + "$Unsold_YTBD$Players$Players$" + row + "$WithData$img_Player"
-					+ "*TEXTURE*IMAGE SET " + photo_path + plyr.getPhotoName() + AuctionUtil.PNG_EXTENSION + "\0");
+					+ "*TEXTURE*IMAGE SET " + photo_mini_path + plyr.getPhotoName() + AuctionUtil.PNG_EXTENSION + "\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + which_side + "$Unsold_YTBD$Players$Players$" + row + "$WithData$Flag$"
 					+ "img_Flag*TEXTURE*IMAGE SET " + flag_path + plyr.getNationality() + "\0");
 			
