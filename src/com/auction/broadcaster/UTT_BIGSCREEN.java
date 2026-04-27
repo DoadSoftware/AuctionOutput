@@ -1042,6 +1042,10 @@ public class UTT_BIGSCREEN extends Scene{
 	}
 
 	public void resetData(PrintWriter print_writer) {
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Logo$Ident$EventLogo$img_TeamBadgesShadow"
+				+ "*TEXTURE*IMAGE SET " + logo_path + "EVENT02" + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$Logo$Ident$EventLogo$img_TeamBadges"
+				+ "*TEXTURE*IMAGE SET " + logo_path + "EVENT02" + "\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Ident SHOW 0.0 \0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Profile SHOW 0.0 \0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change_Profile SHOW 0.0 \0");
@@ -1400,7 +1404,7 @@ public class UTT_BIGSCREEN extends Scene{
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$Header$Side" + which_side + "$Style2$txt_TeamName*GEOM*TEXT SET " + HeaderValue + "\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$Header$Side" + which_side + "$Style2$img-TeamBadges"
-				+ "*TEXTURE*IMAGE SET " + logo_path + "EVENT" + "\0");
+				+ "*TEXTURE*IMAGE SET " + logo_path + "EVENT02" + "\0");
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + which_side + "$Select_Graphics*FUNCTION*Omo*vis_con SET 5\0");
 
@@ -1470,7 +1474,7 @@ public class UTT_BIGSCREEN extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$Main$Header$Header_Out$Header_In$Side" + whichSide + "$Style2$"
 				+ "txt_TeamName*GEOM*TEXT SET " + "RETAINED\r\nPLAYERS" + " \0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$Main$Header$Header_Out$Header_In$Side" + whichSide + "$Style2$" 
-				+ "img-TeamBadges*TEXTURE*IMAGE SET " + logo_path + "EVENT" + "\0");
+				+ "img-TeamBadges*TEXTURE*IMAGE SET " + logo_path + "EVENT02" + "\0");
 		
 		for(Player player : top_sold) {
 			if(player.getSoldOrUnsold().equalsIgnoreCase("RETAIN")) {
@@ -1494,7 +1498,7 @@ public class UTT_BIGSCREEN extends Scene{
 					+ "NameGrp$BottomLine$Maxsize$txt_TopLine*GEOM*TEXT SET " + AuctionFunctions.ConvertToLakh(player.getSoldForPoints(),true)+ "L TOKENS" + "\0");
 			
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$Main$Side" + whichSide + "$Retained$Select_PlayerNumber$" + row + "$WithData$"
-					+ "NameGrp$BottomLine$RTM$txt_RTM*ACTIVE SET 0\0");
+					+ "NameGrp$BottomLine$RTM$txt_RTM*GEOM*TEXT SET\0");
 			
 		}
 	}
@@ -1932,7 +1936,7 @@ public class UTT_BIGSCREEN extends Scene{
 				+ "txt_TeamName*GEOM*TEXT SET " + "PLAYER AUCTION" + " \0");
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$Main$Header$Header_Out$Header_In$Side" + whichSide + "$Style2$" 
-				+ "img-TeamBadges*TEXTURE*IMAGE SET " + logo_path + "EVENT" + "\0");
+				+ "img-TeamBadges*TEXTURE*IMAGE SET " + logo_path + "EVENT02" + "\0");
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide 
 				+ "$Team_Details$2_Column$List1$0$txt_Name*GEOM*TEXT SET TEAM\0");
@@ -2081,7 +2085,7 @@ public class UTT_BIGSCREEN extends Scene{
 				+ "txt_TeamName*GEOM*TEXT SET " + "TOP BUYS" + " \0");
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$Main$Header$Header_Out$Header_In$Side" + whichSide + "$Style2$" 
-				+ "img-TeamBadges*TEXTURE*IMAGE SET " + logo_path + "EVENT" + "\0");
+				+ "img-TeamBadges*TEXTURE*IMAGE SET " + logo_path + "EVENT02" + "\0");
 		
 		for(Player plyr : top_sold) {
 			if(plyr.getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD) || plyr.getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)) {
@@ -2101,7 +2105,7 @@ public class UTT_BIGSCREEN extends Scene{
 						+ "*TEXTURE*IMAGE SET " + flag_path + auctionService.getAllPlayer().get(plyr.getPlayerId() - 1).getNationality().trim().replace(" ", "_") + "\0");
 				
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide + "$Top5_Buys$" + midPath + 
-						"$"+(which_data.equalsIgnoreCase("WithImage") ? "TeamNameGrp$txt_TopLine": "txt_Team") + "*GEOM*TEXT SET " + auction.getTeam().get(plyr.getTeamId() - 1).getTeamName1() + " \0");
+						"$"+(which_data.equalsIgnoreCase("WithImage") ? "TeamNameGrp$txt_TopLine": "txt_Team") + "*GEOM*TEXT SET " + auction.getTeam().get(plyr.getTeamId() - 1).getTeamName4() + " \0");
 
 				if(which_data.equalsIgnoreCase("WithImage")){
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide + "$Top5_Buys$"+
