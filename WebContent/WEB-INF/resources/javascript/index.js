@@ -2815,9 +2815,6 @@ function addItemsToList(whatToProcess, dataToProcess)
 			        });
 				} else {
 			        ['style', 'freetext', 'prevteam', 'stats', 'category'].forEach(value => {
-			            if (broadcaster === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
-					        return; // skip these options for Mumbai
-					    }
 			            const option = document.createElement('option');
 			            option.value = value;
 			            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
