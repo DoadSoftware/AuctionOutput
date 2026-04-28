@@ -31,7 +31,8 @@ public class MUMBAI_T20_VIZ extends Scene{
 	public String session_selected_broadcaster = "MUMBAI_T20_VIZ";
 	public String isPlayerSoldorUnsold = "";
 	public Data data = new Data();
-	public String which_graphics_onscreen = "",which_data="", rtm_googly_on_screen = "",which_stat = "";
+	public int whichSideCrawler=1;	
+	public String which_graphics_onscreen = "",which_data="", rtm_googly_on_screen = "",which_stat = "",which_crwaler_onscreen;
 	public int current_layer = 2, whichSide = 1, whichSideNotProfile=1, rowHighlight = 1,prevRowHighlight = 1, rtmGooglyWhichSide = 1;
 	public int player_id = 0,team_id=0,player_number=0;
 	public int zoneSize = 0, current_index = 0;
@@ -112,6 +113,10 @@ public class MUMBAI_T20_VIZ extends Scene{
 		case "POPULATE-FF_FIVE_TOP_BUY_TEAM": case "POPULATE-ZONEWISE_PLAYERS_SOLD": case "POPULATE-FLIPPER_SQUAD": case "POPULATE-FF_SQUAD_TEAM":
 		case "POPULATE-FF_SQUAD_ROLE_TEAM":case "POPULATE-LOF_TEAM_BID_AUCTION": case "POPULATE-L3-FLIPPER_TEXT": case "POPULATE-PROFILE_FF":
 			
+		//crawl	
+		case "POPULATE-CRAWLE_SQUAD":
+		case "POPULATE-CRAWL-PURSE_REMAINING": case "POPULATE-CRAWL-SQUAD_SIZE": case "POPULATE-CRAWL_TOP_SOLD": 
+		case "POPULATE-CRAWLER_TEAM_TOP_SOLD": case "POPULATE-L3-CRWLERFREETEXT":		
 			switch (session_selected_broadcaster.toUpperCase()) {
 			case "MUMBAI_T20_VIZ":
 				if(which_graphics_onscreen != "") {
@@ -203,6 +208,45 @@ public class MUMBAI_T20_VIZ extends Scene{
 					side2ValueToProcess = valueToProcess;
 					populateFlipperText(print_writer, whichSideNotProfile, Integer.valueOf(valueToProcess), auction, auctionService, session_selected_broadcaster);
 					processPreviewLowerThirds(print_writer, whatToProcess, whichSideNotProfile);
+					break;
+				//crawl
+				case "POPULATE-CRAWL-PURSE_REMAINING":
+					whichSideCrawler = (which_crwaler_onscreen != null && !which_crwaler_onscreen.isEmpty() ? 2 : 1);
+					side2ValueToProcess = valueToProcess;
+					populateCrawlerRemainingPurse(print_writer, valueToProcess.split(",")[0],whichSideCrawler, auction,auctionService, session_selected_broadcaster);
+				//	processPreviewCrawler(print_writer, whatToProcess, whichSideCrawler);
+					break;
+				
+				case "POPULATE-CRAWL-SQUAD_SIZE":
+					whichSideCrawler = (which_crwaler_onscreen != null && !which_crwaler_onscreen.isEmpty() ? 2 : 1);
+					side2ValueToProcess = valueToProcess;
+					populateCrawlerSquadSize(print_writer, whichSideCrawler, auction,auctionService,session_selected_broadcaster);
+				//	processPreviewCrawler(print_writer, whatToProcess, whichSideCrawler);
+					break;
+				case "POPULATE-CRAWL_TOP_SOLD":
+					whichSideCrawler = (which_crwaler_onscreen != null && !which_crwaler_onscreen.isEmpty() ? 2 : 1);
+					side2ValueToProcess = valueToProcess;
+					populateCrawlerTopSold(print_writer,whichSideCrawler, auction,auctionService, session_selected_broadcaster);
+				//	processPreviewCrawler(print_writer, whatToProcess, whichSideCrawler);
+					break;
+				case "POPULATE-CRAWLER_TEAM_TOP_SOLD":	
+					whichSideCrawler = (which_crwaler_onscreen != null && !which_crwaler_onscreen.isEmpty() ? 2 : 1);
+					side2ValueToProcess = valueToProcess;
+					populateCrawlTeamTopSold(print_writer,Integer.valueOf(valueToProcess.split(",")[0]),whichSideCrawler, auction,auctionService, session_selected_broadcaster);
+				//	processPreviewCrawler(print_writer, whatToProcess, whichSideCrawler);
+					break;
+				case "POPULATE-L3-CRWLERFREETEXT":	
+					whichSideCrawler = (which_crwaler_onscreen != null && !which_crwaler_onscreen.isEmpty() ? 2 : 1);
+					side2ValueToProcess = valueToProcess;
+					populateFreetextcrawler(print_writer, whichSideCrawler,Integer.valueOf(valueToProcess.split(",")[0]), auction,auctionService, 
+							session_selected_broadcaster);
+				//	processPreviewCrawler(print_writer, whatToProcess, whichSideCrawler);
+					break;
+				case "POPULATE-CRAWLE_SQUAD":
+					whichSideCrawler = (which_crwaler_onscreen != null && !which_crwaler_onscreen.isEmpty() ? 2 : 1);
+					side2ValueToProcess = valueToProcess;
+					populateCrawlerSquad(print_writer,Integer.valueOf(valueToProcess.split(",")[0]),whichSideCrawler, auction,auctionService, session_selected_broadcaster);
+				//	processPreviewCrawler(print_writer, whatToProcess, whichSideCrawler);
 					break;
 				case "POPULATE-L3-FLIPPER":
 					if(!which_graphics_onscreen.isEmpty()) {
@@ -571,7 +615,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 					break;
 				}
 			}
-		case "ANIMATE-OUT-PROFILE": case "ANIMATE-OUT-RTM_GOOGLY":
+		case "ANIMATE-OUT-PROFILE": case "ANIMATE-OUT-RTM_GOOGLY": case "ANIMATE-OUT-CRAWLER":
 		case "ANIMATE-OUT": case "CLEAR-ALL": case "ANIMATE-IN-PLAYERPROFILE": case "ANIMATE-IN-SQUAD": case "ANIMATE-IN-REMAINING_PURSE_ALL": case "ANIMATE-IN-SINGLE_PURSE":
 		case "ANIMATE-IN-TOP_SOLD": case "ANIMATE-IN-NAMESUPER": case "ANIMATE-IN-IDENT": case "ANIMATE-IN-TOP_SOLD_TEAM": case "ANIMATE-IN-CURR_BID":
 		case "ANIMATE-IN-RTM_AVAILABLE": case "ANIMATE-IN-RTM_ENABLED": case "ANIMATE-IN-GOOGLY_POWER": case "ANIMATE-IN-PROFILE_STATS": case "ANIMATE-OUT-PLAYER_STAT":
@@ -588,6 +632,10 @@ public class MUMBAI_T20_VIZ extends Scene{
 		case "ANIMATE-IN-FF_RTM_AND_PURSE_REMAINING": case "ANIMATE-IN-FF_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_TOP_BUY_TEAM": case "ANIMATE-IN-FF_ICONIC_PLAYERS":
 		case "ANIMATE-IN-FF_FIVE_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM":case "ANIMATE-IN-FF_SQUAD_TEAM":
 		
+			
+	//crawl
+		case "ANIMATE-IN-CRAWL_REMAINING_PURSE": case "ANIMATE-IN-CRAWL_SQUAD_SIZE": case "ANIMATE-IN-CRAWL_REMAINING_RMT": 
+		case "ANIMATE-IN-CRAWLER_TEAM_TOP_SOLD": case "ANIMATE-IN-CRAWL_TOP_SOLD": 	case "ANIMATE-IN-CRAWL_SQUAD":
 			switch (session_selected_broadcaster.toUpperCase()) {
 			case "MUMBAI_T20_VIZ":
 				switch (whatToProcess.toUpperCase()) {
@@ -907,7 +955,42 @@ public class MUMBAI_T20_VIZ extends Scene{
 						which_graphics_onscreen = whatToProcess.replace("ANIMATE-IN-", "");
 					}
 					break;
-					
+					//crawl
+				case "ANIMATE-IN-CRAWL_REMAINING_PURSE": case "ANIMATE-IN-CRAWL_SQUAD_SIZE": case "ANIMATE-IN-CRAWLER_TEAM_TOP_SOLD": 
+				case "ANIMATE-IN-CRAWL_SQUAD": case "ANIMATE-IN-CRAWL_TOP_SOLD": case "ANIMATE-IN-FREEETEXTCRAWLER": 
+					if(which_crwaler_onscreen != null && !which_crwaler_onscreen.isEmpty()) {
+						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_Crawl START \0");
+						
+						TimeUnit.MILLISECONDS.sleep(500);
+						switch (whatToProcess.toUpperCase()) {
+						case "ANIMATE-IN-CRAWL_REMAINING_PURSE":
+							populateCrawlerRemainingPurse(print_writer, side2ValueToProcess.split(",")[0],1, auction,auctionService, session_selected_broadcaster);
+							break;
+						case "ANIMATE-IN-CRAWL_SQUAD_SIZE":
+							populateCrawlerSquadSize(print_writer, 1, auction,auctionService,session_selected_broadcaster);
+							break;
+						case "ANIMATE-IN-CRAWLER_TEAM_TOP_SOLD":
+							populateCrawlTeamTopSold(print_writer,Integer.valueOf(side2ValueToProcess.split(",")[0]),1, auction,auctionService, session_selected_broadcaster);
+							break;
+						case "ANIMATE-IN-CRAWL_SQUAD":	
+							populateCrawlerSquad(print_writer,Integer.valueOf(side2ValueToProcess.split(",")[0]),1, auction,auctionService, session_selected_broadcaster);
+							break;
+						case "ANIMATE-IN-FREEETEXTCRAWLER":	
+							populateFreetextcrawler(print_writer, 1,Integer.valueOf(side2ValueToProcess.split(",")[0]), auction,auctionService, 
+									session_selected_broadcaster);
+							break;
+						case "ANIMATE-IN-CRAWL_TOP_SOLD":
+							populateCrawlerTopSold(print_writer,1, auction,auctionService, session_selected_broadcaster);
+							break;
+						}
+						TimeUnit.MILLISECONDS.sleep(500);
+						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_Crawl SHOW 0.0 \0");
+					}else {
+						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Crawl$In_Out START \0");
+					}
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlAll$Side1$Crawl*GEOM*start INVOKE\0");
+					which_crwaler_onscreen = whatToProcess.replace("ANIMATE-IN-", "");
+					break;	
 				case "ANIMATE-IN-RTM_AVAILABLE":
 					if(rtm_googly_on_screen.equalsIgnoreCase("RTM")) {
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_RTM$Text$Change_Out START\0");
@@ -1053,7 +1136,8 @@ public class MUMBAI_T20_VIZ extends Scene{
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_Overlays SHOW 0.0 \0");
 //					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$MoveForStats*ANIMATION*KEY*$A1*VALUE SET 0.0 0.0 0.0 \0");
 //					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$MoveForStats*ANIMATION*KEY*$A2*VALUE SET 0.0 40.0 0.0 \0");
-					
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Crawl SHOW 0.0 \0");
+					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_Crawl SHOW 0.0 \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_RTM SHOW 0.0 \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_RTM SHOW 0.0 \0");
 					
@@ -1140,6 +1224,17 @@ public class MUMBAI_T20_VIZ extends Scene{
 					data.setData_on_screen(false);
 					data.setBid_result("");
 					break;
+				case "ANIMATE-OUT-CRAWLER":
+					switch(which_crwaler_onscreen) {
+					case "CRAWL_REMAINING_PURSE": case "CRAWL_SQUAD_SIZE": case "CRAWL_TOP_SOLD": case "CRAWLER_TEAM_TOP_SOLD": 
+					case "CRAWL_SQUAD": case "FREEETEXTCRAWLER":
+						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Crawl$In_Out CONTINUE \0");
+						which_crwaler_onscreen = "";
+						TimeUnit.MILLISECONDS.sleep(1200);
+						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Crawl SHOW 0.0\0");
+						break;
+					}
+					break;		
 				case "ANIMATE-OUT-RTM_GOOGLY":
 					switch (rtm_googly_on_screen) {
 					case "RTM":
@@ -4336,6 +4431,178 @@ public class MUMBAI_T20_VIZ extends Scene{
 			break;
 		}
 	}
+	public void populateCrawlerRemainingPurse(PrintWriter print_writer,String which_type,int which_side, Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
+		
+		int total = 0;
+		
+		String crawler_Data = "";
+		
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + "PURSE REMAINING" + " \0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header2*GEOM*TEXT SET " + "" + " \0");
+		
+		for(int i=0; i <= auction.getTeam().size()-1; i++) {
+			
+			crawler_Data = crawler_Data + auction.getTeam().get(i).getTeamName1() + ": ";
+			
+			if(auction.getPlayers() != null ) {
+				for(int j=0; j <= auction.getPlayers().size()-1; j++) {
+					if(auction.getPlayers().get(j).getTeamId() == auction.getTeam().get(i).getTeamId()) {
+						total = total + auction.getPlayers().get(j).getSoldForPoints();
+					}
+				}
+			}
+			
+			if((Integer.valueOf(auction.getTeam().get(i).getTeamTotalPurse()) - total) <= 0) {
+				crawler_Data = crawler_Data + "-";
+			}else {
+				crawler_Data = crawler_Data + AuctionFunctions.ConvertToLakh((Integer.valueOf(auction.getTeam().get(i).getTeamTotalPurse()) - total),true) + "L" + "\n";
+			}
+			total = 0;
+		}
+		
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*text SET " + crawler_Data + " \0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*build INVOKE\0");
+		
+	}
+	public void populateCrawlerSquadSize(PrintWriter print_writer, int which_side , Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
+		int squadSize = 0;
+		
+		String crawler_Data = "";
+		
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + "SQUAD SIZE" + " \0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header2*GEOM*TEXT SET " + "" + " \0");
+		
+		for(Team tm : auction.getTeam()) {
+			crawler_Data = crawler_Data + tm.getTeamName1() + ": ";
+			
+			for(Player auc : auction.getPlayers()) {
+				if(tm.getTeamId() == auc.getTeamId()) {
+					squadSize++;
+				}
+			}
+			crawler_Data = crawler_Data + squadSize + "\n";
+			squadSize = 0;
+		}
+		
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*text SET " + crawler_Data + " \0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*build INVOKE\0");
+		
+		if(which_side == 1) {
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*start INVOKE\0");
+		}
+		
+	}
+	
+	public void populateCrawlerSquad(PrintWriter print_writer,int team_id,int which_side, Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
+		
+		String crawler_Data = "";
+		squad.clear();
+		
+		if(auction.getPlayers() != null) {
+			for(Player plyr : auction.getPlayers()){
+				if(plyr.getTeamId() == team_id) {
+					squad.add(plyr);
+				}
+			}
+		}
+		Collections.sort(squad,new AuctionFunctions.PlayerStatsComparator());
+		
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + auction.getTeam().get(team_id-1).getTeamName1() + " \0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header2*GEOM*TEXT SET " + "SQUAD" + " \0");
+		
+		
+		for(int m=0; m<= squad.size() - 1; m++) {
+			if(squad.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD) || squad.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)
+					|| squad.get(m).getSoldOrUnsold().equalsIgnoreCase("RETAIN")) {
+				crawler_Data = crawler_Data + auctionService.getAllPlayer().get(squad.get(m).getPlayerId()-1).getFull_name() + 
+						(squad.get(m).getSoldOrUnsold().equalsIgnoreCase("RETAIN") ? " (RETAINED)": "") + ": " +
+			             AuctionFunctions.ConvertToLakh(squad.get(m).getSoldForPoints(),true)+"L" + "\n";
+			}
+		}
+		
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*text SET " + crawler_Data + " \0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*build INVOKE\0");
+		
+	}
+	public void populateFreetextcrawler(PrintWriter print_writer, int which_side, int FlipperId, Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
+	
+	String crawler_Data = "";
+	for(Flipper flipper : auctionService.getFlipper()) {
+		if(flipper.getFlipperId() == FlipperId) {
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + flipper.getHeader() + " \0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header2*GEOM*TEXT SET " + "" + " \0");
+			
+			crawler_Data = crawler_Data + flipper.getSubLine() + "\n";
+		}
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*text SET " + crawler_Data + " \0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*build INVOKE\0");
+	}
+	
+	}
+
+	public void populateCrawlerTopSold(PrintWriter print_writer,int which_side, Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
+		
+		int row = 0;
+		String crawler_Data = "";
+		List<Player> top_sold = new ArrayList<Player>();
+		
+		if(auction.getPlayers() != null) {
+			top_sold = auction.getPlayers();
+		}
+		
+		Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
+		
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + "TOP BUYS" + " \0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header2*GEOM*TEXT SET " + "" + " \0");
+		
+		for(int m=0; m < top_sold.size(); m++) {
+			if(top_sold.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD) || top_sold.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)) {
+				row = row + 1;
+	        	if(row <= 10) {
+	        		
+	        		crawler_Data = crawler_Data + auctionService.getAllPlayer().get(top_sold.get(m).getPlayerId()-1).getFull_name() + ": " +
+	        				AuctionFunctions.ConvertToLakh(top_sold.get(m).getSoldForPoints(),true) + "L" +" ( "+ 
+	        				auction.getTeam().get(top_sold.get(m).getTeamId()-1).getTeamName4() + " )\n";
+	        	}
+	        }
+		}
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*text SET " + crawler_Data + " \0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*build INVOKE\0");
+		
+	}
+	public void populateCrawlTeamTopSold(PrintWriter print_writer,int team_id,int which_side, Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
+	
+        int row = 0;
+        String crawler_Data = "";
+        List<Player> top_sold = new ArrayList<Player>();
+
+        if(auction.getPlayers() != null) {
+        	for(Player plyr : auction.getPlayers()){
+        		if(plyr.getTeamId() == team_id) {
+        			top_sold.add(plyr);
+        		}
+        	}
+        }
+
+        Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
+
+        print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + "TOP BUYS" + " \0");
+        print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header2*GEOM*TEXT SET " + auction.getTeam().get(team_id-1).getTeamName4() + " \0");
+
+        for(int m=0; m<= top_sold.size() - 1; m++) {
+        	if(top_sold.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD) || top_sold.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)) {
+        		row = row + 1;
+        		if(row <= 10) {
+        			crawler_Data = crawler_Data + auctionService.getAllPlayer().get(top_sold.get(m).getPlayerId()-1).getFull_name() + ": "+ 
+        					AuctionFunctions.ConvertToLakh(top_sold.get(m).getSoldForPoints(),true) + "L" + "\n";
+        		}
+        	}
+        }
+        print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*text SET " + crawler_Data + " \0");
+        print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlAll$Side" + which_side + "$Crawl*GEOM*build INVOKE\0");
+
+	}
+	
 	public void populateFlipperSquad(PrintWriter print_writer, int whichSide, int teamId,String whichData, Auction auction, AuctionService auctionService, String session_selected_broadcaster) throws Exception {
 		
 		int row=0;
