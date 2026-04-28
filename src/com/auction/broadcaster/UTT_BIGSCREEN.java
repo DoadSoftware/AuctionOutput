@@ -71,6 +71,8 @@ public class UTT_BIGSCREEN extends Scene{
 		}else if(which_graphics_onscreen.equalsIgnoreCase("SQUAD_ANIMATION")) {
 			populateSquadAnimation(true,print_writer, Integer.valueOf(side2ValueToProcess.split(",")[0]),side2ValueToProcess.split(",")[1], 
 					whichSideNotProfile, auction, auctionService, session_selected_broadcaster);
+		}else if(which_graphics_onscreen.equalsIgnoreCase("FF_RTM_AND_PURSE_REMAINING")) {
+			populateFFRTMAndPurseRemaining(true,print_writer, whichSideNotProfile, auction,auctionService,session_selected_broadcaster);
 		}
 		return data;
 	}
@@ -337,7 +339,7 @@ public class UTT_BIGSCREEN extends Scene{
 						whichSideNotProfile = 1;
 					}
 					side2ValueToProcess = valueToProcess;
-					populateFFRTMAndPurseRemaining(print_writer, whichSideNotProfile, auction,auctionService,session_selected_broadcaster);
+					populateFFRTMAndPurseRemaining(false, print_writer, whichSideNotProfile, auction,auctionService,session_selected_broadcaster);
 					processPreviewFullFrames(print_writer, whatToProcess, whichSideNotProfile);
 					break;
 				case "POPULATE-FF_FIVE_TOP_BUYS_AUCTION":
@@ -700,7 +702,7 @@ public class UTT_BIGSCREEN extends Scene{
 									1, auction, auctionService, session_selected_broadcaster);
 							break;
 						case "ANIMATE-IN-FF_RTM_AND_PURSE_REMAINING":
-							populateFFRTMAndPurseRemaining(print_writer, 1, auction, auctionService, session_selected_broadcaster);
+							populateFFRTMAndPurseRemaining(false, print_writer, 1, auction, auctionService, session_selected_broadcaster);
 							break;
 						case "ANIMATE-IN-FF_TOP_BUYS_AUCTION":
 							populateFFTopBuysAuction(print_writer, 1, auction, auctionService, session_selected_broadcaster);
@@ -1451,9 +1453,9 @@ public class UTT_BIGSCREEN extends Scene{
 				+ "AUCTION" + "\0");
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Ident$Main$Ident$Text$Info1_Out$Info1_in$txt_Info1*GEOM*TEXT SET " 
-				+ "ULTIMATE TABLE TENNIS SEASON 7" + "\0");
+				+ "BUTTERFLY UTT SEASON 7" + "\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Ident$Main$Ident$Text$Info2_Out$Info2_In$txt_Info2*GEOM*TEXT SET " 
-				+ "HOTEL SAHARA STAR - MUMBAI" + "\0");
+				+ "" + "\0");
 		
 	}
 	
@@ -1922,32 +1924,33 @@ public class UTT_BIGSCREEN extends Scene{
 		}
 	}
 		
-	public void populateFFRTMAndPurseRemaining(PrintWriter print_writer, int whichSide , Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
+	public void populateFFRTMAndPurseRemaining(boolean b,PrintWriter print_writer, int whichSide , Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
 		int rtmUsed=0,squadSize=0,totalAmountSpent=0,row=0;
+		if(b == false) {
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$Header$Side" + whichSide + "$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 1\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide + "$Select_Graphics*FUNCTION*Omo*vis_con SET 4\0");
+			
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide 
+					+ "$Select_Graphics$Team_Details$Slect_ColumnNumber*FUNCTION*Omo*vis_con SET 0\0");
+			
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$Main$Header$Header_Out$Header_In$Side" + whichSide + "$Style2$"
+					+ "txt_TeamName*GEOM*TEXT SET " + "PLAYER AUCTION" + " \0");
+			
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$Main$Header$Header_Out$Header_In$Side" + whichSide + "$Style2$" 
+					+ "img-TeamBadges*TEXTURE*IMAGE SET " + logo_path + "EVENT02" + "\0");
+			
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide 
+					+ "$Team_Details$2_Column$List1$0$txt_Name*GEOM*TEXT SET TEAM\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide 
+					+ "$Team_Details$2_Column$List2$0$txt_Name*GEOM*TEXT SET SQUAD SIZE\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide 
+					+ "$Team_Details$2_Column$List3$0$txt_Name*GEOM*TEXT SET PURSE REM. (TOKENS)\0");
+//			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide 
+//					+ "$Team_Details$2_Column$List4$0$Select_LineNumber*FUNCTION*Omo*vis_con SET 1\0");
+//			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide 
+//					+ "$Team_Details$3_Column$List4$0$txt_Info*GEOM*TEXT SET IN LAKH\0");
+		}
 		
-		System.out.println("COMING INSIDE");
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$Header$Side" + whichSide + "$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 1\0");
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide + "$Select_Graphics*FUNCTION*Omo*vis_con SET 4\0");
-		
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide 
-				+ "$Select_Graphics$Team_Details$Slect_ColumnNumber*FUNCTION*Omo*vis_con SET 0\0");
-		
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$Main$Header$Header_Out$Header_In$Side" + whichSide + "$Style2$"
-				+ "txt_TeamName*GEOM*TEXT SET " + "PLAYER AUCTION" + " \0");
-		
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$Main$Header$Header_Out$Header_In$Side" + whichSide + "$Style2$" 
-				+ "img-TeamBadges*TEXTURE*IMAGE SET " + logo_path + "EVENT02" + "\0");
-		
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide 
-				+ "$Team_Details$2_Column$List1$0$txt_Name*GEOM*TEXT SET TEAM\0");
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide 
-				+ "$Team_Details$2_Column$List2$0$txt_Name*GEOM*TEXT SET SQUAD SIZE\0");
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide 
-				+ "$Team_Details$2_Column$List3$0$txt_Name*GEOM*TEXT SET PURSE REM. (TOKENS)\0");
-//		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide 
-//				+ "$Team_Details$2_Column$List4$0$Select_LineNumber*FUNCTION*Omo*vis_con SET 1\0");
-//		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_Fullframes$All_Graphics$Side" + whichSide 
-//				+ "$Team_Details$3_Column$List4$0$txt_Info*GEOM*TEXT SET IN LAKH\0");
 	
 		for(Team tm : auction.getTeam()) {
 			row++;
