@@ -15,16 +15,20 @@ public class Configurations {
 	@XmlElement(name="broadcaster")
 	private String broadcaster;
 	
+	@XmlElement(name="category")
+	private String category;
+	
 	@XmlElement(name="ipAddress")
 	private String ipAddress;
 	
 	@XmlElement(name="portNumber")
 	private int portNumber;
 
-	public Configurations(String filename, String broadcaster, String ipAddress, int portNumber) {
+	public Configurations(String filename, String broadcaster,String category, String ipAddress, int portNumber) {
 		super();
 		this.filename = filename;
 		this.broadcaster = broadcaster;
+		this.category = category;
 		this.ipAddress = ipAddress;
 		this.portNumber = portNumber;
 	}
@@ -58,4 +62,13 @@ public class Configurations {
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
 }

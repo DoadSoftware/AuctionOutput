@@ -79,6 +79,16 @@
 			    </div>
 			  </div>
 			  <div class="form-group row row-bottom-margin ml-2" style="margin-bottom:5px;">
+			    <label for="which_category" class="col-sm-4 col-form-label text-left">Select Category </label>
+			    <div class="col-sm-6 col-md-6">
+			      <select id="which_category" name="which_category" class="browser-default custom-select custom-select-sm"
+			      		onchange="processUserSelection(this)">
+			          <option value="Men">Men</option>
+			          <option value="Women">Women</option> 
+			      </select>
+			    </div>
+			  </div>
+			  <div class="form-group row row-bottom-margin ml-2" style="margin-bottom:5px;">
 			    <label for="which_layer" class="col-sm-4 col-form-label text-left">Which Layer </label>
 			    <div class="col-sm-6 col-md-6">
 			      <select id="which_layer" name="which_layer" class="browser-default custom-select custom-select-sm"

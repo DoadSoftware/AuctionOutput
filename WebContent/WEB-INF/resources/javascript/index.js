@@ -396,6 +396,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 'f': //LOF PURSE REMAINING
 			switch ($('#selected_broadcaster').val()){
 			case 'VIZ_ISPL_2024': case 'PSL': case 'KCL': case 'KCL_BIGSCREEN': case 'PWL': case 'UTT_VIZ':
+			case 'MUMBAI_T20_VIZ':
 				processAuctionProcedures('POPULATE-LOF_REMAINING_PURSE');
 				break;
 			default://ISPL
@@ -521,7 +522,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 		case 'm': //LT ICONIC PPLAYERS
 			
 			switch ($('#selected_broadcaster').val()){
-			case 'KCL': case 'PWL':
+			case 'KCL': case 'PWL': case 'MUMBAI_T20_VIZ':
 				processAuctionProcedures('LOF_SLOT_CHANGEON');
 				break;
 			default://ISPL
@@ -1027,9 +1028,12 @@ function processUserSelection(whichInput)
 		break;
 	case 'select_broadcaster':
 		switch ($('#select_broadcaster :selected').val().toUpperCase()) {
-		case 'HANDBALL': case 'ISPL':
+		case 'HANDBALL': case 'ISPL': case 'PSL':
 			$('#vizPortNumber').attr('value','1980');
 			$('label[for=which_layer], select#which_layer').hide();
+			break;
+		case	 'MUMBAI_T20_VIZ':
+			$('label[for=which_category], select#which_category').show();
 			break;
 		}
 		break;
@@ -1609,6 +1613,14 @@ function processAuctionProcedures(whatToProcess)
 							processAuctionProcedures('ANIMATE-IN-RTM_PLAYER');
 							break;
 					}
+				}else if(whatToProcess == 'POPULATE-PROFILE_STATS')	{
+					if(confirm('Animate In?') == true){
+						switch(whatToProcess) {
+						case 'POPULATE-PROFILE_STATS':
+							processAuctionProcedures('ANIMATE-IN-PROFILE_STATS');
+							break;
+						}
+					}
 				}else{
 					if(confirm('Animate In?') == true){
 						$('#select_graphic_options_div').empty();
@@ -1664,9 +1676,6 @@ function processAuctionProcedures(whatToProcess)
 							break;
 						case 'POPULATE-GOOGLY_POWER':
 							processAuctionProcedures('ANIMATE-IN-GOOGLY_POWER');
-							break;
-						case 'POPULATE-PROFILE_STATS':
-							processAuctionProcedures('ANIMATE-IN-PROFILE_STATS');
 							break;
 						case "POPULATE-PROFILE_STATS_CHANGE":
 							 processAuctionProcedures('ANIMATE-IN-PROFILE_STATS_CHANGE');
@@ -2813,7 +2822,14 @@ function addItemsToList(whatToProcess, dataToProcess)
 			            option.text = value.charAt(0).toUpperCase() + value.slice(1);
 			            select.appendChild(option);
 			        });
-				} else {
+				}else if(broadcaster === 'MUMBAI_T20_VIZ'){
+					['style', 'prevteam', 'stats'].forEach(value => {
+			            const option = document.createElement('option');
+			            option.value = value;
+			            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
+			            select.appendChild(option);
+			        });
+				}  else {
 			        ['style', 'freetext', 'prevteam', 'stats', 'category'].forEach(value => {
 			            const option = document.createElement('option');
 			            option.value = value;

@@ -96,7 +96,8 @@ public class IndexController
 	Auction auc = new Auction();
 	
 	int whichInning,player_id,team_id,session_port;
-	String session_selected_broadcaster,selected_layer,selected_scene,session_selected_ip, viz_scene_path, which_graphics_onscreen;
+	String session_selected_broadcaster,selected_layer,selected_scene,session_selected_ip, 
+	viz_scene_path, which_graphics_onscreen,selected_category;
 	boolean is_Infobar_on_Screen = false;
 	boolean is_director_on_bottom = false;
 	boolean is_Ident_on_Screen = false;
@@ -140,6 +141,7 @@ public class IndexController
 	public String outputPage(ModelMap model,
 			@RequestParam(value = "configuration_file_name", required = false, defaultValue = "") String configuration_file_name,
 			@RequestParam(value = "select_broadcaster", required = false, defaultValue = "") String select_broadcaster,
+			@RequestParam(value = "which_category", required = false, defaultValue = "") String which_category,
 			@RequestParam(value = "which_layer", required = false, defaultValue = "") String which_layer,
 			@RequestParam(value = "which_scene", required = false, defaultValue = "") String which_scene,
 			@RequestParam(value = "select_cricket_matches", required = false, defaultValue = "") String selectedMatch,
@@ -178,10 +180,11 @@ public class IndexController
 			session_selected_broadcaster = select_broadcaster;
 			selected_layer = which_layer;
 			selected_scene = which_scene;
+			selected_category = which_category;
 			session_socket = new Socket(vizIPAddresss, Integer.valueOf(vizPortNumber));
 			print_writer = new PrintWriter(session_socket.getOutputStream(), true);
 			
-			session_Configurations = new Configurations(selectedMatch, select_broadcaster, vizIPAddresss, vizPortNumber);
+			session_Configurations = new Configurations(selectedMatch, select_broadcaster,which_category, vizIPAddresss, vizPortNumber);
 			
 			JAXBContext.newInstance(Configurations.class).createMarshaller().marshal(session_Configurations, 
 					new File(AuctionUtil.AUCTION_DIRECTORY + AuctionUtil.CONFIGURATIONS_DIRECTORY + configuration_file_name));
@@ -253,6 +256,7 @@ public class IndexController
 			model.addAttribute("session_port", session_port);
 			model.addAttribute("session_selected_ip", session_selected_ip);
 			model.addAttribute("session_selected_broadcaster", session_selected_broadcaster);
+			model.addAttribute("selected_category", selected_category);
 			model.addAttribute("selected_layer", selected_layer);
 			model.addAttribute("selected_scene", selected_scene);
 			model.addAttribute("licence_expiry_message","Software licence expires on " + 
