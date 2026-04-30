@@ -212,10 +212,30 @@
 			    </tbody>
 			  </table>	
   			</c:if>
+  			<c:if test="${(session_selected_broadcaster == 'MUMBAI_T20_VIZ')}">
+				<table class="table table-bordered table-hover" style="font-size: 1.4rem; background-color: #e0f7fa; width: 100%; max-width: 100%;">
+				    <thead>
+				      <tr style="background-color: #219ebc; color: white; font-weight: 700;">
+				        <th>Team</th>
+				        <th>North Zone</th>
+				        <th>East Zone</th>
+				        <th>South Zone</th>
+				        <th>West Zone</th>
+				      </tr>
+				    </thead>
+			    <tbody id="zone_table_body">
+			      <tr><td>Team 1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+			      <tr><td>Team 2</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+			      <tr><td>Team 3</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+			      <tr><td>Team 4</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+			      <tr><td>Team 5</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+			      <tr><td>Team 6</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+			      <tr><td>Team 7</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+			      <tr><td>Team 8</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+			    </tbody>
+			  </table>	
+  			</c:if>
 			</div>
-
-			  
-			    
 			    <!-- 
 			    <label class="col-sm-4 col-form-label text-left" style="font-size: 20px;">SCOREBUG</label>
 			    <div class="left">
