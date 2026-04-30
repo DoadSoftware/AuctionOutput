@@ -338,7 +338,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			break;
 		case 'Shift_R': //FF ICONIC PLAYERS
 			switch ($('#selected_broadcaster').val()){
-			case 'PSL':
+			case 'PSL': case 'MUMBAI_T20_VIZ':
 				$("#captions_div").hide();
 				$("#cancel_match_setup_btn").hide();
 				$("#expiry_message").hide();
@@ -1164,9 +1164,11 @@ function processAuctionProcedures(whatToProcess)
 		}
 		break;
 	case 'POPULATE-FF_RETAIN_PLAYERS':
-		case 'PSL':
+		switch ($('#selected_broadcaster').val().toUpperCase()) {
+		case 'PSL': case 'MUMBAI_T20_VIZ':
 			valueToProcess = $('#selectTeamName option:selected').val();
 			break;
+		}
 		break;
 	case 'POPULATE-TEAMS':
 		switch ($('#selected_broadcaster').val().toUpperCase()) {
