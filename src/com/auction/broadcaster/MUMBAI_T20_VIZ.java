@@ -2644,6 +2644,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$select_GraphicsType*FUNCTION*Omo*vis_con SET 1\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$select_HeaderType*FUNCTION*Omo*vis_con SET 0\0");
 		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Profile$BasePrice$Spatter$Normal$img_Base2"
+				+ "*TEXTURE*IMAGE SET "+ base_path_2 + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
+		
 		if(auctionService.getAllPlayer().get(playerId - 1).getSurname() != null) {
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$Name$txt_FirstName*GEOM*TEXT SET " 
 					+ auctionService.getAllPlayer().get(playerId - 1).getFirstname() + "\0");
@@ -2815,6 +2818,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$select_GraphicsType*FUNCTION*Omo*vis_con SET 1\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Header$Side" + which_side + "$select_HeaderType*FUNCTION*Omo*vis_con SET 0\0");
+		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Profile$BasePrice$Spatter$Normal$img_Base2"
+				+ "*TEXTURE*IMAGE SET "+ base_path_2 + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
 		
 		if(auctionService.getAllPlayer().get(playerId - 1).getSurname() != null) {
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$Name$txt_FirstName*GEOM*TEXT SET " 
@@ -3992,6 +3998,15 @@ public class MUMBAI_T20_VIZ extends Scene{
 		
 		for(int i=1; i<=5; i++) {
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + i + "*ACTIVE SET 0\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + i + "$TopPicData$"
+					+ "Base$img_Base1*TEXTURE*IMAGE SET "+ base_path_1 + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")
+							?"MENS":"WOMENS") + "\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + i + "$TopPicData$"
+					+ "Name_Category$img_Base1*TEXTURE*IMAGE SET "+ base_path_1 + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")
+							?"MENS":"WOMENS") + "\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + i + "$TopPicData$"
+					+ "Name_Category$Category$mg_Base2*TEXTURE*IMAGE SET "+ base_path_2 + (IndexController.session_Configurations.getCategory().
+							equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
 		}
 		
 		for(Player plyr : top_sold) {
@@ -4072,6 +4087,15 @@ public class MUMBAI_T20_VIZ extends Scene{
 		
 		for(int i=1; i<=5; i++) {
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + i + "*ACTIVE SET 0\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + i + "$TopPicData$"
+					+ "Base$img_Base1*TEXTURE*IMAGE SET "+ base_path_1 + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")
+							?"MENS":"WOMENS") + "\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + i + "$TopPicData$"
+					+ "Name_Category$img_Base1*TEXTURE*IMAGE SET "+ base_path_1 + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")
+							?"MENS":"WOMENS") + "\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$TopBuysImage$IconPlayer" + i + "$TopPicData$"
+					+ "Name_Category$Category$mg_Base2*TEXTURE*IMAGE SET "+ base_path_2 + (IndexController.session_Configurations.getCategory().
+							equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
 		}
 		
 		for(Player plyr : top_sold) {
@@ -5375,7 +5399,10 @@ public class MUMBAI_T20_VIZ extends Scene{
 					data_str.get(k).equalsIgnoreCase("GENERAL")) {
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
 						+ "$Select_DataType*FUNCTION*Omo*vis_con SET 1\0");
-				
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row + 
+						"$NoData$Base$img_Base1*TEXTURE*IMAGE SET "+ base_path_1 + (IndexController.session_Configurations.getCategory().
+								equalsIgnoreCase("MEN") ? "MENS" : "WOMENS") + "\0");
+
 				switch(data_str.get(k)) {
 				case "DEVELOPMENT":
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row + 
@@ -5405,6 +5432,16 @@ public class MUMBAI_T20_VIZ extends Scene{
 			}else {
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
 						+ "$Select_DataType*FUNCTION*Omo*vis_con SET 2\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row + 
+						"$WithData$Base$img_Base1*TEXTURE*IMAGE SET "+ base_path_1 + (IndexController.session_Configurations.getCategory().
+								equalsIgnoreCase("MEN") ? "MENS" : "WOMENS") + "\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row + 
+						"$WithData$NameGrp$img_Base1*TEXTURE*IMAGE SET "+ base_path_1 + (IndexController.session_Configurations.getCategory().
+								equalsIgnoreCase("MEN") ? "MENS" : "WOMENS") + "\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row + 
+						"$WithData$NameGrp$Category$mg_Base2*TEXTURE*IMAGE SET "+ base_path_2 + (IndexController.session_Configurations.getCategory().
+								equalsIgnoreCase("MEN") ? "MENS" : "WOMENS") + "\0");
+				
 				for(Player plyr : match.getPlayersList()) {
 					if(plyr.getPlayerId() == Integer.valueOf(data_str.get(k))) {
 						if(plyr.getSurname() != null) {
@@ -5455,6 +5492,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + which_side + "$select_HeaderType*FUNCTION*Omo*vis_con SET 1\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + which_side + "$HeaderType1$Logo$select_Logo*FUNCTION*Omo*vis_con SET 1\0");
 		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player20*ACTIVE SET 1\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player19*ACTIVE SET 1\0");
+		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + which_side + "$HeaderType1$Header$txt_Header1*GEOM*TEXT SET " 
 				+ "T20 MUMBAI AUCTION 2026" + "\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + which_side + "$HeaderType1$Header$txt_Header2*GEOM*TEXT SET \0");
@@ -5476,6 +5516,16 @@ public class MUMBAI_T20_VIZ extends Scene{
 				row = row + 1;
 				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
 						+ "$Select_DataType*FUNCTION*Omo*vis_con SET 2\0");
+				
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row + 
+						"$WithData$Base$img_Base1*TEXTURE*IMAGE SET "+ base_path_1 + (IndexController.session_Configurations.getCategory().
+								equalsIgnoreCase("MEN") ? "MENS" : "WOMENS") + "\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row + 
+						"$WithData$NameGrp$img_Base1*TEXTURE*IMAGE SET "+ base_path_1 + (IndexController.session_Configurations.getCategory().
+								equalsIgnoreCase("MEN") ? "MENS" : "WOMENS") + "\0");
+				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row + 
+						"$WithData$NameGrp$Category$mg_Base2*TEXTURE*IMAGE SET "+ base_path_2 + (IndexController.session_Configurations.getCategory().
+								equalsIgnoreCase("MEN") ? "MENS" : "WOMENS") + "\0");
 				
 				if(plyr.getSurname() != null) {
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row + "$WithData$NameGrp$"
