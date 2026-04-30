@@ -1621,12 +1621,16 @@ function processAuctionProcedures(whatToProcess)
 							processAuctionProcedures('ANIMATE-IN-RTM_PLAYER');
 							break;
 					}
-				}else if(whatToProcess == 'POPULATE-PROFILE_STATS')	{
+				}else if(whatToProcess == 'POPULATE-PROFILE_STATS' || 
+						whatToProcess == 'POPULATE-SQUAD-PLAYER')	{
 					if(confirm('Animate In?') == true){
 						switch(whatToProcess) {
 						case 'POPULATE-PROFILE_STATS':
 							processAuctionProcedures('ANIMATE-IN-PROFILE_STATS');
 							break;
+						case "POPULATE-SQUAD-PLAYER":
+							processAuctionProcedures('ANIMATE-IN-SQUAD-PLAYER');
+							break;	
 						}
 					}
 				}else{
@@ -1718,9 +1722,6 @@ function processAuctionProcedures(whatToProcess)
 							processAuctionProcedures('ANIMATE-IN-LOF_SQUAD_REMAIN');
 							break;
 						
-						case "POPULATE-SQUAD-PLAYER":
-							processAuctionProcedures('ANIMATE-IN-SQUAD-PLAYER');
-							break;
 						case 'POPULATE-LOF_SQUAD_SIZE_CATEGORY_WISE':
 							processAuctionProcedures('ANIMATE-IN-LOF_SQUAD_SIZE_CATEGORY_WISE');
 							break;
