@@ -221,15 +221,10 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				break;
 			}
 			break;	
-		case 'Control_p':
-			processAuctionProcedures('POPULATE-PURSE_SIZE_ALL');
-			break;
-		case 'Control_u':
-			processAuctionProcedures('POPULATE-PURSE_SLOT_ALL');
-			break;	
-		case 'Control_s': 
+			
+		case 'Control_s': //FF 5 TOP BUY AUCTION
 			switch ($('#selected_broadcaster').val()){
-			case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN': case 'PWL': case '"MUMBAI_T20_VIZ"':
+			case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN': case 'PWL':
 				$("#captions_div").hide();
 				$("#cancel_match_setup_btn").hide();
 				$("#expiry_message").hide();
@@ -651,7 +646,7 @@ function initialiseForm(whatToProcess,dataToProcess)
 			}
 				const tbody = document.getElementById('zone_table_body');
 				
-				//tbody.innerHTML = "";
+				tbody.innerHTML = "";
 				if($('#selected_broadcaster').val().toUpperCase() == 'KCL' || $('#selected_broadcaster').val().toUpperCase() == 'KCL_BIGSCREEN'
 				){
 					for (let i = 0; i < dataToProcess.teamZoneList.length; i++) {
@@ -747,53 +742,7 @@ function initialiseForm(whatToProcess,dataToProcess)
 					    });
 					}
 
-				}else if($('#selected_broadcaster').val().toUpperCase() == 'MUMBAI_T20_VIZ'){
-					const tbody = document.getElementById("zone_table_body");
-					const thead = document.getElementById("zone_table_head");
-					
-					console.log(dataToProcess.teamZoneList)
-					// ✅ Clear old data
-					tbody.innerHTML = "";
-					thead.innerHTML = "";
-					
-					// ✅ Get keys dynamically
-					const firstTeam = dataToProcess.teamZoneList[0];
-					const categoryKeys = Object.keys(firstTeam.category);
-					
-					// ✅ Create header
-					thead.innerHTML = `
-					<tr style="background-color: #219ebc; color: white; font-weight: 700;">
-					    <th>Team</th>
-					    ${categoryKeys.map(key => `<th>${key}</th>`).join("")}
-					</tr>
-					`;
-					
-					// ✅ Create rows
-					for (let i = 0; i < dataToProcess.teamZoneList.length; i++) {
-					
-					    const team = dataToProcess.teamZoneList[i];
-					    const row = tbody.insertRow();
-					
-					    row.style.fontSize = '16px';
-					    row.style.fontWeight = '800';
-					    row.style.color = '#BC8F8F';
-					
-					    const values = categoryKeys.map(key => team.category[key]);
-					
-					    row.innerHTML = `
-					        <td>${team.teamName1}</td>
-					        ${values.map(v => `<td>${v}</td>`).join("")}
-					    `;
-					
-					    // Highlight logic
-					    values.forEach((val, index) => {
-					        if (val >= 8) {
-					            row.cells[index + 1].style.backgroundColor = "#E34234";
-					            row.cells[index + 1].style.color = "white";
-					        }
-					    });
-					}
-			}else{
+				}else{
 					for (let i = 0; i < dataToProcess.teamZoneList.length; i++) {
 				    const row = tbody.insertRow(); // Insert a new row
 				    row.style.fontSize = '16px';
@@ -828,13 +777,14 @@ function initialiseForm(whatToProcess,dataToProcess)
 				        }
 				    });
 				}
-			}
+				}
 		}
 		break;
 	case 'UPDATE-CONFIG':
 		document.getElementById('configuration_file_name').value = $('#select_configuration_file option:selected').val();
 		document.getElementById('select_broadcaster').value = dataToProcess.broadcaster;
 		document.getElementById('vizIPAddress').value = dataToProcess.ipAddress;
+		document.getElementById('which_category').value = dataToProcess.category;
 		document.getElementById('vizPortNumber').value = dataToProcess.portNumber;
 		break;
 	}
@@ -1653,7 +1603,6 @@ function processAuctionProcedures(whatToProcess)
 			case 'POPULATE-ZONEWISE_PLAYERS_SOLD':case "POPULATE-LOF_TEAM_BID_AUCTION": case 'POPULATE-ZONE_PLAYERS_FULL':case 'POPULATE-LOF_CATRGORY':
 			
 			case 'POPULATE-CRAWL-PURSE_REMAINING': case 'POPULATE-CRAWL-SQUAD_SIZE': case'POPULATE-CRAWL_TOP_SOLD':
-			case 'POPULATE-PURSE_SIZE_ALL': case 'POPULATE-PURSE_SLOT_ALL':
 			
 				if(whatToProcess == 'POPULATE-RTM_ENABLED' || whatToProcess == 'POPULATE-CURR_BID' || whatToProcess == 'POPULATE-RTM_PLAYER')	{
 					switch(whatToProcess){
@@ -1796,12 +1745,6 @@ function processAuctionProcedures(whatToProcess)
 							break;
 						case 'POPULATE-FF_FIVE_TOP_BUYS_AUCTION':
 							processAuctionProcedures('ANIMATE-IN-FF_FIVE_TOP_BUYS_AUCTION');
-							break;
-						case 'POPULATE-PURSE_SIZE_ALL':
-							processAuctionProcedures('ANIMATE-IN-PURSE_SIZE_ALL');
-							break;
-						case 'POPULATE-PURSE_SLOT_ALL':
-							processAuctionProcedures('ANIMATE-IN-PURSE_SLOT_ALL');
 							break;
 						case "POPULATE-LOF_TEAM_BID_AUCTION":
 							processAuctionProcedures('ANIMATE-IN-LOF_TEAM_BID_AUCTION');
@@ -2574,30 +2517,50 @@ function addItemsToList(whatToProcess, dataToProcess)
 										option.value = 'ISPL S-2';
 										option.text = 'ISPL S-2';
 										select.appendChild(option);
+										
+										select.setAttribute('onchange',"processUserSelection(this)");
+										row.insertCell(cellCount).appendChild(select);
+										cellCount = cellCount + 1;
+										break;
+									case 'MUMBAI_T20_VIZ':
+										option = document.createElement('option');
+										option.value = 'with_info';
+										option.text = 'With Stats';
+										select.appendChild(option);
+									
+										option = document.createElement('option');
+										option.value = 'without';
+										option.text = 'WithOut Stats';
+										select.appendChild(option);
+										
+										select.setAttribute('onchange',"processUserSelection(this)");
+										row.insertCell(cellCount).appendChild(select);
+										cellCount = cellCount + 1;
+										break;
+									default:
+										option = document.createElement('option');
+										option.value = 'with_info';
+										option.text = 'Category';
+										select.appendChild(option);
+										
+										option = document.createElement('option');
+										option.value = 'with_data';
+										option.text = 'Rank & Style';
+										select.appendChild(option);
+									
+										option = document.createElement('option');
+										option.value = 'without';
+										option.text = 'WithOut Stats';
+										select.appendChild(option);
+										
+										select.setAttribute('onchange',"processUserSelection(this)");
+										row.insertCell(cellCount).appendChild(select);
+										cellCount = cellCount + 1;
 										break;
 									}
 									
-									option = document.createElement('option');
-									option.value = 'with_info';
-									option.text = 'Category';
-									select.appendChild(option);
-									
-									option = document.createElement('option');
-									option.value = 'with_data';
-									option.text = 'Rank & Style';
-									select.appendChild(option);
-								
-									/*option = document.createElement('option');
-									option.value = 'without';
-									option.text = 'WithOut Stats';
-									select.appendChild(option);*/
-									
-									select.setAttribute('onchange',"processUserSelection(this)");
-									row.insertCell(cellCount).appendChild(select);
-									cellCount = cellCount + 1;
-									
 									switch ($('#selected_broadcaster').val().toUpperCase()){
-									case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
+									case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024': case 'MUMBAI_T20_VIZ':
 										// Second cell: reserved for conditional dropdown
 									    const seCell = row.insertCell(cellCount);
 									    seCell.id = 'Playerstats'; // So we can target it easily later
@@ -2617,15 +2580,28 @@ function addItemsToList(whatToProcess, dataToProcess)
 									            const statsDropdown = document.createElement('select');
 									            statsDropdown.id = 'PlayerData';
 									            statsDropdown.name = 'PlayerData';
-									
-									            ['ISPL S-1', 'ISPL S-2'].forEach(value => {
-									                const option = document.createElement('option');
-									                option.value = value;
-									                option.text = value;
-									                option.style.fontWeight = 'bold';
-									                statsDropdown.appendChild(option);
-									            });
-									
+									            
+									            switch ($('#selected_broadcaster').val().toUpperCase()){
+												case 'ISPL': case 'ISPL_VIZ': case 'VIZ_ISPL_2024':
+													['ISPL S-1', 'ISPL S-2'].forEach(value => {
+										                const option = document.createElement('option');
+										                option.value = value;
+										                option.text = value;
+										                option.style.fontWeight = 'bold';
+										                statsDropdown.appendChild(option);
+										            });
+													break;
+												case 'MUMBAI_T20_VIZ':
+													['MCA T20s', 'DT20', 'FC', 'LIST A'].forEach(value => {
+										                const option = document.createElement('option');
+										                option.value = value;
+										                option.text = value;
+										                option.style.fontWeight = 'bold';
+										                statsDropdown.appendChild(option);
+										            });
+													break;
+												}
+									            
 									            container.appendChild(statsDropdown);
 									        }
 									    });							
