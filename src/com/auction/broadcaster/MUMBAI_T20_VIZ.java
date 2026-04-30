@@ -5478,16 +5478,20 @@ public class MUMBAI_T20_VIZ extends Scene{
 		        		
 		        		if(entry.getKey().toString().equalsIgnoreCase("U19") || entry.getKey().toString().equalsIgnoreCase("GENERAL")) {
 		        			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + which_side + "$HeaderType2$SquadData$Category$" 
-				            		+ j + "$txt_Zone*GEOM*TEXT SET " + entry.getKey().toString().substring(0, 3) + "\0");
+		        					+ (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"Grp2$":"Grp1$") + j + "$txt_Zone*GEOM*TEXT SET " 
+		        					+ entry.getKey().toString().substring(0, 3) + "\0");
 		        		}else {
 		        			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + which_side + "$HeaderType2$SquadData$Category$" 
-				            		+ j + "$txt_Zone*GEOM*TEXT SET " + entry.getKey().toString().substring(0, 2) + "\0");
+		        					+ (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"Grp2$":"Grp1$") + j + "$txt_Zone*GEOM*TEXT SET " 
+		        					+ entry.getKey().toString().substring(0, 2) + "\0");
 		        		}
 		        		
 			            print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + which_side + "$HeaderType2$SquadData$Category$" 
-			            		+ j + "$txt_Value*GEOM*TEXT SET " + "" + "\0");
+			            		+ (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"Grp2$":"Grp1$") + j + "$txt_Value*GEOM*TEXT SET " 
+			            		+ "" + "\0");
 			            print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + which_side + "$HeaderType2$SquadData$Category$" 
-			            		+ j + "$txt_Value*GEOM*TEXT SET " + entry.getValue() + "\0");
+			            		+ (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"Grp2$":"Grp1$") + j + "$txt_Value*GEOM*TEXT SET " 
+			            		+ entry.getValue() + "\0");
 		        	}
 		        	 print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + which_side + "$HeaderType2$SquadData$Category$"
 		        	 		+ "select_CategoryNumber*FUNCTION*Omo*vis_con SET " + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"1":"0") + "\0");
