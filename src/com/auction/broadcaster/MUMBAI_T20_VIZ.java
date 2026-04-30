@@ -2540,6 +2540,17 @@ public class MUMBAI_T20_VIZ extends Scene{
 //			}
 			
 			populateProfileStats(print_writer, "STYLE",0, which_side, auction, auctionService);
+			
+			if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$MoveForStats$TopGrp$Base$img_Base1*TEXTURE*IMAGE SET "+ base_path_1 + "MENS" + "\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$MoveForStats$TopGrp$TopDataGrp$img_Base2*TEXTURE*IMAGE SET "+ base_path_2 + "MENS" + "\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$StatsGrp$img_Base2*TEXTURE*IMAGE SET "+ base_path_2 + "MENS" + "\0");
+			}else {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$MoveForStats$TopGrp$Base$img_Base1*TEXTURE*IMAGE SET "+ base_path_1 + "WOMENS" + "\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$MoveForStats$TopGrp$TopDataGrp$img_Base2*TEXTURE*IMAGE SET "+ base_path_2 + "WOMENS" + "\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$StatsGrp$img_Base2*TEXTURE*IMAGE SET "+ base_path_2 + "WOMENS" + "\0");
+			}
+			
 			if(auctionService.getAllPlayer().get(playerId - 1).getSurname() != null) {
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$MoveForStats$TopDataGrp$Side" + which_side + "$PlayerName$txt_FirstName*GEOM*TEXT SET " + 
 						auctionService.getAllPlayer().get(playerId - 1).getFirstname() + " \0");
