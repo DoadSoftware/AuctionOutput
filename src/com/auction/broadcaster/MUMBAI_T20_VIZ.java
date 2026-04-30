@@ -3852,7 +3852,8 @@ public class MUMBAI_T20_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + whichSide + "$select_HeaderType$HeaderType1$Logo$select_Logo"
 				+ "*FUNCTION*Omo*vis_con SET 0\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + whichSide + "$select_HeaderType$HeaderType1$Logo$select_Logo$img_Logo"
-				+ "*TEXTURE*IMAGE SET " + logo_path + "TLOGO" + "\0");
+				+ "*TEXTURE*IMAGE SET " + logo_path + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"T20M":"T20W") + "\0");
+		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$PurseRTM"+mensOrWomens+"$DataAll$Title$txt_Title1*GEOM*TEXT SET TEAM NAME\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$PurseRTM"+mensOrWomens+"$DataAll$Title$txt_Title2*GEOM*TEXT SET SLOT REM.\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$PurseRTM"+mensOrWomens+"$DataAll$Title$txt_Title3*GEOM*TEXT SET RTM REM.\0");
@@ -3932,7 +3933,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + whichSide + "$select_HeaderType$HeaderType1$Logo$select_Logo"
 				+ "*FUNCTION*Omo*vis_con SET 0\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + whichSide + "$HeaderType1$Logo$img_Logo"
-				+ "*TEXTURE*IMAGE SET " + logo_path + "T20M" + "\0");
+				+ "*TEXTURE*IMAGE SET " + logo_path + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"T20M":"T20W") + "\0");
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_GraphicsType*FUNCTION*Omo*vis_con SET 5\0");
 		
@@ -4003,7 +4004,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + whichSide + "$select_HeaderType$HeaderType1$Logo$select_Logo"
 				+ "*FUNCTION*Omo*vis_con SET 0\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + whichSide + "$HeaderType1$Logo$img_Logo"
-				+ "*TEXTURE*IMAGE SET " + logo_path + "T20M" + "\0");
+				+ "*TEXTURE*IMAGE SET " + logo_path + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"T20M":"T20W") + "\0");
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$select_GraphicsType*FUNCTION*Omo*vis_con SET 7\0");
 		
@@ -5266,7 +5267,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + which_side + "$select_HeaderType$HeaderType1$Logo$select_Logo"
 				+ "*FUNCTION*Omo*vis_con SET 0\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + which_side + "$select_HeaderType$HeaderType1$Logo$select_Logo$img_Logo"
-				+ "*TEXTURE*IMAGE SET " + logo_path + "T20M" + "\0");
+				+ "*TEXTURE*IMAGE SET " + logo_path + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"T20M":"T20W") + "\0");
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$PurseRemaining$DataAll$Title$DataAll$txt_Title1*GEOM*TEXT SET TEAM NAME\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$PurseRemaining$DataAll$Title$DataAll$txt_Title2*GEOM*TEXT SET SQUAD SIZE\0");
@@ -5373,7 +5374,6 @@ public class MUMBAI_T20_VIZ extends Scene{
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + which_side + "$HeaderType2$SquadData$SquadSize$Gloss$img_Base2"
 				+ "*TEXTURE*IMAGE SET "+ base_path_2 + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
-		
 		
 		Auction session_auction = match;
 		session_auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(session_auction.getTeam(), 
@@ -5540,7 +5540,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + which_side + "$select_HeaderType$HeaderType1$Logo$select_Logo"
 				+ "*FUNCTION*Omo*vis_con SET 0\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + which_side + "$HeaderType1$Logo$img_Logo"
-				+ "*TEXTURE*IMAGE SET " + logo_path + "T20M" + "\0");
+				+ "*TEXTURE*IMAGE SET " + logo_path + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"T20M":"T20W") + "\0");
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$select_GraphicsType*FUNCTION*Omo*vis_con SET 2\0");
 		
@@ -6254,69 +6254,53 @@ public class MUMBAI_T20_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*AudioFF SHOW 0.0 \0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Loop SHOW 0.0 \0");
 		
-		if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")) {
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$img_Base2*TEXTURE*IMAGE SET "+ base_path_2 + "MENS" + "\0");
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Veil$img_Base1*TEXTURE*IMAGE SET "+ base_path_1 + "MENS" + "\0");
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$VerticalPictogram$VerticalText$Text1$Text1$img_Base1"
-					+ "*TEXTURE*IMAGE SET "+ base_path_1 + "MENS" + "\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$VerticalPictogram$VerticalText$Text1$Text2$img_Base2"
-					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "MENS" + "\0");
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$VerticalPictogram$Year$img_Base2"
-					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "MENS" + "\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$VerticalPictogram$Gavel$img_Base2"
-					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "MENS" + "\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$VerticalPictogram$Gavel$img_Base2$Ring$Ring"
-					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "MENS" + "\0");
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Transition$In$img_Base1"
-					+ "*TEXTURE*IMAGE SET "+ base_path_1 + "MENS" + "\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Transition$In$img_Base2"
-					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "MENS" + "\0");
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Transition$Out$img_Base1"
-					+ "*TEXTURE*IMAGE SET "+ base_path_1 + "MENS" + "\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Transition$Out$img_Base2"
-					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "MENS" + "\0");
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$ChangeWipe$In$img_Base1"
-					+ "*TEXTURE*IMAGE SET "+ base_path_1 + "MENS" + "\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$ChangeWipe$In$img_Base2"
-					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "MENS" + "\0");
-		}else {
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$img_Base2*TEXTURE*IMAGE SET "+ base_path_2 + "WOMENS" + "\0");
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Veil$img_Base1*TEXTURE*IMAGE SET "+ base_path_1 + "WOMENS" + "\0");
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$VerticalPictogram$VerticalText$Text1$Text1$img_Base1"
-					+ "*TEXTURE*IMAGE SET "+ base_path_1 + "WOMENS" + "\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$VerticalPictogram$VerticalText$Text1$Text2$img_Base2"
-					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "WOMENS" + "\0");
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$VerticalPictogram$Year$img_Base2"
-					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "WOMENS" + "\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$VerticalPictogram$Gavel$img_Base2"
-					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "WOMENS" + "\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$VerticalPictogram$Gavel$img_Base2$Ring$Ring"
-					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "WOMENS" + "\0");
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Transition$In$img_Base1"
-					+ "*TEXTURE*IMAGE SET "+ base_path_1 + "WOMENS" + "\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Transition$In$img_Base2"
-					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "WOMENS" + "\0");
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Transition$Out$img_Base1"
-					+ "*TEXTURE*IMAGE SET "+ base_path_1 + "WOMENS" + "\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Transition$Out$img_Base2"
-					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "WOMENS" + "\0");
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$ChangeWipe$In$img_Base1"
-					+ "*TEXTURE*IMAGE SET "+ base_path_1 + "WOMENS" + "\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$ChangeWipe$In$img_Base2"
-					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "WOMENS" + "\0");
-		}
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$img_Base2*TEXTURE*IMAGE SET "+ base_path_2 + 
+				(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Veil$img_Base1*TEXTURE*IMAGE SET "+ base_path_1 + 
+				(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
+		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$VerticalPictogram$VerticalText$Text1$Text1$img_Base1*TEXTURE*IMAGE SET "
+				+ base_path_1 + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$VerticalPictogram$VerticalText$Text1$Text2$img_Base2*TEXTURE*IMAGE SET "
+				+ base_path_2 + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
+		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$VerticalPictogram$Year$img_Base2*TEXTURE*IMAGE SET "+ base_path_2 + 
+				(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$VerticalPictogram$Gavel$img_Base2*TEXTURE*IMAGE SET "+ base_path_2 + 
+				(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$VerticalPictogram$Gavel$img_Base2$Ring$Ring*TEXTURE*IMAGE SET "
+				+ base_path_2 + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
+		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Transition$In$img_Base1*TEXTURE*IMAGE SET "+ base_path_1 + 
+				(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Transition$In$img_Base2*TEXTURE*IMAGE SET "+ base_path_2 + 
+				(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
+		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Transition$In$LogoAll$img_Logo*TEXTURE*IMAGE SET " 
+				+ logo_base + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"T20M":"T20W") + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Transition$In$LogoAll$img_Base2*TEXTURE*IMAGE SET "+ base_path_2 
+				+ (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
+		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Transition$Out$LogoAll$Logo*TEXTURE*IMAGE SET " 
+				+ logo_base + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"T20M":"T20W") + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Transition$Out$LogoAll$img_Base2*TEXTURE*IMAGE SET "+ base_path_2 
+				+ (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
+		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Transition$Out$img_Base1*TEXTURE*IMAGE SET "+ base_path_1 + 
+				(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Transition$Out$img_Base2*TEXTURE*IMAGE SET "+ base_path_2 + 
+				(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
+		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$ChangeWipe$In$img_Base1*TEXTURE*IMAGE SET "+ base_path_1 + 
+				(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$ChangeWipe$In$img_Base2*TEXTURE*IMAGE SET "+ base_path_2 + 
+				(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
+		
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$ChangeWipe$In$LogoAll$Logo*TEXTURE*IMAGE SET " 
+				+ logo_base + (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"T20M":"T20W") + "\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$ChangeWipe$In$LogoAll$img_Base2*TEXTURE*IMAGE SET "+ base_path_2 
+				+ (IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")?"MENS":"WOMENS") + "\0");
+		
 	}
 	public String toString() {
 		return "Doad [status=" + status + ", slashOrDash=" + slashOrDash + "]";
