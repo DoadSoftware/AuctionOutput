@@ -4776,6 +4776,8 @@ public class MUMBAI_T20_VIZ extends Scene{
         		}
         		
         		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$ReatainImage$IconPlayer" + row + 
+        				"$Style2$Price*ACTIVE SET 1\0");
+        		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$ReatainImage$IconPlayer" + row + 
         				"$Style2$Price$txt_Value*GEOM*TEXT SET "+AuctionFunctions.ConvertToLakh(player.getSoldForPoints())+" L"+"\0");
         		
         		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$ReatainImage$IconPlayer" + row + 

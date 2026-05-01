@@ -212,7 +212,7 @@
 			    </tbody>
 			  </table>	
   			</c:if>
-  			<c:if test="${(session_selected_broadcaster == 'MUMBAI_T20_VIZ')}">
+  			<!--<c:if test="${(session_selected_broadcaster == 'MUMBAI_T20_VIZ')}">
 				<table class="table table-bordered table-hover" style="font-size: 1.4rem; background-color: #e0f7fa; width: 100%; max-width: 100%;">
 				    <thead>
 				      <tr style="background-color: #219ebc; color: white; font-weight: 700;">
