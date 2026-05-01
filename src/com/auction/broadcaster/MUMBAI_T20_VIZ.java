@@ -5898,7 +5898,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 								equalsIgnoreCase("MEN") ? "MENS" : "WOMENS") + "\0");
 				
 				switch(data_str.get(k)) {
-				case "DEVELOPMENT": case "SENIOR": case "ICON": case "EMERGING": case "GENRAL":
+				case "DEVELOPMENT": case "SENIOR": case "ICON": case "EMERGING": case "GENERAL": case "U19":
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
 							+ "$NoData$IconGrpGrp$select_Icon*FUNCTION*Omo*vis_con SET 0\0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
