@@ -33,6 +33,7 @@ import com.auction.broadcaster.ISPL;
 import com.auction.broadcaster.ISPL_VIZ;
 import com.auction.broadcaster.KCL;
 import com.auction.broadcaster.KCL_BIGSCREEN;
+import com.auction.broadcaster.MUMBAI_T20_BIGSCREEN;
 import com.auction.broadcaster.MUMBAI_T20_VIZ;
 import com.auction.broadcaster.PSL;
 import com.auction.broadcaster.PWL;
@@ -72,6 +73,7 @@ public class IndexController
 	public static VIZ_ISPL_2024 this_ispl_viz_2024;
 	public static PSL this_psl;
 	public static MUMBAI_T20_VIZ this_mumbai_t20_viz;
+	public static MUMBAI_T20_BIGSCREEN this_MUMBAI_T20_BIGSCREEN;
 	public static KCL this_kcl;
 	public static PWL this_pwl;
 	public static KCL_BIGSCREEN this_KCL_BIGSCREEN;
@@ -171,6 +173,8 @@ public class IndexController
 			this_ispl_viz_2024 = new VIZ_ISPL_2024();
 			this_psl = new PSL();
 			this_mumbai_t20_viz = new MUMBAI_T20_VIZ();
+			
+			this_MUMBAI_T20_BIGSCREEN = new MUMBAI_T20_BIGSCREEN();
 			this_kcl = new KCL();
 			this_pwl =new PWL();
 			this_KCL_BIGSCREEN = new KCL_BIGSCREEN();
@@ -213,13 +217,16 @@ public class IndexController
 				this_utt_bigscreen.resetData(print_writer);
 				print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Logo$In_Out START \0");
 				break;
-			case "VIZ_ISPL_2024": case "PSL":  case "UTT_VIZ": case "MUMBAI_T20_VIZ": case "KCL": 
+			case "VIZ_ISPL_2024": case "PSL":  case "UTT_VIZ": case "MUMBAI_T20_VIZ": case "MUMBAI_T20_BIGSCREEN": case "KCL": 
 			case "KCL_BIGSCREEN": case "PWL":
 				scene.LoadScene("OVERLAYS", print_writer, session_Configurations);
 				scene.LoadScene("FULL-FRAMERS", print_writer, session_Configurations);
 				switch (session_selected_broadcaster) {
 				case "MUMBAI_T20_VIZ":
 					this_mumbai_t20_viz.resetData(print_writer);
+					break;
+				case "MUMBAI_T20_BIGSCREEN":
+					this_MUMBAI_T20_BIGSCREEN.resetData(print_writer);
 					break;
 				case "KCL":
 					this_kcl.resetData(print_writer);
@@ -375,6 +382,13 @@ public class IndexController
 					}
 					this_mumbai_t20_viz.updateData(session_auction,session_curr_bid,auctionService,print_writer);
 					break;
+						
+				case "MUMBAI_T20_BIGSCREEN":
+					if(this_MUMBAI_T20_BIGSCREEN.data.isBid_Start_or_not() == true) {
+						this_MUMBAI_T20_BIGSCREEN.data.setWhichside(2);
+					}
+					this_MUMBAI_T20_BIGSCREEN.updateData(session_auction,session_curr_bid,auctionService,print_writer);
+					break;	
 				}
 			}
 			
@@ -406,6 +420,9 @@ public class IndexController
 			case "MUMBAI_T20_VIZ":
 				this_mumbai_t20_viz.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
 				break;
+			case "MUMBAI_T20_BIGSCREEN":
+				this_MUMBAI_T20_BIGSCREEN.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
+				break;				
 			case "KCL":
 				this_kcl.ProcessGraphicOption(whatToProcess, session_auction, session_curr_bid, auctionService, print_writer, session_selected_scenes, valueToProcess);
 				break;

@@ -75,6 +75,7 @@
 			          <option value="UTT_VIZ">UTT</option>
 			          <option value="UTT_BIGSCREEN">UTT BIG SCREEN</option>
 			          <option value="MUMBAI_T20_VIZ">MUMBAI T20</option>
+			          <option value="MUMBAI_T20_BIGSCREEN">MUMBAI T20 BIG SCREEN</option>
 			      </select>
 			    </div>
 			  </div>
