@@ -1732,6 +1732,8 @@ public class MUMBAI_T20_VIZ extends Scene{
 			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + whichSide + "$PurseRemaining_Small$Select_Lines$"
 					+ Bid_Team.size() +  "$Row" + row + "$MainBase*TEXTURE*IMAGE SET " + logo_path + team.getTeamName4() + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + whichSide + "$PurseRemaining_Small$Select_Lines$"
+					+ Bid_Team.size() +  "$Row" + row + "$MainBase02*TEXTURE*IMAGE SET " + logo_path + team.getTeamName4() + "\0");
 			row ++;
 		}
 	}
