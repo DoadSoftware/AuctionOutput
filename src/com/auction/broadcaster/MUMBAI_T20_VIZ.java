@@ -2615,9 +2615,13 @@ public class MUMBAI_T20_VIZ extends Scene{
 		if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")) {
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Ident$Logo$img_Base2"
 					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "MENS" + "\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Ident$Logo$img_TeamLogo"
+					+ "*TEXTURE*IMAGE SET "+ logo_path + "T20M" + "\0");
 		}else {
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Ident$Logo$img_Base2"
 					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "WOMENS" + "\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Ident$Logo$img_TeamLogo"
+					+ "*TEXTURE*IMAGE SET "+ logo_path + "T20W" + "\0");
 		}
 		
 		String venue = "";
