@@ -383,7 +383,7 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 			break;
 		case 'd': // LOF RTM REMAINING
 			switch ($('#selected_broadcaster').val()){
-			case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN': case 'PWL': case 'PSL':
+			case 'KCL': case 'KCL_BIGSCREEN': case 'PWL': case 'PSL':
 				alert('GFX IS NOT ACTIVE FOR THIS AUCTION');
 				break;
 			default://ISPL
@@ -2480,13 +2480,13 @@ function addItemsToList(whatToProcess, dataToProcess)
 								select.name = select.id;
 								
 								option = document.createElement('option');
-								option.value = 'WITHOUT_LOGO';
-								option.text = 'WITHOUT LOGO';
+								option.value = 'WITH_LOGO';
+								option.text = 'WITH LOGO';
 								select.appendChild(option);
 								
 								option = document.createElement('option');
-								option.value = 'WITH_LOGO';
-								option.text = 'WITH LOGO';
+								option.value = 'WITHOUT_LOGO';
+								option.text = 'WITHOUT LOGO';
 								select.appendChild(option);
 								
 								select.setAttribute('onchange',"processUserSelection(this)");
@@ -2657,7 +2657,14 @@ function addItemsToList(whatToProcess, dataToProcess)
 								            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
 								            select.appendChild(option);
 								        });
-									} else {
+									} else if(broadcaster === 'MUMBAI_T20_VIZ'){
+										['player', 'thisyearteam','stats','category'].forEach(value => {
+								            const option = document.createElement('option');
+								            option.value = value;
+								            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
+								            select.appendChild(option);
+								        });
+									}else {
 								        ['player', 'thisyearteam', 'prevteam', 'stats', 'category'].forEach(value => {
 								            if ($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ' && (value === 'prevteam' || value === 'freetext')) {
 										        return; // skip these options for Mumbai
@@ -2693,7 +2700,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 								            statsDropdown.id = 'PlayerData';
 								            statsDropdown.name = 'PlayerData';
 								
-								            ['ISPL S-1', 'ISPL S-2'].forEach(value => {
+								            ['MCA T20s','ISPL S-1', 'ISPL S-2'].forEach(value => {
 								                const option = document.createElement('option');
 								                option.value = value;
 								                option.text = value;
@@ -2743,6 +2750,13 @@ function addItemsToList(whatToProcess, dataToProcess)
 				}
 				else if($('#selected_broadcaster').val().toUpperCase() === 'KCL'){
 					['player'].forEach(value => {
+			            const option = document.createElement('option');
+			            option.value = value;
+			            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
+			            select.appendChild(option);
+			        });
+				}else if($('#selected_broadcaster').val().toUpperCase() === 'MUMBAI_T20_VIZ'){
+					['player', 'thisyearteam', 'prevteam','stats', 'category'].forEach(value => {
 			            const option = document.createElement('option');
 			            option.value = value;
 			            option.text = value === 'freetext' ? 'Franchise pick' : value.charAt(0).toUpperCase() + value.slice(1);
@@ -2805,7 +2819,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 			            statsDropdown.id = 'PlayerData';
 			            statsDropdown.name = 'PlayerData';
 			
-			            ['ISPL S-1', 'ISPL S-2'].forEach(value => {
+			            ['MCA T20s','ISPL S-1', 'ISPL S-2'].forEach(value => {
 			                const option = document.createElement('option');
 			                option.value = value;
 			                option.text = value;
