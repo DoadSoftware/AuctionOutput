@@ -2543,15 +2543,15 @@ function addItemsToList(whatToProcess, dataToProcess)
 										break;
 									case 'MUMBAI_T20_VIZ': case 'MUMBAI_T20_BIGSCREEN':
 										option = document.createElement('option');
-										option.value = 'with_info';
-										option.text = 'With Stats';
-										select.appendChild(option);
-									
-										option = document.createElement('option');
 										option.value = 'without';
 										option.text = 'WithOut Stats';
 										select.appendChild(option);
 										
+										option = document.createElement('option');
+										option.value = 'with_info';
+										option.text = 'With Stats';
+										select.appendChild(option);
+									
 										select.setAttribute('onchange',"processUserSelection(this)");
 										row.insertCell(cellCount).appendChild(select);
 										cellCount = cellCount + 1;
