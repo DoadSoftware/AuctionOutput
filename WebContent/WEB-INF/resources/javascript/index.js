@@ -1572,7 +1572,7 @@ function processAuctionProcedures(whatToProcess)
 			}
 			break;
 			case 'POPULATE-SQUAD': case 'POPULATE-LOF_SQUAD': case 'POPULATE-ZONE_PLAYERS_STATS': case 'POPULATE-FF_FIVE_TOP_BUY_TEAM':
-			case 'POPULATE-FF_TOP_BUY_TEAM': case 'POPULATE-FF_RETAIN_PLAYERS':
+			case 'POPULATE-FF_TOP_BUY_TEAM': case 'POPULATE-FF_RETAIN_PLAYERS': case "POPULATE-FF_SQUAD_ROLE_TEAM":
 				if(confirm('Animate In?') == true){
 					switch(whatToProcess){
 					case 'POPULATE-SQUAD':
@@ -1593,6 +1593,9 @@ function processAuctionProcedures(whatToProcess)
 					case 'POPULATE-FF_RETAIN_PLAYERS':
 						processAuctionProcedures('ANIMATE-IN-FF_RETAIN_PLAYERS');
 						break;
+					case "POPULATE-FF_SQUAD_ROLE_TEAM":
+						processAuctionProcedures('ANIMATE-IN-FF_SQUAD_ROLE_TEAM');
+						break;
 					}	
 				}		
 				break;
@@ -1607,9 +1610,9 @@ function processAuctionProcedures(whatToProcess)
 			case 'POPULATE-L3-FLIPPER': case 'POPULATE-L3-FLIPPER_TEXT':
 			
 			case 'POPULATE-FF_RTM_AND_PURSE_REMAINING': case 'POPULATE-FF_TOP_BUYS_AUCTION': case 'POPULATE-TEAM_CURR_BID': case 'POPULATE-FF_ICONIC_PLAYERS': 
-			case 'POPULATE-FF_FIVE_TOP_BUYS_AUCTION': case 'POPULATE-FF_SINGLEPURSE_TEAM': case "POPULATE-FF_SQUAD_TEAM":case "POPULATE-FF_SQUAD_ROLE_TEAM": 
-			case 'POPULATE-LT_ICONIC_PLAYERS': case 'POPULATE-PLAYERPROFILE_LT': case 'POPULATE-PLAYERPROFILE_LT_STATS': case 'POPULATE-ZONEWISE_PLAYERS_SOLD':
-			case "POPULATE-LOF_TEAM_BID_AUCTION": case 'POPULATE-ZONE_PLAYERS_FULL':case 'POPULATE-LOF_CATRGORY':
+			case 'POPULATE-FF_FIVE_TOP_BUYS_AUCTION': case 'POPULATE-FF_SINGLEPURSE_TEAM': case "POPULATE-FF_SQUAD_TEAM": case 'POPULATE-LT_ICONIC_PLAYERS': 
+			case 'POPULATE-PLAYERPROFILE_LT': case 'POPULATE-PLAYERPROFILE_LT_STATS': case 'POPULATE-ZONEWISE_PLAYERS_SOLD': case "POPULATE-LOF_TEAM_BID_AUCTION": 
+			case 'POPULATE-ZONE_PLAYERS_FULL':case 'POPULATE-LOF_CATRGORY':
 			
 			case 'POPULATE-CRAWL-PURSE_REMAINING': case 'POPULATE-CRAWL-SQUAD_SIZE': case'POPULATE-CRAWL_TOP_SOLD':
 			
@@ -1761,9 +1764,6 @@ function processAuctionProcedures(whatToProcess)
 							break;
 						case "POPULATE-FF_SQUAD_TEAM":
 							processAuctionProcedures('ANIMATE-IN-FF_SQUAD_TEAM');
-							break;
-						case "POPULATE-FF_SQUAD_ROLE_TEAM":
-							processAuctionProcedures('ANIMATE-IN-FF_SQUAD_ROLE_TEAM');
 							break;
 						case 'POPULATE-FF_SINGLEPURSE_TEAM':
 							processAuctionProcedures('ANIMATE-SINGLEPURSE_TEAM');
