@@ -221,10 +221,15 @@ function processUserSelectionData(whatToProcess,dataToProcess){
 				break;
 			}
 			break;	
-			
+		case 'Control_p':
+			processAuctionProcedures('POPULATE-PURSE_SIZE_ALL');
+			break;
+		case 'Control_u':
+			processAuctionProcedures('POPULATE-PURSE_SLOT_ALL');
+			break;	
 		case 'Control_s': //FF 5 TOP BUY AUCTION
 			switch ($('#selected_broadcaster').val()){
-			case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN': case 'PWL':
+			case 'MUMBAI_T20_VIZ':  case 'KCL': case 'KCL_BIGSCREEN': case 'PWL': case 'MUMBAI_T20_VIZ':
 				$("#captions_div").hide();
 				$("#cancel_match_setup_btn").hide();
 				$("#expiry_message").hide();
@@ -1612,6 +1617,7 @@ function processAuctionProcedures(whatToProcess)
 			case "POPULATE-LOF_TEAM_BID_AUCTION": case 'POPULATE-ZONE_PLAYERS_FULL':case 'POPULATE-LOF_CATRGORY':
 			
 			case 'POPULATE-CRAWL-PURSE_REMAINING': case 'POPULATE-CRAWL-SQUAD_SIZE': case'POPULATE-CRAWL_TOP_SOLD':
+			case 'POPULATE-PURSE_SIZE_ALL': case 'POPULATE-PURSE_SLOT_ALL':
 			
 				if(whatToProcess == 'POPULATE-RTM_ENABLED' || whatToProcess == 'POPULATE-CURR_BID' || whatToProcess == 'POPULATE-RTM_PLAYER')	{
 					switch(whatToProcess){
@@ -1626,7 +1632,8 @@ function processAuctionProcedures(whatToProcess)
 							break;
 					}
 				}else if(whatToProcess == 'POPULATE-PROFILE_STATS' || 
-						whatToProcess == 'POPULATE-SQUAD-PLAYER')	{
+						whatToProcess == 'POPULATE-SQUAD-PLAYER' || 
+						whatToProcess == 'POPULATE-LOF_TEAM_BID_AUCTION')	{
 					if(confirm('Animate In?') == true){
 						switch(whatToProcess) {
 						case 'POPULATE-PROFILE_STATS':
@@ -1634,7 +1641,10 @@ function processAuctionProcedures(whatToProcess)
 							break;
 						case "POPULATE-SQUAD-PLAYER":
 							processAuctionProcedures('ANIMATE-IN-SQUAD-PLAYER');
-							break;	
+							break;
+						case "POPULATE-LOF_TEAM_BID_AUCTION":
+							processAuctionProcedures('ANIMATE-IN-LOF_TEAM_BID_AUCTION');
+							break;		
 						}
 					}
 				}else{
@@ -1659,6 +1669,12 @@ function processAuctionProcedures(whatToProcess)
 							break;
 						case 'POPULATE-L3-CRWLERFREETEXT':
 							processAuctionProcedures('ANIMATE-IN-FREEETEXTCRAWLER');	
+							break;
+						case 'POPULATE-PURSE_SIZE_ALL': 
+							processAuctionProcedures('ANIMATE-IN-PURSE_SIZE_ALL');	
+							break;
+						case 'POPULATE-PURSE_SLOT_ALL':
+							processAuctionProcedures('ANIMATE-IN-PURSE_SLOT_ALL');	
 							break;
 						case 'POPULATE-L3-FLIPPER_TEXT':
 							processAuctionProcedures('ANIMATE-IN-FLIPPER_TEXT');	
@@ -1758,6 +1774,8 @@ function processAuctionProcedures(whatToProcess)
 							break;
 						case "POPULATE-LOF_TEAM_BID_AUCTION":
 							processAuctionProcedures('ANIMATE-IN-LOF_TEAM_BID_AUCTION');
+						case 'POPULATE-FF_TOP_BUY_TEAM':
+							processAuctionProcedures('ANIMATE-IN-FF_TOP_BUY_TEAM');
 							break;
 						case "POPULATE-FF_SQUAD_TEAM":
 							processAuctionProcedures('ANIMATE-IN-FF_SQUAD_TEAM');
@@ -2908,7 +2926,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 				                statsDropdown.appendChild(option);
 				            });
 						}else{
-							['FC', 'LIST A', 'DT20', 'MCA T20s'].forEach(value => {
+							['MCA T20s','FC', 'LIST A', 'DT20'].forEach(value => {
 				                const option = document.createElement('option');
 				                option.value = value;
 				                option.text = value;
