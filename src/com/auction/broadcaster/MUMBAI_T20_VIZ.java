@@ -33,7 +33,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 	private String status, side2ValueToProcess = "";
 	private String slashOrDash = "-";
 	public String session_selected_broadcaster = "MUMBAI_T20_VIZ";
-	public String isPlayerSoldorUnsold = "";
+	public String isPlayerSoldorUnsold = "",showPlayerOrNot = "";
 	public String session_selected_category = "",plyerBug = "",plyerBug2 = "",PlayerPhotoOrNot = "";
 	public Data data = new Data();
 	public int whichSideCrawler=1,preval=0;	
@@ -845,6 +845,8 @@ public class MUMBAI_T20_VIZ extends Scene{
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Crawl SHOW 0.0\0");
 						break;
 					}
+					
+					
 					if(data.isData_on_screen()) {
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Overlays$In_Out$Essentials CONTINUE \0");
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Overlays$In_Out$Normal CONTINUE \0");
@@ -983,12 +985,13 @@ public class MUMBAI_T20_VIZ extends Scene{
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Loop START \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio START\0");
 					
-					if(isProfileStatsOnScreen == false) {
-						TimeUnit.MILLISECONDS.sleep(1700);
-						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Stats START\0");
-						isProfileStatsOnScreen = true;
+					if(showPlayerOrNot.equalsIgnoreCase("YES")) {
+						if(isProfileStatsOnScreen == false) {
+							TimeUnit.MILLISECONDS.sleep(1700);
+							print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Stats START\0");
+							isProfileStatsOnScreen = true;
+						}
 					}
-					
 					TimeUnit.MILLISECONDS.sleep(500);
 					if(data.isPlayer_sold_or_unsold() == false) {
 						data.setBid_result("GAVEL");
@@ -1440,6 +1443,10 @@ public class MUMBAI_T20_VIZ extends Scene{
 					data.setBid_result("");
 					isFlipperonScreen = false;
 					isSBStatsonScreen = false;
+					isPlayerSoldorUnsold = "";
+					plyerBug = "";
+					plyerBug2 = "";
+					showPlayerOrNot = "";
 					break;
 				case "ANIMATE-OUT-PROFILE":
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Overlays$In_Out$Essentials CONTINUE \0");
@@ -1490,6 +1497,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 					isPlayerSoldorUnsold = "";
 					plyerBug = "";
 					plyerBug2 = "";
+					showPlayerOrNot = "";
 					break;
 				case "ANIMATE-OUT-CRAWLER":
 					switch(which_crwaler_onscreen) {
@@ -2753,7 +2761,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 	public void populatePlayerProfile(boolean is_this_updating,PrintWriter print_writer,int which_side, int playerId,List<Statistics> stats, Auction auction, 
 			Auction session_curr_bid,AuctionService auctionService, String session_selected_broadcaster) throws InterruptedException 
 	{
-		System.out.println("cat = " + IndexController.session_Configurations.getCategory());
+		//System.out.println("cat = " + IndexController.session_Configurations.getCategory());
 		if(session_curr_bid.getCurrentPlayers() != null) {
 			if(data.isData_on_screen() == true) {
 				if(data.isPlayer_sold_or_unsold() == false) {
@@ -2814,7 +2822,10 @@ public class MUMBAI_T20_VIZ extends Scene{
 //				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$ImageGrp$Select_Image*FUNCTION*Omo*vis_con SET 1\0");
 //			}
 			
-			populateProfileStats(print_writer, "STYLE",0, which_side, auction, auctionService);
+			if(auctionService.getAllPlayer().get(playerId - 1).getPair().equalsIgnoreCase("YES")) {
+				populateProfileStats(print_writer, "STYLE",0, which_side, auction, auctionService);
+				showPlayerOrNot = "YES";
+			}
 			
 			if(auctionService.getAllPlayer().get(playerId - 1).getDraft().equalsIgnoreCase("YES")) {
 				plyerBug = "$MoveForSold";
@@ -3293,15 +3304,17 @@ public class MUMBAI_T20_VIZ extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 0 \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 					+ logo_path + "T20M" + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
 		}else if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("WOMEN")) {
 			session_selected_category = "$Women_3Data";
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 1 \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 					+ logo_path + "T20W" + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 1" + " \0");
 		}
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 1 \0");
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
+		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle2$txt_Header2*GEOM*TEXT SET " + "PLAYER AUCTION" + " \0");
 //		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$Header$Side" + which_side + "$HeaderStyle1$txt_Header3*GEOM*TEXT SET " + "AUCTION" + " \0");
 		
@@ -3358,13 +3371,15 @@ public class MUMBAI_T20_VIZ extends Scene{
 		if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")) {
 			session_selected_category = "$Men";
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 0 \0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
 		}else if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("WOMEN")) {
 			session_selected_category = "$Women_3Data";
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 1 \0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 1" + " \0");
 		}
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 1 \0");
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
+		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle2$txt_Header2*GEOM*TEXT SET " + "PLAYER AUCTION" + " \0");
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$SubHead$Side" + which_side + "$Select_SubHeaderStyle*FUNCTION*Omo*vis_con SET 0 \0");
@@ -3413,13 +3428,15 @@ public class MUMBAI_T20_VIZ extends Scene{
 		if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")) {
 			session_selected_category = "$Men";
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 0 \0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
 		}else if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("WOMEN")) {
 			session_selected_category = "$Women_3Data";
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 1 \0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 1" + " \0");
 		}
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 1 \0");
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
+		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle2$txt_Header2*GEOM*TEXT SET " + "PLAYER AUCTION" + " \0");
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$SubHead$Side" + which_side + "$Select_SubHeaderStyle*FUNCTION*Omo*vis_con SET 0 \0");
@@ -3480,11 +3497,13 @@ public class MUMBAI_T20_VIZ extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 0 \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 					+ logo_path + "T20M" + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle3$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
 		}else if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("WOMEN")) {
 			session_selected_category = "$Women_5Data";
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 2 \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 					+ logo_path + "T20W" + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle3$txt_Header1*GEOM*TEXT SET " + "SEASON 1" + " \0");
 		}
 		
 		for(int i=1; i<=5; i++) {
@@ -3492,7 +3511,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 		}
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 2\0");
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle3$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
+		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle3$txt_Header2*GEOM*TEXT SET " + "PLAYER AUCTION" + " \0");
 //		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + which_side + "$HeaderStyle1$txt_Header3*GEOM*TEXT SET " + "AUCTION" + " \0");
 		
@@ -3765,7 +3784,8 @@ public class MUMBAI_T20_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + which_side + "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 5\0");
 		
 		for(int m=0; m<= squad.size() - 1; m++) {
-			if(squad.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD) || squad.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)) {
+			if(squad.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD) || squad.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM) || 
+					squad.get(m).getSoldOrUnsold().equalsIgnoreCase("RETAIN")) {
 	        	if(row < 6) {
 	        		row = row + 1;
 	        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + which_side + "$Squad$Row" + row + "*ACTIVE SET 1 \0");
@@ -3787,6 +3807,11 @@ public class MUMBAI_T20_VIZ extends Scene{
 		    					+ "*FUNCTION*Omo*vis_con SET 1\0");
 					}else {
 						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + which_side + "$Squad$Row" + row + "$Select_IconPlayer"
+		    					+ "*FUNCTION*Omo*vis_con SET 0\0");
+					}
+	        		
+	        		if(squad.get(m).getCategory().equalsIgnoreCase("ICON")){
+	        			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + which_side + "$Squad$Row" + row + "$Select_IconPlayer"
 		    					+ "*FUNCTION*Omo*vis_con SET 0\0");
 					}
 	        		
@@ -3836,7 +3861,8 @@ public class MUMBAI_T20_VIZ extends Scene{
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + which_side + "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 5\0");
 		
 		for(int m = player_number; m<= squad.size() - 1; m++) {
-			if(squad.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD) || squad.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)) {
+			if(squad.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD) || squad.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM) || 
+					squad.get(m).getSoldOrUnsold().equalsIgnoreCase("RETAIN")) {
 	        	if(row < 6) {
 	        		row = row + 1;
 	        		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + which_side + "$Squad$Row" + row + "*ACTIVE SET 1 \0");
@@ -3858,6 +3884,11 @@ public class MUMBAI_T20_VIZ extends Scene{
 		    					+ "*FUNCTION*Omo*vis_con SET 1\0");
 					}else {
 						print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + which_side + "$Squad$Row" + row + "$Select_IconPlayer"
+		    					+ "*FUNCTION*Omo*vis_con SET 0\0");
+					}
+	        		
+	        		if(squad.get(m).getCategory().equalsIgnoreCase("ICON")){
+	        			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + which_side + "$Squad$Row" + row + "$Select_IconPlayer"
 		    					+ "*FUNCTION*Omo*vis_con SET 0\0");
 					}
 	        		
@@ -3893,17 +3924,19 @@ public class MUMBAI_T20_VIZ extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 0 \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 					+ logo_path + "T20M" + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
 		}else if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("WOMEN")) {
 			session_selected_category = "$Women_3Data";
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 1 \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 					+ logo_path + "T20W" + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 1" + " \0");
 		}
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side"+whichSide+"$Select_GraphicsType*FUNCTION*Omo*vis_con SET 1" + "\0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side"+whichSide+"$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 1"+ "\0");
 		
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
+		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header2*GEOM*TEXT SET " + "PLAYER AUCTION" + " \0");
 //		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle1$txt_Header3*GEOM*TEXT SET " + "AUCTION" + " \0");
 		
@@ -4009,15 +4042,17 @@ public class MUMBAI_T20_VIZ extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 0 \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 					+ logo_path + "T20M" + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
 		}else if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("WOMEN")) {
 			session_selected_category = "$Women_3Data";
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 1 \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 					+ logo_path + "T20W" + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 1" + " \0");
 		}
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 1 \0");
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
+		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header2*GEOM*TEXT SET " + "PLAYER AUCTION" + " \0");
 //		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle1$txt_Header3*GEOM*TEXT SET " + "AUCTION" + " \0");
 		
@@ -4083,15 +4118,17 @@ public class MUMBAI_T20_VIZ extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 0 \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 					+ logo_path + "T20M" + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
 		}else if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("WOMEN")) {
 			session_selected_category = "$Women_3Data";
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 1 \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 					+ logo_path + "T20W" + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 1" + " \0");
 		}
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 1 \0");
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
+		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header2*GEOM*TEXT SET " + "PLAYER AUCTION" + " \0");
 //		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle1$txt_Header3*GEOM*TEXT SET " + "AUCTION" + " \0");
 		
@@ -4139,15 +4176,17 @@ public class MUMBAI_T20_VIZ extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 0 \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 					+ logo_path + "T20M" + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
 		}else if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("WOMEN")) {
 			session_selected_category = "$Women_3Data";
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 1 \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 					+ logo_path + "T20W" + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 1" + " \0");
 		}
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 1 \0");
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
+		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header2*GEOM*TEXT SET " + "PLAYER AUCTION" + " \0");
 //		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle1$txt_Header3*GEOM*TEXT SET " + "AUCTION" + " \0");
 		
@@ -4188,15 +4227,17 @@ public class MUMBAI_T20_VIZ extends Scene{
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 0 \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 					+ logo_path + "T20M" + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
 		}else if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("WOMEN")) {
 			session_selected_category = "$Women_3Data";
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF$All$Select*FUNCTION*Omo*vis_con SET 1 \0");
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle1$img_TeamLogo*TEXTURE*IMAGE SET "
 					+ logo_path + "T20W" + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 1" + " \0");
 		}
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$Select_HeaderStyle*FUNCTION*Omo*vis_con SET 1 \0");
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header1*GEOM*TEXT SET " + "SEASON 4" + " \0");
+		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle2$txt_Header2*GEOM*TEXT SET " + "PLAYER AUCTION" + " \0");
 //		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle1$txt_Header3*GEOM*TEXT SET " + "AUCTION" + " \0");
 		
