@@ -2848,11 +2848,11 @@ public class MUMBAI_T20_VIZ extends Scene{
 						auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase() + " \0");
 			}
 			
-			if(auction.getPlayersList().get(playerId - 1).getCategory().equalsIgnoreCase("U19")) {
+			if(auctionService.getAllPlayer().get(playerId - 1).getCategory().equalsIgnoreCase("U19")) {
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$MoveForStats$TopInfoGrp" + plyerBug + "$Side" + which_side + "$txt_Info1*GEOM*TEXT SET UNDER 19 \0");
 			}else {
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$MoveForStats$TopInfoGrp" + plyerBug + "$Side" + which_side + "$txt_Info1*GEOM*TEXT SET " + 
-						auction.getPlayersList().get(playerId - 1).getCategory().toUpperCase() + " \0");
+						auctionService.getAllPlayer().get(playerId - 1).getCategory().toUpperCase() + " \0");
 			}
 			
 			
@@ -2867,9 +2867,12 @@ public class MUMBAI_T20_VIZ extends Scene{
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$MoveForStats$TopDataGrp" +  plyerBug + "$Side" + which_side + "$PlayerName$txt_LastName*GEOM*TEXT SET \0");
 			}
 			
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$MoveForStats$TopGrp$ImageAll$Side" + which_side + "$img_Player*TEXTURE*IMAGE SET "+ photo_path + 
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$MoveForStats$TopGrp$ImageAll$Side" + which_side + "$img_Player*TEXTURE*IMAGE SET "+ photo_path + IndexController.session_Configurations.getCategory() + "\\Blank" + AuctionUtil.PNG_EXTENSION + "\0");
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$MoveForStats$TopGrp$ImageAll$Side2$img_Player*TEXTURE*IMAGE SET "+ photo_path + IndexController.session_Configurations.getCategory() + "\\Blank" + AuctionUtil.PNG_EXTENSION + "\0");
+			
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$MoveForStats$TopGrp$ImageAll$Side" + which_side + "$img_Player*TEXTURE*IMAGE SET "+ photo_path + IndexController.session_Configurations.getCategory() + "\\" + 
 					auctionService.getAllPlayer().get(playerId - 1).getPhotoName().trim() + AuctionUtil.PNG_EXTENSION + "\0");
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$MoveForStats$TopGrp$ImageAll$Side2$img_Player*TEXTURE*IMAGE SET "+ photo_path + 
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$MoveForStats$TopGrp$ImageAll$Side2$img_Player*TEXTURE*IMAGE SET "+ photo_path + IndexController.session_Configurations.getCategory() + "\\" + 
 					auctionService.getAllPlayer().get(playerId - 1).getPhotoName().trim() + AuctionUtil.PNG_EXTENSION + "\0");
 //			if(auctionService.getAllPlayer().get(playerId - 1).getIconic().equalsIgnoreCase(AuctionUtil.YES)) {
 //				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_ScoreBug$MoveForStats$ImageGrp$GenericImage$IconPlayer$Select_IconPlayer"
@@ -3055,7 +3058,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 								"T20 CAREER" + "\0");
 					}else if(auctionService.getStatsTypes().get(stats_id - 1).getStats_short_name().equalsIgnoreCase("MCA T20s")) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Profile$Category$txt_Category*GEOM*TEXT SET " + 
-								"MCA T20s" + "\0");
+								"MCA T20s 2024-2026" + "\0");
 					}
 					
 					switch (auctionService.getAllPlayer().get(playerId - 1).getRole().toUpperCase()) {
@@ -4195,7 +4198,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 //		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$Header$Side" + whichSide + "$HeaderStyle1$txt_Header3*GEOM*TEXT SET " + "AUCTION" + " \0");
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$SubHead$Side" + whichSide + "$Select_SubHeaderStyle*FUNCTION*Omo*vis_con SET 0 \0");
-		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$SubHead$Side" + whichSide + "$txt_SubHeader*GEOM*TEXT SET " + "RTM AVAILABLE" + " \0");
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$SubHead$Side" + whichSide + "$txt_SubHeader*GEOM*TEXT SET " + "RTM REMAINING" + " \0");
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + whichSide + "$Select_GraphicsType*FUNCTION*Omo*vis_con SET 0 \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + whichSide + "$RemainingPurse$TitleText$RupeeSymbol*ACTIVE SET 0\0");
@@ -5013,7 +5016,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 			}else if(which_stat.equalsIgnoreCase("DT20")) {
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET T20 CAREER\0");
 			}else if(which_stat.equalsIgnoreCase("MCA T20s")) {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET MCA T20s\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET MCA T20s 2024-2026\0");
 			}
 			
 			for(Statistics stat : stats) {
@@ -5208,7 +5211,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 			}else if(which_stat.equalsIgnoreCase("DT20")) {
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET T20\0");
 			}else if(which_stat.equalsIgnoreCase("MCA T20s")) {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET MCA T20s\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LowerThird$NameGrp$Side" + which_side + "$img_Text1$NameGrp$txt_Role*GEOM*TEXT SET MCA T20s 2024-2026\0");
 			}
 			
 			for(Statistics stat : stats) {
@@ -5367,6 +5370,12 @@ public class MUMBAI_T20_VIZ extends Scene{
 		
 		String crawler_Data = "";
 		
+		if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")) {
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$img_Base2*TEXTURE*IMAGE SET " + base_path_1 + "MENS" + " \0");
+		}else if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("WOMEN")) {
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$img_Base2*TEXTURE*IMAGE SET " + base_path_1 + "WOMENS" + " \0");
+		}
+		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + "PURSE REMAINING" + " \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header2*GEOM*TEXT SET " + "" + " \0");
 		
@@ -5398,6 +5407,12 @@ public class MUMBAI_T20_VIZ extends Scene{
 		int squadSize = 0;
 		
 		String crawler_Data = "";
+		
+		if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")) {
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$img_Base2*TEXTURE*IMAGE SET " + base_path_1 + "MENS" + " \0");
+		}else if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("WOMEN")) {
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$img_Base2*TEXTURE*IMAGE SET " + base_path_1 + "WOMENS" + " \0");
+		}
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + "SQUAD SIZE" + " \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header2*GEOM*TEXT SET " + "" + " \0");
@@ -5437,6 +5452,12 @@ public class MUMBAI_T20_VIZ extends Scene{
 		}
 		Collections.sort(squad,new AuctionFunctions.PlayerStatsComparator());
 		
+		if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")) {
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$img_Base2*TEXTURE*IMAGE SET " + base_path_1 + "MENS" + " \0");
+		}else if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("WOMEN")) {
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$img_Base2*TEXTURE*IMAGE SET " + base_path_1 + "WOMENS" + " \0");
+		}
+		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + auction.getTeam().get(team_id-1).getTeamName1() + " \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header2*GEOM*TEXT SET " + "SQUAD" + " \0");
 		
@@ -5457,6 +5478,12 @@ public class MUMBAI_T20_VIZ extends Scene{
 	public void populateFreetextcrawler(PrintWriter print_writer, int which_side, int FlipperId, Auction auction,AuctionService auctionService, String session_selected_broadcaster) {
 	
 	String crawler_Data = "";
+	if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")) {
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$img_Base2*TEXTURE*IMAGE SET " + base_path_1 + "MENS" + " \0");
+	}else if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("WOMEN")) {
+		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$img_Base2*TEXTURE*IMAGE SET " + base_path_1 + "WOMENS" + " \0");
+	}
+	
 	for(Flipper flipper : auctionService.getFlipper()) {
 		if(flipper.getFlipperId() == FlipperId) {
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + flipper.getHeader() + " \0");
@@ -5481,6 +5508,12 @@ public class MUMBAI_T20_VIZ extends Scene{
 		}
 		
 		Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
+		
+		if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")) {
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$img_Base2*TEXTURE*IMAGE SET " + base_path_1 + "MENS" + " \0");
+		}else if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("WOMEN")) {
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$img_Base2*TEXTURE*IMAGE SET " + base_path_1 + "WOMENS" + " \0");
+		}
 		
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + "TOP BUYS" + " \0");
 		print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header2*GEOM*TEXT SET " + "" + " \0");
@@ -5516,6 +5549,12 @@ public class MUMBAI_T20_VIZ extends Scene{
 
         Collections.sort(top_sold,new AuctionFunctions.PlayerStatsComparator());
 
+        if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")) {
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$img_Base2*TEXTURE*IMAGE SET " + base_path_1 + "MENS" + " \0");
+		}else if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("WOMEN")) {
+			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$img_Base2*TEXTURE*IMAGE SET " + base_path_1 + "WOMENS" + " \0");
+		}
+        
         print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header1*GEOM*TEXT SET " + "TOP BUYS" + " \0");
         print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Crawl$CrawlHeader$Side" + which_side + "$txt_Header2*GEOM*TEXT SET " + auction.getTeam().get(team_id-1).getTeamName4() + " \0");
 
@@ -6080,8 +6119,38 @@ public class MUMBAI_T20_VIZ extends Scene{
 		if(!which_graphics_onscreen.isEmpty()) {
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$RTM$TextGrp$Side"+whichSide+"$txt_Bottom*GEOM*TEXT SET AVAILABLE\0");
 		}else {
-			Player player = auctionService.getAllPlayer().stream().filter(plyr -> plyr.getPlayerId() == current_bid.getCurrentPlayers().getPlayerId()).findAny().orElse(null);
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$RTM$img_TeamLogo*TEXTURE*IMAGE SET " + logo_path + auctionService.getTeams().get(player.getLastYearTeam()-1).getTeamName4() + "\0");
+//			Player player = auctionService.getAllPlayer().stream().filter(plyr -> plyr.getPlayerId() == current_bid.getCurrentPlayers().getPlayerId()).findAny().orElse(null);
+//			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$RTM$img_TeamLogo*TEXTURE*IMAGE SET " + logo_path + auctionService.getTeams().get(player.getLastYearTeam()-1).getTeamName4() + "\0");
+			
+			Player player = auctionService.getAllPlayer()
+			        .stream()
+			        .filter(p -> p.getPlayerId() == current_bid.getCurrentPlayers().getPlayerId())
+			        .findAny()
+			        .orElse(null);
+
+			String teamLogo = "-";
+
+			if (player != null && player.getLastYearTeam() != null) {
+
+			    int index = player.getLastYearTeam() - 1;
+
+			    if (index >= 0 && index < auctionService.getTeams().size()) {
+
+			        Team team = auctionService.getTeams().get(index);
+
+			        if (team != null && team.getTeamName4() != null) {
+			            teamLogo = logo_path + team.getTeamName4();
+			        }
+			    }
+			}
+
+			System.out.println("PLAYER NAME + " + player.getFull_name() + "      PRE = " + player.getLastYearTeam());
+			// Always prints something (no crash)
+			print_writer.println(
+			    "-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$RTM$img_TeamLogo*TEXTURE*IMAGE SET "
+			    + teamLogo + "\0"
+			);
+			
 			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$RTM$TextGrp$Side"+whichSide+"$txt_Bottom*GEOM*TEXT SET AVAILABLE\0");
 		}
 	}
@@ -6276,7 +6345,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 			}else if(which_stat.equalsIgnoreCase("DT20")) {
 				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$StatsGrp$Side"+whichSide+"$Stats$txt_Title*GEOM*TEXT SET T20 CAREER\0");
 			}else if(which_stat.equalsIgnoreCase("MCA T20s")) {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$StatsGrp$Side"+whichSide+"$Stats$txt_Title*GEOM*TEXT SET MCA T20s  24-25\0");
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_Overlays$StatsGrp$Side"+whichSide+"$Stats$txt_Title*GEOM*TEXT SET MCA T20s  2024-2026\0");
 			}
 			
 			for(Statistics stats : auctionService.getAllStats()) {
