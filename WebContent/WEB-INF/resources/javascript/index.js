@@ -1571,41 +1571,45 @@ function processAuctionProcedures(whatToProcess)
 				}
 			}
 			break;
-			case 'POPULATE-SQUAD':
+			case 'POPULATE-SQUAD': case 'POPULATE-LOF_SQUAD': case 'POPULATE-ZONE_PLAYERS_STATS': case 'POPULATE-FF_FIVE_TOP_BUY_TEAM':
+			case 'POPULATE-FF_TOP_BUY_TEAM': case 'POPULATE-FF_RETAIN_PLAYERS':
 				if(confirm('Animate In?') == true){
-					processAuctionProcedures('ANIMATE-IN-SQUAD');	
-				}
-				break;
-			case 'POPULATE-LOF_SQUAD':
-				if(confirm('Animate In?') == true){
-					processAuctionProcedures('ANIMATE-IN-LOF_SQUAD');	
-				}			
-				break;
-			case 'POPULATE-ZONE_PLAYERS_STATS':
-				if(confirm('Animate In?') == true){
-					processAuctionProcedures('ANIMATE-IN-ZONE-PLAYER_STATS');
-				}			
-				break;
-			case 'POPULATE-FF_FIVE_TOP_BUY_TEAM':
-				if(confirm('Animate In?') == true){
-					processAuctionProcedures('ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM');
-				}			
+					switch(whatToProcess){
+					case 'POPULATE-SQUAD':
+						processAuctionProcedures('ANIMATE-IN-SQUAD');
+						break;
+					case 'POPULATE-LOF_SQUAD':
+						processAuctionProcedures('ANIMATE-IN-LOF_SQUAD');
+						break;
+					case 'POPULATE-ZONE_PLAYERS_STATS':
+						processAuctionProcedures('ANIMATE-IN-ZONE-PLAYER_STATS');
+						break;
+					case 'POPULATE-FF_FIVE_TOP_BUY_TEAM':
+						processAuctionProcedures('ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM');
+						break;
+					case 'POPULATE-FF_TOP_BUY_TEAM':
+						processAuctionProcedures('ANIMATE-IN-FF_TOP_BUY_TEAM');
+						break;
+					case 'POPULATE-FF_RETAIN_PLAYERS':
+						processAuctionProcedures('ANIMATE-IN-FF_RETAIN_PLAYERS');
+						break;
+					}	
+				}		
 				break;
 			
-			case 'POPULATE-FF-PLAYERPROFILE': case 'POPULATE-REMAINING_PURSE_ALL': case 'POPULATE-SINGLE_PURSE': case 'POPULATE-TOP_SOLD':
-			case 'POPULATE-L3-NAMESUPER': case 'POPULATE-TOP_SOLD_TEAM': case 'POPULATE-IDENT': case 'POPULATE-FLIPPER_SQUAD': case 'POPULATE-TEAMS': case 'POPULATE-TEAMS_DETAILS':
-			case 'POPULATE-CURR_BID': case 'POPULATE-RTM_AVAILABLE': case 'POPULATE-RTM_PLAYER': case "POPULATE-PROFILE_STATS_CHANGE":
-			case 'POPULATE-RTM_ENABLED': case 'POPULATE-GOOGLY_POWER': case 'POPULATE-PROFILE_STATS': case 'POPULATE-LOF_REMAINING_PURSE':
-			case 'POPULATE-LOF_TOP_SOLD': case 'POPULATE-LOF_TEAM_TOP_SOLD': case 'POPULATE-CRAWLER_TEAM_TOP_SOLD': case "POPULATE-SQUAD-PLAYER": 
-			case 'POPULATE-PLAYERPROFILE_FF': case 'POPULATE-PROFILE_FF': case 'POPULATE-PLAYERPROFILE_FF_BIG':
-			case 'POPULATE-LOF_REMAINING_SLOT': case 'POPULATE-LOF_SQUAD_SIZE': case 'POPULATE-LOF_RTM_REMAINING': case 'POPULATE-LOF_SQUAD_SIZE_CATEGORY_WISE':
-			case 'POPULATE-CRAWLE_SQUAD': case 'POPULATE-LOF_SQUAD_REMAIN': case 'POPULATE-L3-CRWLERFREETEXT': case 'POPULATE-L3-FLIPPER': case 'POPULATE-L3-FLIPPER_TEXT':
+			case 'POPULATE-FF-PLAYERPROFILE': case 'POPULATE-REMAINING_PURSE_ALL': case 'POPULATE-SINGLE_PURSE': case 'POPULATE-TOP_SOLD': case 'POPULATE-L3-NAMESUPER': 
+			case 'POPULATE-TOP_SOLD_TEAM': case 'POPULATE-IDENT': case 'POPULATE-FLIPPER_SQUAD': case 'POPULATE-TEAMS': case 'POPULATE-TEAMS_DETAILS': case 'POPULATE-CURR_BID': 
+			case 'POPULATE-RTM_AVAILABLE': case 'POPULATE-RTM_PLAYER': case "POPULATE-PROFILE_STATS_CHANGE": case 'POPULATE-RTM_ENABLED': case 'POPULATE-GOOGLY_POWER': 
+			case 'POPULATE-PROFILE_STATS': case 'POPULATE-LOF_REMAINING_PURSE': case 'POPULATE-LOF_TOP_SOLD': case 'POPULATE-LOF_TEAM_TOP_SOLD': 
+			case 'POPULATE-CRAWLER_TEAM_TOP_SOLD': case "POPULATE-SQUAD-PLAYER": case 'POPULATE-PLAYERPROFILE_FF': case 'POPULATE-PROFILE_FF': 
+			case 'POPULATE-PLAYERPROFILE_FF_BIG': case 'POPULATE-LOF_REMAINING_SLOT': case 'POPULATE-LOF_SQUAD_SIZE': case 'POPULATE-LOF_RTM_REMAINING': 
+			case 'POPULATE-LOF_SQUAD_SIZE_CATEGORY_WISE': case 'POPULATE-CRAWLE_SQUAD': case 'POPULATE-LOF_SQUAD_REMAIN': case 'POPULATE-L3-CRWLERFREETEXT': 
+			case 'POPULATE-L3-FLIPPER': case 'POPULATE-L3-FLIPPER_TEXT':
 			
-			case 'POPULATE-FF_RTM_AND_PURSE_REMAINING': case 'POPULATE-FF_TOP_BUYS_AUCTION': case 'POPULATE-FF_TOP_BUY_TEAM': case 'POPULATE-TEAM_CURR_BID':
-			case 'POPULATE-FF_ICONIC_PLAYERS': case 'POPULATE-FF_FIVE_TOP_BUYS_AUCTION': case 'POPULATE-FF_SINGLEPURSE_TEAM':
-			case "POPULATE-FF_SQUAD_TEAM":case "POPULATE-FF_SQUAD_ROLE_TEAM": case 'POPULATE-FF_RETAIN_PLAYERS':
-			case 'POPULATE-LT_ICONIC_PLAYERS': case 'POPULATE-PLAYERPROFILE_LT': case 'POPULATE-PLAYERPROFILE_LT_STATS':
-			case 'POPULATE-ZONEWISE_PLAYERS_SOLD':case "POPULATE-LOF_TEAM_BID_AUCTION": case 'POPULATE-ZONE_PLAYERS_FULL':case 'POPULATE-LOF_CATRGORY':
+			case 'POPULATE-FF_RTM_AND_PURSE_REMAINING': case 'POPULATE-FF_TOP_BUYS_AUCTION': case 'POPULATE-TEAM_CURR_BID': case 'POPULATE-FF_ICONIC_PLAYERS': 
+			case 'POPULATE-FF_FIVE_TOP_BUYS_AUCTION': case 'POPULATE-FF_SINGLEPURSE_TEAM': case "POPULATE-FF_SQUAD_TEAM":case "POPULATE-FF_SQUAD_ROLE_TEAM": 
+			case 'POPULATE-LT_ICONIC_PLAYERS': case 'POPULATE-PLAYERPROFILE_LT': case 'POPULATE-PLAYERPROFILE_LT_STATS': case 'POPULATE-ZONEWISE_PLAYERS_SOLD':
+			case "POPULATE-LOF_TEAM_BID_AUCTION": case 'POPULATE-ZONE_PLAYERS_FULL':case 'POPULATE-LOF_CATRGORY':
 			
 			case 'POPULATE-CRAWL-PURSE_REMAINING': case 'POPULATE-CRAWL-SQUAD_SIZE': case'POPULATE-CRAWL_TOP_SOLD':
 			
@@ -1755,9 +1759,6 @@ function processAuctionProcedures(whatToProcess)
 						case "POPULATE-LOF_TEAM_BID_AUCTION":
 							processAuctionProcedures('ANIMATE-IN-LOF_TEAM_BID_AUCTION');
 							break;
-						case 'POPULATE-FF_TOP_BUY_TEAM':
-							processAuctionProcedures('ANIMATE-IN-FF_TOP_BUY_TEAM');
-							break;
 						case "POPULATE-FF_SQUAD_TEAM":
 							processAuctionProcedures('ANIMATE-IN-FF_SQUAD_TEAM');
 							break;
@@ -1769,9 +1770,6 @@ function processAuctionProcedures(whatToProcess)
 							break;	
 						case 'POPULATE-FF_ICONIC_PLAYERS':
 							processAuctionProcedures('ANIMATE-IN-FF_ICONIC_PLAYERS');
-							break;
-						case 'POPULATE-FF_RETAIN_PLAYERS':
-							processAuctionProcedures('ANIMATE-IN-FF_RETAIN_PLAYERS');
 							break;
 						case 'POPULATE-LT_ICONIC_PLAYERS':
 							processAuctionProcedures('ANIMATE-IN-LT_ICONIC_PLAYERS');
@@ -2052,7 +2050,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 							option.value = 'U19';
 							option.text = 'UNDER 19';
 							select.appendChild(option);
-						break;
+							break;
 						default:
 							dataToProcess.forEach(function(flip){
 								option = document.createElement('option');
@@ -2060,7 +2058,7 @@ function addItemsToList(whatToProcess, dataToProcess)
 								option.text = flip;
 								select.appendChild(option);
 							});
-						break;
+							break;
 						}
 						
 						select.setAttribute('onchange',"processUserSelection(this)");

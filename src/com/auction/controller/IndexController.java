@@ -439,15 +439,12 @@ public class IndexController
 			System.out.println("Comiong in controller sssss");
 		    return (List<T>) session_team;
 		case "ZONEWISE_PLAYER_SOLD_GRAPHICS-OPTIONS": case "ZONE-PLAYER_GRAPHICS-OPTIONS":
-		    Set<String> allCategories = session_auction.getPlayersList().stream()
-		        .map(Player::getCategory)
-		        .filter(Objects::nonNull)
-		        .map(String::trim)
-		        .map(String::toUpperCase)
-		        .collect(Collectors.toSet());
+			Set<String> allCategories = session_auction.getPlayersList().stream()
+	        	.map(Player::getCategory).filter(Objects::nonNull).map(String::trim)
+	        	.map(String::toUpperCase).filter(category -> !category.equals("ICON"))  // remove ICON
+	        	.collect(Collectors.toSet());
 		    ArrayList<String> array = new ArrayList<>(allCategories);
 		    return (List<T>) array;
-
 		}
 	    return null;
 	}
