@@ -66,8 +66,8 @@ public class UTT_BIGSCREEN extends Scene{
 	public Data updateData(Auction auction, Auction session_curr_bid,AuctionService auctionService, PrintWriter print_writer) throws NumberFormatException, Exception
 	{
 		if(which_graphics_onscreen.equalsIgnoreCase("PLAYERPROFILE_FF")) {
-			populatePlayerProfileFF(true,print_writer, whichSideNotProfile, Integer.valueOf(side2ValueToProcess.split(",")[0]), side2ValueToProcess.split(",")[1], 
-					auction, auctionService, session_selected_broadcaster);	
+			populatePlayerProfileFF(true,print_writer, whichSideNotProfile, Integer.valueOf(side2ValueToProcess.split(",")[0]), 
+					side2ValueToProcess.split(",")[1], auction, auctionService, session_selected_broadcaster);	
 		}else if(which_graphics_onscreen.equalsIgnoreCase("SQUAD_ANIMATION")) {
 			populateSquadAnimation(true,print_writer, Integer.valueOf(side2ValueToProcess.split(",")[0]),side2ValueToProcess.split(",")[1], 
 					whichSideNotProfile, auction, auctionService, session_selected_broadcaster);
