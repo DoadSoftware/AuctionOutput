@@ -1253,7 +1253,7 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 									auctionService, session_selected_broadcaster);
 							break;
 						}
-						TimeUnit.MILLISECONDS.sleep(1300);
+						TimeUnit.MILLISECONDS.sleep(2000);
 						cutBack(print_writer, which_graphics_onscreen, whatToProcess);
 						which_graphics_onscreen = whatToProcess.replace("ANIMATE-IN-", "");
 					}
@@ -1653,7 +1653,7 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side1$select_GraphicsType*FUNCTION*Omo*vis_con SET 9\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side1$select_HeaderType*FUNCTION*Omo*vis_con SET 0\0");
 						TimeUnit.MILLISECONDS.sleep(1000);
-						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Main$Logo_Bg SHOW 3.000\0");
+						//print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Main$Logo_Bg SHOW 3.000\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Logo_Bg SHOW 0.0\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Wipe SHOW 0.0\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Header SHOW 0.0\0");
@@ -1850,8 +1850,7 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
 					"$SquadCategoryData$PlayerName$Iconic_Icon$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-					"$SquadCategoryData$PlayerName$Retain_Icon$Select_Icon*FUNCTION*Omo*vis_con SET " + (player.getSoldOrUnsold().
-							equalsIgnoreCase("RETAIN")?"1":"0") + "\0");
+					"$SquadCategoryData$PlayerName$Retain_Icon$Select_Icon*FUNCTION*Omo*vis_con SET " + "0" + "\0");
 			
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
 					"$SquadCategoryData$PlayerName$Value*ACTIVE SET 1\0");
@@ -2475,7 +2474,7 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 		case "ANIMATE-IN-IDENT": case "ANIMATE-IN-PLAYERPROFILE_FF": case "ANIMATE-IN-REMAINING_PURSE_ALL": case "ANIMATE-IN-SQUAD": case "ANIMATE-IN-FF_TOP_BUYS_AUCTION": 
 		case "ANIMATE-IN-FF_TOP_BUY_TEAM": case "ANIMATE-IN-FF_ICONIC_PLAYERS": case "ANIMATE-IN-FF_RTM_AND_PURSE_REMAINING": case "ANIMATE-IN-ZONE-PLAYER_STATS":
 		case "ANIMATE-IN-FF_FIVE_TOP_BUYS_AUCTION": case "ANIMATE-IN-FF_FIVE_TOP_BUY_TEAM":case "ANIMATE-IN-FF_SQUAD_TEAM": case "ANIMATE-IN-PROFILE_FF":
-		case "ANIMATE-IN-FF_RETAIN_PLAYERS": case "ANIMATE-IN-SQUAD_ANIMATION":
+		case "ANIMATE-IN-FF_RETAIN_PLAYERS": case "ANIMATE-IN-SQUAD_ANIMATION": case "ANIMATE-IN-FF_SQUAD_ROLE_TEAM":
 			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Wipe SHOW 0.0\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$Header SHOW 0.0\0");
 			switch (whatToProcess.toUpperCase()) {
@@ -2680,9 +2679,13 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 		if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")) {
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Ident$Logo$img_Base2"
 					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "MENS" + "\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Ident$Logo$img_TeamLogo"
+					+ "*TEXTURE*IMAGE SET "+ logo_path + "T20M" + "\0");
 		}else {
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Ident$Logo$img_Base2"
 					+ "*TEXTURE*IMAGE SET "+ base_path_2 + "WOMENS" + "\0");
+			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Ident$Logo$img_TeamLogo"
+					+ "*TEXTURE*IMAGE SET "+ logo_path + "T20W" + "\0");
 		}
 		
 		String venue = "";
@@ -3117,9 +3120,8 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 				if(data.isPlayer_sold_or_unsold() == true) {
 					if(data.getBid_result() != null && !data.getBid_result().isEmpty()) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$NormalToFinal START \0");
-						
-						TimeUnit.MILLISECONDS.sleep(1500);
-						PlayerSoldOrUnsold(print_writer, auction, playerId, 1);
+						//TimeUnit.MILLISECONDS.sleep(1500);
+						//PlayerSoldOrUnsold(print_writer, auction, playerId, 1);
 						//TimeUnit.MILLISECONDS.sleep(500);
 						//print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$NormalToFinal SHOW 0.0 \0");
 					}
@@ -4656,7 +4658,7 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + whichSide + "$HeaderType1$Header$txt_Header1*GEOM*TEXT SET " + team.getTeamName2() + "\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + whichSide + "$HeaderType1$Header$txt_Header2*GEOM*TEXT SET " + team.getTeamName3() + "\0");
-		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + whichSide + "$HeaderType1$txt_SubHeader*GEOM*TEXT SET RETAINED PLAYERS\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + whichSide + "$HeaderType1$txt_SubHeader*GEOM*TEXT SET ALLOTMENT OF ICON & RETAINED PLAYERS\0");
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + whichSide + "$select_HeaderType$HeaderType1$Logo$select_Logo"
 				+ "*FUNCTION*Omo*vis_con SET 1\0");
@@ -5778,7 +5780,7 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 								equalsIgnoreCase("MEN") ? "MENS" : "WOMENS") + "\0");
 				
 				switch(data_str.get(k)) {
-				case "DEVELOPMENT": case "SENIOR": case "ICON": case "EMERGING": case "GENRAL":
+				case "DEVELOPMENT": case "SENIOR": case "ICON": case "EMERGING": case "GENERAL": case "U19":
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
 							+ "$NoData$IconGrpGrp$select_Icon*FUNCTION*Omo*vis_con SET 0\0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
@@ -5850,8 +5852,13 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 //						}
 						
 						if(plyr.getSoldOrUnsold().equalsIgnoreCase("RETAIN") || plyr.getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)) {
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
-									+ "$Image_Value$SpecialIcon$select_SpecialIcon*FUNCTION*Omo*vis_con SET 1\0");
+							if(plyr.getCategory().equalsIgnoreCase("ICON")) {
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
+										+ "$Image_Value$SpecialIcon$select_SpecialIcon*FUNCTION*Omo*vis_con SET 0\0");
+							}else {
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
+										+ "$Image_Value$SpecialIcon$select_SpecialIcon*FUNCTION*Omo*vis_con SET 1\0");
+							}
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
 									+ "$Image_Value$SpecialIcon$text$txt_Category*GEOM*TEXT SET " + plyr.getSoldOrUnsold().toUpperCase() + "\0");
 						}else {
@@ -5960,7 +5967,7 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 								equalsIgnoreCase("MEN") ? "MENS" : "WOMENS") + "\0");
 				
 				switch(data_str.get(k)) {
-				case "DEVELOPMENT": case "SENIOR": case "ICON": case "EMERGING": case "GENRAL":
+				case "DEVELOPMENT": case "SENIOR": case "ICON": case "EMERGING": case "GENERAL": case "U19":
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
 							+ "$NoData$IconGrpGrp$select_Icon*FUNCTION*Omo*vis_con SET 0\0");
 					print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
@@ -6032,8 +6039,13 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 //						}
 						
 						if(plyr.getSoldOrUnsold().equalsIgnoreCase("RETAIN") || plyr.getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)) {
-							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
-									+ "$Image_Value$SpecialIcon$select_SpecialIcon*FUNCTION*Omo*vis_con SET 1\0");
+							if(plyr.getCategory().equalsIgnoreCase("ICON")) {
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
+										+ "$Image_Value$SpecialIcon$select_SpecialIcon*FUNCTION*Omo*vis_con SET 0\0");
+							}else {
+								print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
+										+ "$Image_Value$SpecialIcon$select_SpecialIcon*FUNCTION*Omo*vis_con SET 1\0");
+							}
 							print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + which_side + "$Squad$Players$Player" + row 
 									+ "$Image_Value$SpecialIcon$text$txt_Category*GEOM*TEXT SET " + plyr.getSoldOrUnsold().toUpperCase() + "\0");
 						}else {
