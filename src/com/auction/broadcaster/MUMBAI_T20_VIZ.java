@@ -1929,15 +1929,19 @@ public class MUMBAI_T20_VIZ extends Scene{
 				row++;	
 			}
 		}
-		
-		players = team.getPlayer().stream().filter(pl -> pl.getIconic().equalsIgnoreCase("NO") &&  pl.getRole().equalsIgnoreCase("Bowler")&& 
-				PlayerRole(pl).equalsIgnoreCase("SPIN")) .collect(Collectors.toList());
+
+//		players = team.getPlayer().stream().filter(pl -> pl.getIconic().equalsIgnoreCase("NO") &&  pl.getRole().equalsIgnoreCase("Bowler")&& 
+//				PlayerRole(pl).equalsIgnoreCase("SPIN")) .collect(Collectors.toList());
+		players = team.getPlayer().stream().filter(pl -> pl.getIconic().equalsIgnoreCase("NO") && 
+				pl.getRole().equalsIgnoreCase("Bowler")) .collect(Collectors.toList());
 		
 		if(players != null && players.size() >0) {
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
 					"$SquadCategoryData$SlectDataStyle*FUNCTION*Omo*vis_con SET 0\0");
+//			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//					"$SquadCategoryData$Title$txt_Title*GEOM*TEXT SET " + "SPINNERS" + "\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-					"$SquadCategoryData$Title$txt_Title*GEOM*TEXT SET " + "SPINNERS" + "\0");
+					"$SquadCategoryData$Title$txt_Title*GEOM*TEXT SET " + "BOWLER" + "\0");
 			
 			row = row + 1;
 			
@@ -1964,39 +1968,39 @@ public class MUMBAI_T20_VIZ extends Scene{
 			}		
 		}
 		
-		players =  team.getPlayer().stream().filter(pl ->  pl.getIconic().equalsIgnoreCase("NO") && pl.getRole().equalsIgnoreCase("Bowler")&& 
-				PlayerRole(pl).equalsIgnoreCase("SEAM")) .collect(Collectors.toList());
-		
-		if(players != null && players.size() >0) {
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-					"$SquadCategoryData$SlectDataStyle*FUNCTION*Omo*vis_con SET 0\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-					"$SquadCategoryData$Title$txt_Title*GEOM*TEXT SET " + "PACERS" + "\0");
-			
-			row = row + 1;
-			
-			for(Player ply :players) {
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-						"$SquadCategoryData$SlectDataStyle*FUNCTION*Omo*vis_con SET 2\0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-						"$SquadCategoryData$PlayerName$img_Icon*TEXTURE*IMAGE SET " + setPlayerRole(ply)+ "\0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + ply.getFull_name() + "\0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET \0");
-				
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-						"$SquadCategoryData$PlayerName$Iconic_Icon$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-						"$SquadCategoryData$PlayerName$Retain_Icon$Select_Icon*FUNCTION*Omo*vis_con SET " + (ply.getSoldOrUnsold().
-								equalsIgnoreCase("RETAIN")?"1":"0") + "\0");
-				
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_Value*GEOM*TEXT SET " + AuctionFunctions.ConvertToLakh(ply.getSoldForPoints()) + " L \0");
-				
-				row++;	
-			}
-		}
+//		players =  team.getPlayer().stream().filter(pl ->  pl.getIconic().equalsIgnoreCase("NO") && pl.getRole().equalsIgnoreCase("Bowler")&& 
+//				PlayerRole(pl).equalsIgnoreCase("SEAM")) .collect(Collectors.toList());
+//		
+//		if(players != null && players.size() >0) {
+//			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//					"$SquadCategoryData$SlectDataStyle*FUNCTION*Omo*vis_con SET 0\0");
+//			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//					"$SquadCategoryData$Title$txt_Title*GEOM*TEXT SET " + "PACERS" + "\0");
+//			
+//			row = row + 1;
+//			
+//			for(Player ply :players) {
+//				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//						"$SquadCategoryData$SlectDataStyle*FUNCTION*Omo*vis_con SET 2\0");
+//				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//						"$SquadCategoryData$PlayerName$img_Icon*TEXTURE*IMAGE SET " + setPlayerRole(ply)+ "\0");
+//				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + ply.getFull_name() + "\0");
+//				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET \0");
+//				
+//				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//						"$SquadCategoryData$PlayerName$Iconic_Icon$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
+//				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//						"$SquadCategoryData$PlayerName$Retain_Icon$Select_Icon*FUNCTION*Omo*vis_con SET " + (ply.getSoldOrUnsold().
+//								equalsIgnoreCase("RETAIN")?"1":"0") + "\0");
+//				
+//				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//						"$SquadCategoryData$PlayerName$txt_Value*GEOM*TEXT SET " + AuctionFunctions.ConvertToLakh(ply.getSoldForPoints()) + " L \0");
+//				
+//				row++;	
+//			}
+//		}
 	}
 
 	private void populateFFSquadTeam(PrintWriter print_writer, int whichSide, Integer teaam_id,
