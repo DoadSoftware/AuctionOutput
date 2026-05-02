@@ -292,11 +292,13 @@ public class IndexController
 				this_psl.enableAudio = "TRUE";
 				this_kcl.enableAudio = "TRUE";
 				this_pwl.enableAudio ="TRUE";
+				this_mumbai_t20_viz.enableAudio ="TRUE";
 			}else {
 				this_ispl_viz_2024.enableAudio = "FALSE";
 				this_psl.enableAudio = "FALSE";
 				this_kcl.enableAudio = "FALSE";
 				this_pwl.enableAudio ="FALSE";
+				this_mumbai_t20_viz.enableAudio ="FALSE";
 			}
 			return null;	
 		case "RE_READ_DATA":

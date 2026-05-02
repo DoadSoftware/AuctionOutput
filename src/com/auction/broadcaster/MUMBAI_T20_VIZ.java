@@ -41,6 +41,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 	public int current_layer = 2, whichSide = 1, whichSideNotProfile=1, rowHighlight = 1,prevRowHighlight = 1, rtmGooglyWhichSide = 1;
 	public int player_id = 0,team_id=0,player_number=0;
 	public int zoneSize = 0, current_index = 0;
+	public String enableAudio = "";
 	
 	List<Player> squad = new ArrayList<Player>();
 	List<String> data_str = new ArrayList<String>();
@@ -983,8 +984,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Overlays$In_Out$Essentials START \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Overlays$In_Out$Normal START \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Loop START \0");
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio START\0");
-					
+					if(enableAudio.equalsIgnoreCase("TRUE")) {
+						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio START\0");
+					}
 					if(showPlayerOrNot.equalsIgnoreCase("YES")) {
 						if(isProfileStatsOnScreen == false) {
 							TimeUnit.MILLISECONDS.sleep(1700);
@@ -1451,7 +1453,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 				case "ANIMATE-OUT-PROFILE":
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Overlays$In_Out$Essentials CONTINUE \0");
 					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Overlays$In_Out$Normal CONTINUE \0");
-					print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio START\0");
+					//print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio START\0");
 					
 					if(isPlayerSoldorUnsold.equalsIgnoreCase("SOLD")) {
 						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*anim_Overlays$In_Out$Sold CONTINUE REVERSE\0");
@@ -2786,6 +2788,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 //								}
 								
 								isPlayerSoldorUnsold = "SOLD";
+								if(enableAudio.equalsIgnoreCase("TRUE")) {
+									print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio START\0");
+								}
 							}else if(data.getBid_result().equalsIgnoreCase(AuctionUtil.UNSOLD)) {
 								if(isProfileStatsOnScreen == true) {
 									print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Stats CONTINUE REVERSE \0");
@@ -2797,7 +2802,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 								
 								isPlayerSoldorUnsold = "UNSOLD";
 							}
-							print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio START \0");
+							//print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Audio START \0");
 						}
 //						print_writer.println("-1 RENDERER*FRONT_LAYER*STAGE*DIRECTOR*Change_TopData START \0");
 						TimeUnit.MILLISECONDS.sleep(2000);
