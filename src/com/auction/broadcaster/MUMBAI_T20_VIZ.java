@@ -2254,7 +2254,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 			}
 			break;
 		}
-		TimeUnit.MILLISECONDS.sleep(300);
+		TimeUnit.MILLISECONDS.sleep(700);
 		if(!which_graphics_onscreen.equalsIgnoreCase(whatToProcess)) {
 			
 		}
@@ -3477,11 +3477,20 @@ public class MUMBAI_T20_VIZ extends Scene{
 			}
 			
 			if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")) {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + which_side + "$RemPurse_SQ_Size$Row" + (i+1) + "$txt_Value2*GEOM*TEXT SET " 
-						+ (18-squadSize) + " \0");
+				if((Integer.valueOf(18-squadSize)) < 0) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + which_side + "$RemPurse_SQ_Size$Row" + (i+1) + "$txt_Value2*GEOM*TEXT SET -\0");
+				}else {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + which_side + "$RemPurse_SQ_Size$Row" + (i+1) + "$txt_Value2*GEOM*TEXT SET " 
+							+ (18-squadSize) + " \0");
+				}
+				
 			}else if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("WOMEN")) {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + which_side + "$RemPurse_SQ_Size$Row" + (i+1) + "$txt_Value2*GEOM*TEXT SET " 
-						+ (16-squadSize) + " \0");
+				if((Integer.valueOf(16-squadSize)) < 0) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + which_side + "$RemPurse_SQ_Size$Row" + (i+1) + "$txt_Value2*GEOM*TEXT SET -\0");
+				}else {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + which_side + "$RemPurse_SQ_Size$Row" + (i+1) + "$txt_Value2*GEOM*TEXT SET " 
+							+ (16-squadSize) + " \0");
+				}
 			}
 			
 			total = 0;
@@ -4089,11 +4098,21 @@ public class MUMBAI_T20_VIZ extends Scene{
 			}
 			
 			if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("MEN")) {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$txt_Value*GEOM*TEXT SET " 
-						+ (18-squadSize) + " \0");
+				if((Integer.valueOf(18-squadSize)) < 0) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$txt_Value*GEOM*TEXT SET -\0");
+				}else {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$txt_Value*GEOM*TEXT SET " 
+							+ (18-squadSize) + " \0");
+				}
+				
 			}else if(IndexController.session_Configurations.getCategory().equalsIgnoreCase("WOMEN")) {
-				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$txt_Value*GEOM*TEXT SET " 
-						+ (16-squadSize) + " \0");
+				if((Integer.valueOf(16-squadSize)) < 0) {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$txt_Value*GEOM*TEXT SET -\0");
+				}else {
+					print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$txt_Value*GEOM*TEXT SET " 
+							+ (16-squadSize) + " \0");
+				}
+				
 			}
 			
 			squadSize = 0;
@@ -4272,8 +4291,14 @@ public class MUMBAI_T20_VIZ extends Scene{
 					rtmUsed++;
 				}
 			}
-			print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$txt_Value*GEOM*TEXT SET " 
-					+ (Integer.valueOf(tm.getTeamTotalRTM()) - rtmUsed) + " \0");
+			
+			if((Integer.valueOf(tm.getTeamTotalRTM()) - rtmUsed) < 0) {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$txt_Value*GEOM*TEXT SET -\0");
+			}else {
+				print_writer.println("-1 RENDERER*FRONT_LAYER*TREE*$gfx_LOF" + session_selected_category + "$AllGraphics$Side" + whichSide + "$RemainingPurse$Row" + row + "$txt_Value*GEOM*TEXT SET " 
+						+ (Integer.valueOf(tm.getTeamTotalRTM()) - rtmUsed) + " \0");
+			}
+			
 			rtmUsed = 0;
 		}
 	}
