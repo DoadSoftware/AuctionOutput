@@ -5570,9 +5570,14 @@ public class MUMBAI_T20_VIZ extends Scene{
 		for(int m=0; m<= squad.size() - 1; m++) {
 			if(squad.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.SOLD) || squad.get(m).getSoldOrUnsold().equalsIgnoreCase(AuctionUtil.RTM)
 					|| squad.get(m).getSoldOrUnsold().equalsIgnoreCase("RETAIN")) {
-				crawler_Data = crawler_Data + auctionService.getAllPlayer().get(squad.get(m).getPlayerId()-1).getFull_name() + 
-						(squad.get(m).getSoldOrUnsold().equalsIgnoreCase("RETAIN") ? " (RETAINED)": "") + ": " +
-			             AuctionFunctions.ConvertToLakh(squad.get(m).getSoldForPoints(),true)+"L" + "\n";
+				if(auctionService.getAllPlayer().get(squad.get(m).getPlayerId()-1).getIconic().equalsIgnoreCase(AuctionUtil.YES)) {
+					crawler_Data = crawler_Data + auctionService.getAllPlayer().get(squad.get(m).getPlayerId()-1).getFull_name() + ": " +
+				             AuctionFunctions.ConvertToLakh(squad.get(m).getSoldForPoints(),true)+"L" + "\n";
+				}else {
+					crawler_Data = crawler_Data + auctionService.getAllPlayer().get(squad.get(m).getPlayerId()-1).getFull_name() + 
+							(squad.get(m).getSoldOrUnsold().equalsIgnoreCase("RETAIN") ? " (RETAINED)": "") + ": " +
+				             AuctionFunctions.ConvertToLakh(squad.get(m).getSoldForPoints(),true)+"L" + "\n";
+				}
 			}
 		}
 		
