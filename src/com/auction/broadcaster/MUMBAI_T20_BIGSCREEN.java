@@ -42,6 +42,8 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 	public int player_id = 0,team_id=0,player_number=0;
 	public int zoneSize = 0, current_index = 0;
 	
+	public String enableAudio = "";
+	
 	public Statistics Statistics;
 	public int stats_id;
 	
@@ -780,7 +782,9 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Transition CONTINUE\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Essentials CONTINUE\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Header CONTINUE\0");
-						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*AudioFF START\0");
+						if(enableAudio.equalsIgnoreCase("TRUE")) {
+							print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*AudioFF START \0");
+						}
 						switch (which_graphics_onscreen) {
 						case "IDENT":
 							print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Main$Ident CONTINUE\0");
@@ -1128,7 +1132,9 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 				case "ANIMATE-IN-FF_SQUAD_ROLE_TEAM": case "ANIMATE-IN-PROFILE_FF": case "ANIMATE-IN-FF_RETAIN_PLAYERS": case "ANIMATE-IN-SQUAD_ANIMATION":
 					if(which_graphics_onscreen.isEmpty()) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Loop START \0");
-						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*AudioFF START \0");
+						if(enableAudio.equalsIgnoreCase("TRUE")) {
+							print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*AudioFF START \0");
+						}
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Transition START \0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Essentials START\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Header START\0");
@@ -3188,9 +3194,9 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 				if(data.isPlayer_sold_or_unsold() == true) {
 					if(data.getBid_result() != null && !data.getBid_result().isEmpty()) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$NormalToFinal$Side1 START \0");
-						TimeUnit.MILLISECONDS.sleep(1500);
+						TimeUnit.MILLISECONDS.sleep(1000);
 						PlayerSoldOrUnsold(print_writer, auction, playerId, 1);
-						TimeUnit.MILLISECONDS.sleep(500);
+						TimeUnit.MILLISECONDS.sleep(2000);
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$NormalToFinal$Side1 SHOW 0.0 \0");
 					}
 				}
@@ -4398,7 +4404,7 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 					+ "*GEOM*TEXT SET " + tm.getTeamName3()+"\0");
 			
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$PurseRTM"+mensOrWomens+"$Team"+row+"$txt_SquadSize"
-					+ "*GEOM*TEXT SET " +(noOfPlayers-tm.getPlayers())+"\0");
+					+ "*GEOM*TEXT SET " + ((noOfPlayers-tm.getPlayers()) < 0 ? "-" : (noOfPlayers-tm.getPlayers())) + "\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$PurseRTM$DataAll"+mensOrWomens+"$Team"+ row + "$Value$RupeeSymbol"
 					+ "*ACTIVE SET 1 \0");
 			
@@ -7136,6 +7142,9 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 		print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Essentials START\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Header START\0");
 		print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Main$Logo_Bg START\0");
+		
+		print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Main$ProfileWithoutImage SHOW 3.000\0");
+		print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Main$Profile SHOW 3.000\0");
 		
 		which_graphics_onscreen = "BG";
 		noPlayerImage = "YES";

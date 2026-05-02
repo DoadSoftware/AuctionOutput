@@ -1119,7 +1119,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 				case "ANIMATE-IN-FF_SQUAD_ROLE_TEAM": case "ANIMATE-IN-PROFILE_FF": case "ANIMATE-IN-FF_RETAIN_PLAYERS":
 					if(which_graphics_onscreen.isEmpty()) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Loop START \0");
-						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*AudioFF START \0");
+						if(enableAudio.equalsIgnoreCase("TRUE")) {
+							print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*AudioFF START \0");
+						}
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Transition START \0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Essentials START\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Header START\0");
@@ -1602,7 +1604,9 @@ public class MUMBAI_T20_VIZ extends Scene{
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Transition CONTINUE\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Essentials CONTINUE\0");
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Header CONTINUE\0");
-						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*AudioFF START\0");
+						if(enableAudio.equalsIgnoreCase("TRUE")) {
+							print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*AudioFF START \0");
+						}
 						switch (which_graphics_onscreen) {
 						case "IDENT":
 							print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*anim_Fullframes$In_Out$Main$Ident CONTINUE\0");
@@ -4355,7 +4359,7 @@ public class MUMBAI_T20_VIZ extends Scene{
 					+ "*GEOM*TEXT SET " + tm.getTeamName3()+"\0");
 			
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$PurseRTM"+mensOrWomens+"$Team"+row+"$txt_SquadSize"
-					+ "*GEOM*TEXT SET " +(noOfPlayers-tm.getPlayers())+"\0");
+					+ "*GEOM*TEXT SET " + ((noOfPlayers-tm.getPlayers()) < 0 ? "-" : (noOfPlayers-tm.getPlayers())) + "\0");
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$PurseRTM$DataAll"+mensOrWomens+"$Team"+ row + "$Value$RupeeSymbol"
 					+ "*ACTIVE SET 1 \0");
 			
