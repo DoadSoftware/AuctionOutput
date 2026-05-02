@@ -3194,9 +3194,9 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 				if(data.isPlayer_sold_or_unsold() == true) {
 					if(data.getBid_result() != null && !data.getBid_result().isEmpty()) {
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$NormalToFinal$Side1 START \0");
-						TimeUnit.MILLISECONDS.sleep(1000);
+						TimeUnit.MILLISECONDS.sleep(3000);
 						PlayerSoldOrUnsold(print_writer, auction, playerId, 1);
-						TimeUnit.MILLISECONDS.sleep(2000);
+						
 						print_writer.println("-1 RENDERER*BACK_LAYER*STAGE*DIRECTOR*Change$NormalToFinal$Side1 SHOW 0.0 \0");
 					}
 				}

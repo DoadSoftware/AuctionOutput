@@ -1750,6 +1750,10 @@ public class MUMBAI_T20_VIZ extends Scene{
 		auction.setTeamZoneList(AuctionFunctions.PlayerCountPerTeamZoneWise(auction.getTeam(), 
 		        auction.getPlayers(), auction.getPlayersList(),session_selected_broadcaster));
 		
+		for(PlayerCount pc : auction.getTeamZoneList()) {
+			System.out.println(pc);
+		}
+		
 		PlayerCount team = auction.getTeamZoneList().stream().filter(tm->tm.getTeamId() == teaam_id).findAny().orElse(null);
 		
 		print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$HeaderAll$Side" + whichSide + "$select_HeaderType*FUNCTION*Omo*vis_con SET 1\0");
