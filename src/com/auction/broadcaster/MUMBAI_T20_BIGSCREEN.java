@@ -1873,8 +1873,11 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 		
 		row = row + 1;
 		
-		List<Player> players = team.getPlayer().stream().filter(pl -> pl.getIconic().equalsIgnoreCase("NO") && pl.getRole().equalsIgnoreCase("Batsman"))
-				.collect(Collectors.toList()) ;
+//		List<Player> players = team.getPlayer().stream().filter(pl -> pl.getIconic().equalsIgnoreCase("NO") && pl.getRole().equalsIgnoreCase("Batsman"))
+//				.collect(Collectors.toList()) ;
+		List<Player> players = team.getPlayer().stream().filter(pl -> pl.getIconic().equalsIgnoreCase("NO") && 
+				(pl.getRole().equalsIgnoreCase("Batsman") || pl.getRole().equalsIgnoreCase("Bat/Keeper")||
+				pl.getRole().equalsIgnoreCase("Wicket-Keeper"))).collect(Collectors.toList()) ;
 		
 		if(players != null && players.size() >0) {
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
@@ -1913,41 +1916,41 @@ public class MUMBAI_T20_BIGSCREEN extends Scene{
 			row = row + 1;
 		}
 		
-		players = team.getPlayer().stream().filter(pl -> pl.getIconic().equalsIgnoreCase("NO") && pl.getRole().equalsIgnoreCase("Bat/Keeper")||
-				pl.getRole().equalsIgnoreCase("Wicket-Keeper")) .collect(Collectors.toList());
-		
-		if(players != null && players.size() >0) {
-			
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-					"$SquadCategoryData$SlectDataStyle*FUNCTION*Omo*vis_con SET 0\0");
-			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-					"$SquadCategoryData$Title$txt_Title*GEOM*TEXT SET " + "WICKET - KEEPERS" + "\0");
-			
-			row = row + 1;
-			
-			for(Player ply : players) {
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-						"$SquadCategoryData$SlectDataStyle*FUNCTION*Omo*vis_con SET 2\0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-						"$SquadCategoryData$PlayerName$img_Icon*TEXTURE*IMAGE SET " + setPlayerRole(ply)+ "\0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + ply.getFull_name() + "\0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET \0");
-				
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-						"$SquadCategoryData$PlayerName$Iconic_Icon$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-						"$SquadCategoryData$PlayerName$Retain_Icon$Select_Icon*FUNCTION*Omo*vis_con SET " + (ply.getSoldOrUnsold().
-								equalsIgnoreCase("RETAIN")?"1":"0") + "\0");
-				
-				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
-						"$SquadCategoryData$PlayerName$txt_Value*GEOM*TEXT SET " + AuctionFunctions.ConvertToLakh(ply.getSoldForPoints()) + " L \0");
-				
-				row++;	
-			}
-			
-		}
+//		players = team.getPlayer().stream().filter(pl -> pl.getIconic().equalsIgnoreCase("NO") && pl.getRole().equalsIgnoreCase("Bat/Keeper")||
+//				pl.getRole().equalsIgnoreCase("Wicket-Keeper")) .collect(Collectors.toList());
+//		
+//		if(players != null && players.size() >0) {
+//			
+//			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//					"$SquadCategoryData$SlectDataStyle*FUNCTION*Omo*vis_con SET 0\0");
+//			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//					"$SquadCategoryData$Title$txt_Title*GEOM*TEXT SET " + "WICKET - KEEPERS" + "\0");
+//			
+//			row = row + 1;
+//			
+//			for(Player ply : players) {
+//				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//						"$SquadCategoryData$SlectDataStyle*FUNCTION*Omo*vis_con SET 2\0");
+//				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//						"$SquadCategoryData$PlayerName$img_Icon*TEXTURE*IMAGE SET " + setPlayerRole(ply)+ "\0");
+//				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//						"$SquadCategoryData$PlayerName$txt_FirstName*GEOM*TEXT SET " + ply.getFull_name() + "\0");
+//				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//						"$SquadCategoryData$PlayerName$txt_LastName*GEOM*TEXT SET \0");
+//				
+//				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//						"$SquadCategoryData$PlayerName$Iconic_Icon$Select_Icon*FUNCTION*Omo*vis_con SET 0\0");
+//				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//						"$SquadCategoryData$PlayerName$Retain_Icon$Select_Icon*FUNCTION*Omo*vis_con SET " + (ply.getSoldOrUnsold().
+//								equalsIgnoreCase("RETAIN")?"1":"0") + "\0");
+//				
+//				print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
+//						"$SquadCategoryData$PlayerName$txt_Value*GEOM*TEXT SET " + AuctionFunctions.ConvertToLakh(ply.getSoldForPoints()) + " L \0");
+//				
+//				row++;	
+//			}
+//			
+//		}
 		
 		if(row==16) {
 			print_writer.println("-1 RENDERER*BACK_LAYER*TREE*$gfx_FullFrames$Main$Side" + whichSide + "$Squad_Category$Row" + row +
